@@ -48,7 +48,7 @@ module.exports = {
     '^.+\\.js?$': 'babel-jest',
     '\\.(gql|graphql)$': require.resolve('jest-transform-graphql'), // for graphql-tag
   },
-  snapshotSerializers: [require.resolve('enzyme-to-json/serializer')],
+  snapshotSerializers: [],
   moduleNameMapper: {
     '^.+\\.(png|gif|css|scss)$': `${nodeModules}/identity-obj-proxy/src/index.js`,
     ...moduleNameMapper,

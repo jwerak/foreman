@@ -1,4 +1,6 @@
 import React from 'react';
+import { fireEvent, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import IntegrationTestHelper from '../../../common/IntegrationTestHelper';
 
@@ -9,17 +11,25 @@ import PasswordStrength, { reducers } from '../index';
 document.getElementById = jest.fn(id => ({ value: passwords[id].password }));
 
 describe('PasswordStrength integration test', () => {
-  // the password-strength 3rd-party reading the input.value instead the event.value
-  // therefore, it is not enough to simulate a change-event
+  // The ReactPasswordStrength component is a controlled component that reads
+  // input.value via a ref in its handleChange callback. We need to set the
+  // native value setter to bypass React's controlled input behavior, then
+  // dispatch a native input event to trigger the component's change handler.
   const setInputValue = (input, value) => {
-    input.instance().value = value; // eslint-disable-line no-param-reassign
-    input.simulate('change', { target: { value } });
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      'value'
+    ).set;
+    nativeInputValueSetter.call(input, value);
+    act(() => {
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
   };
 
   it('should flow', () => {
     const integrationTestHelper = new IntegrationTestHelper(reducers);
 
-    const component = integrationTestHelper.mount(
+    const { container } = integrationTestHelper.mount(
       <div>
         <input id="username" value={passwords.username.password} readOnly />
         <input id="email" value={passwords.email.password} readOnly />
@@ -35,37 +45,33 @@ describe('PasswordStrength integration test', () => {
       </div>
     );
 
-    const passwordInput = component.find('input#user_password');
-    const passwordConfirmationInput = component.find(
-      'input#password_confirmation'
-    );
-    const passwordWarning = component.find(
-      '.ReactPasswordStrength-strength-desc'
-    );
-
     integrationTestHelper.takeStoreSnapshot('initial state');
 
     Object.keys(passwords).forEach(key => {
       const { password, expected } = passwords[key];
 
+      const passwordInput = container.querySelector('input#user_password');
       setInputValue(passwordInput, password);
 
-      expect(passwordWarning.text()).toBe(expected);
+      // Re-query the warning element each time as the component re-renders
+      const passwordWarning = container.querySelector(
+        '.ReactPasswordStrength-strength-desc'
+      );
+      expect(passwordWarning.textContent).toBe(expected);
       integrationTestHelper.takeStoreAndLastActionSnapshot(`${key} fixture`);
     });
 
+    const passwordConfirmationInput = container.querySelector(
+      'input#password_confirmation'
+    );
     setInputValue(passwordConfirmationInput, passwords.strong.password);
-    expect(
-      component.find(`CommonForm[label="${'Verify'}"] .help-block`)
-    ).toHaveLength(1);
+    expect(container.querySelectorAll('.help-block')).toHaveLength(1);
     integrationTestHelper.takeStoreAndLastActionSnapshot(
       'unmached password confirmation'
     );
 
     setInputValue(passwordConfirmationInput, passwords.veryStrong.password);
-    expect(
-      component.find(`CommonForm[label="${'Verify'}"] .help-block`)
-    ).toHaveLength(0);
+    expect(container.querySelectorAll('.help-block')).toHaveLength(0);
     integrationTestHelper.takeStoreAndLastActionSnapshot(
       'mached password confirmation'
     );

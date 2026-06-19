@@ -1,22 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SkeletonLoader should loading finished with no children 1`] = `"custom empty"`;
+exports[`SkeletonLoader should loading finished with no children 1`] = `
+<div>
+  custom empty
+</div>
+`;
 
 exports[`SkeletonLoader should loading true 1`] = `
-<G
-  circle={false}
-  count={3}
-  duration={1.2}
-  height={null}
-  width={null}
-  wrapper={null}
-/>
+<div>
+  <span>
+    <span
+      class="css-19bon8n react-loading-skeleton"
+      style="animation: animation-16jpnkj 1.2s ease-in-out infinite;"
+    >
+      ‌
+    </span>
+    <span
+      class="css-19bon8n react-loading-skeleton"
+      style="animation: animation-16jpnkj 1.2s ease-in-out infinite;"
+    >
+      ‌
+    </span>
+    <span
+      class="css-19bon8n react-loading-skeleton"
+      style="animation: animation-16jpnkj 1.2s ease-in-out infinite;"
+    >
+      ‌
+    </span>
+  </span>
+</div>
 `;
 
 exports[`SkeletonLoader should loading true with a node child 1`] = `
 <div>
-  a child
+  <div>
+    a child
+  </div>
 </div>
 `;
 
-exports[`SkeletonLoader should render custom error 1`] = `"custom error node"`;
+exports[`SkeletonLoader should render custom error 1`] = `
+<div>
+  custom error node
+</div>
+`;

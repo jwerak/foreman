@@ -1,21 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActionLinks rendering render action links 1`] = `
-<GridItem
-  className="actions-btns"
-  span={12}
->
-  <Button
-    className="pf-v5-u-float-right"
-    component="a"
-    href="/hosts/foo.example.com"
-    isInline={true}
-    key="0"
-    ouiaId="action-links-btn"
-    size="sm"
-    variant="primary"
+<div>
+  <div
+    class="pf-v5-l-grid__item pf-m-12-col actions-btns"
   >
-    Host details
-  </Button>
-</GridItem>
+    <a
+      aria-disabled="false"
+      class="pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right"
+      data-ouia-component-id="action-links-btn"
+      data-ouia-component-type="PF5/Button"
+      data-ouia-safe="true"
+      href="/hosts/foo.example.com"
+    >
+      Host details
+    </a>
+  </div>
+</div>
 `;

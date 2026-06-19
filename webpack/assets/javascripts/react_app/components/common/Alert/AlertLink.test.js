@@ -1,24 +1,26 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import AlertLink from './AlertLink';
 
 describe('AlertLink', () => {
   it('should render with href', () => {
-    const wrapper = shallow(<AlertLink href="#">some link</AlertLink>);
+    render(<AlertLink href="#">some link</AlertLink>);
 
-    expect(wrapper).toMatchSnapshot();
+    const link = screen.getByRole('link', { name: 'some link' });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '#');
   });
 
   it('should render with onClick', () => {
     const handleClick = jest.fn();
-    const wrapper = shallow(
-      <AlertLink onClick={handleClick}>some link</AlertLink>
-    );
+    render(<AlertLink onClick={handleClick}>some link</AlertLink>);
 
-    expect(wrapper).toMatchSnapshot();
+    const link = screen.getByText('some link');
+    expect(link).toBeInTheDocument();
 
-    wrapper.find('a').simulate('click');
+    fireEvent.click(link);
 
     expect(handleClick).toHaveBeenCalled();
   });

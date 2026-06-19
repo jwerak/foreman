@@ -1,103 +1,396 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsTableSnapshot should render 1`] = `
-<Table
-  borders={true}
-  id="settings-table"
-  isStriped={true}
-  ouiaId="settings-table"
-  variant="compact"
->
-  <TableHead />
-  <Tbody>
-    <ViewRows
-      settings={
-        Array [
-          Object {
-            "category": "General",
-            "configFile": "settings.yaml",
-            "createdAt": "2019-11-06 09:42:45 +0100",
-            "default": "root@example.com",
-            "description": "The default administrator email address",
-            "encrypted": false,
-            "fullName": "Administrator email address",
-            "id": 36,
-            "name": "administrator",
-            "readonly": false,
-            "selectValues": null,
-            "settingsType": "string",
-            "updatedAt": "2020-04-29 15:48:23 +0200",
-            "value": "root@example.com",
-          },
-          Object {
-            "category": "General",
-            "configFile": "settings.yaml",
-            "createdAt": "2018-01-22 14:03:38 +0100",
-            "default": false,
-            "description": "Foreman will append domain names when new hosts are provisioned",
-            "encrypted": false,
-            "fullName": "Append domain names to the host",
-            "id": 177,
-            "name": "display_fqdn_for_hosts",
-            "readonly": false,
-            "selectValues": null,
-            "settingsType": "boolean",
-            "updatedAt": "2018-01-22 14:03:38 +0100",
-            "value": true,
-          },
-          Object {
-            "category": "General",
-            "configFile": "settings.yaml",
-            "default": null,
-            "description": "Timezone to use for new users",
-            "encrypted": false,
-            "fullName": "Default timezone",
-            "id": 27,
-            "name": "default_timezone",
-            "readonly": false,
-            "selectValues": Object {
-              "": "Browser timezone",
-              "Abu Dhabi": "(GMT +04:00) Abu Dhabi",
-              "Adelaide": "(GMT +09:30) Adelaide",
-              "Alaska": "(GMT -09:00) Alaska",
-              "Almaty": "(GMT +06:00) Almaty",
-              "American Samoa": "(GMT -11:00) American Samoa",
-              "Amsterdam": "(GMT +01:00) Amsterdam",
-              "Arizona": "(GMT -07:00) Arizona",
-              "Astana": "(GMT +06:00) Astana",
-              "Athens": "(GMT +02:00) Athens",
-              "Atlantic Time (Canada)": "(GMT -04:00) Atlantic Time (Canada)",
-              "Auckland": "(GMT +12:00) Auckland",
-              "Azores": "(GMT -01:00) Azores",
-              "Baghdad": "(GMT +03:00) Baghdad",
-              "Baku": "(GMT +04:00) Baku",
-              "Bangkok": "(GMT +07:00) Bangkok",
-            },
-            "settingsType": null,
-            "value": "Bangkok",
-          },
-          Object {
-            "category": "General",
-            "configFile": "settings.yaml",
-            "createdAt": "2019-11-06 09:42:45 +0100",
-            "default": Array [],
-            "description": "Set hostnames to which requests are not to be proxied. Requests to the local host are excluded by default.",
-            "encrypted": false,
-            "fullName": "HTTP(S) proxy except hosts",
-            "id": 47,
-            "name": "http_proxy_except_list",
-            "readonly": false,
-            "selectValues": null,
-            "settingsType": "array",
-            "updatedAt": "2020-03-20 13:44:40 +0100",
-            "value": Array [
-              "localhost",
-              "127.0.0.1",
-            ],
-          },
-        ]
-      }
-    />
-  </Tbody>
-</Table>
+<div>
+  <table
+    class="pf-v5-c-table pf-m-grid-md pf-m-compact pf-m-striped"
+    data-ouia-component-id="settings-table"
+    data-ouia-component-type="PF5/Table"
+    data-ouia-safe="true"
+    id="settings-table"
+    role="grid"
+  >
+    <thead
+      class="pf-v5-c-table__thead"
+    >
+      <tr
+        class="pf-v5-c-table__tr"
+        data-ouia-component-id="setting-table-heading-row"
+        data-ouia-component-type="PF5/TableRow"
+        data-ouia-safe="true"
+      >
+        <th
+          class="pf-v5-c-table__th pf-m-width-30"
+          scope="col"
+          tabindex="-1"
+        >
+           
+          Name
+           
+        </th>
+        <th
+          class="pf-v5-c-table__th pf-m-width-35"
+          scope="col"
+          tabindex="-1"
+        >
+           
+          Value
+           
+        </th>
+        <th
+          class="pf-v5-c-table__th pf-m-width-35"
+          scope="col"
+          tabindex="-1"
+        >
+           
+          Description
+           
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="pf-v5-c-table__tbody"
+      role="rowgroup"
+    >
+      <tr
+        class="pf-v5-c-table__tr"
+        data-ouia-component-id="setting-table-heading-row-0"
+        data-ouia-component-type="PF5/TableRow"
+        data-ouia-safe="true"
+      >
+        <td
+          class="pf-v5-c-table__td pf-m-width-30"
+          tabindex="-1"
+        >
+          <div
+            style="display: contents;"
+          >
+            <span>
+              Administrator email address
+            </span>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          <div
+            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+          >
+            <div
+              class="setting-value"
+            >
+              <div
+                style="display: contents;"
+              >
+                <span>
+                  <div
+                    class=""
+                  >
+                    root@example.com
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <button
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-plain"
+                data-ouia-component-id="edit-row-0-icon"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                id="administrator"
+                type="button"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          The default administrator email address
+        </td>
+      </tr>
+      <tr
+        class="pf-v5-c-table__tr"
+        data-ouia-component-id="setting-table-heading-row-1"
+        data-ouia-component-type="PF5/TableRow"
+        data-ouia-safe="true"
+      >
+        <td
+          class="pf-v5-c-table__td pf-m-width-30"
+          tabindex="-1"
+        >
+          <div
+            style="display: contents;"
+          >
+            <span>
+              Append domain names to the host
+            </span>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          <div
+            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+          >
+            <div
+              class="setting-value"
+            >
+              <div
+                style="display: contents;"
+              >
+                <span>
+                  <strong>
+                    <div
+                      class=""
+                    >
+                      Yes
+                    </div>
+                  </strong>
+                </span>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <button
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-plain"
+                data-ouia-component-id="edit-row-1-icon"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                id="display_fqdn_for_hosts"
+                type="button"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          Foreman will append domain names when new hosts are provisioned
+        </td>
+      </tr>
+      <tr
+        class="pf-v5-c-table__tr"
+        data-ouia-component-id="setting-table-heading-row-2"
+        data-ouia-component-type="PF5/TableRow"
+        data-ouia-safe="true"
+      >
+        <td
+          class="pf-v5-c-table__td pf-m-width-30"
+          tabindex="-1"
+        >
+          <div
+            style="display: contents;"
+          >
+            <span>
+              Default timezone
+            </span>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          <div
+            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+          >
+            <div
+              class="setting-value"
+            >
+              <div
+                style="display: contents;"
+              >
+                <span>
+                  <div
+                    class=""
+                  >
+                    (GMT +07:00) Bangkok
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <button
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-plain"
+                data-ouia-component-id="edit-row-2-icon"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                id="default_timezone"
+                type="button"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          Timezone to use for new users
+        </td>
+      </tr>
+      <tr
+        class="pf-v5-c-table__tr"
+        data-ouia-component-id="setting-table-heading-row-3"
+        data-ouia-component-type="PF5/TableRow"
+        data-ouia-safe="true"
+      >
+        <td
+          class="pf-v5-c-table__td pf-m-width-30"
+          tabindex="-1"
+        >
+          <div
+            style="display: contents;"
+          >
+            <span>
+              HTTP(S) proxy except hosts
+            </span>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          <div
+            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+          >
+            <div
+              class="setting-value"
+            >
+              <div
+                style="display: contents;"
+              >
+                <span>
+                  <div
+                    class=""
+                  >
+                    [localhost, 127.0.0.1]
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <button
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-plain"
+                data-ouia-component-id="edit-row-3-icon"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                id="http_proxy_except_list"
+                type="button"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </td>
+        <td
+          class="pf-v5-c-table__td pf-m-width-35"
+          tabindex="-1"
+        >
+          Set hostnames to which requests are not to be proxied. Requests to the local host are excluded by default.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 `;

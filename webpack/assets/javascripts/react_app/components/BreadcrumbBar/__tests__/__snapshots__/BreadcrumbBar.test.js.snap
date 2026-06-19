@@ -1,84 +1,235 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
-<div
-  className="breadcrumb-bar"
->
-  <Breadcrumb
-    className="breadcrumbs-list"
-    isTitle={false}
-    items={
-      Array [
-        Object {
-          "caption": "root",
-          "url": "/some-url",
-        },
-        Object {
-          "caption": "child with onClick",
-          "onClick": [MockFunction],
-        },
-        Object {
-          "caption": "active child",
-        },
-      ]
-    }
-    ouiaId="breadcrumbs-list"
-    titleReplacement={null}
-  />
-  <hr
-    className="breadcrumb-line"
-  />
+<div>
+  <div
+    class="breadcrumb-bar"
+  >
+    <nav
+      aria-label="Breadcrumb"
+      class="pf-v5-c-breadcrumb breadcrumbs-list"
+      data-ouia-component-id="breadcrumbs-list"
+      data-ouia-component-type="PF5/Breadcrumb"
+      data-ouia-safe="true"
+    >
+      <ol
+        class="pf-v5-c-breadcrumb__list"
+        role="list"
+      >
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          item="[object Object]"
+        >
+          <a
+            class="pf-v5-c-breadcrumb__link"
+            href="/some-url"
+          >
+             
+            root
+          </a>
+        </li>
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          item="[object Object]"
+        >
+          <span
+            class="pf-v5-c-breadcrumb__item-divider"
+          >
+            <svg
+              aria-hidden="true"
+              class="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 256 512"
+              width="1em"
+            >
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+              />
+            </svg>
+          </span>
+           
+          child with onClick
+        </li>
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+          item="[object Object]"
+        >
+          <span
+            class="pf-v5-c-breadcrumb__item-divider"
+          >
+            <svg
+              aria-hidden="true"
+              class="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 256 512"
+              width="1em"
+            >
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+              />
+            </svg>
+          </span>
+           
+          <div
+            style="display: contents;"
+          >
+            <span
+              class="pf-v5-c-truncate"
+            >
+              <span
+                class="pf-v5-c-truncate__start"
+              >
+                active child
+              </span>
+            </span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+    <hr
+      class="breadcrumb-line"
+    />
+  </div>
 </div>
 `;
 
 exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
-<div
-  className="breadcrumb-bar"
->
-  <Breadcrumb
-    className="breadcrumbs-list"
-    isTitle={false}
-    items={
-      Array [
-        Object {
-          "caption": "root",
-          "url": "/some-url",
-        },
-        Object {
-          "caption": "child with onClick",
-          "onClick": [MockFunction],
-        },
-        Object {
-          "caption": "active child",
-        },
-      ]
-    }
-    ouiaId="breadcrumbs-list"
-    titleReplacement={null}
+<div>
+  <div
+    class="breadcrumb-bar"
   >
-    <BreadcrumbSwitcher
-      currentPage={null}
-      hasError={false}
-      isLoading={false}
-      isOpen={false}
-      items={Array []}
-      onHide={[Function]}
-      onOpen={[Function]}
-      onPerPageSelect={[Function]}
-      onResourceClick={[Function]}
-      onSearchChange={[Function]}
-      onSearchClear={[Function]}
-      onSetPage={[Function]}
-      openSwitcher={[Function]}
-      perPage={10}
-      searchDebounceTimeout={0}
-      searchValue="some value"
-      total={1}
+    <nav
+      aria-label="Breadcrumb"
+      class="pf-v5-c-breadcrumb breadcrumbs-list"
+      data-ouia-component-id="breadcrumbs-list"
+      data-ouia-component-type="PF5/Breadcrumb"
+      data-ouia-safe="true"
+    >
+      <ol
+        class="pf-v5-c-breadcrumb__list"
+        role="list"
+      >
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          item="[object Object]"
+        >
+          <a
+            class="pf-v5-c-breadcrumb__link"
+            href="/some-url"
+          >
+             
+            root
+          </a>
+        </li>
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          item="[object Object]"
+        >
+          <span
+            class="pf-v5-c-breadcrumb__item-divider"
+          >
+            <svg
+              aria-hidden="true"
+              class="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 256 512"
+              width="1em"
+            >
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+              />
+            </svg>
+          </span>
+           
+          child with onClick
+        </li>
+        <li
+          class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+          item="[object Object]"
+        >
+          <span
+            class="pf-v5-c-breadcrumb__item-divider"
+          >
+            <svg
+              aria-hidden="true"
+              class="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 256 512"
+              width="1em"
+            >
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+              />
+            </svg>
+          </span>
+           
+          <div
+            style="display: contents;"
+          >
+            <span
+              class="pf-v5-c-truncate"
+            >
+              <span
+                class="pf-v5-c-truncate__start"
+              >
+                active child
+              </span>
+            </span>
+          </div>
+          <div
+            class="pf4-breadcrumb-switcher"
+          >
+            <div
+              style="display: contents;"
+            >
+              <button
+                aria-disabled="false"
+                aria-label="open breadcrumb switcher"
+                class="pf-v5-c-button pf-m-plain"
+                data-ouia-component-id="breadcrumb-button"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                type="button"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </nav>
+    <hr
+      class="breadcrumb-line"
     />
-  </Breadcrumb>
-  <hr
-    className="breadcrumb-line"
-  />
+  </div>
 </div>
 `;
 

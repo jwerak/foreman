@@ -1,109 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumbs renders breadcrumbs menu 1`] = `
-<Breadcrumb>
-  <BreadcrumbItem
-    className="breadcrumb-item"
-    isActive={false}
-    item={
-      Object {
-        "caption": "root",
-        "url": "/some-url",
-      }
-    }
-    key="0"
-    to="/some-url"
+<div>
+  <nav
+    aria-label="Breadcrumb"
+    class="pf-v5-c-breadcrumb"
+    data-ouia-component-id="OUIA-Generated-Breadcrumb-1"
+    data-ouia-component-type="PF5/Breadcrumb"
+    data-ouia-safe="true"
   >
-     
-    root
-  </BreadcrumbItem>
-  <BreadcrumbItem
-    className="breadcrumb-item"
-    isActive={false}
-    item={
-      Object {
-        "caption": "child with onClick",
-        "onClick": [MockFunction],
-      }
-    }
-    key="1"
-    onClick={[MockFunction]}
-  >
-     
-    child with onClick
-  </BreadcrumbItem>
-  <BreadcrumbItem
-    className="breadcrumb-item active"
-    isActive={true}
-    item={
-      Object {
-        "caption": "active child",
-      }
-    }
-    key="2"
-  >
-     
-    <Truncate
-      content="active child"
-      tooltipPosition="bottom"
-    />
-  </BreadcrumbItem>
-</Breadcrumb>
+    <ol
+      class="pf-v5-c-breadcrumb__list"
+      role="list"
+    >
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item"
+        item="[object Object]"
+      >
+        <a
+          class="pf-v5-c-breadcrumb__link"
+          href="/some-url"
+        >
+           
+          root
+        </a>
+      </li>
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item"
+        item="[object Object]"
+      >
+        <span
+          class="pf-v5-c-breadcrumb__item-divider"
+        >
+          <svg
+            aria-hidden="true"
+            class="pf-v5-svg"
+            fill="currentColor"
+            height="1em"
+            role="img"
+            viewBox="0 0 256 512"
+            width="1em"
+          >
+            <path
+              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            />
+          </svg>
+        </span>
+         
+        child with onClick
+      </li>
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+        item="[object Object]"
+      >
+        <span
+          class="pf-v5-c-breadcrumb__item-divider"
+        >
+          <svg
+            aria-hidden="true"
+            class="pf-v5-svg"
+            fill="currentColor"
+            height="1em"
+            role="img"
+            viewBox="0 0 256 512"
+            width="1em"
+          >
+            <path
+              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            />
+          </svg>
+        </span>
+         
+        <div
+          style="display: contents;"
+        >
+          <span
+            class="pf-v5-c-truncate"
+          >
+            <span
+              class="pf-v5-c-truncate__start"
+            >
+              active child
+            </span>
+          </span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+</div>
 `;
 
 exports[`Breadcrumbs renders h1 title 1`] = `
-<Breadcrumb>
-  <BreadcrumbItem
-    className="breadcrumb-item active"
-    isActive={true}
-    item={
-      Object {
-        "caption": "title",
-      }
-    }
-    key="0"
+<div>
+  <nav
+    aria-label="Breadcrumb"
+    class="pf-v5-c-breadcrumb"
+    data-ouia-component-id="OUIA-Generated-Breadcrumb-2"
+    data-ouia-component-type="PF5/Breadcrumb"
+    data-ouia-safe="true"
   >
-     
-    <Truncate
-      content="title"
-      tooltipPosition="bottom"
-    />
-  </BreadcrumbItem>
-</Breadcrumb>
+    <ol
+      class="pf-v5-c-breadcrumb__list"
+      role="list"
+    >
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+        item="[object Object]"
+      >
+         
+        <div
+          style="display: contents;"
+        >
+          <span
+            class="pf-v5-c-truncate"
+          >
+            <span
+              class="pf-v5-c-truncate__start"
+            >
+              title
+            </span>
+          </span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+</div>
 `;
 
 exports[`Breadcrumbs renders title override 1`] = `
-<Breadcrumb>
-  <BreadcrumbItem
-    className="breadcrumb-item"
-    isActive={false}
-    item={
-      Object {
-        "caption": "root",
-        "url": "/some-url",
-      }
-    }
-    key="0"
-    to="/some-url"
+<div>
+  <nav
+    aria-label="Breadcrumb"
+    class="pf-v5-c-breadcrumb"
+    data-ouia-component-id="OUIA-Generated-Breadcrumb-3"
+    data-ouia-component-type="PF5/Breadcrumb"
+    data-ouia-safe="true"
   >
-     
-    root
-  </BreadcrumbItem>
-  <BreadcrumbItem
-    className="breadcrumb-item active"
-    isActive={true}
-    item={
-      Object {
-        "caption": "active child",
-      }
-    }
-    key="1"
-  >
-     
-    <Truncate
-      content="override title"
-      tooltipPosition="bottom"
-    />
-  </BreadcrumbItem>
-</Breadcrumb>
+    <ol
+      class="pf-v5-c-breadcrumb__list"
+      role="list"
+    >
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item"
+        item="[object Object]"
+      >
+        <a
+          class="pf-v5-c-breadcrumb__link"
+          href="/some-url"
+        >
+           
+          root
+        </a>
+      </li>
+      <li
+        class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+        item="[object Object]"
+      >
+        <span
+          class="pf-v5-c-breadcrumb__item-divider"
+        >
+          <svg
+            aria-hidden="true"
+            class="pf-v5-svg"
+            fill="currentColor"
+            height="1em"
+            role="img"
+            viewBox="0 0 256 512"
+            width="1em"
+          >
+            <path
+              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+            />
+          </svg>
+        </span>
+         
+        <div
+          style="display: contents;"
+        >
+          <span
+            class="pf-v5-c-truncate"
+          >
+            <span
+              class="pf-v5-c-truncate__start"
+            >
+              override title
+            </span>
+          </span>
+        </div>
+      </li>
+    </ol>
+  </nav>
+</div>
 `;

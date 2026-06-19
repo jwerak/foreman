@@ -5,7 +5,6 @@ import { setModalOpen, setModalClosed } from './ForemanModalActions';
 import ModalContext from './ForemanModalContext';
 import { deprecate } from '../../common/DeprecationService';
 
-// Because enzyme doesn't support useContext yet
 export const useModalContext = () => useContext(ModalContext);
 
 // Use in any ForemanModal.  Handles Redux actions for creating, opening, and closing the modal.
@@ -34,5 +33,4 @@ export const useForemanModal = ({ id, isOpen = false }) => {
   };
 };
 
-// to get enzyme hacky test to work
 export default ModalContext;

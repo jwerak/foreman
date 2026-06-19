@@ -1,195 +1,357 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuditsList rendering render resources list 1`] = `
-<DataList
-  aria-label="Audits data list"
-  id="audit-list"
-  isCompact={true}
->
-  <DataListItem
-    aria-labelledby=""
-    className="audits-data-list main-info-minimize-padding"
-    id={234}
-    isExpanded={false}
-    key="234"
+exports[`AuditsList render resources list 1`] = `
+<div>
+  <ul
+    aria-label="Audits data list"
+    class="pf-v5-c-data-list pf-m-compact pf-m-grid-md"
+    id="audit-list"
+    role="list"
   >
-    <DataListItemRow
-      className="audits-list-item-row"
-      onClick={[Function]}
+    <li
+      aria-labelledby=""
+      class="pf-v5-c-data-list__item audits-data-list main-info-minimize-padding"
+      id="234"
     >
-      <DataListToggle
-        isExpanded={false}
-        onClick={[Function]}
-      />
-      <DataListItemCells
-        dataListCells={
-          Array [
-            <DataListCell
-              width={3}
-            >
-              <UserDetails
-                isAuditLogin={false}
-                remoteAddress="127.0.0.1"
-                userInfo={
-                  Object {
-                    "audit_path": "/audits?search=id+%3D+234",
-                    "display_name": "Admin ",
-                    "login": "admin",
-                    "search_path": "/audits?search=user+%3D+admin",
-                  }
-                }
-              />
-            </DataListCell>,
-            <DataListCell
-              width={1}
-            >
-              updated
-            </DataListCell>,
-            <DataListCell
-              alignRight={true}
-              className="additional-info-item item-name"
-              width={3}
-            >
-              <span>
-                HOST
-              </span>
-            </DataListCell>,
-            <DataListCell
-              className="additional-info-item item-resource"
-              width={5}
-              wrapModifier="truncate"
-            >
-              <span>
-                <SearchLink
-                  id={234}
-                  textValue="host-foo.example.com"
-                  title="Filter audits for this resource only"
-                  url="/audits?search=type+%3D+host+and+auditable_id+%3D+9"
-                />
-              </span>
-            </DataListCell>,
-          ]
-        }
-      />
-      <DataListAction
-        className="audits-list-actions"
+      <div
+        class="pf-v5-c-data-list__item-row audits-list-item-row"
       >
-        <span
-          className="gray-text"
+        <div
+          class="pf-v5-c-data-list__item-control"
         >
-          <ShortDateTime
-            date="2018-08-13 00:34:55 -1100"
-            defaultValue="N/A"
-            seconds={false}
-            showRelativeTimeTooltip={true}
-          />
-        </span>
-      </DataListAction>
-    </DataListItemRow>
-    <DataListContent
-      className="data-list-content"
-      isHidden={true}
-    >
-      <Grid>
-        <ActionLinks
-          allowedActions={
-            Array [
-              Object {
-                "css_class": "pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right",
-                "title": "Host details",
-                "url": "/hosts/host-foo.example.com",
-              },
-            ]
-          }
-        />
-        <ShowOrgsLocs
-          locs={
-            Array [
-              Object {
-                "name": "test_loc1",
-                "url": "/locations/2-test_loc1/edit",
-              },
-              Object {
-                "name": "test_loc2",
-                "url": "/locations/6-test_loc2/edit",
-              },
-              Object {
-                "name": "test_loc3",
-                "url": "/locations/9-test_loc3/edit",
-              },
-            ]
-          }
-          orgs={
-            Array [
-              Object {
-                "name": "test_org1",
-                "url": "/organizations/1-test_org1/edit",
-              },
-              Object {
-                "name": "test_org2",
-                "url": "/organizations/3-test_org2/edit",
-              },
-              Object {
-                "name": "test_org3",
-                "url": "/organizations/5-test_org3/edit",
-              },
-            ]
-          }
-        />
-        <ShowInlineRequestUuid
-          fetchAndPush={[MockFunction]}
-          id={234}
-          requestUuid="c134239d-8ac3-494b-9962-35133fe153ba"
-        />
-        <ExpansiveView
-          actionDisplayName="updated"
-          auditTitle="host-foo.example.com"
-          auditedChanges={
-            Object {
-              "comment": Array [
-                "",
-                "This is info about host for audit",
-              ],
-              "root_pass": Array [
-                "[redacted]",
-                "[redacted]",
-              ],
-            }
-          }
-          auditedChangesWithIdToLabel={
-            Array [
-              Object {
-                "change": Array [
-                  Object {
-                    "css_class": "show-old",
-                    "id_to_label": "[redacted]",
-                  },
-                  Object {
-                    "css_class": "show-new",
-                    "id_to_label": "[redacted]",
-                  },
-                ],
-                "name": "Root pass",
-              },
-              Object {
-                "change": Array [
-                  Object {
-                    "css_class": "show-old",
-                    "id_to_label": "[empty]",
-                  },
-                  Object {
-                    "css_class": "show-new",
-                    "id_to_label": "This is info about host for audit",
-                  },
-                ],
-                "name": "Comment",
-              },
-            ]
-          }
-          comment={null}
-        />
-      </Grid>
-    </DataListContent>
-  </DataListItem>
-</DataList>
+          <div
+            class="pf-v5-c-data-list__toggle"
+          >
+            <button
+              aria-controls="false"
+              aria-disabled="false"
+              aria-expanded="false"
+              aria-label="Details"
+              aria-labelledby=" undefined"
+              class="pf-v5-c-button pf-m-plain"
+              data-ouia-component-id="OUIA-Generated-Button-plain-1"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              type="button"
+            >
+              <div
+                class="pf-v5-c-data-list__toggle-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pf-v5-svg"
+                  fill="currentColor"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 256 512"
+                  width="1em"
+                >
+                  <path
+                    d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-data-list__item-content"
+        >
+          <div
+            class="pf-v5-c-data-list__cell pf-m-flex-3"
+          >
+            <span
+              class="pf-v5-u-font-weight-bold pf-v5-u-font-size-sm"
+            >
+              <div
+                style="display: contents;"
+              >
+                <a
+                  class="user-info"
+                  href="/audits?search=user+%3D+admin"
+                >
+                  Admin 
+                </a>
+              </div>
+              <div
+                class="gray-text"
+              >
+                (
+                127.0.0.1
+                )
+              </div>
+            </span>
+          </div>
+          <div
+            class="pf-v5-c-data-list__cell"
+          >
+            updated
+          </div>
+          <div
+            class="pf-v5-c-data-list__cell pf-m-flex-3 pf-m-align-right additional-info-item item-name"
+          >
+            <span>
+              HOST
+            </span>
+          </div>
+          <div
+            class="pf-v5-c-data-list__cell pf-m-flex-5 additional-info-item item-resource pf-m-truncate"
+          >
+            <span>
+              <div
+                style="display: contents;"
+              >
+                <a
+                  href="/audits?search=type+%3D+host+and+auditable_id+%3D+9"
+                  id="resource-link-234"
+                >
+                  host-foo.example.com
+                </a>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-data-list__item-action audits-list-actions"
+          rowid=""
+        >
+          <span
+            class="gray-text"
+          >
+            <span
+              title="6 years ago"
+            >
+              <span>
+                Aug 13, 11:34 AM
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+      <section
+        class="pf-v5-c-data-list__expandable-content data-list-content"
+        hidden=""
+        id=""
+      >
+        <div
+          class="pf-v5-c-data-list__expandable-content-body"
+        >
+          <div
+            class="pf-v5-l-grid"
+          >
+            <div
+              class="pf-v5-l-grid__item pf-m-12-col actions-btns"
+            >
+              <a
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right"
+                data-ouia-component-id="action-links-btn"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                href="/hosts/host-foo.example.com"
+              >
+                Host details
+              </a>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-12-col taxonomy-section"
+            >
+              <div
+                class="pf-v5-l-grid"
+              >
+                <div
+                  class="pf-v5-l-grid__item pf-m-3-col"
+                >
+                  <span>
+                    Affected Organizations
+                  </span>
+                </div>
+                <div
+                  class="pf-v5-l-grid__item pf-m-9-col"
+                >
+                  <strong>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/organizations/1-test_org1/edit"
+                    >
+                      test_org1
+                    </a>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/organizations/3-test_org2/edit"
+                    >
+                      test_org2
+                    </a>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/organizations/5-test_org3/edit"
+                    >
+                      test_org3
+                    </a>
+                  </strong>
+                </div>
+              </div>
+              <div
+                class="pf-v5-l-grid"
+              >
+                <div
+                  class="pf-v5-l-grid__item pf-m-3-col"
+                >
+                  <span>
+                    Affected Locations
+                  </span>
+                </div>
+                <div
+                  class="pf-v5-l-grid__item pf-m-9-col"
+                >
+                  <strong>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/locations/2-test_loc1/edit"
+                    >
+                      test_loc1
+                    </a>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/locations/6-test_loc2/edit"
+                    >
+                      test_loc2
+                    </a>
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      data-ouia-component-id="taxonomy-inline-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/locations/9-test_loc3/edit"
+                    >
+                      test_loc3
+                    </a>
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-3-col"
+            >
+              <span>
+                Request UUID
+              </span>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-9-col value"
+            >
+              <div
+                style="display: contents;"
+              >
+                <button
+                  aria-disabled="false"
+                  class="pf-v5-c-button pf-m-link pf-m-inline"
+                  data-ouia-component-id="request-uuid-btn"
+                  data-ouia-component-type="PF5/Button"
+                  data-ouia-safe="true"
+                  type="button"
+                >
+                  c134239d-8ac3-494b-9962-35133fe153ba
+                </button>
+              </div>
+            </div>
+            <div
+              class="grid-container"
+            >
+              <table
+                class="table-changes table table-bordered table-hover"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      class="col-6 col-md-4"
+                    >
+                      <div>
+                        Root pass
+                      </div>
+                    </td>
+                    <td
+                      class="col-6 col-md-4 show-old"
+                    >
+                      <div
+                        class="show-old"
+                      >
+                        <p>
+                          [redacted]
+                        </p>
+                      </div>
+                    </td>
+                    <td
+                      class="col-6 col-md-4 show-new"
+                    >
+                      <div
+                        class="show-new"
+                      >
+                        <p>
+                          [redacted]
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="col-6 col-md-4"
+                    >
+                      <div>
+                        Comment
+                      </div>
+                    </td>
+                    <td
+                      class="col-6 col-md-4 show-old"
+                    >
+                      <div
+                        class="show-old"
+                      >
+                        <p>
+                          [empty]
+                        </p>
+                      </div>
+                    </td>
+                    <td
+                      class="col-6 col-md-4 show-new"
+                    >
+                      <div
+                        class="show-new"
+                      >
+                        <p>
+                          This is info about host for audit
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </li>
+  </ul>
+</div>
 `;

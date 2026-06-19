@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavItem rendering render NavItem 1`] = `
-<li
-  className=""
->
+<div>
   <li
-    key="key"
+    class=""
   >
-    TEST
+    <span>
+      TEST
+    </span>
   </li>
-</li>
+</div>
 `;

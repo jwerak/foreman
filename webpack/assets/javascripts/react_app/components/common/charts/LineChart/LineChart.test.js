@@ -1,23 +1,31 @@
-import { testComponentSnapshotsWithFixtures } from 'foremanReact/common/testHelpers';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { rtlHelpers } from 'foremanReact/common/testHelpers';
 import { data, timeseriesData } from './LineChart.fixtures';
 import LineChart from './index';
 
-const fixtures = {
-  'should render line chart': {
-    data,
-    id: 'abc',
-  },
-  'should render line chart with timeseries': {
-    data: timeseriesData,
-    xAxisDataLabel: 'x',
-    config: 'timeseries',
-    id: 'xyz',
-  },
-  'should render empty state when no data': {
-    data: undefined,
-    id: 'empty',
-  },
-};
+describe('Line Chart', () => {
+  it('should render line chart', () => {
+    const { container } = render(<LineChart data={data} id="abc" />);
+    expect(container).toMatchSnapshot();
+  });
 
-describe('Line Chart', () =>
-  testComponentSnapshotsWithFixtures(LineChart, fixtures));
+  it('should render line chart with timeseries', () => {
+    const { container } = render(
+      <LineChart
+        data={timeseriesData}
+        xAxisDataLabel="x"
+        config="timeseries"
+        id="xyz"
+      />
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render empty state when no data', () => {
+    const { container } = rtlHelpers.renderWithStore(
+      <LineChart data={undefined} id="empty" />
+    );
+    expect(container).toMatchSnapshot();
+  });
+});

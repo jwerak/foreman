@@ -1,24 +1,24 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import CounterInput from '../';
-
 
 describe('CounterInput', () => {
   it('warning alert', () => {
     const setWarning = jest.fn();
-    const component = mount(
+    render(
       <CounterInput value={11} recommendedMaxValue={10} inputKey={'cpus'} setWarning={setWarning} />
     );
-    expect(component.find('input').prop('value')).toEqual('11');
-    expect(setWarning.mock.calls.length).toBe(1);
+    expect(screen.getByRole('spinbutton')).toHaveValue('11');
+    expect(setWarning).toHaveBeenCalledTimes(1);
   });
 
-  it('error alert', async () => {
+  it('error alert', () => {
     const setError = jest.fn();
-    const component = mount(
+    render(
       <CounterInput value={21} max={20} inputKey={'cpus'} setError={setError} />
     );
-    expect(component.find('input').prop('value')).toEqual('21');
-    expect(setError.mock.calls.length).toBe(1);
+    expect(screen.getByRole('spinbutton')).toHaveValue('21');
+    expect(setError).toHaveBeenCalledTimes(1);
   });
 });

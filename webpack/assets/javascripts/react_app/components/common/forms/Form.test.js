@@ -1,23 +1,26 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import Form from './Form';
 
 describe('Form', () => {
   it('should render a form', () => {
-    const wrapper = shallow(<Form />);
+    const { container } = render(<Form />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(container.querySelector('form')).toBeInTheDocument();
   });
+
   it('should display one base error', () => {
-    const wrapper = shallow(
+    render(
       <Form error={{ errorMsgs: ['invalid something'], severity: 'danger' }} />
     );
 
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('invalid something')).toBeInTheDocument();
   });
+
   it('should display multiple base errors', () => {
-    const wrapper = shallow(
+    render(
       <Form
         error={{
           errorMsgs: ['invalid something', 'error too'],
@@ -26,10 +29,12 @@ describe('Form', () => {
       />
     );
 
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('invalid something')).toBeInTheDocument();
+    expect(screen.getByText('error too')).toBeInTheDocument();
   });
+
   it('should accept base error title', () => {
-    const wrapper = shallow(
+    render(
       <Form
         error={{
           errorMsgs: ['invalid something'],
@@ -39,10 +44,12 @@ describe('Form', () => {
       />
     );
 
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('Oops')).toBeInTheDocument();
+    expect(screen.getByText('invalid something')).toBeInTheDocument();
   });
+
   it('should dispaly form errors as warning', () => {
-    const wrapper = shallow(
+    render(
       <Form
         error={{
           errorMsgs: ['Do not feed the trolls'],
@@ -51,6 +58,6 @@ describe('Form', () => {
       />
     );
 
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('Do not feed the trolls')).toBeInTheDocument();
   });
 });

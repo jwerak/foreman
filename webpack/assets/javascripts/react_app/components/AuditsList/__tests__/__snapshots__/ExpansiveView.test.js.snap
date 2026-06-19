@@ -1,72 +1,155 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExpansiveView rendering render audit record changes 1`] = `
-<div
-  className="grid-container"
->
-  <DiffContainer
-    className=""
-    newText="<h1>Hello World..</h1>"
-    oldText="<h1>Hello..</h1>"
-    patch=""
-  />
-  <table
-    className="table-changes table table-bordered table-hover"
-  >
-    <tbody>
-      <tr
-        key="0"
-      >
-        <td
-          className="col-6 col-md-4"
-          key="0"
-        >
-          <div>
-            Name
-          </div>
-        </td>
-        <td
-          className="col-6 col-md-4 show-old"
-          key="0"
-        >
-          <div
-            className="show-old"
-          >
-            <p>
-              temp1
-            </p>
-          </div>
-        </td>
-        <td
-          className="col-6 col-md-4 show-new"
-          key="1"
-        >
-          <div
-            className="show-new"
-          >
-            <p>
-              temp2
-            </p>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div>
   <div
-    className="details-row comment-section"
+    class="grid-container"
   >
-    <p
-      className="comment-title"
+    <div
+      class=""
+      id="diff-container"
     >
-      <strong>
-        Comments
-      </strong>
-    </p>
-    <p
-      className="comment-desc"
+      <div
+        aria-label="editor-diff-buttons"
+        class="pf-v5-c-toggle-group"
+        id="diff-toggle-buttons"
+        role="group"
+      >
+        <div
+          class="pf-v5-c-toggle-group__item diff-button"
+        >
+          <button
+            aria-pressed="true"
+            class="pf-v5-c-toggle-group__button pf-m-selected"
+            id="split-btn"
+            type="button"
+          >
+            <span
+              class="pf-v5-c-toggle-group__text"
+            >
+              Split
+            </span>
+          </button>
+        </div>
+        <div
+          class="pf-v5-c-toggle-group__item diff-button"
+        >
+          <button
+            aria-pressed="false"
+            class="pf-v5-c-toggle-group__button"
+            id="unified-btn"
+            type="button"
+          >
+            <span
+              class="pf-v5-c-toggle-group__text"
+            >
+              Unified
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        aria-label="diff-table"
+        id="diff-table"
+        role="table"
+      >
+        <table
+          class="diff diff-split"
+        >
+          <colgroup>
+            <col
+              class="diff-gutter-col"
+            />
+            <col />
+            <col
+              class="diff-gutter-col"
+            />
+            <col />
+          </colgroup>
+          <tbody
+            class="diff-hunk"
+          >
+            <tr
+              class="diff-line diff-line-compare"
+            >
+              <td
+                class="diff-gutter diff-gutter-delete"
+              >
+                1
+              </td>
+              <td
+                class="diff-code diff-code-delete"
+              >
+                &lt;h1&gt;Hello..&lt;/h1&gt;
+              </td>
+              <td
+                class="diff-gutter diff-gutter-insert"
+              >
+                1
+              </td>
+              <td
+                class="diff-code diff-code-insert"
+              >
+                &lt;h1&gt;Hello World..&lt;/h1&gt;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <table
+      class="table-changes table table-bordered table-hover"
     >
-      This is just test audit record
-    </p>
+      <tbody>
+        <tr>
+          <td
+            class="col-6 col-md-4"
+          >
+            <div>
+              Name
+            </div>
+          </td>
+          <td
+            class="col-6 col-md-4 show-old"
+          >
+            <div
+              class="show-old"
+            >
+              <p>
+                temp1
+              </p>
+            </div>
+          </td>
+          <td
+            class="col-6 col-md-4 show-new"
+          >
+            <div
+              class="show-new"
+            >
+              <p>
+                temp2
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="details-row comment-section"
+    >
+      <p
+        class="comment-title"
+      >
+        <strong>
+          Comments
+        </strong>
+      </p>
+      <p
+        class="comment-desc"
+      >
+        This is just test audit record
+      </p>
+    </div>
   </div>
 </div>
 `;

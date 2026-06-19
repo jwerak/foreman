@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { initMockStore } from './testInitialReduxStore';
 import { rtlHelpers } from './rtlTestHelpers';
 
@@ -51,15 +51,16 @@ export const classFunctionUnitTest = (obj, func, objThis, args) =>
   obj.prototype[func].apply(objThis, args);
 
 /**
- * Shallow render a component multipile times with fixtures
- * @param  {ReactComponent} Component Component to shallow-render
+ * Render a component multiple times with fixtures using RTL
+ * @param  {ReactComponent} Component Component to render
  * @param  {Object}         fixtures  key=fixture description, value=props to apply
- * @return {Object}                   key=fixture description, value=shallow-rendered component
+ * @return {Array}                    key=fixture description, value={ Component, props } for deferred rendering
  */
 export const shallowRenderComponentWithFixtures = (Component, fixtures) =>
   Object.entries(fixtures).map(([description, props]) => ({
     description,
-    component: shallow(<Component {...props} />),
+    Component,
+    props,
   }));
 
 /**
@@ -68,11 +69,11 @@ export const shallowRenderComponentWithFixtures = (Component, fixtures) =>
  * @param  {Object}         fixtures  key=fixture description, value=props to apply
  */
 export const testComponentSnapshotsWithFixtures = (Component, fixtures) =>
-  shallowRenderComponentWithFixtures(
-    Component,
-    fixtures
-  ).forEach(({ description, component }) =>
-    it(description, () => expect(component).toMatchSnapshot())
+  Object.entries(fixtures).forEach(([description, props]) =>
+    it(description, () => {
+      const { container } = render(<Component {...props} />);
+      expect(container).toMatchSnapshot();
+    })
   );
 
 const resolveDispatch = async (action, depth) => {

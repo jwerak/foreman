@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-
-import { testComponentSnapshotsWithFixtures } from '../../../common/testHelpers';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import {
   passwordStrengthDataWithVerify,
@@ -22,58 +21,100 @@ const createProps = (props = {}) => ({
   ...props,
 });
 
-const fixtures = {
-  'renders password-strength': createProps(),
-  'renders password-strength with password-confirmation': createProps({
-    data: { ...passwordStrengthDataWithVerify },
-  }),
-  'renders password-strength with unmatched password-confirmation': createProps(
-    {
-      doesPasswordsMatch: false,
-      data: { ...passwordStrengthDataWithVerify },
-    }
-  ),
-  'renders password-strength with user-input-ids': createProps({
-    data: { ...passwordStrengthDataWithInputIds },
-  }),
-};
-
 describe('PasswordStrength component', () => {
   jest
     .spyOn(document, 'getElementById')
     .mockImplementation(id => ({ value: id }));
 
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(PasswordStrength, fixtures));
+  describe('rendering', () => {
+    it('renders password-strength', () => {
+      const props = createProps();
+      const { container } = render(<PasswordStrength {...props} />);
+
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(
+        container.querySelector(`input#${props.data.id}`)
+      ).toBeInTheDocument();
+      expect(screen.getByText('some-password-error')).toBeInTheDocument();
+      expect(
+        screen.queryByText('Verify')
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders password-strength with password-confirmation', () => {
+      const props = createProps({
+        data: { ...passwordStrengthDataWithVerify },
+      });
+      const { container } = render(<PasswordStrength {...props} />);
+
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(screen.getByText('Verify')).toBeInTheDocument();
+      expect(
+        container.querySelector('input#password_confirmation')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('some-password-confirmation-error')
+      ).toBeInTheDocument();
+    });
+
+    it('renders password-strength with unmatched password-confirmation', () => {
+      const props = createProps({
+        doesPasswordsMatch: false,
+        data: { ...passwordStrengthDataWithVerify },
+      });
+      render(<PasswordStrength {...props} />);
+
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(screen.getByText('Verify')).toBeInTheDocument();
+      expect(
+        screen.getByText('Passwords do not match')
+      ).toBeInTheDocument();
+    });
+
+    it('renders password-strength with user-input-ids', () => {
+      const props = createProps({
+        data: { ...passwordStrengthDataWithInputIds },
+      });
+      const { container } = render(<PasswordStrength {...props} />);
+
+      expect(screen.getByText('Password')).toBeInTheDocument();
+      expect(
+        container.querySelector(`input#${props.data.id}`)
+      ).toBeInTheDocument();
+      expect(document.getElementById).toHaveBeenCalledWith('input1');
+      expect(document.getElementById).toHaveBeenCalledWith('input2');
+    });
+  });
 
   describe('triggering', () => {
-    const setInputValue = (input, value) => {
-      input.instance().value = value; // eslint-disable-line no-param-reassign
-      input.simulate('change', { target: { value } });
-    };
-
     it('should trigger updatePassword', () => {
       const props = createProps();
-      const component = mount(<PasswordStrength {...props} />);
+      const { container } = render(<PasswordStrength {...props} />);
 
-      const passwordInput = component.find(`input#${props.data.id}`);
-      setInputValue(passwordInput, 'some-value');
+      const passwordInput = container.querySelector(
+        `input#${props.data.id}`
+      );
+      fireEvent.change(passwordInput, { target: { value: 'some-value' } });
 
-      expect(props.updatePassword.mock.calls).toMatchSnapshot();
+      expect(props.updatePassword).toHaveBeenCalledWith('some-value');
     });
 
     it('should trigger updatePasswordConfirmation', () => {
       const props = createProps({
         data: { ...passwordStrengthDataWithVerify },
       });
-      const component = mount(<PasswordStrength {...props} />);
+      const { container } = render(<PasswordStrength {...props} />);
 
-      const passwordConfirmationInput = component.find(
+      const passwordConfirmationInput = container.querySelector(
         'input#password_confirmation'
       );
-      setInputValue(passwordConfirmationInput, 'some-value');
+      fireEvent.change(passwordConfirmationInput, {
+        target: { value: 'some-value' },
+      });
 
-      expect(props.updatePasswordConfirmation.mock.calls).toMatchSnapshot();
+      expect(props.updatePasswordConfirmation).toHaveBeenCalledWith(
+        'some-value'
+      );
     });
   });
 });

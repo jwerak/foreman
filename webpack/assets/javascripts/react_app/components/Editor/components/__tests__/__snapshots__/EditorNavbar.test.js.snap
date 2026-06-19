@@ -1,101 +1,212 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
-<div
-  className="navbar navbar-form navbar-full-width navbar-editor"
->
-  <ul
-    className="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary"
+exports[`EditorNavbar renders EditorNavbar 1`] = `
+<div>
+  <div
+    class="navbar navbar-form navbar-full-width navbar-editor"
   >
-    <EditorRadioButton
-      btnView="input"
-      disabled={false}
-      icon={null}
-      onClick={[Function]}
-      stateView="input"
-      title="Editor"
-    />
-    <EditorRadioButton
-      btnView="diff"
-      disabled={false}
-      icon={null}
-      onClick={[Function]}
-      stateView="input"
-      title="Changes"
-    />
-    <EditorRadioButton
-      btnView="preview"
-      disabled={false}
-      icon={null}
-      onClick={[Function]}
-      stateView="input"
-      title="Preview"
-    />
-    <EditorSafemodeCheckbox
-      checked={true}
-      disabled={true}
-      handleSafeModeChange={[Function]}
-      show={false}
-    />
-  </ul>
-  <EditorOptions
-    autocompletion={true}
-    changeDiffViewType={[Function]}
-    changeSetting={[Function]}
-    changeTab={[Function]}
-    diffViewType="split"
-    hosts={
-      Array [
-        Object {
-          "id": "1",
-          "name": "host1",
-        },
-        Object {
-          "id": "2",
-          "name": "host2",
-        },
-      ]
-    }
-    importFile={[Function]}
-    isDiff={true}
-    isRendering={false}
-    keyBinding="Default"
-    keyBindings={
-      Array [
-        "Default",
-        "Emacs",
-        "Vim",
-      ]
-    }
-    liveAutocompletion={false}
-    mode="Ruby"
-    modes={
-      Array [
-        "Text",
-        "Json",
-        "Ruby",
-        "Html_ruby",
-        "Sh",
-        "Xml",
-        "Yaml",
-      ]
-    }
-    renderPath="/render/path"
-    revertChanges={[Function]}
-    selectedView="input"
-    showHostSelector={true}
-    showImport={true}
-    showPreview={true}
-    template="<? />"
-    theme="Monokai"
-    themes={
-      Array [
-        "Github",
-        "Monokai",
-      ]
-    }
-    toggleModal={[Function]}
-    value="value"
-  />
+    <ul
+      class="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary"
+    >
+      <li
+        class="active"
+        id="input-navitem"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link pf-m-inline"
+          data-ouia-component-id="OUIA-Generated-Button-link-1"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          type="button"
+        >
+          Editor
+        </button>
+      </li>
+      <li
+        class=""
+        id="diff-navitem"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link pf-m-inline"
+          data-ouia-component-id="OUIA-Generated-Button-link-2"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          type="button"
+        >
+          Changes
+        </button>
+      </li>
+      <li
+        class=""
+        id="preview-navitem"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link pf-m-inline"
+          data-ouia-component-id="OUIA-Generated-Button-link-3"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          type="button"
+        >
+          Preview
+        </button>
+      </li>
+    </ul>
+    <div
+      id="editor-dropdowns"
+    >
+      <h4
+        id="divider"
+      >
+        |
+      </h4>
+      <div
+        style="display: contents;"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link editor-button"
+          data-ouia-component-id="OUIA-Generated-Button-link-4"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          id="undo-btn"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-icon pf-m-md"
+          >
+            <span
+              class="pf-v5-c-icon__content"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                />
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div
+        style="display: contents;"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link import-button"
+          data-ouia-component-id="OUIA-Generated-Button-link-5"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          id="import-btn"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-icon pf-m-md"
+          >
+            <span
+              class="pf-v5-c-icon__content"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+                />
+              </svg>
+            </span>
+          </span>
+          <input
+            class="hidden"
+            type="file"
+          />
+        </button>
+      </div>
+      <div
+        style="display: contents;"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link editor-button"
+          data-ouia-component-id="OUIA-Generated-Button-link-6"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          id="cog-btn"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-icon pf-m-md"
+          >
+            <span
+              class="pf-v5-c-icon__content"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                />
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
+      <div
+        style="display: contents;"
+      >
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-link editor-button"
+          data-ouia-component-id="OUIA-Generated-Button-link-7"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          id="fullscreen-btn"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-icon pf-m-md"
+          >
+            <span
+              class="pf-v5-c-icon__content"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M352.201 425.775l-79.196 79.196c-9.373 9.373-24.568 9.373-33.941 0l-79.196-79.196c-15.119-15.119-4.411-40.971 16.971-40.97h51.162L228 284H127.196v51.162c0 21.382-25.851 32.09-40.971 16.971L7.029 272.937c-9.373-9.373-9.373-24.569 0-33.941L86.225 159.8c15.119-15.119 40.971-4.411 40.971 16.971V228H228V127.196h-51.23c-21.382 0-32.09-25.851-16.971-40.971l79.196-79.196c9.373-9.373 24.568-9.373 33.941 0l79.196 79.196c15.119 15.119 4.411 40.971-16.971 40.971h-51.162V228h100.804v-51.162c0-21.382 25.851-32.09 40.97-16.971l79.196 79.196c9.373 9.373 9.373 24.569 0 33.941L425.773 352.2c-15.119 15.119-40.971 4.411-40.97-16.971V284H284v100.804h51.23c21.382 0 32.09 25.851 16.971 40.971z"
+                />
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 `;

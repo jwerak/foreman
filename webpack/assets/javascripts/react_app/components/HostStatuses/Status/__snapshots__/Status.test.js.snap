@@ -1,167 +1,218 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Status renders Status 1`] = `
-<GridItem
-  sm={12}
-  xl2={6}
->
-  <Card
-    className="pf-v5-c-alert pf-m-danger"
-    isExpanded={false}
-    ouiaId="status-card"
+<div>
+  <div
+    class="pf-v5-l-grid__item pf-m-12-col-on-sm pf-m-6-col-on-2xl"
   >
-    <CardHeader
-      onExpand={[Function]}
-      toggleButtonProps={
-        Object {
-          "aria-expanded": false,
-          "aria-label": "Details",
-          "aria-labelledby": "titleId toggle-button",
-          "id": "toggle-button",
-        }
-      }
+    <div
+      class="pf-v5-c-card pf-v5-c-alert pf-m-danger"
+      data-ouia-component-id="status-card"
+      data-ouia-component-type="PF5/Card"
+      data-ouia-safe="true"
+      id=""
     >
-      <Grid
-        className="w-100"
-        hasGutter={true}
+      <div
+        class="pf-v5-c-card__header"
       >
-        <GridItem
-          rowSpan={2}
-          span={1}
-          style={
-            Object {
-              "fontSize": "2.2em",
-            }
-          }
+        <div
+          class="pf-v5-c-card__header-toggle"
         >
-          <GlobalStatusIcon
-            status={2}
-          />
-        </GridItem>
-        <GridItem
-          span={5}
-          style={
-            Object {
-              "fontSize": "1.5em",
-            }
-          }
-        >
-          Status Name
-        </GridItem>
-        <GridItem
-          className="status-count text-center"
-          rowSpan={2}
-          span={2}
+          <button
+            aria-disabled="false"
+            aria-expanded="false"
+            aria-label="Details"
+            aria-labelledby="titleId toggle-button"
+            class="pf-v5-c-button pf-m-plain"
+            data-ouia-component-id="OUIA-Generated-Button-plain-1"
+            data-ouia-component-type="PF5/Button"
+            data-ouia-safe="true"
+            id="toggle-button"
+            type="button"
+          >
+            <span
+              class="pf-v5-c-card__header-toggle-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 256 512"
+                width="1em"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div
+          class="pf-v5-c-card__header-main"
         >
           <div
-            style={
-              Object {
-                "fontSize": "1.5em",
-              }
-            }
+            class="pf-v5-l-grid pf-m-gutter w-100"
           >
-            <GlobalStatusIcon
-              status={0}
-            />
+            <div
+              class="pf-v5-l-grid__item pf-m-1-col pf-m-2-row"
+              style="font-size: 2.2em;"
+            >
+              <span
+                class="pf-v5-c-icon"
+              >
+                <span
+                  class="pf-v5-c-icon__content"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="pf-v5-svg"
+                    fill="currentColor"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                  >
+                    <path
+                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-5-col"
+              style="font-size: 1.5em;"
+            >
+              Status Name
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+            >
+              <div
+                style="font-size: 1.5em;"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+              <a
+                href="/hosts?search=status+%3D+ok"
+              >
+                Total: 3
+              </a>
+              <a
+                href="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+warn"
+              >
+                Owned: 1
+              </a>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+            >
+              <div
+                style="font-size: 1.5em;"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 576 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+              <a
+                href="/hosts?search=status+%3D+warn"
+              >
+                Total: 7
+              </a>
+              <a
+                href="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+error"
+              >
+                Owned: 2
+              </a>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+            >
+              <div
+                style="font-size: 1.5em;"
+              >
+                <span
+                  class="pf-v5-c-icon"
+                >
+                  <span
+                    class="pf-v5-c-icon__content"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+              <a
+                href="/hosts?search=status+%3D+error"
+              >
+                Total: 5
+              </a>
+              <a
+                href="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+ok"
+              >
+                Owned: 0
+              </a>
+            </div>
+            <div
+              class="pf-v5-l-grid__item pf-m-5-col"
+            >
+              Description of the status
+            </div>
           </div>
-          <LinkOrLabel
-            label="Total: 3"
-            path="/hosts?search=status+%3D+ok"
-          />
-          <LinkOrLabel
-            label="Owned: 1"
-            path="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+warn"
-          />
-        </GridItem>
-        <GridItem
-          className="status-count text-center"
-          rowSpan={2}
-          span={2}
-        >
-          <div
-            style={
-              Object {
-                "fontSize": "1.5em",
-              }
-            }
-          >
-            <GlobalStatusIcon
-              status={1}
-            />
-          </div>
-          <LinkOrLabel
-            label="Total: 7"
-            path="/hosts?search=status+%3D+warn"
-          />
-          <LinkOrLabel
-            label="Owned: 2"
-            path="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+error"
-          />
-        </GridItem>
-        <GridItem
-          className="status-count text-center"
-          rowSpan={2}
-          span={2}
-        >
-          <div
-            style={
-              Object {
-                "fontSize": "1.5em",
-              }
-            }
-          >
-            <GlobalStatusIcon
-              status={2}
-            />
-          </div>
-          <LinkOrLabel
-            label="Total: 5"
-            path="/hosts?search=status+%3D+error"
-          />
-          <LinkOrLabel
-            label="Owned: 0"
-            path="/hosts?search=owner+%3D+current_user+AND+%28status+%3D+ok"
-          />
-        </GridItem>
-        <GridItem
-          span={5}
-        >
-          Description of the status
-        </GridItem>
-      </Grid>
-    </CardHeader>
-    <CardExpandableContent>
-      <Details
-        data={
-          Array [
-            Object {
-              "global_status": 0,
-              "label": "OK",
-              "owned": 1,
-              "owned_path": "/hosts?search=owner+%3D+current_user+AND+%28status+%3D+ok",
-              "total": 3,
-              "total_path": "/hosts?search=status+%3D+ok",
-            },
-            Object {
-              "global_status": 1,
-              "label": "Warning",
-              "owned": 2,
-              "owned_path": "/hosts?search=owner+%3D+current_user+AND+%28status+%3D+warn",
-              "total": 7,
-              "total_path": "/hosts?search=status+%3D+warn",
-            },
-            Object {
-              "global_status": 2,
-              "label": "Error",
-              "owned": 0,
-              "owned_path": "/hosts?search=owner+%3D+current_user+AND+%28status+%3D+error",
-              "total": 5,
-              "total_path": "/hosts?search=status+%3D+error",
-            },
-          ]
-        }
-      />
-    </CardExpandableContent>
-  </Card>
-</GridItem>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

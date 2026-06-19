@@ -1,58 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExternalLogout rendering renders ExternalLogout 1`] = `
-<div
-  className="external-logout"
-  style={
-    Object {
-      "backgroundImage": "url(/some-background)",
-    }
-  }
->
-  <Grid>
-    <GridItem
-      md={6}
-      mdOffset={3}
-      sm={8}
-      smOffset={2}
-      span={12}
+<div>
+  <div
+    class="external-logout"
+    style="background-image: url(/some-background);"
+  >
+    <div
+      class="pf-v5-l-grid"
     >
-      <header
-        className="login-pf-page-header"
+      <div
+        class="pf-v5-l-grid__item pf-m-12-col pf-m-8-col-on-sm pf-m-offset-2-col-on-sm pf-m-6-col-on-md pf-m-offset-3-col-on-md"
       >
-        <img
-          alt="logo"
-          className="brand"
-          src="/some-logo"
-        />
-        <div
-          className="login-pf-caption"
+        <header
+          class="login-pf-page-header"
         >
-          <h1
-            id="title"
+          <img
+            alt="logo"
+            class="brand"
+            src="/some-logo"
+          />
+          <div
+            class="login-pf-caption"
           >
-            Welcome
-          </h1>
-          <p
-            id="login_text"
-          >
-            some caption
-          </p>
-        </div>
-      </header>
-      <Button
-        className="login-pf-submit-button"
-        component="a"
-        href="some link"
-        isBlock={true}
-        ouiaId="login-pf-submit-button"
-        size="lg"
-        type="submit"
-        variant="primary"
-      >
-        Click to log in again
-      </Button>
-    </GridItem>
-  </Grid>
+            <h1
+              id="title"
+            >
+              Welcome
+            </h1>
+            <p
+              id="login_text"
+            >
+              some caption
+            </p>
+          </div>
+        </header>
+        <a
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-primary pf-m-block pf-m-display-lg login-pf-submit-button"
+          data-ouia-component-id="login-pf-submit-button"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          href="some link"
+        >
+          Click to log in again
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 `;

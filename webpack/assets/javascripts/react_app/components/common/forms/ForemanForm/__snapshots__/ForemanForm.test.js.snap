@@ -23,123 +23,80 @@ exports[`Foreman form helper functions should recognize invalid initial values 1
 exports[`Foreman form helper functions should recognize valid initial values 1`] = `true`;
 
 exports[`ForemanForm render foreman form with fields 1`] = `
-<ForemanForm
-  enableReinitialize={false}
-  initialValues={
-    Object {
-      "name": "Charles",
-      "surname": "Lindbergh",
-    }
-  }
-  onCancel={[Function]}
-  onSubmit={[Function]}
-  validationSchema={
-    ObjectSchema {
-      "_blacklist": RefSet {
-        "list": Array [],
-        "refs": Array [],
-      },
-      "_conditions": Array [],
-      "_defaultDefault": [Function],
-      "_deps": Array [],
-      "_excludedEdges": Array [],
-      "_exclusive": Object {},
-      "_mutate": undefined,
-      "_nodes": Array [
-        "surname",
-        "name",
-      ],
-      "_options": Object {
-        "abortEarly": true,
-        "recursive": true,
-      },
-      "_type": "object",
-      "_typeError": [Function],
-      "_whitelist": RefSet {
-        "list": Array [],
-        "refs": Array [],
-      },
-      "fields": Object {
-        "name": StringSchema {
-          "_blacklist": RefSet {
-            "list": Array [],
-            "refs": Array [],
-          },
-          "_conditions": Array [],
-          "_deps": Array [],
-          "_exclusive": Object {
-            "required": true,
-          },
-          "_mutate": undefined,
-          "_options": Object {
-            "abortEarly": true,
-            "recursive": true,
-          },
-          "_type": "string",
-          "_typeError": [Function],
-          "_whitelist": RefSet {
-            "list": Array [],
-            "refs": Array [],
-          },
-          "tests": Array [
-            [Function],
-          ],
-          "transforms": Array [
-            [Function],
-          ],
-          "type": "string",
-        },
-        "surname": StringSchema {
-          "_blacklist": RefSet {
-            "list": Array [],
-            "refs": Array [],
-          },
-          "_conditions": Array [],
-          "_deps": Array [],
-          "_exclusive": Object {
-            "min": true,
-          },
-          "_mutate": undefined,
-          "_options": Object {
-            "abortEarly": true,
-            "recursive": true,
-          },
-          "_type": "string",
-          "_typeError": [Function],
-          "_whitelist": RefSet {
-            "list": Array [],
-            "refs": Array [],
-          },
-          "tests": Array [
-            [Function],
-          ],
-          "transforms": Array [
-            [Function],
-          ],
-          "type": "string",
-        },
-      },
-      "tests": Array [],
-      "transforms": Array [
-        [Function],
-      ],
-      "type": "object",
-    }
-  }
->
-  <TextField
-    className=""
-    label="name"
-    name="name"
-    required="true"
-    type="text"
-  />
-  <TextField
-    className=""
-    label="surname"
-    name="surname"
-    required={false}
-    type="text"
-  />
-</ForemanForm>
+<div>
+  <form
+    class="form-horizontal well"
+  >
+    <div
+      class="form-group  "
+    >
+      <label
+        class="col-md-2 control-label"
+      >
+        name
+         *
+      </label>
+      <div
+        class="col-md-4"
+      >
+        <input
+          class="form-control"
+          name="name"
+          type="text"
+          value="Charles"
+        />
+      </div>
+    </div>
+    <div
+      class="form-group  "
+    >
+      <label
+        class="col-md-2 control-label"
+      >
+        surname
+      </label>
+      <div
+        class="col-md-4"
+      >
+        <input
+          class="form-control"
+          name="surname"
+          type="text"
+          value="Lindbergh"
+        />
+      </div>
+    </div>
+    <div
+      class="clearfix"
+    >
+      <div
+        class="form-actions"
+      >
+        <button
+          aria-disabled="true"
+          class="pf-v5-c-button pf-m-primary pf-m-disabled"
+          data-ouia-component-id="OUIA-Generated-Button-primary-1"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          disabled=""
+          type="submit"
+        >
+           
+          Submit
+        </button>
+         
+        <button
+          aria-disabled="false"
+          class="pf-v5-c-button pf-m-secondary"
+          data-ouia-component-id="OUIA-Generated-Button-secondary-1"
+          data-ouia-component-type="PF5/Button"
+          data-ouia-safe="true"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
 `;

@@ -1,51 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TextFieldInner render 1`] = `
-<CommonForm
-  className=""
-  inputClassName="col-md-4"
-  label=""
-  required={false}
-  tooltipHelp={null}
-  touched={false}
->
-  <input
-    className="form-control"
-    type="text"
-  />
-</CommonForm>
+<div>
+  <div
+    class="form-group  "
+  >
+    <label
+      class="col-md-2 control-label"
+    >
+      
+    </label>
+    <div
+      class="col-md-4"
+    >
+      <input
+        class="form-control"
+        type="text"
+      />
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TextFieldInner render textarea 1`] = `
-<CommonForm
-  className=""
-  inputClassName="col-md-4"
-  label=""
-  required={false}
-  tooltipHelp={null}
-  touched={false}
->
-  <textarea
-    className="form-control"
-    some="input"
-  />
-</CommonForm>
+<div>
+  <div
+    class="form-group  "
+  >
+    <label
+      class="col-md-2 control-label"
+    >
+      
+    </label>
+    <div
+      class="col-md-4"
+    >
+      <textarea
+        class="form-control"
+        some="input"
+      />
+    </div>
+  </div>
+</div>
 `;
 
 exports[`TextFieldInner render with item some props 1`] = `
-<CommonForm
-  className="some-class-name"
-  error="some-error"
-  inputClassName="some-input-class"
-  label="some-label"
-  required={true}
-  tooltipHelp={null}
-  touched={true}
->
-  <input
-    className="form-control"
-    some="input"
-    type="password"
-  />
-</CommonForm>
+<div>
+  <div
+    class="form-group some-class-name has-error"
+  >
+    <label
+      class="col-md-2 control-label"
+    >
+      some-label
+       *
+    </label>
+    <div
+      class="some-input-class"
+    >
+      <input
+        class="form-control"
+        some="input"
+        type="password"
+      />
+    </div>
+    <span
+      class="help-block help-inline"
+    >
+      <span
+        class="error-message"
+      >
+        some-error
+      </span>
+    </span>
+  </div>
+</div>
 `;

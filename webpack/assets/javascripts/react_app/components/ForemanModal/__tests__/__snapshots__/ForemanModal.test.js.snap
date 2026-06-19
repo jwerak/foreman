@@ -1,268 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ForemanModal rendering renders default header child when title prop is present 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "defaultHeaderChild",
-      "isOpen": true,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "Test modal",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Test modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    footer={
-      <ForemanModalFooter>
-        this is the footer
-      </ForemanModalFooter>
-    }
-    hasNoBodyWrapper={false}
-    header={<ForemanModalHeader />}
-    id="defaultHeaderChild"
-    isOpen={true}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  >
-    <div
-      key=".0"
-    >
-      This is the body
-    </div>
-  </Modal>
-</ContextProvider>
+<div
+  aria-hidden="true"
+/>
 `;
 
 exports[`ForemanModal rendering renders the supplied header child when title prop is not present 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "customHeaderChild",
-      "isOpen": true,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Foreman modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    footer={
-      <ForemanModalFooter>
-        this is the footer
-      </ForemanModalFooter>
-    }
-    hasNoBodyWrapper={false}
-    header={
-      <ForemanModalHeader>
-        this is the header
-      </ForemanModalHeader>
-    }
-    id="customHeaderChild"
-    isOpen={true}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  >
-    <div
-      key=".1"
-    >
-      This is the body
-    </div>
-  </Modal>
-</ContextProvider>
+<div
+  aria-hidden="true"
+/>
 `;
 
 exports[`ForemanModal rendering renders when header and footer are supplied 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "withSuppliedChildren",
-      "isOpen": true,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "Test modal",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Test modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    footer={
-      <ForemanModalFooter>
-        this is the footer
-      </ForemanModalFooter>
-    }
-    hasNoBodyWrapper={false}
-    header={
-      <ForemanModalHeader>
-        this is the header
-      </ForemanModalHeader>
-    }
-    id="withSuppliedChildren"
-    isOpen={true}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  >
-    <div
-      key=".1"
-    >
-      This is the body
-    </div>
-  </Modal>
-</ContextProvider>
+<div
+  aria-hidden="true"
+/>
 `;
 
 exports[`ForemanModal rendering renders without header when neither <ForemanModal.Header> nor title prop are present 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "noHeader",
-      "isOpen": true,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Foreman modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    footer={
-      <ForemanModalFooter>
-        this is the footer
-      </ForemanModalFooter>
-    }
-    hasNoBodyWrapper={false}
-    id="noHeader"
-    isOpen={true}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  >
-    <div
-      key=".0"
-    >
-      This is the body
-    </div>
-  </Modal>
-</ContextProvider>
+<div
+  aria-hidden="true"
+/>
 `;
 
 exports[`ForemanModal rendering should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "render",
-      "isOpen": true,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "Test modal",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Test modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    hasNoBodyWrapper={false}
-    header={<ForemanModalHeader />}
-    id="render"
-    isOpen={true}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  />
-</ContextProvider>
+<div
+  aria-hidden="true"
+/>
 `;
 
-exports[`ForemanModal rendering should render closed 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "id": "closed",
-      "isOpen": false,
-      "isSubmitting": false,
-      "onClose": [MockFunction],
-      "submitProps": Object {},
-      "title": "Test modal",
-    }
-  }
->
-  <Modal
-    actions={Array []}
-    appendTo={[Function]}
-    aria-describedby=""
-    aria-label="Test modal"
-    aria-labelledby=""
-    className="foreman-modal"
-    hasNoBodyWrapper={false}
-    header={<ForemanModalHeader />}
-    id="closed"
-    isOpen={false}
-    onClose={[MockFunction]}
-    ouiaSafe={true}
-    position="default"
-    showClose={true}
-    title=""
-    titleIconVariant={null}
-    titleLabel=""
-    variant="default"
-  />
-</ContextProvider>
-`;
+exports[`ForemanModal rendering should render closed 1`] = `<div />`;

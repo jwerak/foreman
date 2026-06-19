@@ -1,32 +1,31 @@
-import 'select2';
-import { mount } from 'enzyme';
 import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import $ from 'jquery';
 
 import Select from './Select';
 
-jest.unmock('jquery');
+// Mock select2 plugin on jQuery prototype
+$.fn.select2 = jest.fn();
 
 describe('Select', () => {
-  beforeEach(() => {
-    document.body.innerHTML = '<div>\n  <span id="select" />\n</div>';
-  });
   it('onChange called exactly once even after update', () => {
     const options = { one: '1', two: '2' };
     const onChangeMock = jest.fn();
-    const wrapper = mount(
-      <Select options={options} onChange={onChangeMock} />,
-      { attachTo: document.getElementById('select') }
+    const { container, rerender } = render(
+      <Select options={options} onChange={onChangeMock} />
     );
 
-    wrapper.find('select').simulate('change', { target: { value: 'val' } });
+    const selectElement = container.querySelector('select');
+    fireEvent.change(selectElement, { target: { value: 'val' } });
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
 
     options.three = '3';
-    wrapper.setProps(Object.assign({}, wrapper.props(), { options }));
+    rerender(<Select options={options} onChange={onChangeMock} />);
 
     onChangeMock.mockClear();
-    wrapper.find('select').simulate('change', { target: { value: 'val' } });
+    fireEvent.change(selectElement, { target: { value: 'val' } });
     expect(onChangeMock).toHaveBeenCalledTimes(1);
   });
 });

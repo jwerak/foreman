@@ -1,5 +1,7 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+
 import ConfigReports from './ConfigReports';
 
 const mockData = {
@@ -10,8 +12,12 @@ const mockData = {
 
 describe('ComponentWrapper', () => {
   it('should render config reports', () => {
-    const wrapper = shallow(<ConfigReports data={mockData} />);
+    const { container } = render(<ConfigReports data={mockData} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('Report Metrics')).toBeInTheDocument();
+    expect(screen.getByText('Report Status')).toBeInTheDocument();
+    expect(screen.getByText('config_retrieval')).toBeInTheDocument();
+    expect(screen.getByText('Total')).toBeInTheDocument();
+    expect(container.querySelector('table')).toBeInTheDocument();
   });
 });

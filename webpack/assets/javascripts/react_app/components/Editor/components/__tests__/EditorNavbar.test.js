@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { testComponentSnapshotsWithFixtures } from '../../../../common/testHelpers';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import EditorNavbar from '../EditorNavbar';
 import { editorOptions, showBooleans } from '../../Editor.fixtures';
@@ -15,80 +14,53 @@ const props = {
   isDiff: true,
 };
 
-const fixtures = {
-  'renders EditorNavbar': props,
-};
-
 describe('EditorNavbar', () => {
-  describe('rendring', () =>
-    testComponentSnapshotsWithFixtures(EditorNavbar, fixtures));
+  it('renders EditorNavbar', () => {
+    const { container } = render(<EditorNavbar {...props} />);
+    expect(container).toMatchSnapshot();
+  });
 
   describe('simulate onClick', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-    afterEach(() => {
-      jest.useRealTimers();
-    });
-
     it('should call changeTab on tab clicks', () => {
       const changeTab = jest.fn();
+      const toggleRenderView = jest.fn();
 
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <EditorNavbar
-            {...props}
-            changeTab={changeTab}
-            isDiff
-            isRendering
-            selectedView="preview"
-          />
-        );
-        jest.runAllTimers();
-      });
+      const { rerender } = render(
+        <EditorNavbar
+          {...props}
+          changeTab={changeTab}
+          toggleRenderView={toggleRenderView}
+          isDiff
+          isRendering
+          selectedView="preview"
+        />
+      );
 
-      act(() => {
-        wrapper
-          .find('#input-navitem')
-          .first()
-          .find('button')
-          .first()
-          .simulate('click');
-        jest.runAllTimers();
-      });
+      // Click "Editor" tab - selectedView is "preview", so changeTab should fire
+      fireEvent.click(screen.getByText('Editor'));
 
-      act(() => {
-        wrapper
-          .find('#diff-navitem')
-          .first()
-          .find('button')
-          .first()
-          .simulate('click');
-        jest.runAllTimers();
-      });
+      // Click "Changes" tab - selectedView is still "preview" (prop-driven), so changeTab should fire
+      fireEvent.click(screen.getByText('Changes'));
 
-      act(() => {
-        wrapper.setProps({
-          ...props,
-          isRendering: false,
-          selectedView: 'input',
-        });
-        wrapper.update();
-        jest.runAllTimers();
-      });
+      // Re-render with updated props
+      rerender(
+        <EditorNavbar
+          {...props}
+          changeTab={changeTab}
+          toggleRenderView={toggleRenderView}
+          isDiff
+          isRendering={false}
+          selectedView="input"
+        />
+      );
 
-      act(() => {
-        wrapper
-          .find('#preview-navitem')
-          .first()
-          .find('button')
-          .first()
-          .simulate('click');
-        jest.runAllTimers();
-      });
+      // Click "Preview" tab - selectedView is now "input", so changeTab should fire
+      fireEvent.click(screen.getByText('Preview'));
 
-      expect(changeTab).toHaveBeenCalledTimes(2);
+      expect(changeTab).toHaveBeenCalledTimes(3);
+      expect(changeTab).toHaveBeenCalledWith('input');
+      expect(changeTab).toHaveBeenCalledWith('diff');
+      expect(changeTab).toHaveBeenCalledWith('preview');
     });
   });
 });

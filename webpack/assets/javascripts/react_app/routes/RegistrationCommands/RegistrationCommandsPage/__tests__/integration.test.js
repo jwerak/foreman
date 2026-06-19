@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
+import { fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import IntegrationTestHelper from '../../../../common/IntegrationTestHelper';
 import history from '../../../../history';
 import * as selectors from '../RegistrationCommandsPageSelectors';
@@ -34,44 +36,40 @@ describe('RegistrationCommandsPage integration', () => {
       thunk,
       APIMiddleware,
     ]);
-    const component = integrationTestHelper.mount(
+    const { container } = integrationTestHelper.mount(
       <Router history={history}>
         <RegistrationCommandsPage />
       </Router>
     );
     integrationTestHelper.takeStoreAndLastActionSnapshot('rendered');
 
-    const submitBtn = component.find('#generate_btn').at(0);
-    const commandField = component.find(
+    const submitBtn = container.querySelector('#generate_btn');
+    const commandField = container.querySelector(
       '.pf-v5-c-clipboard-copy__expandable-content pre'
     );
 
-    expect(submitBtn.hasClass('pf-m-disabled')).toBe(false);
-    expect(commandField.length).toBe(0);
+    expect(submitBtn).not.toHaveClass('pf-m-disabled');
+    expect(commandField).toBeNull();
 
     // check that only current Org and Loc are selectable
-    const organizationSelectOptions = component
-      .find('#reg_organization')
-      .find('FormSelectOption');
-    expect(organizationSelectOptions.length).toBe(2);
-    expect(
-      organizationSelectOptions.findWhere(n => n.prop('value') === 1).length
-    ).toBe(0);
-    expect(
-      organizationSelectOptions.findWhere(n => n.prop('value') === 3).length
-    ).toBe(2);
-    const locationSelectOptions = component
-      .find('#reg_location')
-      .find('FormSelectOption');
-    expect(locationSelectOptions.length).toBe(2);
-    expect(
-      locationSelectOptions.findWhere(n => n.prop('value') === 2).length
-    ).toBe(0);
-    expect(
-      locationSelectOptions.findWhere(n => n.prop('value') === 4).length
-    ).toBe(2);
+    const orgSelect = container.querySelector('#reg_organization');
+    const organizationOptions = orgSelect.querySelectorAll('option');
+    // Should have 2 options: "Not specified" + ACME (id=3)
+    expect(organizationOptions).toHaveLength(2);
+    // No option with value "1"
+    const orgValues = Array.from(organizationOptions).map(o => o.value);
+    expect(orgValues).not.toContain('1');
+    expect(orgValues).toContain('3');
 
-    submitBtn.simulate('click');
+    const locSelect = container.querySelector('#reg_location');
+    const locationOptions = locSelect.querySelectorAll('option');
+    // Should have 2 options: "Not specified" + munich (id=4)
+    expect(locationOptions).toHaveLength(2);
+    const locValues = Array.from(locationOptions).map(o => o.value);
+    expect(locValues).not.toContain('2');
+    expect(locValues).toContain('4');
+
+    fireEvent.click(submitBtn);
     integrationTestHelper.takeStoreAndLastActionSnapshot('generated command');
   });
 });

@@ -4,7 +4,7 @@ import { testComponentSnapshotsWithFixtures } from '../../../common/testHelpers'
 import NavItem from '../components/NavItem';
 
 const fixtures = {
-  'render NavItem': { children: [<li key="key">TEST</li>] },
+  'render NavItem': { children: [<span key="key">TEST</span>] },
 };
 
 describe('NavItem', () => {

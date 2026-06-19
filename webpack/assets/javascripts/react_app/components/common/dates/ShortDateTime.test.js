@@ -1,29 +1,24 @@
-/* eslint-disable promise/prefer-await-to-then */
-// Configure Enzyme
-import { mount } from 'enzyme';
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import ShortDateTime from './ShortDateTime';
 import { i18nProviderWrapperFactory } from '../../../common/i18nProviderWrapperFactory';
-import { intl } from '../../../common/I18n';
 
 describe('ShortDateTime', () => {
   const date = new Date('2017-10-13 00:54:55 -1100');
   const now = new Date('2017-10-28 00:00:00 -1100');
   const IntlDate = i18nProviderWrapperFactory(now, 'UTC')(ShortDateTime);
 
-  it('formats date', () => {
-    const wrapper = mount(
-      <IntlDate date={date} defaultValue="Default value" />
-    );
+  it('formats date', async () => {
+    render(<IntlDate date={date} defaultValue="Default value" />);
 
-    intl.ready.then(() => {
-      wrapper.update();
-      expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
+    await waitFor(() => {
+      expect(screen.getByText(/Oct 13/)).toBeInTheDocument();
     });
   });
 
-  it('formats date with relative tooltip', () => {
-    const wrapper = mount(
+  it('formats date with relative tooltip', async () => {
+    render(
       <IntlDate
         date={date}
         defaultValue="Default value"
@@ -31,31 +26,29 @@ describe('ShortDateTime', () => {
       />
     );
 
-    intl.ready.then(() => {
-      wrapper.update();
-      expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
+    await waitFor(() => {
+      expect(screen.getByText(/Oct 13/)).toBeInTheDocument();
+      expect(screen.getByText(/Oct 13/).closest('span[title]')).toHaveAttribute(
+        'title',
+        '15 days ago'
+      );
     });
   });
 
-  it('formats date with seconds', () => {
-    const wrapper = mount(
-      <IntlDate date={date} seconds defaultValue="Default value" />
-    );
+  it('formats date with seconds', async () => {
+    render(<IntlDate date={date} seconds defaultValue="Default value" />);
 
-    intl.ready.then(() => {
-      wrapper.update();
-      expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
+    await waitFor(() => {
+      expect(screen.getByText(/Oct 13/)).toBeInTheDocument();
+      expect(screen.getByText(/11:54:55/)).toBeInTheDocument();
     });
   });
 
-  it('renders default value', () => {
-    const wrapper = mount(
-      <IntlDate date={null} defaultValue="Default value" />
-    );
+  it('renders default value', async () => {
+    render(<IntlDate date={null} defaultValue="Default value" />);
 
-    intl.ready.then(() => {
-      wrapper.update();
-      expect(wrapper.find('ShortDateTime')).toMatchSnapshot();
+    await waitFor(() => {
+      expect(screen.getByText('Default value')).toBeInTheDocument();
     });
   });
 });

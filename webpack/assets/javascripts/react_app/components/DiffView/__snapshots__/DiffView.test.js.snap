@@ -2,89 +2,159 @@
 
 exports[`DiffView rendering render DiffView w/Patch 1`] = `
 <div>
-  <Memo(Diff)
-    diffType="modify"
-    hunks={
-      Array [
-        Object {
-          "changes": Array [
-            Object {
-              "content": "S",
-              "isDelete": true,
-              "lineNumber": 1,
-              "type": "delete",
-            },
-            Object {
-              "content": "Kernel 
- on an m",
-              "isDelete": true,
-              "lineNumber": 2,
-              "type": "delete",
-            },
-            Object {
-              "content": "",
-              "isDelete": true,
-              "lineNumber": 3,
-              "type": "delete",
-            },
-            Object {
-              "content": "fooo",
-              "isInsert": true,
-              "lineNumber": 1,
-              "type": "insert",
-            },
-            Object {
-              "content": "No newline at end of file",
-              "isNormal": true,
-              "newLineNumber": 2,
-              "oldLineNumber": 4,
-              "type": "normal",
-            },
-          ],
-          "content": "@@ -1,3 +1 @@",
-          "isPlain": false,
-          "newLines": 1,
-          "newStart": 1,
-          "oldLines": 3,
-          "oldStart": 1,
-        },
-      ]
-    }
-    key="1111111-2222222"
-    viewType="unified"
-  />
+  <div>
+    <table
+      class="diff diff-unified"
+    >
+      <colgroup>
+        <col
+          class="diff-gutter-col"
+        />
+        <col
+          class="diff-gutter-col"
+        />
+        <col />
+      </colgroup>
+      <tbody
+        class="diff-hunk"
+      >
+        <tr
+          class="diff-line"
+        >
+          <td
+            class="diff-gutter diff-gutter-delete"
+          >
+            1
+          </td>
+          <td
+            class="diff-gutter diff-gutter-delete"
+          />
+          <td
+            class="diff-code diff-code-delete"
+          >
+            S
+          </td>
+        </tr>
+        <tr
+          class="diff-line"
+        >
+          <td
+            class="diff-gutter diff-gutter-delete"
+          >
+            2
+          </td>
+          <td
+            class="diff-gutter diff-gutter-delete"
+          />
+          <td
+            class="diff-code diff-code-delete"
+          >
+            Kernel 
+ on an m
+          </td>
+        </tr>
+        <tr
+          class="diff-line"
+        >
+          <td
+            class="diff-gutter diff-gutter-delete"
+          >
+            3
+          </td>
+          <td
+            class="diff-gutter diff-gutter-delete"
+          />
+          <td
+            class="diff-code diff-code-delete"
+          >
+             
+          </td>
+        </tr>
+        <tr
+          class="diff-line"
+        >
+          <td
+            class="diff-gutter diff-gutter-insert"
+          />
+          <td
+            class="diff-gutter diff-gutter-insert"
+          >
+            1
+          </td>
+          <td
+            class="diff-code diff-code-insert"
+          >
+            fooo
+          </td>
+        </tr>
+        <tr
+          class="diff-line"
+        >
+          <td
+            class="diff-gutter diff-gutter-normal"
+          >
+            4
+          </td>
+          <td
+            class="diff-gutter diff-gutter-normal"
+          >
+            2
+          </td>
+          <td
+            class="diff-code diff-code-normal"
+          >
+            No newline at end of file
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;
 
 exports[`DiffView rendering render DiffView w/oldText & newText 1`] = `
-<Memo(Diff)
-  diffType="modify"
-  hunks={
-    Array [
-      Object {
-        "changes": Array [
-          Object {
-            "content": "hello friend",
-            "isDelete": true,
-            "lineNumber": 1,
-            "type": "delete",
-          },
-          Object {
-            "content": "hello there friend",
-            "isInsert": true,
-            "lineNumber": 1,
-            "type": "insert",
-          },
-        ],
-        "content": "@@ -1 +1 @@",
-        "isPlain": false,
-        "newLines": 1,
-        "newStart": 1,
-        "oldLines": 1,
-        "oldStart": 1,
-      },
-    ]
-  }
-  viewType="split"
-/>
+<div>
+  <table
+    class="diff diff-split"
+  >
+    <colgroup>
+      <col
+        class="diff-gutter-col"
+      />
+      <col />
+      <col
+        class="diff-gutter-col"
+      />
+      <col />
+    </colgroup>
+    <tbody
+      class="diff-hunk"
+    >
+      <tr
+        class="diff-line diff-line-compare"
+      >
+        <td
+          class="diff-gutter diff-gutter-delete"
+        >
+          1
+        </td>
+        <td
+          class="diff-code diff-code-delete"
+        >
+          hello friend
+        </td>
+        <td
+          class="diff-gutter diff-gutter-insert"
+        >
+          1
+        </td>
+        <td
+          class="diff-code diff-code-insert"
+        >
+          hello there friend
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 `;

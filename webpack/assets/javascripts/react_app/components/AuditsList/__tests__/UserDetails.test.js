@@ -1,4 +1,4 @@
-import { shallowRenderComponentWithFixtures } from '../../../common/testHelpers';
+import { testComponentSnapshotsWithFixtures } from '../../../common/testHelpers';
 import UserDetails from '../UserDetails';
 
 import { AuditRecord } from './AuditsList.fixtures';
@@ -16,16 +16,5 @@ const userFixtures = {
   },
 };
 
-describe('UserDetails', () => {
-  describe('rendering', () => {
-    const components = shallowRenderComponentWithFixtures(
-      UserDetails,
-      userFixtures
-    );
-    components.forEach(({ description, component }) => {
-      it(description, () => {
-        expect(component).toMatchSnapshot();
-      });
-    });
-  });
-});
+describe('UserDetails', () =>
+  testComponentSnapshotsWithFixtures(UserDetails, userFixtures));

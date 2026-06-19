@@ -1,311 +1,1960 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AuditsPage rendering render audits page 1`] = `
-<PageLayout
-  beforeToolbarComponent={null}
-  breadcrumbOptions={null}
-  customBreadcrumbs={null}
-  customHeader={null}
-  customToolbar={null}
-  header="Audits"
-  isLoading={false}
-  onSearch={[Function]}
-  pageSectionType="default"
-  searchProps={
-    Object {
-      "autocomplete": Object {
-        "apiParams": Object {},
-        "id": "searchBar-audits",
-        "searchQuery": "",
-        "url": "audits/auto_complete_search",
-        "useKeyShortcuts": true,
-      },
-      "bookmarks": Object {
-        "canCreate": true,
-        "documentationUrl": "/links/manual/4.1.5Searching",
-        "id": "searchBar-audits",
-        "url": "/api/bookmarks",
-      },
-      "controller": "audits",
-    }
-  }
-  searchQuery="search"
-  searchable={true}
-  toolbarButtons={
-    <Button
-      className="btn-docs"
-      component="a"
-      href="/links/manual/4.1.4Auditing"
-      ouiaId="audits-documentation-button"
-      rel="external noreferrer noopener"
-      target="_blank"
-      variant="secondary"
+<div>
+  <div
+    class="page-layout"
+  >
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-title-section"
     >
-       Documentation
-    </Button>
-  }
->
-  <Component
-    fetchAndPush={[Function]}
-    hasData={true}
-    initializeAudits={[Function]}
-    isLoading={false}
-    location={Object {}}
-    searchProps={
-      Object {
-        "data": Object {
-          "autocomplete": Object {
-            "apiParams": Object {},
-            "id": "searchBar",
-            "searchQuery": null,
-            "url": "model/auto_complete_search",
-            "useKeyShortcuts": true,
-          },
-          "bookmarks": Object {
-            "canCreate": true,
-            "documentationUrl": "/doc/url",
-            "id": "searchBar",
-            "url": "/api/bookmarks",
-          },
-          "controller": "models",
-        },
-      }
-    }
-    searchable={true}
-  />
-</PageLayout>
+      <div
+        id="page-title"
+      >
+        <div
+          class="pf-v5-c-content"
+        >
+          <h1
+            class=""
+            data-ouia-component-id="breadcrumb_title"
+            data-ouia-component-type="PF5/Text"
+            data-ouia-safe="true"
+            data-pf-content="true"
+          >
+            Audits
+          </h1>
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-toolbar-section"
+    >
+      <div
+        class="pf-v5-c-toolbar page-toolbar"
+        data-ouia-component-id="page-toolbar"
+        data-ouia-component-type="PF5/Toolbar"
+        data-ouia-safe="true"
+        id="pf-random-id-0"
+      >
+        <div
+          class="pf-v5-c-toolbar__content"
+        >
+          <div
+            class="pf-v5-c-toolbar__content-section"
+          >
+            <div
+              class="pf-v5-c-toolbar__group pf-m-filter-group toolbar-group-search"
+            >
+              <div
+                class="pf-v5-c-toolbar__item toolbar-search"
+              >
+                <div
+                  class="foreman-search-bar"
+                >
+                  <div
+                    class="autocomplete-search"
+                  >
+                    <div
+                      class="pf-v5-c-input-group"
+                    >
+                      <div
+                        class="pf-v5-c-input-group__item pf-m-fill"
+                      >
+                        <div
+                          class="pf-v5-c-text-input-group"
+                        >
+                          <div
+                            class="pf-v5-c-text-input-group__main pf-m-icon"
+                          >
+                            <span
+                              class="pf-v5-c-text-input-group__text"
+                            >
+                              <span
+                                class="pf-v5-c-text-input-group__icon"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="pf-v5-svg"
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  viewBox="0 0 512 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                  />
+                                </svg>
+                              </span>
+                              <input
+                                aria-label="Search input"
+                                class="pf-v5-c-text-input-group__text-input"
+                                placeholder="Search"
+                                type="text"
+                                value="search"
+                              />
+                            </span>
+                          </div>
+                          <div
+                            class="pf-v5-c-text-input-group__utilities"
+                          >
+                            <button
+                              aria-disabled="false"
+                              aria-label="Reset search"
+                              class="pf-v5-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-1"
+                              data-ouia-component-type="PF5/Button"
+                              data-ouia-safe="true"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pf-v5-c-input-group__item"
+                      >
+                        <button
+                          aria-disabled="false"
+                          aria-label="Search"
+                          class="pf-v5-c-button pf-m-control"
+                          data-ouia-component-id="OUIA-Generated-Button-control-1"
+                          data-ouia-component-type="PF5/Button"
+                          data-ouia-safe="true"
+                          type="submit"
+                        >
+                          <span
+                            class="pf-v5-c-icon"
+                          >
+                            <span
+                              class="pf-v5-c-icon__content pf-v5-m-mirror-inline-rtl"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 448 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pf-v5-c-dropdown"
+                    data-ouia-component-id="bookmarks-dropdown"
+                    data-ouia-component-type="PF5/Dropdown"
+                    data-ouia-safe="true"
+                    id="audits"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="bookmarks dropdown toggle"
+                      class="pf-v5-c-dropdown__toggle"
+                      data-ouia-component-id="bookmarks-dropdown-toggle"
+                      data-ouia-component-type="PF5/DropdownToggle"
+                      data-ouia-safe="true"
+                      id="pf-dropdown-toggle-id-1"
+                      title="Bookmarks"
+                      type="button"
+                    >
+                      <span
+                        class="pf-v5-c-dropdown__toggle-text"
+                      >
+                        <span
+                          class="pf-v5-c-icon"
+                        >
+                          <span
+                            class="pf-v5-c-icon__content"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="pf-v5-svg"
+                              fill="currentColor"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 384 512"
+                              width="1em"
+                            >
+                              <path
+                                d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="pf-v5-c-dropdown__toggle-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="pf-v5-svg"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 320 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pf-v5-c-toolbar__group pf-m-align-right"
+            >
+              <a
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-secondary btn-docs"
+                data-ouia-component-id="audits-documentation-button"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                href="/links/manual/4.1.4Auditing"
+                rel="external noreferrer noopener"
+                target="_blank"
+              >
+                 Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-toolbar__content pf-m-hidden"
+          hidden=""
+        >
+          <div
+            class="pf-v5-c-toolbar__group"
+          />
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-content-section"
+    >
+      <div
+        id="audit-list"
+      >
+        <ul
+          aria-label="Audits data list"
+          class="pf-v5-c-data-list pf-m-compact pf-m-grid-md"
+          id="audit-list"
+          role="list"
+        >
+          <li
+            aria-labelledby=""
+            class="pf-v5-c-data-list__item audits-data-list main-info-minimize-padding"
+            id="234"
+          >
+            <div
+              class="pf-v5-c-data-list__item-row audits-list-item-row"
+            >
+              <div
+                class="pf-v5-c-data-list__item-control"
+              >
+                <div
+                  class="pf-v5-c-data-list__toggle"
+                >
+                  <button
+                    aria-controls="false"
+                    aria-disabled="false"
+                    aria-expanded="false"
+                    aria-label="Details"
+                    aria-labelledby=" undefined"
+                    class="pf-v5-c-button pf-m-plain"
+                    data-ouia-component-id="OUIA-Generated-Button-plain-2"
+                    data-ouia-component-type="PF5/Button"
+                    data-ouia-safe="true"
+                    type="button"
+                  >
+                    <div
+                      class="pf-v5-c-data-list__toggle-icon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v5-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 256 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="pf-v5-c-data-list__item-content"
+              >
+                <div
+                  class="pf-v5-c-data-list__cell pf-m-flex-3"
+                >
+                  <span
+                    class="pf-v5-u-font-weight-bold pf-v5-u-font-size-sm"
+                  >
+                    <div
+                      style="display: contents;"
+                    >
+                      <a
+                        class="user-info"
+                        href="/audits?search=user+%3D+admin"
+                      >
+                        Admin 
+                      </a>
+                    </div>
+                    <div
+                      class="gray-text"
+                    >
+                      (
+                      127.0.0.1
+                      )
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="pf-v5-c-data-list__cell"
+                >
+                  updated
+                </div>
+                <div
+                  class="pf-v5-c-data-list__cell pf-m-flex-3 pf-m-align-right additional-info-item item-name"
+                >
+                  <span>
+                    HOST
+                  </span>
+                </div>
+                <div
+                  class="pf-v5-c-data-list__cell pf-m-flex-5 additional-info-item item-resource pf-m-truncate"
+                >
+                  <span>
+                    <div
+                      style="display: contents;"
+                    >
+                      <a
+                        href="/audits?search=type+%3D+host+and+auditable_id+%3D+9"
+                        id="resource-link-234"
+                      >
+                        host-foo.example.com
+                      </a>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="pf-v5-c-data-list__item-action audits-list-actions"
+                rowid=""
+              >
+                <span
+                  class="gray-text"
+                >
+                  <span
+                    title="8 years ago"
+                  >
+                    <span>
+                      Aug 13, 01:34 PM
+                    </span>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <section
+              class="pf-v5-c-data-list__expandable-content data-list-content"
+              hidden=""
+              id=""
+            >
+              <div
+                class="pf-v5-c-data-list__expandable-content-body"
+              >
+                <div
+                  class="pf-v5-l-grid"
+                >
+                  <div
+                    class="pf-v5-l-grid__item pf-m-12-col actions-btns"
+                  >
+                    <a
+                      aria-disabled="false"
+                      class="pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right"
+                      data-ouia-component-id="action-links-btn"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      href="/hosts/host-foo.example.com"
+                    >
+                      Host details
+                    </a>
+                  </div>
+                  <div
+                    class="pf-v5-l-grid__item pf-m-12-col taxonomy-section"
+                  >
+                    <div
+                      class="pf-v5-l-grid"
+                    >
+                      <div
+                        class="pf-v5-l-grid__item pf-m-3-col"
+                      >
+                        <span>
+                          Affected Organizations
+                        </span>
+                      </div>
+                      <div
+                        class="pf-v5-l-grid__item pf-m-9-col"
+                      >
+                        <strong>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/organizations/1-test_org1/edit"
+                          >
+                            test_org1
+                          </a>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/organizations/3-test_org2/edit"
+                          >
+                            test_org2
+                          </a>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/organizations/5-test_org3/edit"
+                          >
+                            test_org3
+                          </a>
+                        </strong>
+                      </div>
+                    </div>
+                    <div
+                      class="pf-v5-l-grid"
+                    >
+                      <div
+                        class="pf-v5-l-grid__item pf-m-3-col"
+                      >
+                        <span>
+                          Affected Locations
+                        </span>
+                      </div>
+                      <div
+                        class="pf-v5-l-grid__item pf-m-9-col"
+                      >
+                        <strong>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/locations/2-test_loc1/edit"
+                          >
+                            test_loc1
+                          </a>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/locations/6-test_loc2/edit"
+                          >
+                            test_loc2
+                          </a>
+                          <a
+                            aria-disabled="false"
+                            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                            data-ouia-component-id="taxonomy-inline-btn"
+                            data-ouia-component-type="PF5/Button"
+                            data-ouia-safe="true"
+                            href="/locations/9-test_loc3/edit"
+                          >
+                            test_loc3
+                          </a>
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pf-v5-l-grid__item pf-m-3-col"
+                  >
+                    <span>
+                      Request UUID
+                    </span>
+                  </div>
+                  <div
+                    class="pf-v5-l-grid__item pf-m-9-col value"
+                  >
+                    <div
+                      style="display: contents;"
+                    >
+                      <button
+                        aria-disabled="false"
+                        class="pf-v5-c-button pf-m-link pf-m-inline"
+                        data-ouia-component-id="request-uuid-btn"
+                        data-ouia-component-type="PF5/Button"
+                        data-ouia-safe="true"
+                        type="button"
+                      >
+                        c134239d-8ac3-494b-9962-35133fe153ba
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="grid-container"
+                  >
+                    <table
+                      class="table-changes table table-bordered table-hover"
+                    >
+                      <tbody>
+                        <tr>
+                          <td
+                            class="col-6 col-md-4"
+                          >
+                            <div>
+                              Root pass
+                            </div>
+                          </td>
+                          <td
+                            class="col-6 col-md-4 show-old"
+                          >
+                            <div
+                              class="show-old"
+                            >
+                              <p>
+                                [redacted]
+                              </p>
+                            </div>
+                          </td>
+                          <td
+                            class="col-6 col-md-4 show-new"
+                          >
+                            <div
+                              class="show-new"
+                            >
+                              <p>
+                                [redacted]
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            class="col-6 col-md-4"
+                          >
+                            <div>
+                              Comment
+                            </div>
+                          </td>
+                          <td
+                            class="col-6 col-md-4 show-old"
+                          >
+                            <div
+                              class="show-old"
+                            >
+                              <p>
+                                [empty]
+                              </p>
+                            </div>
+                          </td>
+                          <td
+                            class="col-6 col-md-4 show-new"
+                          >
+                            <div
+                              class="show-new"
+                            >
+                              <p>
+                                This is info about host for audit
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="pf-v5-c-pagination pf-m-bottom tfm-pagination no-side-padding"
+        data-ouia-component-id="OUIA-Generated-Pagination-bottom-1"
+        data-ouia-component-type="PF5/Pagination"
+        data-ouia-safe="true"
+        data-per-page="20"
+        data-total="1"
+        id="options-menu-bottom-pagination"
+        style="--pf-v5-c-pagination__nav-page-select--c-form-control--width-chars: 2;"
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Items per page"
+          class="pf-v5-c-menu-toggle pf-m-plain pf-m-text"
+          data-ouia-component-id="OUIA-Generated-MenuToggle-plainText-1"
+          data-ouia-component-type="PF5/MenuToggle"
+          data-ouia-safe="true"
+          id="options-menu-bottom-toggle"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-menu-toggle__text"
+          >
+            <b>
+              1
+               - 
+              1
+            </b>
+             
+            of
+             
+            <b>
+              1
+            </b>
+             
+            items
+          </span>
+          <span
+            class="pf-v5-c-menu-toggle__controls"
+          >
+            <span
+              class="pf-v5-c-menu-toggle__toggle-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 320 512"
+                width="1em"
+              >
+                <path
+                  d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                />
+              </svg>
+            </span>
+          </span>
+        </button>
+        <nav
+          aria-label="Pagination"
+          class="pf-v5-c-pagination__nav"
+        >
+          <div
+            class="pf-v5-c-pagination__nav-control pf-m-first"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to first page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="first"
+              data-ouia-component-id="OUIA-Generated-Button-plain-3"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 448 512"
+                width="1em"
+              >
+                <path
+                  d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to previous page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="previous"
+              data-ouia-component-id="OUIA-Generated-Button-plain-4"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 256 512"
+                width="1em"
+              >
+                <path
+                  d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-page-select"
+          >
+            <span
+              class="pf-v5-c-form-control pf-m-disabled"
+            >
+              <input
+                aria-invalid="false"
+                aria-label="Current page"
+                data-ouia-component-id="OUIA-Generated-TextInputBase-1"
+                data-ouia-component-type="PF5/TextInput"
+                data-ouia-safe="true"
+                disabled=""
+                max="1"
+                min="1"
+                type="number"
+                value="1"
+              />
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              of
+               
+              1
+            </span>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to next page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="next"
+              data-ouia-component-id="OUIA-Generated-Button-plain-5"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 256 512"
+                width="1em"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control pf-m-last"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to last page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="last"
+              data-ouia-component-id="OUIA-Generated-Button-plain-6"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 448 512"
+                width="1em"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </section>
+  </div>
+</div>
 `;
 
 exports[`AuditsPage rendering render audits page w/empty audits 1`] = `
-<PageLayout
-  beforeToolbarComponent={null}
-  breadcrumbOptions={null}
-  customBreadcrumbs={null}
-  customHeader={null}
-  customToolbar={null}
-  header="Audits"
-  isLoading={false}
-  onSearch={[Function]}
-  pageSectionType="default"
-  searchProps={
-    Object {
-      "autocomplete": Object {
-        "apiParams": Object {},
-        "id": "searchBar-audits",
-        "searchQuery": "",
-        "url": "audits/auto_complete_search",
-        "useKeyShortcuts": true,
-      },
-      "bookmarks": Object {
-        "canCreate": true,
-        "documentationUrl": "/links/manual/4.1.5Searching",
-        "id": "searchBar-audits",
-        "url": "/api/bookmarks",
-      },
-      "controller": "audits",
-    }
-  }
-  searchQuery="search"
-  searchable={true}
-  toolbarButtons={
-    <Button
-      className="btn-docs"
-      component="a"
-      href="/links/manual/4.1.4Auditing"
-      ouiaId="audits-documentation-button"
-      rel="external noreferrer noopener"
-      target="_blank"
-      variant="secondary"
+<div>
+  <div
+    class="page-layout"
+  >
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-title-section"
     >
-       Documentation
-    </Button>
-  }
->
-  <Component
-    fetchAndPush={[Function]}
-    hasData={true}
-    hasError={true}
-    initializeAudits={[Function]}
-    isLoading={false}
-    location={Object {}}
-    message="no audits"
-    searchProps={
-      Object {
-        "data": Object {
-          "autocomplete": Object {
-            "apiParams": Object {},
-            "id": "searchBar",
-            "searchQuery": null,
-            "url": "model/auto_complete_search",
-            "useKeyShortcuts": true,
-          },
-          "bookmarks": Object {
-            "canCreate": true,
-            "documentationUrl": "/doc/url",
-            "id": "searchBar",
-            "url": "/api/bookmarks",
-          },
-          "controller": "models",
-        },
-      }
-    }
-    searchable={true}
-  />
-</PageLayout>
+      <div
+        id="page-title"
+      >
+        <div
+          class="pf-v5-c-content"
+        >
+          <h1
+            class=""
+            data-ouia-component-id="breadcrumb_title"
+            data-ouia-component-type="PF5/Text"
+            data-ouia-safe="true"
+            data-pf-content="true"
+          >
+            Audits
+          </h1>
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-toolbar-section"
+    >
+      <div
+        class="pf-v5-c-toolbar page-toolbar"
+        data-ouia-component-id="page-toolbar"
+        data-ouia-component-type="PF5/Toolbar"
+        data-ouia-safe="true"
+        id="pf-random-id-2"
+      >
+        <div
+          class="pf-v5-c-toolbar__content"
+        >
+          <div
+            class="pf-v5-c-toolbar__content-section"
+          >
+            <div
+              class="pf-v5-c-toolbar__group pf-m-filter-group toolbar-group-search"
+            >
+              <div
+                class="pf-v5-c-toolbar__item toolbar-search"
+              >
+                <div
+                  class="foreman-search-bar"
+                >
+                  <div
+                    class="autocomplete-search"
+                  >
+                    <div
+                      class="pf-v5-c-input-group"
+                    >
+                      <div
+                        class="pf-v5-c-input-group__item pf-m-fill"
+                      >
+                        <div
+                          class="pf-v5-c-text-input-group"
+                        >
+                          <div
+                            class="pf-v5-c-text-input-group__main pf-m-icon"
+                          >
+                            <span
+                              class="pf-v5-c-text-input-group__text"
+                            >
+                              <span
+                                class="pf-v5-c-text-input-group__icon"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="pf-v5-svg"
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  viewBox="0 0 512 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                  />
+                                </svg>
+                              </span>
+                              <input
+                                aria-label="Search input"
+                                class="pf-v5-c-text-input-group__text-input"
+                                placeholder="Search"
+                                type="text"
+                                value="search"
+                              />
+                            </span>
+                          </div>
+                          <div
+                            class="pf-v5-c-text-input-group__utilities"
+                          >
+                            <button
+                              aria-disabled="false"
+                              aria-label="Reset search"
+                              class="pf-v5-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-12"
+                              data-ouia-component-type="PF5/Button"
+                              data-ouia-safe="true"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pf-v5-c-input-group__item"
+                      >
+                        <button
+                          aria-disabled="false"
+                          aria-label="Search"
+                          class="pf-v5-c-button pf-m-control"
+                          data-ouia-component-id="OUIA-Generated-Button-control-3"
+                          data-ouia-component-type="PF5/Button"
+                          data-ouia-safe="true"
+                          type="submit"
+                        >
+                          <span
+                            class="pf-v5-c-icon"
+                          >
+                            <span
+                              class="pf-v5-c-icon__content pf-v5-m-mirror-inline-rtl"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 448 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pf-v5-c-dropdown"
+                    data-ouia-component-id="bookmarks-dropdown"
+                    data-ouia-component-type="PF5/Dropdown"
+                    data-ouia-safe="true"
+                    id="audits"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="bookmarks dropdown toggle"
+                      class="pf-v5-c-dropdown__toggle"
+                      data-ouia-component-id="bookmarks-dropdown-toggle"
+                      data-ouia-component-type="PF5/DropdownToggle"
+                      data-ouia-safe="true"
+                      id="pf-dropdown-toggle-id-7"
+                      title="Bookmarks"
+                      type="button"
+                    >
+                      <span
+                        class="pf-v5-c-dropdown__toggle-text"
+                      >
+                        <span
+                          class="pf-v5-c-icon"
+                        >
+                          <span
+                            class="pf-v5-c-icon__content"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="pf-v5-svg"
+                              fill="currentColor"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 384 512"
+                              width="1em"
+                            >
+                              <path
+                                d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="pf-v5-c-dropdown__toggle-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="pf-v5-svg"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 320 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pf-v5-c-toolbar__group pf-m-align-right"
+            >
+              <a
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-secondary btn-docs"
+                data-ouia-component-id="audits-documentation-button"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                href="/links/manual/4.1.4Auditing"
+                rel="external noreferrer noopener"
+                target="_blank"
+              >
+                 Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-toolbar__content pf-m-hidden"
+          hidden=""
+        >
+          <div
+            class="pf-v5-c-toolbar__group"
+          />
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-content-section"
+    >
+      <div
+        class="pf-v5-c-empty-state pf-m-xl"
+      >
+        <div
+          class="pf-v5-c-empty-state__content"
+        >
+          <span
+            class="empty-state-icon"
+          >
+            <span
+              class="pf-v5-c-icon"
+            >
+              <span
+                class="pf-v5-c-icon__content"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pf-v5-svg"
+                  fill="currentColor"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                >
+                  <path
+                    d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <div
+            class="pf-v5-c-empty-state__header"
+          >
+            <div
+              class="pf-v5-c-empty-state__title"
+            >
+              <h5
+                class="pf-v5-c-empty-state__title-text"
+              >
+                No Results
+              </h5>
+            </div>
+          </div>
+          <div
+            class="pf-v5-c-empty-state__body"
+          >
+            <div
+              class="empty-state-description"
+            >
+              no audits
+            </div>
+          </div>
+          <div
+            class="pf-v5-c-empty-state__footer"
+          >
+            <div
+              class="pf-v5-c-empty-state__actions"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 `;
 
 exports[`AuditsPage rendering render audits page w/error 1`] = `
-<PageLayout
-  beforeToolbarComponent={null}
-  breadcrumbOptions={null}
-  customBreadcrumbs={null}
-  customHeader={null}
-  customToolbar={null}
-  header="Audits"
-  isLoading={false}
-  onSearch={[Function]}
-  pageSectionType="default"
-  searchProps={
-    Object {
-      "autocomplete": Object {
-        "apiParams": Object {},
-        "id": "searchBar-audits",
-        "searchQuery": "",
-        "url": "audits/auto_complete_search",
-        "useKeyShortcuts": true,
-      },
-      "bookmarks": Object {
-        "canCreate": true,
-        "documentationUrl": "/links/manual/4.1.5Searching",
-        "id": "searchBar-audits",
-        "url": "/api/bookmarks",
-      },
-      "controller": "audits",
-    }
-  }
-  searchQuery="search"
-  searchable={true}
-  toolbarButtons={
-    <Button
-      className="btn-docs"
-      component="a"
-      href="/links/manual/4.1.4Auditing"
-      ouiaId="audits-documentation-button"
-      rel="external noreferrer noopener"
-      target="_blank"
-      variant="secondary"
+<div>
+  <div
+    class="page-layout"
+  >
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-title-section"
     >
-       Documentation
-    </Button>
-  }
->
-  <Component
-    fetchAndPush={[Function]}
-    hasData={true}
-    hasError={true}
-    initializeAudits={[Function]}
-    isLoading={false}
-    location={Object {}}
-    message="some-error"
-    searchProps={
-      Object {
-        "data": Object {
-          "autocomplete": Object {
-            "apiParams": Object {},
-            "id": "searchBar",
-            "searchQuery": null,
-            "url": "model/auto_complete_search",
-            "useKeyShortcuts": true,
-          },
-          "bookmarks": Object {
-            "canCreate": true,
-            "documentationUrl": "/doc/url",
-            "id": "searchBar",
-            "url": "/api/bookmarks",
-          },
-          "controller": "models",
-        },
-      }
-    }
-    searchable={true}
-  />
-</PageLayout>
+      <div
+        id="page-title"
+      >
+        <div
+          class="pf-v5-c-content"
+        >
+          <h1
+            class=""
+            data-ouia-component-id="breadcrumb_title"
+            data-ouia-component-type="PF5/Text"
+            data-ouia-safe="true"
+            data-pf-content="true"
+          >
+            Audits
+          </h1>
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-toolbar-section"
+    >
+      <div
+        class="pf-v5-c-toolbar page-toolbar"
+        data-ouia-component-id="page-toolbar"
+        data-ouia-component-type="PF5/Toolbar"
+        data-ouia-safe="true"
+        id="pf-random-id-3"
+      >
+        <div
+          class="pf-v5-c-toolbar__content"
+        >
+          <div
+            class="pf-v5-c-toolbar__content-section"
+          >
+            <div
+              class="pf-v5-c-toolbar__group pf-m-filter-group toolbar-group-search"
+            >
+              <div
+                class="pf-v5-c-toolbar__item toolbar-search"
+              >
+                <div
+                  class="foreman-search-bar"
+                >
+                  <div
+                    class="autocomplete-search"
+                  >
+                    <div
+                      class="pf-v5-c-input-group"
+                    >
+                      <div
+                        class="pf-v5-c-input-group__item pf-m-fill"
+                      >
+                        <div
+                          class="pf-v5-c-text-input-group"
+                        >
+                          <div
+                            class="pf-v5-c-text-input-group__main pf-m-icon"
+                          >
+                            <span
+                              class="pf-v5-c-text-input-group__text"
+                            >
+                              <span
+                                class="pf-v5-c-text-input-group__icon"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="pf-v5-svg"
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  viewBox="0 0 512 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                  />
+                                </svg>
+                              </span>
+                              <input
+                                aria-label="Search input"
+                                class="pf-v5-c-text-input-group__text-input"
+                                placeholder="Search"
+                                type="text"
+                                value="search"
+                              />
+                            </span>
+                          </div>
+                          <div
+                            class="pf-v5-c-text-input-group__utilities"
+                          >
+                            <button
+                              aria-disabled="false"
+                              aria-label="Reset search"
+                              class="pf-v5-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-13"
+                              data-ouia-component-type="PF5/Button"
+                              data-ouia-safe="true"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pf-v5-c-input-group__item"
+                      >
+                        <button
+                          aria-disabled="false"
+                          aria-label="Search"
+                          class="pf-v5-c-button pf-m-control"
+                          data-ouia-component-id="OUIA-Generated-Button-control-4"
+                          data-ouia-component-type="PF5/Button"
+                          data-ouia-safe="true"
+                          type="submit"
+                        >
+                          <span
+                            class="pf-v5-c-icon"
+                          >
+                            <span
+                              class="pf-v5-c-icon__content pf-v5-m-mirror-inline-rtl"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 448 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pf-v5-c-dropdown"
+                    data-ouia-component-id="bookmarks-dropdown"
+                    data-ouia-component-type="PF5/Dropdown"
+                    data-ouia-safe="true"
+                    id="audits"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="bookmarks dropdown toggle"
+                      class="pf-v5-c-dropdown__toggle"
+                      data-ouia-component-id="bookmarks-dropdown-toggle"
+                      data-ouia-component-type="PF5/DropdownToggle"
+                      data-ouia-safe="true"
+                      id="pf-dropdown-toggle-id-10"
+                      title="Bookmarks"
+                      type="button"
+                    >
+                      <span
+                        class="pf-v5-c-dropdown__toggle-text"
+                      >
+                        <span
+                          class="pf-v5-c-icon"
+                        >
+                          <span
+                            class="pf-v5-c-icon__content"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="pf-v5-svg"
+                              fill="currentColor"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 384 512"
+                              width="1em"
+                            >
+                              <path
+                                d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="pf-v5-c-dropdown__toggle-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="pf-v5-svg"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 320 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pf-v5-c-toolbar__group pf-m-align-right"
+            >
+              <a
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-secondary btn-docs"
+                data-ouia-component-id="audits-documentation-button"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                href="/links/manual/4.1.4Auditing"
+                rel="external noreferrer noopener"
+                target="_blank"
+              >
+                 Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-toolbar__content pf-m-hidden"
+          hidden=""
+        >
+          <div
+            class="pf-v5-c-toolbar__group"
+          />
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-content-section"
+    >
+      <div
+        class="pf-v5-c-empty-state pf-m-xl"
+      >
+        <div
+          class="pf-v5-c-empty-state__content"
+        >
+          <span
+            class="empty-state-icon"
+          >
+            <span
+              class="pf-v5-c-icon"
+            >
+              <span
+                class="pf-v5-c-icon__content"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pf-v5-svg"
+                  fill="currentColor"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                >
+                  <path
+                    d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <div
+            class="pf-v5-c-empty-state__header"
+          >
+            <div
+              class="pf-v5-c-empty-state__title"
+            >
+              <h5
+                class="pf-v5-c-empty-state__title-text"
+              >
+                Error
+              </h5>
+            </div>
+          </div>
+          <div
+            class="pf-v5-c-empty-state__body"
+          >
+            <div
+              class="empty-state-description"
+            >
+              some-error
+            </div>
+          </div>
+          <div
+            class="pf-v5-c-empty-state__footer"
+          >
+            <div
+              class="pf-v5-c-empty-state__actions"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 `;
 
 exports[`AuditsPage rendering render loading audits page 1`] = `
-<PageLayout
-  beforeToolbarComponent={null}
-  breadcrumbOptions={null}
-  customBreadcrumbs={null}
-  customHeader={null}
-  customToolbar={null}
-  header="Audits"
-  isLoading={false}
-  onSearch={[Function]}
-  pageSectionType="default"
-  searchProps={
-    Object {
-      "autocomplete": Object {
-        "apiParams": Object {},
-        "id": "searchBar-audits",
-        "searchQuery": "",
-        "url": "audits/auto_complete_search",
-        "useKeyShortcuts": true,
-      },
-      "bookmarks": Object {
-        "canCreate": true,
-        "documentationUrl": "/links/manual/4.1.5Searching",
-        "id": "searchBar-audits",
-        "url": "/api/bookmarks",
-      },
-      "controller": "audits",
-    }
-  }
-  searchQuery="search"
-  searchable={true}
-  toolbarButtons={
-    <Button
-      className="btn-docs"
-      component="a"
-      href="/links/manual/4.1.4Auditing"
-      ouiaId="audits-documentation-button"
-      rel="external noreferrer noopener"
-      target="_blank"
-      variant="secondary"
+<div>
+  <div
+    class="page-layout"
+  >
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-title-section"
     >
-       Documentation
-    </Button>
-  }
->
-  <Component
-    audits={Array []}
-    fetchAndPush={[Function]}
-    hasData={true}
-    hasError={false}
-    initializeAudits={[Function]}
-    isLoading={false}
-    location={Object {}}
-    searchProps={
-      Object {
-        "data": Object {
-          "autocomplete": Object {
-            "apiParams": Object {},
-            "id": "searchBar",
-            "searchQuery": null,
-            "url": "model/auto_complete_search",
-            "useKeyShortcuts": true,
-          },
-          "bookmarks": Object {
-            "canCreate": true,
-            "documentationUrl": "/doc/url",
-            "id": "searchBar",
-            "url": "/api/bookmarks",
-          },
-          "controller": "models",
-        },
-      }
-    }
-    searchable={true}
-  />
-</PageLayout>
+      <div
+        id="page-title"
+      >
+        <div
+          class="pf-v5-c-content"
+        >
+          <h1
+            class=""
+            data-ouia-component-id="breadcrumb_title"
+            data-ouia-component-type="PF5/Text"
+            data-ouia-safe="true"
+            data-pf-content="true"
+          >
+            Audits
+          </h1>
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-toolbar-section"
+    >
+      <div
+        class="pf-v5-c-toolbar page-toolbar"
+        data-ouia-component-id="page-toolbar"
+        data-ouia-component-type="PF5/Toolbar"
+        data-ouia-safe="true"
+        id="pf-random-id-1"
+      >
+        <div
+          class="pf-v5-c-toolbar__content"
+        >
+          <div
+            class="pf-v5-c-toolbar__content-section"
+          >
+            <div
+              class="pf-v5-c-toolbar__group pf-m-filter-group toolbar-group-search"
+            >
+              <div
+                class="pf-v5-c-toolbar__item toolbar-search"
+              >
+                <div
+                  class="foreman-search-bar"
+                >
+                  <div
+                    class="autocomplete-search"
+                  >
+                    <div
+                      class="pf-v5-c-input-group"
+                    >
+                      <div
+                        class="pf-v5-c-input-group__item pf-m-fill"
+                      >
+                        <div
+                          class="pf-v5-c-text-input-group"
+                        >
+                          <div
+                            class="pf-v5-c-text-input-group__main pf-m-icon"
+                          >
+                            <span
+                              class="pf-v5-c-text-input-group__text"
+                            >
+                              <span
+                                class="pf-v5-c-text-input-group__icon"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="pf-v5-svg"
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  viewBox="0 0 512 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                  />
+                                </svg>
+                              </span>
+                              <input
+                                aria-label="Search input"
+                                class="pf-v5-c-text-input-group__text-input"
+                                placeholder="Search"
+                                type="text"
+                                value="search"
+                              />
+                            </span>
+                          </div>
+                          <div
+                            class="pf-v5-c-text-input-group__utilities"
+                          >
+                            <button
+                              aria-disabled="false"
+                              aria-label="Reset search"
+                              class="pf-v5-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-7"
+                              data-ouia-component-type="PF5/Button"
+                              data-ouia-safe="true"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pf-v5-c-input-group__item"
+                      >
+                        <button
+                          aria-disabled="false"
+                          aria-label="Search"
+                          class="pf-v5-c-button pf-m-control"
+                          data-ouia-component-id="OUIA-Generated-Button-control-2"
+                          data-ouia-component-type="PF5/Button"
+                          data-ouia-safe="true"
+                          type="submit"
+                        >
+                          <span
+                            class="pf-v5-c-icon"
+                          >
+                            <span
+                              class="pf-v5-c-icon__content pf-v5-m-mirror-inline-rtl"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="pf-v5-svg"
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 448 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pf-v5-c-dropdown"
+                    data-ouia-component-id="bookmarks-dropdown"
+                    data-ouia-component-type="PF5/Dropdown"
+                    data-ouia-safe="true"
+                    id="audits"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="bookmarks dropdown toggle"
+                      class="pf-v5-c-dropdown__toggle"
+                      data-ouia-component-id="bookmarks-dropdown-toggle"
+                      data-ouia-component-type="PF5/DropdownToggle"
+                      data-ouia-safe="true"
+                      id="pf-dropdown-toggle-id-4"
+                      title="Bookmarks"
+                      type="button"
+                    >
+                      <span
+                        class="pf-v5-c-dropdown__toggle-text"
+                      >
+                        <span
+                          class="pf-v5-c-icon"
+                        >
+                          <span
+                            class="pf-v5-c-icon__content"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="pf-v5-svg"
+                              fill="currentColor"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 384 512"
+                              width="1em"
+                            >
+                              <path
+                                d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="pf-v5-c-dropdown__toggle-icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="pf-v5-svg"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 320 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pf-v5-c-toolbar__group pf-m-align-right"
+            >
+              <a
+                aria-disabled="false"
+                class="pf-v5-c-button pf-m-secondary btn-docs"
+                data-ouia-component-id="audits-documentation-button"
+                data-ouia-component-type="PF5/Button"
+                data-ouia-safe="true"
+                href="/links/manual/4.1.4Auditing"
+                rel="external noreferrer noopener"
+                target="_blank"
+              >
+                 Documentation
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pf-v5-c-toolbar__content pf-m-hidden"
+          hidden=""
+        >
+          <div
+            class="pf-v5-c-toolbar__group"
+          />
+        </div>
+      </div>
+    </section>
+    <section
+      class="pf-v5-c-page__main-section pf-m-light page-content-section"
+    >
+      <div
+        id="audit-list"
+      >
+        <ul
+          aria-label="Audits data list"
+          class="pf-v5-c-data-list pf-m-compact pf-m-grid-md"
+          id="audit-list"
+          role="list"
+        />
+      </div>
+      <div
+        class="pf-v5-c-pagination pf-m-bottom tfm-pagination no-side-padding"
+        data-ouia-component-id="OUIA-Generated-Pagination-bottom-2"
+        data-ouia-component-type="PF5/Pagination"
+        data-ouia-safe="true"
+        data-per-page="20"
+        data-total="1"
+        id="options-menu-bottom-pagination"
+        style="--pf-v5-c-pagination__nav-page-select--c-form-control--width-chars: 2;"
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Items per page"
+          class="pf-v5-c-menu-toggle pf-m-plain pf-m-text"
+          data-ouia-component-id="OUIA-Generated-MenuToggle-plainText-2"
+          data-ouia-component-type="PF5/MenuToggle"
+          data-ouia-safe="true"
+          id="options-menu-bottom-toggle"
+          type="button"
+        >
+          <span
+            class="pf-v5-c-menu-toggle__text"
+          >
+            <b>
+              1
+               - 
+              1
+            </b>
+             
+            of
+             
+            <b>
+              1
+            </b>
+             
+            items
+          </span>
+          <span
+            class="pf-v5-c-menu-toggle__controls"
+          >
+            <span
+              class="pf-v5-c-menu-toggle__toggle-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 320 512"
+                width="1em"
+              >
+                <path
+                  d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                />
+              </svg>
+            </span>
+          </span>
+        </button>
+        <nav
+          aria-label="Pagination"
+          class="pf-v5-c-pagination__nav"
+        >
+          <div
+            class="pf-v5-c-pagination__nav-control pf-m-first"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to first page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="first"
+              data-ouia-component-id="OUIA-Generated-Button-plain-8"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 448 512"
+                width="1em"
+              >
+                <path
+                  d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to previous page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="previous"
+              data-ouia-component-id="OUIA-Generated-Button-plain-9"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 256 512"
+                width="1em"
+              >
+                <path
+                  d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-page-select"
+          >
+            <span
+              class="pf-v5-c-form-control pf-m-disabled"
+            >
+              <input
+                aria-invalid="false"
+                aria-label="Current page"
+                data-ouia-component-id="OUIA-Generated-TextInputBase-2"
+                data-ouia-component-type="PF5/TextInput"
+                data-ouia-safe="true"
+                disabled=""
+                max="1"
+                min="1"
+                type="number"
+                value="1"
+              />
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              of
+               
+              1
+            </span>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to next page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="next"
+              data-ouia-component-id="OUIA-Generated-Button-plain-10"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 256 512"
+                width="1em"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="pf-v5-c-pagination__nav-control pf-m-last"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Go to last page"
+              class="pf-v5-c-button pf-m-plain pf-m-disabled"
+              data-action="last"
+              data-ouia-component-id="OUIA-Generated-Button-plain-11"
+              data-ouia-component-type="PF5/Button"
+              data-ouia-safe="true"
+              disabled=""
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="pf-v5-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 448 512"
+                width="1em"
+              >
+                <path
+                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </section>
+  </div>
+</div>
 `;

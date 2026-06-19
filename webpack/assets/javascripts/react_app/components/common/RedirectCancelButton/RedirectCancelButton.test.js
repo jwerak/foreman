@@ -1,7 +1,7 @@
 import React from 'react';
-
-import { testComponentSnapshotsWithFixtures } from 'foremanReact/common/testHelpers';
-
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { MemoryRouter } from 'react-router-dom';
 import RedirectCancelButton from './RedirectCancelButton';
 
 jest.mock('../../../common/withReactRoutes', () => Component => props => (
@@ -10,9 +10,13 @@ jest.mock('../../../common/withReactRoutes', () => Component => props => (
   </div>
 ));
 
-const fixtures = {
-  'renders correctly': { cancelPath: '/hosts' },
-};
-
-describe('RedirectCancelButton', () =>
-  testComponentSnapshotsWithFixtures(RedirectCancelButton, fixtures));
+describe('RedirectCancelButton', () => {
+  it('renders correctly', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <RedirectCancelButton cancelPath="/hosts" />
+      </MemoryRouter>
+    );
+    expect(container).toMatchSnapshot();
+  });
+});

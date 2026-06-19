@@ -1,4 +1,6 @@
-import { testComponentSnapshotsWithFixtures } from 'foremanReact/common/testHelpers';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Formik } from 'formik';
 import RadioButtonGroup from './RadioButtonGroup';
 
 const radios = [
@@ -19,17 +21,22 @@ const commonFixtures = {
   controlLabel: 'RadioButtonGroupLabel',
 };
 
-const fixtures = {
-  'should render group of radio buttons': {
-    radios,
-    ...commonFixtures,
-  },
-  'should render disabled radio buttons': {
-    radios,
-    ...commonFixtures,
-    disabled: true,
-  },
-};
+describe('radio button group', () => {
+  it('should render group of radio buttons', () => {
+    const { container } = render(
+      <Formik initialValues={{}} onSubmit={jest.fn()}>
+        <RadioButtonGroup radios={radios} {...commonFixtures} />
+      </Formik>
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-describe('radio button group', () =>
-  testComponentSnapshotsWithFixtures(RadioButtonGroup, fixtures));
+  it('should render disabled radio buttons', () => {
+    const { container } = render(
+      <Formik initialValues={{}} onSubmit={jest.fn()}>
+        <RadioButtonGroup radios={radios} {...commonFixtures} disabled />
+      </Formik>
+    );
+    expect(container).toMatchSnapshot();
+  });
+});

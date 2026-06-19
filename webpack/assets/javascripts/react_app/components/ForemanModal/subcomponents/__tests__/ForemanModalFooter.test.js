@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, fireEvent, render, act } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 import ForemanModalFooter from '../ForemanModalFooter';
-import * as ModalContext from '../../ForemanModalHooks'; // so enzyme test works
+import * as ModalContext from '../../ForemanModalHooks';
 
 const fixtures = {
   renders: {

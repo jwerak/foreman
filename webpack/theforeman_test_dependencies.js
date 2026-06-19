@@ -1,5 +1,5 @@
 // replaces @theforeman/test.js
-import { shallow, mount, render, configure } from 'enzyme';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 
 import {
@@ -28,9 +28,10 @@ export {
   testSelectorsSnapshotWithFixtures,
   initMockStore,
   IntegrationTestHelper,
-  shallow,
-  mount,
   render,
-  configure,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
   MockAdapter,
 };

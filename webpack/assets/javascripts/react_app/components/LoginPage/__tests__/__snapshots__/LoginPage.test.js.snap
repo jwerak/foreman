@@ -1,86 +1,188 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginPage rendering renders LoginPage 1`] = `
-<div
-  id="login-page"
->
-  <LoginPage
-    brandImgSrc="/some-logo"
-    className="login-pf"
-    loginSubtitle="Log in to your account"
-    loginTitle="Welcome"
-    textContent="some caption"
+<div>
+  <div
+    id="login-page"
   >
-    <Form
-      action="/users/login"
-      method="post"
+    
+    <div
+      class="pf-v5-c-login login-pf"
     >
-      <FormAlert>
-        <Alert
-          aria-live="polite"
-          isInline={true}
-          key="login-failed"
-          ouiaId="login-alert"
-          title={
-            Array [
-              "some-error",
-            ]
-          }
-          variant="danger"
-        />
-      </FormAlert>
-      <FormGroup
-        fieldId="username"
-        isRequired={true}
+      <div
+        class="pf-v5-c-login__container"
       >
-        <TextInput
-          autoComplete="username"
-          autoFocus={true}
-          id="login_login"
-          isRequired={true}
-          name="login[login]"
-          onChange={[Function]}
-          ouiaId="login-username"
-          placeholder="Username"
-          type="text"
-          value=""
-        />
-      </FormGroup>
-      <FormGroup
-        fieldId="password"
-        isRequired={true}
-      >
-        <TextInput
-          autoComplete="current-password"
-          id="login_password"
-          isRequired={true}
-          name="login[password]"
-          onChange={[Function]}
-          ouiaId="login-password"
-          placeholder="Password"
-          type="password"
-          value=""
-        />
-      </FormGroup>
-      <input
-        name="authenticity_token"
-        type="hidden"
-        value="some token"
-      />
-      <ActionGroup>
-        <Button
-          isBlock={true}
-          isDisabled={true}
-          isLoading={false}
-          onClick={[Function]}
-          ouiaId="login-submit"
-          type="submit"
-          variant="primary"
+        <header
+          class="pf-v5-c-login__header"
         >
-          Log In
-        </Button>
-      </ActionGroup>
-    </Form>
-  </LoginPage>
+          <img
+            alt=""
+            class="pf-v5-c-brand"
+            src="/some-logo"
+          />
+        </header>
+        <main
+          class="pf-v5-c-login__main"
+        >
+          <header
+            class="pf-v5-c-login__main-header"
+          >
+            <h2
+              class="pf-v5-c-title pf-m-3xl"
+              data-ouia-component-id="OUIA-Generated-Title-1"
+              data-ouia-component-type="PF5/Title"
+              data-ouia-safe="true"
+            >
+              Welcome
+            </h2>
+            <p
+              class="pf-v5-c-login__main-header-desc"
+            >
+              Log in to your account
+            </p>
+          </header>
+          <div
+            class="pf-v5-c-login__main-body"
+          >
+            <form
+              action="/users/login"
+              class="pf-v5-c-form"
+              method="post"
+              novalidate=""
+            >
+              <div
+                class="pf-v5-c-form__alert"
+              >
+                <div
+                  aria-live="polite"
+                  class="pf-v5-c-alert pf-m-inline pf-m-danger"
+                  data-ouia-component-id="login-alert"
+                  data-ouia-component-type="PF5/Alert"
+                  data-ouia-safe="true"
+                >
+                  <div
+                    class="pf-v5-c-alert__icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v5-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                      />
+                    </svg>
+                  </div>
+                  <h4
+                    class="pf-v5-c-alert__title"
+                  >
+                    <span
+                      class="pf-v5-screen-reader"
+                    >
+                      Danger alert:
+                    </span>
+                    some-error
+                  </h4>
+                  
+                </div>
+              </div>
+              <div
+                class="pf-v5-c-form__group"
+              >
+                <div
+                  class="pf-v5-c-form__group-control"
+                >
+                  <span
+                    class="pf-v5-c-form-control"
+                  >
+                    <input
+                      aria-invalid="false"
+                      autocomplete="username"
+                      data-ouia-component-id="login-username"
+                      data-ouia-component-type="PF5/TextInput"
+                      data-ouia-safe="true"
+                      id="login_login"
+                      name="login[login]"
+                      placeholder="Username"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                class="pf-v5-c-form__group"
+              >
+                <div
+                  class="pf-v5-c-form__group-control"
+                >
+                  <span
+                    class="pf-v5-c-form-control"
+                  >
+                    <input
+                      aria-invalid="false"
+                      autocomplete="current-password"
+                      data-ouia-component-id="login-password"
+                      data-ouia-component-type="PF5/TextInput"
+                      data-ouia-safe="true"
+                      id="login_password"
+                      name="login[password]"
+                      placeholder="Password"
+                      required=""
+                      type="password"
+                      value=""
+                    />
+                  </span>
+                </div>
+              </div>
+              <input
+                name="authenticity_token"
+                type="hidden"
+                value="some token"
+              />
+              <div
+                class="pf-v5-c-form__group pf-m-action"
+              >
+                <div
+                  class="pf-v5-c-form__group-control"
+                >
+                  <div
+                    class="pf-v5-c-form__actions"
+                  >
+                    <button
+                      aria-disabled="true"
+                      class="pf-v5-c-button pf-m-primary pf-m-block pf-m-disabled pf-m-progress"
+                      data-ouia-component-id="login-submit"
+                      data-ouia-component-type="PF5/Button"
+                      data-ouia-safe="true"
+                      disabled=""
+                      type="submit"
+                    >
+                      Log In
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </main>
+        <footer
+          class="pf-v5-c-login__footer"
+        >
+          <p>
+            some caption
+          </p>
+          <ul
+            class="pf-v5-c-list"
+          />
+        </footer>
+      </div>
+    </div>
+  </div>
 </div>
 `;

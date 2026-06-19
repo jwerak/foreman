@@ -1,30 +1,40 @@
 import React from 'react';
+import { render, screen, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 
 import store from '../../../redux';
-import ToastsList, { addToast, deleteToast } from '../index'
-import { toast } from './fixtures'
+import ToastsList, { addToast, deleteToast } from '../index';
+import { toast } from './fixtures';
 
 describe('ToastsList', () => {
   it('integration', () => {
-    const component = mount(
+    render(
       <Provider store={store}>
         <ToastsList />
-      </Provider>);
+      </Provider>
+    );
 
-    let alerts = component.find('.pf-v5-c-alert.foreman-toast');
-    expect(alerts.length).toBe(0);
+    expect(
+      document.body.querySelectorAll('.pf-v5-c-alert.foreman-toast')
+    ).toHaveLength(0);
 
-    store.dispatch(addToast(toast));
-    component.update();
-    alerts = component.find('.pf-v5-c-alert.foreman-toast');
-    expect(alerts.length).toBe(1);
-    expect(component.find('.pf-v5-c-alert__title').at(0).text()).toBe('Success alert:message');
+    act(() => {
+      store.dispatch(addToast(toast));
+    });
 
-    store.dispatch(deleteToast(toast.key));
-    component.update();
-    alerts = component.find('.pf-v5-c-alert.foreman-toast');
-    expect(alerts.length).toBe(0);
+    const alerts = document.body.querySelectorAll(
+      '.pf-v5-c-alert.foreman-toast'
+    );
+    expect(alerts).toHaveLength(1);
+    expect(screen.getByText(/message/)).toBeInTheDocument();
+
+    act(() => {
+      store.dispatch(deleteToast(toast.key));
+    });
+
+    expect(
+      document.body.querySelectorAll('.pf-v5-c-alert.foreman-toast')
+    ).toHaveLength(0);
   });
 });

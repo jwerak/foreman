@@ -1,6 +1,7 @@
 import React from 'react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 import { Button } from '@patternfly/react-core';
 import store from '../../redux';
 import ConfirmModal, { openConfirmModal } from './index';
@@ -13,35 +14,42 @@ describe('Confirm modal', () => {
     const onConfirm = jest.fn();
     const handleConfirmClick = () => {
       store.dispatch(
-        openConfirmModal({title: modalTitle, message: modalMessage, onConfirm })
-      )
+        openConfirmModal({
+          title: modalTitle,
+          message: modalMessage,
+          onConfirm,
+        })
+      );
     };
 
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <ConfirmModal />
-        <Button id="btn-confirm-trigger" onClick={handleConfirmClick}>{btnText}</Button>
+        <Button id="btn-confirm-trigger" onClick={handleConfirmClick}>
+          {btnText}
+        </Button>
       </Provider>
     );
-    
-    wrapper
-        .find('#btn-confirm-trigger')
-        .first()
-        .simulate('click');
-    
-    expect(wrapper.find('.pf-v5-c-modal-box__body').text()).toEqual(modalMessage);
-    expect(wrapper.find('.pf-v5-c-modal-box__title-text').text()).toEqual(modalTitle);
+
+    // Click the trigger button to open the modal
+    act(() => {
+      fireEvent.click(screen.getByText(btnText));
+    });
+
+    // Verify modal content
+    expect(screen.getByText(modalMessage)).toBeInTheDocument();
+    expect(screen.getByText(modalTitle)).toBeInTheDocument();
 
     expect(onConfirm).toBeCalledTimes(0);
 
-    wrapper
-        .find('.pf-v5-c-modal-box__footer > Button')
-        .first()
-        .simulate('click');
-    
+    // Click the Confirm button in the modal
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
+    });
+
     expect(onConfirm).toBeCalledTimes(1);
 
     // The modal should be hidden
-    expect(wrapper.find('.pf-v5-c-modal-box__body')).toHaveLength(0);
+    expect(screen.queryByText(modalMessage)).not.toBeInTheDocument();
   });
 });

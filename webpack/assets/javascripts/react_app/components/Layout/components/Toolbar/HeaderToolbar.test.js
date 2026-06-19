@@ -1,19 +1,21 @@
-import { testComponentSnapshotsWithFixtures } from 'foremanReact/common/testHelpers';
+import React from 'react';
+import '@testing-library/jest-dom';
+import { rtlHelpers } from 'foremanReact/common/testHelpers';
 import { hasTaxonomiesMock } from '../../Layout.fixtures';
-import { noop } from '../../../../common/helpers';
-
 import HeaderToolbar from './HeaderToolbar';
 
-const fixtures = {
-  'render HeaderToolbar': {
-    ...hasTaxonomiesMock.data,
-    currentLocation: hasTaxonomiesMock.currentLocation,
-    currentOrganization: hasTaxonomiesMock.currentOrganization,
-    isLoading: false,
-  },
-};
-
 describe('HeaderToolbar', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(HeaderToolbar, fixtures));
+  describe('rendering', () => {
+    it('render HeaderToolbar', () => {
+      const { container } = rtlHelpers.renderWithStore(
+        <HeaderToolbar
+          {...hasTaxonomiesMock.data}
+          currentLocation={hasTaxonomiesMock.currentLocation}
+          currentOrganization={hasTaxonomiesMock.currentOrganization}
+          isLoading={false}
+        />
+      );
+      expect(container).toMatchSnapshot();
+    });
+  });
 });

@@ -1,37 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ShowOrgsLocs rendering render organizations and locations 1`] = `
-<GridItem
-  className="taxonomy-section"
-  span={12}
->
-  <ShowTaxonomyInline
-    displayLabel="Affected Organizations"
-    items={
-      Array [
-        Object {
-          "name": "testOrg",
-          "url": "/organizations/1-testOrg/edit",
-        },
-        Object {
-          "css_class": "disabled",
-          "disabled": true,
-          "name": "testOrg2",
-          "url": "#",
-        },
-      ]
-    }
-  />
-  <ShowTaxonomyInline
-    displayLabel="Affected Locations"
-    items={
-      Array [
-        Object {
-          "name": "testLoc",
-          "url": "/locations/1-testLoc/edit",
-        },
-      ]
-    }
-  />
-</GridItem>
+exports[`ShowOrgsLocs render organizations and locations 1`] = `
+<div>
+  <div
+    class="pf-v5-l-grid__item pf-m-12-col taxonomy-section"
+  >
+    <div
+      class="pf-v5-l-grid"
+    >
+      <div
+        class="pf-v5-l-grid__item pf-m-3-col"
+      >
+        <span>
+          Affected Organizations
+        </span>
+      </div>
+      <div
+        class="pf-v5-l-grid__item pf-m-9-col"
+      >
+        <strong>
+          <a
+            aria-disabled="false"
+            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+            data-ouia-component-id="taxonomy-inline-btn"
+            data-ouia-component-type="PF5/Button"
+            data-ouia-safe="true"
+            href="/organizations/1-testOrg/edit"
+          >
+            testOrg
+          </a>
+          <a
+            aria-disabled="true"
+            class="pf-v5-c-button pf-m-link pf-m-disabled pf-m-inline apply-comma disabled"
+            data-ouia-component-id="taxonomy-inline-btn"
+            data-ouia-component-type="PF5/Button"
+            data-ouia-safe="true"
+            href="#"
+            tabindex="-1"
+          >
+            testOrg2
+          </a>
+        </strong>
+      </div>
+    </div>
+    <div
+      class="pf-v5-l-grid"
+    >
+      <div
+        class="pf-v5-l-grid__item pf-m-3-col"
+      >
+        <span>
+          Affected Locations
+        </span>
+      </div>
+      <div
+        class="pf-v5-l-grid__item pf-m-9-col"
+      >
+        <strong>
+          <a
+            aria-disabled="false"
+            class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+            data-ouia-component-id="taxonomy-inline-btn"
+            data-ouia-component-type="PF5/Button"
+            data-ouia-safe="true"
+            href="/locations/1-testLoc/edit"
+          >
+            testLoc
+          </a>
+        </strong>
+      </div>
+    </div>
+  </div>
+</div>
 `;

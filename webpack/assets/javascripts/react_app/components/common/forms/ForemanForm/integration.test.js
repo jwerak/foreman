@@ -1,4 +1,6 @@
 import React from 'react';
+import { fireEvent, act, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import IntegrationTestHelper from 'foremanReact/common/IntegrationTestHelper';
 
 import { submitForm } from '../../../../redux/actions/common/forms';
@@ -54,18 +56,20 @@ describe('ForemanForm integration test', () => {
 
     const testHelper = new IntegrationTestHelper(reducers, [APIMiddleware]);
 
-    const component = testHelper.mount(<ConnectedFormComponent {...props} />);
+    const { container } = testHelper.mount(<ConnectedFormComponent {...props} />);
 
-    const submitBtn = component.find('Button[variant="primary"]');
-    submitBtn.simulate('submit');
-    await IntegrationTestHelper.flushAllPromises();
-    component.update();
+    const submitBtn = container.querySelector('button[type="submit"]');
+    await act(async () => {
+      fireEvent.click(submitBtn);
+      await IntegrationTestHelper.flushAllPromises();
+    });
 
-    const formError = component.find('Form').prop('error');
+    await waitFor(() => {
+      const alert = container.querySelector('.pf-v5-c-alert, .pf-c-alert');
+      expect(alert).toBeInTheDocument();
+    });
 
-    expect(formError.errorMsgs).toBe(baseErrors);
-    expect(formError.severity).toBe(severity);
-
-    expect(component.find('Alert')).toMatchSnapshot();
+    const alert = container.querySelector('.pf-v5-c-alert, .pf-c-alert');
+    expect(alert).toMatchSnapshot();
   });
 });

@@ -1,17 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EditorRadioButton renders EditorRadioButton 1`] = `
-<li
-  className="active"
-  id="input-navitem"
->
-  <Button
-    isDisabled={false}
-    isInline={true}
-    onClick={[Function]}
-    variant="link"
+<div>
+  <li
+    class="active"
+    id="input-navitem"
   >
-    Editor
-  </Button>
-</li>
+    <button
+      aria-disabled="false"
+      class="pf-v5-c-button pf-m-link pf-m-inline"
+      data-ouia-component-id="OUIA-Generated-Button-link-1"
+      data-ouia-component-type="PF5/Button"
+      data-ouia-safe="true"
+      type="button"
+    >
+      Editor
+    </button>
+  </li>
+</div>
 `;
