@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
 
@@ -14,21 +14,74 @@ import {
 } from './EditorConstants';
 import './editor.scss';
 
-class Editor extends React.Component {
-  componentDidMount() {
+const Editor = ({
+  data,
+  changeDiffViewType,
+  changeEditorValue,
+  changeSetting,
+  changeTab,
+  diffViewType,
+  dismissErrorToast,
+  editorName,
+  errorText,
+  fetchAndPreview,
+  filteredHosts,
+  hosts,
+  importFile,
+  initializeEditor,
+  isFetchingHosts,
+  isLoading,
+  isMasked,
+  isMaximized,
+  isRendering,
+  isSearchingHosts,
+  isSelectOpen,
+  keyBinding,
+  mode,
+  onHostSearch,
+  onHostSelectToggle,
+  onSearchClear,
+  previewResult,
+  previewTemplate,
+  readOnly,
+  renderedEditorValue,
+  revertChanges,
+  searchQuery,
+  selectedHost,
+  selectedView,
+  showError,
+  theme,
+  autocompletion,
+  liveAutocompletion,
+  toggleModal,
+  toggleRenderView,
+  value,
+  templateKindId,
+}) => {
+  const {
+    name,
+    isSafemodeEnabled,
+    renderPath,
+    safemodeRenderPath,
+    showImport,
+    showPreview,
+    showHostSelector,
+    template,
+    title,
+  } = data;
+
+  useEffect(() => {
     const {
-      data: { hosts, templateClass, locked, template, type, dslCache },
-      initializeEditor,
-      isMasked,
-      isRendering,
-      readOnly,
-      previewResult,
-      selectedView,
-      showError,
-    } = this.props;
+      hosts: dataHosts,
+      templateClass,
+      locked,
+      template: dataTemplate,
+      type,
+      dslCache,
+    } = data;
 
     const initializeData = {
-      hosts,
+      hosts: dataHosts,
       isMasked,
       templateClass,
       isRendering,
@@ -37,198 +90,143 @@ class Editor extends React.Component {
       previewResult,
       selectedView,
       showError,
-      template,
+      template: dataTemplate,
       type,
       dslCache,
     };
     initializeEditor(initializeData);
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    const {
-      data: {
-        name,
-        isSafemodeEnabled,
-        renderPath,
-        safemodeRenderPath,
-        showImport,
-        showPreview,
-        showHostSelector,
-        template,
-        title,
-      },
-      changeDiffViewType,
-      changeEditorValue,
-      changeSetting,
-      changeTab,
-      diffViewType,
-      dismissErrorToast,
-      editorName,
-      errorText,
-      fetchAndPreview,
-      filteredHosts,
-      hosts,
-      importFile,
-      isFetchingHosts,
-      isLoading,
-      isMasked,
-      isMaximized,
-      isRendering,
-      isSearchingHosts,
-      isSelectOpen,
-      keyBinding,
-      mode,
-      onHostSearch,
-      onHostSelectToggle,
-      onSearchClear,
-      previewResult,
-      previewTemplate,
-      readOnly,
-      renderedEditorValue,
-      revertChanges,
-      searchQuery,
-      selectedHost,
-      selectedView,
-      showError,
-      theme,
-      autocompletion,
-      liveAutocompletion,
-      toggleModal,
-      toggleRenderView,
-      value,
-      templateKindId,
-    } = this.props;
+  const editorViewProps = {
+    value: isRendering ? previewResult : value,
+    mode: isRendering ? 'Text' : mode,
+    theme,
+    autocompletion,
+    liveAutocompletion,
+    keyBinding,
+    onChange: isRendering ? noop : changeEditorValue,
+    readOnly: readOnly || isRendering,
+    isMasked,
+  };
+  const editorNameTab = {
+    input: `${editorName}Code`,
+    preview: `${editorName}Preview`,
+  };
 
-    const editorViewProps = {
-      value: isRendering ? previewResult : value,
-      mode: isRendering ? 'Text' : mode,
-      theme,
-      autocompletion,
-      liveAutocompletion,
-      keyBinding,
-      onChange: isRendering ? noop : changeEditorValue,
-      readOnly: readOnly || isRendering,
-      isMasked,
-    };
-    const editorNameTab = {
-      input: `${editorName}Code`,
-      preview: `${editorName}Preview`,
-    };
-
-    return (
-      <div id="editor-container">
-        <Alert
-          id="preview_error_toast"
-          ouiaId="preview_error_toast"
-          variant="danger"
-          className={showError ? '' : 'hidden'}
-          actionClose={
-            <AlertActionCloseButton
-              className="close"
-              onClose={() => dismissErrorToast()}
-            />
-          }
-          title={errorText}
-        />
-        <EditorNavbar
-          changeDiffViewType={changeDiffViewType}
-          changeTab={changeTab}
-          changeSetting={changeSetting}
-          modes={EDITOR_MODES}
-          themes={EDITOR_THEMES}
-          keyBindings={EDITOR_KEYBINDINGS}
-          mode={isRendering ? 'Text' : mode}
-          theme={theme}
-          keyBinding={keyBinding}
-          autocompletion={autocompletion}
-          liveAutocompletion={liveAutocompletion}
-          value={value}
-          templateKindId={templateKindId}
-          renderedEditorValue={renderedEditorValue}
-          diffViewType={diffViewType}
-          template={template}
-          selectedView={selectedView}
-          isDiff={template ? value !== template : false}
-          isRendering={isRendering}
-          isLoading={isLoading}
-          isFetchingHosts={isFetchingHosts}
-          isSearchingHosts={isSearchingHosts}
-          importFile={importFile}
-          showImport={showImport}
-          showPreview={showPreview}
-          showHostSelector={showHostSelector}
-          revertChanges={revertChanges}
-          previewTemplate={previewTemplate}
-          hosts={hosts}
-          filteredHosts={filteredHosts}
-          selectedHost={selectedHost}
-          isSafemodeEnabled={isSafemodeEnabled}
-          renderPath={renderPath}
-          safemodeRenderPath={safemodeRenderPath}
-          toggleRenderView={toggleRenderView}
-          toggleModal={toggleModal}
-          previewResult={previewResult}
-          searchQuery={searchQuery}
-          onHostSelectToggle={onHostSelectToggle}
-          onHostSearch={onHostSearch}
-          onSearchClear={onSearchClear}
-          isSelectOpen={isSelectOpen}
-          showError={showError}
-          fetchAndPreview={fetchAndPreview}
-        />
-        <EditorView
-          {...editorViewProps}
-          key="editorPreview"
-          name={editorNameTab.preview}
-          isSelected={selectedView === 'preview'}
-          className="ace_editor_form ace_preview"
-        />
-        <EditorView
-          {...editorViewProps}
-          key="editorCode"
-          name={editorNameTab.input}
-          isSelected={selectedView === 'input'}
-          className="ace_editor_form ace_input"
-        />
-        <div
-          id="diff-table"
-          className={selectedView === 'diff' ? '' : 'hidden'}
-        >
-          <DiffView
-            oldText={template || ''}
-            newText={value}
-            viewType={diffViewType}
+  return (
+    <div id="editor-container">
+      <Alert
+        id="preview_error_toast"
+        ouiaId="preview_error_toast"
+        variant="danger"
+        className={showError ? '' : 'hidden'}
+        actionClose={
+          <AlertActionCloseButton
+            className="close"
+            onClose={() => dismissErrorToast()}
           />
-        </div>
-        <EditorModal
-          key="editorModal"
-          changeEditorValue={changeEditorValue}
-          changeDiffViewType={changeDiffViewType}
-          name={editorName}
-          title={title}
-          toggleModal={toggleModal}
-          diffViewType={diffViewType}
-          mode={mode}
-          theme={theme}
-          autocompletion={autocompletion}
-          liveAutocompletion={liveAutocompletion}
-          keyBinding={keyBinding}
-          readOnly={readOnly}
-          isMaximized={isMaximized}
-          template={template || ''}
-          editorValue={value}
-          previewValue={previewResult}
-          selectedView={selectedView}
-          isMasked={isMasked}
-          isRendering={isRendering}
+        }
+        title={errorText}
+      />
+      <EditorNavbar
+        changeDiffViewType={changeDiffViewType}
+        changeTab={changeTab}
+        changeSetting={changeSetting}
+        modes={EDITOR_MODES}
+        themes={EDITOR_THEMES}
+        keyBindings={EDITOR_KEYBINDINGS}
+        mode={isRendering ? 'Text' : mode}
+        theme={theme}
+        keyBinding={keyBinding}
+        autocompletion={autocompletion}
+        liveAutocompletion={liveAutocompletion}
+        value={value}
+        templateKindId={templateKindId}
+        renderedEditorValue={renderedEditorValue}
+        diffViewType={diffViewType}
+        template={template}
+        selectedView={selectedView}
+        isDiff={template ? value !== template : false}
+        isRendering={isRendering}
+        isLoading={isLoading}
+        isFetchingHosts={isFetchingHosts}
+        isSearchingHosts={isSearchingHosts}
+        importFile={importFile}
+        showImport={showImport}
+        showPreview={showPreview}
+        showHostSelector={showHostSelector}
+        revertChanges={revertChanges}
+        previewTemplate={previewTemplate}
+        hosts={hosts}
+        filteredHosts={filteredHosts}
+        selectedHost={selectedHost}
+        isSafemodeEnabled={isSafemodeEnabled}
+        renderPath={renderPath}
+        safemodeRenderPath={safemodeRenderPath}
+        toggleRenderView={toggleRenderView}
+        toggleModal={toggleModal}
+        previewResult={previewResult}
+        searchQuery={searchQuery}
+        onHostSelectToggle={onHostSelectToggle}
+        onHostSearch={onHostSearch}
+        onSearchClear={onSearchClear}
+        isSelectOpen={isSelectOpen}
+        showError={showError}
+        fetchAndPreview={fetchAndPreview}
+      />
+      <EditorView
+        {...editorViewProps}
+        key="editorPreview"
+        name={editorNameTab.preview}
+        isSelected={selectedView === 'preview'}
+        className="ace_editor_form ace_preview"
+      />
+      <EditorView
+        {...editorViewProps}
+        key="editorCode"
+        name={editorNameTab.input}
+        isSelected={selectedView === 'input'}
+        className="ace_editor_form ace_input"
+      />
+      <div
+        id="diff-table"
+        className={selectedView === 'diff' ? '' : 'hidden'}
+      >
+        <DiffView
+          oldText={template || ''}
+          newText={value}
+          viewType={diffViewType}
         />
-        {!readOnly && (
-          <textarea className="hidden" name={name} value={value} readOnly />
-        )}
       </div>
-    );
-  }
-}
+      <EditorModal
+        key="editorModal"
+        changeEditorValue={changeEditorValue}
+        changeDiffViewType={changeDiffViewType}
+        name={editorName}
+        title={title}
+        toggleModal={toggleModal}
+        diffViewType={diffViewType}
+        mode={mode}
+        theme={theme}
+        autocompletion={autocompletion}
+        liveAutocompletion={liveAutocompletion}
+        keyBinding={keyBinding}
+        readOnly={readOnly}
+        isMaximized={isMaximized}
+        template={template || ''}
+        editorValue={value}
+        previewValue={previewResult}
+        selectedView={selectedView}
+        isMasked={isMasked}
+        isRendering={isRendering}
+      />
+      {!readOnly && (
+        <textarea className="hidden" name={name} value={value} readOnly />
+      )}
+    </div>
+  );
+};
 
 Editor.propTypes = {
   data: PropTypes.shape({

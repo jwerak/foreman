@@ -70,43 +70,40 @@ const showAuditChanges = (
   return null;
 };
 
-class ExpansiveView extends React.Component {
-  showTemplateDiffIfAny() {
-    const { template } = this.props.auditedChanges;
+const ExpansiveView = ({
+  comment,
+  actionDisplayName,
+  auditedChanges,
+  auditedChangesWithIdToLabel,
+  details,
+}) => {
+  const showTemplateDiffIfAny = () => {
+    const { template } = auditedChanges;
     if (template && template[0] !== template[1]) {
       return <DiffContainer oldText={template[0]} newText={template[1]} />;
     }
     return null;
-  }
+  };
 
-  render() {
-    const {
-      comment,
-      actionDisplayName,
-      auditedChangesWithIdToLabel,
-      details,
-    } = this.props;
-
-    return (
-      <div className="grid-container">
-        {this.showTemplateDiffIfAny()}
-        {showAuditChanges(
-          actionDisplayName,
-          auditedChangesWithIdToLabel,
-          details
-        )}
-        {comment && (
-          <div className="details-row comment-section">
-            <p className="comment-title">
-              <strong>{__('Comments')}</strong>
-            </p>
-            <p className="comment-desc">{comment}</p>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="grid-container">
+      {showTemplateDiffIfAny()}
+      {showAuditChanges(
+        actionDisplayName,
+        auditedChangesWithIdToLabel,
+        details
+      )}
+      {comment && (
+        <div className="details-row comment-section">
+          <p className="comment-title">
+            <strong>{__('Comments')}</strong>
+          </p>
+          <p className="comment-desc">{comment}</p>
+        </div>
+      )}
+    </div>
+  );
+};
 
 ExpansiveView.propTypes = {
   actionDisplayName: PropTypes.string.isRequired,

@@ -7,15 +7,29 @@ import PF4BreadcrumbSwitcher from '../PF4/BreadcrumbSwitcher';
 import { BREADCRUMB_SWITCHER_PER_PAGE } from './BreadcrumbBarConstants';
 import './BreadcrumbBar.scss';
 
-class BreadcrumbBar extends React.Component {
-  handleOpen() {
-    const {
-      resource,
-      loadSwitcherResourcesByResource,
-      currentPage,
-      resourceUrl,
-      resourceSwitcherItems,
-    } = this.props;
+const BreadcrumbBar = ({
+  breadcrumbItems,
+  isSwitchable,
+  resource,
+  currentPage,
+  total,
+  resourceSwitcherItems,
+  resourceUrl,
+  isLoadingResources,
+  hasError,
+  isSwitcherOpen,
+  openSwitcher,
+  closeSwitcher,
+  loadSwitcherResourcesByResource,
+  searchQuery,
+  removeSearchQuery,
+  searchDebounceTimeout,
+  onSwitcherItemClick,
+  titleReplacement,
+  perPage,
+  isPf4,
+}) => {
+  const handleOpen = () => {
     const isUrlFormatValid = resourceSwitcherItems.length
       ? resourceSwitcherItems[0].href ===
         resource.switcherItemUrl?.replace(':id', resourceSwitcherItems[0].id)
@@ -27,91 +41,68 @@ class BreadcrumbBar extends React.Component {
     ) {
       loadSwitcherResourcesByResource(resource);
     }
-  }
+  };
 
-  render() {
-    const {
-      breadcrumbItems,
-      isSwitchable,
-      resource,
-      currentPage,
-      total,
-      resourceSwitcherItems,
-      isLoadingResources,
-      hasError,
-      isSwitcherOpen,
-      openSwitcher,
-      closeSwitcher,
-      loadSwitcherResourcesByResource,
-      searchQuery,
-      removeSearchQuery,
-      searchDebounceTimeout,
-      onSwitcherItemClick,
-      titleReplacement,
-      perPage,
-      isPf4,
-    } = this.props;
-    const isTitle = breadcrumbItems.length === 1;
-    const handleSwitcherItemClick = (e, href) => {
-      closeSwitcher();
-      if (onSwitcherItemClick) {
-        onSwitcherItemClick(e, href);
-      } else {
-        window.location.href = href;
-      }
-    };
+  const isTitle = breadcrumbItems.length === 1;
+  const handleSwitcherItemClick = (e, href) => {
+    closeSwitcher();
+    if (onSwitcherItemClick) {
+      onSwitcherItemClick(e, href);
+    } else {
+      window.location.href = href;
+    }
+  };
 
-    return (
-      <div className={isPf4 ? 'breadcrumb-bar-pf4' : 'breadcrumb-bar'}>
-        <Breadcrumb
-          items={breadcrumbItems}
-          isTitle={isTitle}
-          titleReplacement={titleReplacement}
-          className="breadcrumbs-list"
-          ouiaId="breadcrumbs-list"
-        >
-          {isSwitchable && (
-            <PF4BreadcrumbSwitcher
-              isOpen={isSwitcherOpen}
-              isLoading={isLoadingResources}
-              hasError={hasError}
-              items={resourceSwitcherItems}
-              currentPage={currentPage}
-              total={total}
-              openSwitcher={openSwitcher}
-              onHide={() => closeSwitcher()}
-              onOpen={() => this.handleOpen()}
-              onSetPage={pageNumber => {
-                loadSwitcherResourcesByResource(resource, {
-                  page: pageNumber,
-                  searchQuery,
-                  perPage,
-                });
-              }}
-              onSearchChange={searchTerm =>
-                loadSwitcherResourcesByResource(resource, {
-                  searchQuery: searchTerm,
-                  perPage,
-                })
-              }
-              onPerPageSelect={newPerPage => {
-                loadSwitcherResourcesByResource(resource, {
-                  perPage: newPerPage,
-                });
-              }}
-              perPage={perPage}
-              searchValue={searchQuery}
-              onSearchClear={() => removeSearchQuery(resource)}
-              searchDebounceTimeout={searchDebounceTimeout}
-              onResourceClick={handleSwitcherItemClick}
-            />
-          )}
-        </Breadcrumb>
-        {!isTitle && !isPf4 && <hr className="breadcrumb-line" />}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={isPf4 ? 'breadcrumb-bar-pf4' : 'breadcrumb-bar'}>
+      <Breadcrumb
+        items={breadcrumbItems}
+        isTitle={isTitle}
+        titleReplacement={titleReplacement}
+        className="breadcrumbs-list"
+        ouiaId="breadcrumbs-list"
+      >
+        {isSwitchable && (
+          <PF4BreadcrumbSwitcher
+            isOpen={isSwitcherOpen}
+            isLoading={isLoadingResources}
+            hasError={hasError}
+            items={resourceSwitcherItems}
+            currentPage={currentPage}
+            total={total}
+            openSwitcher={openSwitcher}
+            onHide={() => closeSwitcher()}
+            onOpen={() => handleOpen()}
+            onSetPage={pageNumber => {
+              loadSwitcherResourcesByResource(resource, {
+                page: pageNumber,
+                searchQuery,
+                perPage,
+              });
+            }}
+            onSearchChange={searchTerm =>
+              loadSwitcherResourcesByResource(resource, {
+                searchQuery: searchTerm,
+                perPage,
+              })
+            }
+            onPerPageSelect={newPerPage => {
+              loadSwitcherResourcesByResource(resource, {
+                perPage: newPerPage,
+              });
+            }}
+            perPage={perPage}
+            searchValue={searchQuery}
+            onSearchClear={() => removeSearchQuery(resource)}
+            searchDebounceTimeout={searchDebounceTimeout}
+            onResourceClick={handleSwitcherItemClick}
+          />
+        )}
+      </Breadcrumb>
+      {!isTitle && !isPf4 && <hr className="breadcrumb-line" />}
+    </div>
+  );
+};
 
 BreadcrumbBar.propTypes = {
   isSwitchable: PropTypes.bool,

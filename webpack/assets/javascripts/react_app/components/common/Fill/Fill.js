@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-class Fill extends React.Component {
-  componentDidMount() {
-    const {
-      children,
-      overrideProps,
-      registerFillComponent,
-      slotId,
-      weight,
-      id,
-    } = this.props;
-
+const Fill = ({
+  children,
+  overrideProps,
+  registerFillComponent,
+  unregisterFillComponent,
+  slotId,
+  weight,
+  id,
+}) => {
+  useEffect(() => {
     registerFillComponent(slotId, overrideProps, id, children, weight);
-  }
-  componentWillUnmount() {
-    const { slotId, unregisterFillComponent, id } = this.props;
 
-    unregisterFillComponent(slotId, id);
-  }
-  render() {
-    return null;
-  }
-}
+    return () => {
+      unregisterFillComponent(slotId, id);
+    };
+  }, []);
+
+  return null;
+};
 
 Fill.propTypes = {
   // a component to be injected on a slot

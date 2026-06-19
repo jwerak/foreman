@@ -1,15 +1,14 @@
-import { pick } from 'lodash';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Alert, Button, Divider, Title, Tooltip } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import Controller from './controller/';
 import * as VmWareActions from '../../../../redux/actions/hosts/storage/vmware';
 import { MaxDisksPerController } from './StorageContainer.consts';
 import { translate as __ } from '../../../../../react_app/common/I18n';
-import { noop } from '../../../../common/helpers';
 import './StorageContainer.scss';
 import { STATUS } from '../../../../constants';
 
@@ -25,17 +24,37 @@ export const controllersToJsonString = (controllers, volumes) =>
     volumes: volumes.map(v => filterKeyFromVolume(v)),
   });
 
-class StorageContainer extends React.Component {
-  componentDidMount() {
-    const {
-      data: { config, controllers, volumes, cluster },
-      initController,
-    } = this.props;
-    initController(config, cluster, controllers, volumes);
-  }
+const StorageContainer = ({ data }) => {
+  const dispatch = useDispatch();
+  const actions = useMemo(
+    () => bindActionCreators(VmWareActions, dispatch),
+    [dispatch]
+  );
 
-  getDatastoresStatus() {
-    const { datastoresLoading, datastoresError } = this.props;
+  const {
+    controllers,
+    config,
+    cluster,
+    volumes,
+    datastores,
+    datastoresLoading,
+    datastoresError,
+    storagePods,
+    storagePodsLoading,
+    storagePodsError,
+  } = useSelector(state => state.hosts.storage.vmware);
+
+  useEffect(() => {
+    const {
+      config: initConfig,
+      controllers: initControllers,
+      volumes: initVolumes,
+      cluster: initCluster,
+    } = data;
+    actions.initController(initConfig, initCluster, initControllers, initVolumes);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const getDatastoresStatus = () => {
     if (datastoresError) {
       return STATUS.ERROR;
     }
@@ -43,10 +62,9 @@ class StorageContainer extends React.Component {
       return STATUS.PENDING;
     }
     return STATUS.RESOLVED;
-  }
+  };
 
-  getStoragePodsStatus() {
-    const { storagePodsLoading, storagePodsError } = this.props;
+  const getStoragePodsStatus = () => {
     if (storagePodsError) {
       return STATUS.ERROR;
     }
@@ -54,24 +72,10 @@ class StorageContainer extends React.Component {
       return STATUS.PENDING;
     }
     return STATUS.RESOLVED;
-  }
+  };
 
-  renderControllers(controllers) {
-    const {
-      addDisk,
-      updateController,
-      removeDisk,
-      updateDisk,
-      removeController,
-      config,
-      volumes,
-      datastores,
-      datastoresError,
-      storagePods,
-      storagePodsError,
-    } = this.props;
-
-    return controllers.map((controller, idx) => {
+  const renderControllers = ctrls =>
+    ctrls.map((controller, idx) => {
       const controllerVolumes = volumes.filter(
         v => v.controllerKey === controller.key
       );
@@ -80,90 +84,88 @@ class StorageContainer extends React.Component {
         <React.Fragment key={controller.key}>
           {idx > 0 && <Divider className="controller-divider" />}
           <Controller
-            removeController={() => removeController(controller.key)}
+            removeController={() => actions.removeController(controller.key)}
             controller={controller}
             controllerVolumes={controllerVolumes}
             addDiskEnabled={controllerVolumes.length < MaxDisksPerController}
-            addDisk={() => addDisk(controller.key)}
-            updateDisk={updateDisk}
-            removeDisk={removeDisk}
-            updateController={newValues => updateController(idx, newValues)}
+            addDisk={() => actions.addDisk(controller.key)}
+            updateDisk={actions.updateDisk}
+            removeDisk={actions.removeDisk}
+            updateController={newValues =>
+              actions.updateController(idx, newValues)
+            }
             config={config}
             datastores={datastores}
             datastoresError={datastoresError}
-            datastoresStatus={this.getDatastoresStatus()}
+            datastoresStatus={getDatastoresStatus()}
             storagePods={storagePods}
             storagePodsError={storagePodsError}
-            storagePodsStatus={this.getStoragePodsStatus()}
+            storagePodsStatus={getStoragePodsStatus()}
           />
         </React.Fragment>
       );
     });
+
+  const paramsScope = config && config.paramsScope;
+  const enableAddControllerBtn =
+    config && config.addControllerEnabled && !config.vmExists;
+  const hasControllers = controllers.length > 0;
+
+  if (!cluster) {
+    return (
+      <Alert
+        variant="info"
+        ouiaId="alert-info"
+        title={__('Please select a cluster')}
+      />
+    );
   }
 
-  render() {
-    const { addController, controllers, volumes, cluster, config } = this.props;
-    const paramsScope = config && config.paramsScope;
-    const enableAddControllerBtn =
-      config && config.addControllerEnabled && !config.vmExists;
-    const hasControllers = controllers.length > 0;
-
-    if (!cluster) {
-      return (
-        <Alert
-          variant="info"
-          ouiaId="alert-info"
-          title={__('Please select a cluster')}
-        />
-      );
-    }
-
-    return (
-      <div className="vmware-storage-container">
-        <Title headingLevel="h2" size="lg" ouiaId="storage-title">
-          {__('Storage')}
-        </Title>
-        <div className="storage-body">
-          {this.renderControllers(controllers)}
-          {hasControllers && <Divider className="controller-divider" />}
-          {!enableAddControllerBtn ? (
-            <Tooltip content={__('Cannot add controllers to an existing VM')}>
-              <Button
-                variant="link"
-                icon={<PlusCircleIcon />}
-                className="btn-add-controller"
-                ouiaId="btn-add-controller"
-                isAriaDisabled
-              >
-                {hasControllers
-                  ? __('Create another controller')
-                  : __('Create controller')}
-              </Button>
-            </Tooltip>
-          ) : (
+  return (
+    <div className="vmware-storage-container">
+      <Title headingLevel="h2" size="lg" ouiaId="storage-title">
+        {__('Storage')}
+      </Title>
+      <div className="storage-body">
+        {renderControllers(controllers)}
+        {hasControllers && <Divider className="controller-divider" />}
+        {!enableAddControllerBtn ? (
+          <Tooltip content={__('Cannot add controllers to an existing VM')}>
             <Button
               variant="link"
               icon={<PlusCircleIcon />}
               className="btn-add-controller"
               ouiaId="btn-add-controller"
-              onClick={addController}
+              isAriaDisabled
             >
               {hasControllers
                 ? __('Create another controller')
                 : __('Create controller')}
             </Button>
-          )}
-          <input
-            value={controllersToJsonString(controllers, volumes)}
-            id="controller_hidden"
-            name={paramsScope}
-            type="hidden"
-          />
-        </div>
+          </Tooltip>
+        ) : (
+          <Button
+            variant="link"
+            icon={<PlusCircleIcon />}
+            className="btn-add-controller"
+            ouiaId="btn-add-controller"
+            onClick={actions.addController}
+          >
+            {hasControllers
+              ? __('Create another controller')
+              : __('Create controller')}
+          </Button>
+        )}
+        <input
+          value={controllersToJsonString(controllers, volumes)}
+          id="controller_hidden"
+          name={paramsScope}
+          type="hidden"
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 StorageContainer.propTypes = {
   data: PropTypes.shape({
@@ -172,71 +174,6 @@ StorageContainer.propTypes = {
     volumes: PropTypes.array.isRequired,
     cluster: PropTypes.string,
   }).isRequired,
-  controllers: PropTypes.array.isRequired,
-  config: PropTypes.object,
-  volumes: PropTypes.array,
-  cluster: PropTypes.string,
-  datastoresLoading: PropTypes.bool,
-  datastores: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      capacity: PropTypes.number,
-      freespace: PropTypes.number,
-      uncommitted: PropTypes.number,
-    })
-  ),
-  datastoresError: PropTypes.string,
-  storagePodsLoading: PropTypes.bool,
-  storagePods: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      capacity: PropTypes.number,
-      freespace: PropTypes.number,
-    })
-  ),
-  storagePodsError: PropTypes.string,
-  addController: PropTypes.func,
-  addDisk: PropTypes.func,
-  updateController: PropTypes.func,
-  removeDisk: PropTypes.func,
-  updateDisk: PropTypes.func,
-  removeController: PropTypes.func,
-  initController: PropTypes.func,
 };
 
-StorageContainer.defaultProps = {
-  config: {},
-  cluster: '',
-  volumes: [],
-  datastoresLoading: false,
-  storagePodsLoading: false,
-  datastores: [],
-  storagePods: [],
-  datastoresError: undefined,
-  storagePodsError: undefined,
-  addController: noop,
-  addDisk: noop,
-  updateController: noop,
-  removeDisk: noop,
-  updateDisk: noop,
-  removeController: noop,
-  initController: noop,
-};
-
-const mapStateToProps = state =>
-  pick(state.hosts.storage.vmware, [
-    'controllers',
-    'config',
-    'cluster',
-    'volumes',
-    'datastores',
-    'datastoresLoading',
-    'datastoresError',
-    'storagePods',
-    'storagePodsLoading',
-    'storagePodsError',
-  ]);
-
-export default connect(mapStateToProps, VmWareActions)(StorageContainer);
+export default StorageContainer;

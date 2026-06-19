@@ -43,8 +43,11 @@ export const rtlHelpers = {
    * @returns {Object} RTL render result
    */
   renderWithI18n: (component, mockDate = new Date(), timezone = 'UTC') => {
-    const IntlWrapper = i18nProviderWrapperFactory(mockDate, timezone);
-    return render(React.createElement(IntlWrapper, {}, component));
+    const withIntl = i18nProviderWrapperFactory(mockDate, timezone);
+    // i18nProviderWrapperFactory returns a HOC; wrap a simple component that renders children
+    const Container = ({ children }) => <>{children}</>;
+    const WrappedContainer = withIntl(Container);
+    return render(<WrappedContainer>{component}</WrappedContainer>);
   },
 
   /**
@@ -62,12 +65,14 @@ export const rtlHelpers = {
     timezone = 'UTC'
   ) => {
     const store = createTestStore(initialState);
-    const IntlWrapper = i18nProviderWrapperFactory(mockDate, timezone);
+    const withIntl = i18nProviderWrapperFactory(mockDate, timezone);
+    const Container = ({ children }) => <>{children}</>;
+    const WrappedContainer = withIntl(Container);
 
     return {
       ...render(
         <Provider store={store}>
-          {React.createElement(IntlWrapper, {}, component)}
+          <WrappedContainer>{component}</WrappedContainer>
         </Provider>
       ),
       store,
