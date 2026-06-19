@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'patternfly-react';
+import { Title } from '@patternfly/react-core';
 import { useModalContext } from '../ForemanModalHooks';
 
-const ForemanModalHeader = props => {
+const ForemanModalHeader = ({ children, className, ...rest }) => {
   const { title } = useModalContext();
-  // title will be falsey if its value is the default ''
-  // Render the provided children, or default markup if none given
   return (
-    <Modal.Header closeButton {...props}>
-      {title && <Modal.Title>{title}</Modal.Title>}
-      {props.children}
-    </Modal.Header>
+    <div className={`foreman-modal-header${className ? ` ${className}` : ''}`} {...rest}>
+      {title && (
+        <Title headingLevel="h4" size="2xl">
+          {title}
+        </Title>
+      )}
+      {children}
+    </div>
   );
 };
 

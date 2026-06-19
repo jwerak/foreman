@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { FieldLevelHelp } from 'patternfly-react';
+import { Popover, Button, Icon } from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons';
 
 import CommonForm from './CommonForm';
 
@@ -48,7 +49,15 @@ describe('common Form', () => {
         name="name"
         label="Required form field"
         required
-        tooltipHelp={<FieldLevelHelp content="This is a helpful tooltip" />}
+        tooltipHelp={
+          <Popover bodyContent="This is a helpful tooltip">
+            <Button type="button" variant="plain" onClick={e => e.preventDefault()}>
+              <Icon isInline>
+                <HelpIcon />
+              </Icon>
+            </Button>
+          </Popover>
+        }
       />
     );
 

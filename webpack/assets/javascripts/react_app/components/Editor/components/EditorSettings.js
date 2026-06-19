@@ -1,15 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, MenuItem, Button } from 'patternfly-react';
 import { CogIcon } from '@patternfly/react-icons';
 import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownList,
   Icon,
+  MenuToggle,
   Popover,
   PopoverPosition,
   Tooltip,
   TooltipPosition,
 } from '@patternfly/react-core';
 import { translate as __ } from '../../../common/I18n';
+
+const SettingsDropdown = ({ id, label, isDisabled, items, onSelect }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Dropdown
+      id={id}
+      isOpen={isOpen}
+      onOpenChange={open => setIsOpen(open)}
+      onSelect={() => setIsOpen(false)}
+      toggle={toggleRef => (
+        <MenuToggle
+          ref={toggleRef}
+          isDisabled={isDisabled}
+          onClick={() => setIsOpen(prev => !prev)}
+          isExpanded={isOpen}
+        >
+          {label}
+        </MenuToggle>
+      )}
+    >
+      <DropdownList>
+        {items.map((item, i) => (
+          <DropdownItem key={i} onClick={() => onSelect(item)}>
+            {item}
+          </DropdownItem>
+        ))}
+      </DropdownList>
+    </Dropdown>
+  );
+};
+
+SettingsDropdown.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  isDisabled: PropTypes.bool,
+  items: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
+SettingsDropdown.defaultProps = {
+  isDisabled: false,
+};
 
 const EditorSettings = ({
   selectedView,
@@ -34,54 +81,32 @@ const EditorSettings = ({
         <div>
           <div className="cog-popover-dropdown">
             <div className="cog-popover-dropdown-title">{__('Syntax')}</div>
-            <Dropdown disabled={selectedView === 'preview'} id="mode-dropdown">
-              <Dropdown.Toggle>{mode}</Dropdown.Toggle>
-              <Dropdown.Menu id="settings-dropdown">
-                {modes.map((aceMode, i) => (
-                  <MenuItem
-                    key={i}
-                    onClick={() => changeSetting({ mode: aceMode })}
-                  >
-                    {aceMode}
-                  </MenuItem>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <SettingsDropdown
+              id="mode-dropdown"
+              label={mode}
+              isDisabled={selectedView === 'preview'}
+              items={modes}
+              onSelect={aceMode => changeSetting({ mode: aceMode })}
+            />
           </div>
           <div className="cog-popover-dropdown">
             <div className="cog-popover-dropdown-title">{__('Keybind')}</div>
-            <Dropdown
-              disabled={selectedView === 'preview'}
+            <SettingsDropdown
               id="keybindings-dropdown"
-            >
-              <Dropdown.Toggle>{keyBinding}</Dropdown.Toggle>
-              <Dropdown.Menu id="settings-dropdown">
-                {keyBindings.map((keyBind, i) => (
-                  <MenuItem
-                    key={i}
-                    onClick={() => changeSetting({ keyBinding: keyBind })}
-                  >
-                    {keyBind}
-                  </MenuItem>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+              label={keyBinding}
+              isDisabled={selectedView === 'preview'}
+              items={keyBindings}
+              onSelect={keyBind => changeSetting({ keyBinding: keyBind })}
+            />
           </div>
           <div className="cog-popover-dropdown">
             <div className="cog-popover-dropdown-title">{__('Theme')}</div>
-            <Dropdown id="themes-dropdown">
-              <Dropdown.Toggle>{theme}</Dropdown.Toggle>
-              <Dropdown.Menu id="settings-dropdown">
-                {themes.map((themeKey, i) => (
-                  <MenuItem
-                    key={i}
-                    onClick={() => changeSetting({ theme: themeKey })}
-                  >
-                    {themeKey}
-                  </MenuItem>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <SettingsDropdown
+              id="themes-dropdown"
+              label={theme}
+              items={themes}
+              onSelect={themeKey => changeSetting({ theme: themeKey })}
+            />
           </div>
           <div className="cog-popover-dropdown">
             <div className="cog-popover-dropdown-title">
@@ -121,7 +146,7 @@ const EditorSettings = ({
       triggerRef={() => document.getElementById('cog-btn')}
     />
     <Tooltip content={__('Settings')} position={TooltipPosition.top}>
-      <Button className="editor-button" id="cog-btn" bsStyle="link">
+      <Button className="editor-button" id="cog-btn" variant="link">
         <Icon size="md">
           <CogIcon />
         </Icon>

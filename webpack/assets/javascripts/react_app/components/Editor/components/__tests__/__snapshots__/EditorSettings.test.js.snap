@@ -13,89 +13,23 @@ exports[`EditorSettings renders EditorSettings 1`] = `
           >
             Syntax
           </div>
-          <ForwardRef
-            disabled={false}
+          <SettingsDropdown
             id="mode-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              Ruby
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Text
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Json
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Ruby
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Html_ruby
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Sh
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Xml
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Yaml
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={false}
+            items={
+              Array [
+                "Text",
+                "Json",
+                "Ruby",
+                "Html_ruby",
+                "Sh",
+                "Xml",
+                "Yaml",
+              ]
+            }
+            label="Ruby"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -105,53 +39,19 @@ exports[`EditorSettings renders EditorSettings 1`] = `
           >
             Keybind
           </div>
-          <ForwardRef
-            disabled={false}
+          <SettingsDropdown
             id="keybindings-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              vim
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Default
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Emacs
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Vim
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={false}
+            items={
+              Array [
+                "Default",
+                "Emacs",
+                "Vim",
+              ]
+            }
+            label="vim"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -161,43 +61,18 @@ exports[`EditorSettings renders EditorSettings 1`] = `
           >
             Theme
           </div>
-          <ForwardRef
+          <SettingsDropdown
             id="themes-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              Github
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Github
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Monokai
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={false}
+            items={
+              Array [
+                "Github",
+                "Monokai",
+              ]
+            }
+            label="Github"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -254,13 +129,9 @@ exports[`EditorSettings renders EditorSettings 1`] = `
     position="top"
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
       className="editor-button"
-      disabled={false}
       id="cog-btn"
+      variant="link"
     >
       <Icon
         size="md"
@@ -285,89 +156,23 @@ exports[`EditorSettings renders EditorSettings w/preview 1`] = `
           >
             Syntax
           </div>
-          <ForwardRef
-            disabled={true}
+          <SettingsDropdown
             id="mode-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              Ruby
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Text
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Json
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Ruby
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Html_ruby
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Sh
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Xml
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Yaml
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={true}
+            items={
+              Array [
+                "Text",
+                "Json",
+                "Ruby",
+                "Html_ruby",
+                "Sh",
+                "Xml",
+                "Yaml",
+              ]
+            }
+            label="Ruby"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -377,53 +182,19 @@ exports[`EditorSettings renders EditorSettings w/preview 1`] = `
           >
             Keybind
           </div>
-          <ForwardRef
-            disabled={true}
+          <SettingsDropdown
             id="keybindings-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              vim
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Default
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Emacs
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Vim
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={true}
+            items={
+              Array [
+                "Default",
+                "Emacs",
+                "Vim",
+              ]
+            }
+            label="vim"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -433,43 +204,18 @@ exports[`EditorSettings renders EditorSettings w/preview 1`] = `
           >
             Theme
           </div>
-          <ForwardRef
+          <SettingsDropdown
             id="themes-dropdown"
-          >
-            <DropdownToggle
-              bsClass="dropdown-toggle"
-              bsRole="toggle"
-              open={false}
-              useAnchor={false}
-            >
-              Github
-            </DropdownToggle>
-            <DropdownMenu
-              bsClass="dropdown-menu"
-              bsRole="menu"
-              id="settings-dropdown"
-              pullRight={false}
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Github
-              </MenuItem>
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-                onClick={[Function]}
-              >
-                Monokai
-              </MenuItem>
-            </DropdownMenu>
-          </ForwardRef>
+            isDisabled={false}
+            items={
+              Array [
+                "Github",
+                "Monokai",
+              ]
+            }
+            label="Github"
+            onSelect={[Function]}
+          />
         </div>
         <div
           className="cog-popover-dropdown"
@@ -526,13 +272,9 @@ exports[`EditorSettings renders EditorSettings w/preview 1`] = `
     position="top"
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
       className="editor-button"
-      disabled={false}
       id="cog-btn"
+      variant="link"
     >
       <Icon
         size="md"

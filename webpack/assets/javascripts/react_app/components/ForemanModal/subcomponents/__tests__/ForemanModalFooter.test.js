@@ -43,9 +43,9 @@ describe('ForemanModal.Footer', () => {
       expect(contextValues.onClose).toHaveBeenCalled();
     });
 
-    it('passes props to PF component using spread', () => {
+    it('passes props to the wrapper element using spread', () => {
       const { container } = render(<ForemanModalFooter className="custom-class" />);
-      const modalFooter = container.querySelector('.modal-footer');
+      const modalFooter = container.querySelector('.foreman-modal-footer');
       expect(modalFooter).toHaveClass('custom-class');
     });
   });

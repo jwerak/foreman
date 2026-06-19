@@ -7,16 +7,12 @@ exports[`Form should accept base error title 1`] = `
 >
   <Alert
     className="base in fade"
-    onDismiss={null}
-    type="danger"
+    title="Oops"
+    variant="danger"
   >
-    <AlertBody
-      title="Oops"
-    >
-      <span>
-        invalid something
-      </span>
-    </AlertBody>
+    <span>
+      invalid something
+    </span>
   </Alert>
   <FormActions
     disabled={false}
@@ -33,16 +29,12 @@ exports[`Form should dispaly form errors as warning 1`] = `
 >
   <Alert
     className="base in fade"
-    onDismiss={null}
-    type="warning"
+    title="Unable to save. "
+    variant="warning"
   >
-    <AlertBody
-      title="Unable to save. "
-    >
-      <span>
-        Do not feed the trolls
-      </span>
-    </AlertBody>
+    <span>
+      Do not feed the trolls
+    </span>
   </Alert>
   <FormActions
     disabled={false}
@@ -59,23 +51,19 @@ exports[`Form should display multiple base errors 1`] = `
 >
   <Alert
     className="base in fade"
-    onDismiss={null}
-    type="danger"
+    title="Unable to save. "
+    variant="danger"
   >
-    <AlertBody
-      title="Unable to save. "
+    <li
+      key="0"
     >
-      <li
-        key="0"
-      >
-        invalid something
-      </li>
-      <li
-        key="1"
-      >
-        error too
-      </li>
-    </AlertBody>
+      invalid something
+    </li>
+    <li
+      key="1"
+    >
+      error too
+    </li>
   </Alert>
   <FormActions
     disabled={false}
@@ -92,16 +80,12 @@ exports[`Form should display one base error 1`] = `
 >
   <Alert
     className="base in fade"
-    onDismiss={null}
-    type="danger"
+    title="Unable to save. "
+    variant="danger"
   >
-    <AlertBody
-      title="Unable to save. "
-    >
-      <span>
-        invalid something
-      </span>
-    </AlertBody>
+    <span>
+      invalid something
+    </span>
   </Alert>
   <FormActions
     disabled={false}

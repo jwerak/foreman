@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button } from 'patternfly-react';
+import { Button } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ const RedirectCancelButton = props => {
 
   return (
     <Link to={props.cancelPath}>
-      <Button>{__('Cancel')}</Button>
+      <Button variant="link">{__('Cancel')}</Button>
     </Link>
   );
 };

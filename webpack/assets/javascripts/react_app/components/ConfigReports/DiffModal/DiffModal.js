@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal } from 'patternfly-react';
-import { Icon, Button } from '@patternfly/react-core';
+import { Modal, Icon, Button } from '@patternfly/react-core';
 import { TimesIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
@@ -19,9 +18,9 @@ const DiffModal = ({
   toggleModal,
   diffViewType,
   changeViewType,
-}) => (
-  <Modal show={isOpen} onHide={toggleModal} className="diff-modal">
-    <Modal.Header>
+}) => {
+  const header = (
+    <div className="diff-modal-header">
       <h4 id="diff-modal-h4">{title}</h4>
       <Button
         ouiaId="diff-modal-close-button"
@@ -34,19 +33,31 @@ const DiffModal = ({
         </Icon>
       </Button>
       <DiffToggle changeState={changeViewType} stateView={diffViewType} />
-    </Modal.Header>
-    <Modal.Body className="diff-modal-body">
-      <div id="diff-table">
-        <DiffView
-          oldText={oldText}
-          newText={newText}
-          patch={diff}
-          viewType={diffViewType}
-        />
+    </div>
+  );
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={toggleModal}
+      className="diff-modal"
+      header={header}
+      aria-labelledby="diff-modal-h4"
+      hasNoBodyWrapper
+    >
+      <div className="diff-modal-body">
+        <div id="diff-table">
+          <DiffView
+            oldText={oldText}
+            newText={newText}
+            patch={diff}
+            viewType={diffViewType}
+          />
+        </div>
       </div>
-    </Modal.Body>
-  </Modal>
-);
+    </Modal>
+  );
+};
 
 DiffModal.propTypes = {
   title: PropTypes.string,

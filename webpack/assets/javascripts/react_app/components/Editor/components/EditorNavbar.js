@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Nav, Spinner, Alert, Button } from 'patternfly-react';
+import { Alert, Button, Spinner } from '@patternfly/react-core';
 import { translate as __ } from '../../../common/I18n';
 import AutocompleteInput from '../../common/AutocompleteInput/AutocompleteInput';
 import EditorRadioButton from './EditorRadioButton';
@@ -109,7 +109,7 @@ const EditorNavbar = ({
 
   return (
     <div className="navbar navbar-form navbar-full-width navbar-editor">
-      <Nav className="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary">
+      <ul className="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary">
         <EditorRadioButton
           stateView={selectedView}
           btnView="input"
@@ -171,7 +171,7 @@ const EditorNavbar = ({
                 />
                 {isFetchingHosts && (
                   <div id="editor-host-fetch-spinner">
-                    <Spinner size="sm" loading />
+                    <Spinner size="sm" />
                   </div>
                 )}
               </>
@@ -186,10 +186,10 @@ const EditorNavbar = ({
               previewResult !== '' &&
               renderedEditorValue !== value && (
                 <div id="outdated-preview-alert">
-                  <Alert type="warning">
-                    {__('Preview is outdated.')}
+                  <Alert variant="warning" isInline isPlain title={__('Preview is outdated.')}>
                     <Button
-                      bsStyle="link"
+                      variant="link"
+                      isInline
                       onClick={() =>
                         previewTemplate({
                           host: selectedHost,
@@ -205,12 +205,12 @@ const EditorNavbar = ({
               )}
             {isLoading && (
               <div id="preview-spinner">
-                <Spinner size="sm" loading />
+                <Spinner size="sm" />
               </div>
             )}
           </>
         )}
-      </Nav>
+      </ul>
       <EditorOptions
         hosts={hosts}
         value={value}

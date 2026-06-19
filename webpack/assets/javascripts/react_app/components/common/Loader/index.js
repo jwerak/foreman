@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Spinner } from 'patternfly-react';
+import { Spinner } from '@patternfly/react-core';
 import { STATUS } from '../../../constants';
 import { deprecate } from '../../../common/DeprecationService';
 import MessageBox from '../MessageBox';
@@ -8,14 +8,14 @@ import './Loader.css';
 
 const loaderSpinner = spinnerSize => (
   <div className="loader-root">
-    <Spinner loading size={spinnerSize} />
+    <Spinner size={spinnerSize} aria-label="Loading" />
   </div>
 );
 
 const SimpleLoader = ({ spinnerSize }) => {
   useEffect(() => {
     deprecate(
-      'common/Loader (patternfly-react Spinner)',
+      'common/Loader',
       'Spinner from @patternfly/react-core',
       '5.1'
     );
@@ -35,7 +35,7 @@ SimpleLoader.defaultProps = {
 const Loader = ({ status, children, spinnerSize }) => {
   useEffect(() => {
     deprecate(
-      'common/Loader (patternfly-react Spinner)',
+      'common/Loader',
       'Spinner from @patternfly/react-core',
       '5.1'
     );

@@ -2,10 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, FormControl } from 'patternfly-react';
 import { ArrowsAltIcon, UndoIcon, UploadIcon } from '@patternfly/react-icons';
 
-import { Tooltip, TooltipPosition, Icon } from '@patternfly/react-core';
+import { Button, Tooltip, TooltipPosition, Icon } from '@patternfly/react-core';
 import { translate as __ } from '../../../common/I18n';
 import DiffToggle from '../../DiffView/DiffToggle';
 import EditorSettings from './EditorSettings';
@@ -72,7 +71,7 @@ class EditorOptions extends React.Component {
                   if (selectedView !== 'input') changeTab('input');
                 }
               }}
-              bsStyle="link"
+              variant="link"
             >
               <Icon size="md">
                 <UndoIcon />
@@ -81,10 +80,10 @@ class EditorOptions extends React.Component {
           </Tooltip>
         ) : (
           <Button
-            disabled
+            isDisabled
             className="editor-button"
             id="undo-btn"
-            bsStyle="link"
+            variant="link"
           >
             <Icon size="md">
               <UndoIcon />
@@ -94,17 +93,17 @@ class EditorOptions extends React.Component {
         {showImport && (
           <Tooltip content={__('Import File')} position={TooltipPosition.top}>
             <Button
-              disabled={selectedView !== 'input'}
+              isDisabled={selectedView !== 'input'}
               className="import-button"
               id="import-btn"
-              bsStyle="link"
+              variant="link"
               onClick={() => this.fileDialog()}
             >
               <Icon size="md">
                 <UploadIcon />
               </Icon>
-              <FormControl
-                inputRef={ref => {
+              <input
+                ref={ref => {
                   this.fileInput = ref;
                 }}
                 className="hidden"
@@ -131,7 +130,7 @@ class EditorOptions extends React.Component {
             className="editor-button"
             id="fullscreen-btn"
             onClick={toggleModal}
-            bsStyle="link"
+            variant="link"
           >
             <Icon size="md">
               <ArrowsAltIcon />

@@ -1,9 +1,8 @@
 import $ from 'jquery';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@patternfly/react-core';
+import { Icon, Spinner } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
-import { Spinner } from 'patternfly-react';
 
 import { deprecate } from '../../../common/DeprecationService';
 import { translate as __ } from '../../../common/I18n';
@@ -92,7 +91,7 @@ class Select extends React.Component {
         break;
       }
       case STATUS.PENDING: {
-        content = <Spinner loading size="sm" />;
+        content = <Spinner size="sm" aria-label="Loading" />;
         break;
       }
       case STATUS.ERROR: {

@@ -2,14 +2,11 @@
 
 exports[`ExportButton render with props 1`] = `
 <Button
-  active={false}
-  block={false}
-  bsClass="btn"
-  bsStyle="default"
   className="export-csv"
-  disabled={false}
+  component="a"
   href="url"
   title="title info"
+  variant="secondary"
 >
   info
 </Button>
@@ -17,14 +14,11 @@ exports[`ExportButton render with props 1`] = `
 
 exports[`ExportButton render without props 1`] = `
 <Button
-  active={false}
-  block={false}
-  bsClass="btn"
-  bsStyle="default"
   className="export-csv"
-  disabled={false}
+  component="a"
   href="/?format=csv"
   title="Export to CSV"
+  variant="secondary"
 >
   Export
 </Button>

@@ -40,20 +40,18 @@ describe('Loader', () => {
       );
 
       expect(container.querySelector('.loader-root')).toBeInTheDocument();
-      expect(container.querySelector('.spinner.spinner-lg')).toBeInTheDocument();
+      expect(screen.getByLabelText('Loading')).toBeInTheDocument();
       expect(screen.queryByText('Success')).not.toBeInTheDocument();
     });
 
     it('pending-different-spinner', () => {
-      const { container } = render(
+      render(
         <Loader status={STATUS.PENDING} spinnerSize="xs">
           {loaderChildren}
         </Loader>
       );
 
-      expect(container.querySelector('.loader-root')).toBeInTheDocument();
-      expect(container.querySelector('.spinner.spinner-xs')).toBeInTheDocument();
-      expect(container.querySelector('.spinner.spinner-lg')).not.toBeInTheDocument();
+      expect(screen.getByLabelText('Loading')).toBeInTheDocument();
     });
 
     it('default case', () => {

@@ -139,10 +139,6 @@ const commonConfig = function(buildName = 'core', tsConfig = 'tsconfig.json') {
         os: require.resolve('os-browserify'),
       },
       alias: {
-        'patternfly-react$': path.resolve(
-          root,
-          'node_modules/patternfly-react/dist/js/index.js'
-        ), // to avoid circular dependency in dist/esm
         '/node_modules/jquery': path.resolve(
           root,
           'webpack/assets/javascripts/jquery.js'

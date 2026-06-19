@@ -92,21 +92,13 @@
       display: flex;
       align-items: center;
 
-      .alert {
+      .pf-v5-c-alert {
         padding: 0;
         display: flex;
         margin: 0 5px;
         height: 24px;
         align-items: center;
         border-radius: 2px;
-
-        .pficon-warning-triangle-o {
-          position: inherit;
-          font-size: 15px;
-          top: 0;
-          left: 0;
-          margin: 0 5px;
-        }
       }
     }
 

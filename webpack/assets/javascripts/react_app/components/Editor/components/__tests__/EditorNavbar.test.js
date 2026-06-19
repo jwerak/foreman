@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { testComponentSnapshotsWithFixtures } from '../../../../common/testHelpers';
 
 import EditorNavbar from '../EditorNavbar';
@@ -23,32 +24,71 @@ describe('EditorNavbar', () => {
     testComponentSnapshotsWithFixtures(EditorNavbar, fixtures));
 
   describe('simulate onClick', () => {
-    const changeTab = jest.fn();
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+    afterEach(() => {
+      jest.useRealTimers();
+    });
 
-    const wrapper = mount(
-      <EditorNavbar
-        {...props}
-        changeTab={changeTab}
-        isDiff
-        isRendering
-        selectedView="preview"
-      />
-    );
-    wrapper
-      .find('#input-navitem')
-      .at(1)
-      .simulate('click');
-    wrapper
-      .find('#diff-navitem')
-      .at(1)
-      .simulate('click');
+    it('should call changeTab on tab clicks', () => {
+      const changeTab = jest.fn();
 
-    wrapper.setProps({ ...props, isRendering: false, selectedView: 'input' });
-    wrapper.update();
-    wrapper
-      .find('#preview-navitem')
-      .at(1)
-      .simulate('click');
-    expect(changeTab).toHaveBeenCalledTimes(2);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <EditorNavbar
+            {...props}
+            changeTab={changeTab}
+            isDiff
+            isRendering
+            selectedView="preview"
+          />
+        );
+        jest.runAllTimers();
+      });
+
+      act(() => {
+        wrapper
+          .find('#input-navitem')
+          .first()
+          .find('button')
+          .first()
+          .simulate('click');
+        jest.runAllTimers();
+      });
+
+      act(() => {
+        wrapper
+          .find('#diff-navitem')
+          .first()
+          .find('button')
+          .first()
+          .simulate('click');
+        jest.runAllTimers();
+      });
+
+      act(() => {
+        wrapper.setProps({
+          ...props,
+          isRendering: false,
+          selectedView: 'input',
+        });
+        wrapper.update();
+        jest.runAllTimers();
+      });
+
+      act(() => {
+        wrapper
+          .find('#preview-navitem')
+          .first()
+          .find('button')
+          .first()
+          .simulate('click');
+        jest.runAllTimers();
+      });
+
+      expect(changeTab).toHaveBeenCalledTimes(2);
+    });
   });
 });

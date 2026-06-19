@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FieldLevelHelp } from 'patternfly-react';
+import { Popover, Button, Icon } from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons';
 import { Field } from 'formik';
 import DateTimePicker from '../../DateTimePicker/DateTimePicker';
 
@@ -38,10 +39,18 @@ const DateTime = ({
           inputClassName="col-md-6"
           tooltipHelp={
             info && (
-              <FieldLevelHelp
-                buttonClass="field-help"
-                content={<Fragment>{info}</Fragment>}
-              />
+              <Popover bodyContent={<Fragment>{info}</Fragment>}>
+                <Button
+                  type="button"
+                  variant="plain"
+                  className="field-help"
+                  onClick={e => e.preventDefault()}
+                >
+                  <Icon isInline>
+                    <HelpIcon />
+                  </Icon>
+                </Button>
+              </Popover>
             )
           }
         >

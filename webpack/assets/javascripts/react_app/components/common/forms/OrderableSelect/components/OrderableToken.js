@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TypeAheadSelect } from 'patternfly-react';
+import { Label } from '@patternfly/react-core';
 
 import { orderable } from '../helpers';
 
@@ -20,13 +20,14 @@ const OrderableToken = ({
   tabIndex,
   labelKey,
 }) => (
-  <TypeAheadSelect.Token
-    disabled={disabled}
-    onRemove={onRemove}
-    tabIndex={tabIndex}
+  <Label
+    variant="outline"
+    onClose={disabled ? undefined : onRemove}
+    closeBtnProps={{ tabIndex }}
+    isDisabled={disabled}
   >
     {data[labelKey]}
-  </TypeAheadSelect.Token>
+  </Label>
 );
 
 OrderableToken.propTypes = {

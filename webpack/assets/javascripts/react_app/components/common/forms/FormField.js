@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import {
-  Col,
   FormGroup,
-  ControlLabel,
-  HelpBlock,
-  FieldLevelHelp,
-} from 'patternfly-react';
-import { Icon } from '@patternfly/react-core';
-import { WarningTriangleIcon, ErrorCircleOIcon } from '@patternfly/react-icons';
+  FormHelperText,
+  HelperText,
+  HelperTextItem,
+  Popover,
+  Button,
+  Icon,
+} from '@patternfly/react-core';
+import {
+  WarningTriangleIcon,
+  ErrorCircleOIcon,
+  HelpIcon,
+} from '@patternfly/react-icons';
 import InputFactory from './InputFactory';
 import { noop } from '../../../common/helpers';
 
@@ -17,25 +21,33 @@ const InlineMessage = ({ error, warning, helpInline }) => {
   if (!error && !warning && !helpInline) {
     return null;
   }
+
+  let variant = 'default';
+  let icon = null;
+  if (error) {
+    variant = 'error';
+    icon = (
+      <Icon className="error-icon">
+        <ErrorCircleOIcon />
+      </Icon>
+    );
+  } else if (warning) {
+    variant = 'warning';
+    icon = (
+      <Icon className="warning-icon">
+        <WarningTriangleIcon />
+      </Icon>
+    );
+  }
+
   return (
-    <HelpBlock
-      className={classNames('help-inline', {
-        'error-message': !!error,
-        'warning-message': !!warning,
-      })}
-    >
-      {error && (
-        <Icon className="error-icon">
-          <ErrorCircleOIcon />
-        </Icon>
-      )}
-      {!error && warning && (
-        <Icon className="warning-icon">
-          <WarningTriangleIcon />
-        </Icon>
-      )}
-      {error || warning || helpInline}
-    </HelpBlock>
+    <FormHelperText>
+      <HelperText>
+        <HelperTextItem variant={variant} icon={icon}>
+          {error || warning || helpInline}
+        </HelperTextItem>
+      </HelperText>
+    </FormHelperText>
   );
 };
 InlineMessage.propTypes = {
@@ -85,30 +97,37 @@ const FormField = ({
     ...inputProps,
   };
 
-  let validationState = null;
-  if (innerWarning) validationState = 'warning';
-  if (innerError) validationState = 'error';
+  let validated;
+  if (innerError) validated = 'error';
+  else if (innerWarning) validated = 'warning';
 
   return (
     <FormGroup
-      controlId={id}
-      disabled={disabled}
-      validationState={validationState}
+      fieldId={id}
+      label={label}
+      isRequired={required}
+      labelIcon={
+        labelHelp ? (
+          <Popover bodyContent={<React.Fragment>{labelHelp}</React.Fragment>}>
+            <Button
+              type="button"
+              variant="plain"
+              className="field-help"
+              onClick={e => e.preventDefault()}
+            >
+              <Icon isInline>
+                <HelpIcon />
+              </Icon>
+            </Button>
+          </Popover>
+        ) : undefined
+      }
     >
-      <ControlLabel className={labelSizeClass}>
-        {label}
-        {required ? '*' : null}
-        {labelHelp && (
-          <FieldLevelHelp
-            placement="right"
-            buttonClass="field-help"
-            content={<React.Fragment>{labelHelp}</React.Fragment>}
-          />
+      <div className={inputSizeClass}>
+        {children || (
+          <InputFactory type={type} validated={validated} {...controlProps} />
         )}
-      </ControlLabel>
-      <Col className={inputSizeClass}>
-        {children || <InputFactory type={type} {...controlProps} />}
-      </Col>
+      </div>
       <InlineMessage
         error={innerError}
         warning={innerWarning}

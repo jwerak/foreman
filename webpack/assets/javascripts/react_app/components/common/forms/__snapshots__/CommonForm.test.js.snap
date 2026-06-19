@@ -94,12 +94,21 @@ exports[`common Form should render tooltip help 1`] = `
   >
     Required form field
      *
-    <FieldLevelHelp
-      buttonClass=""
-      content="This is a helpful tooltip"
-      placement="top"
-      rootClose={true}
-    />
+    <Popover
+      bodyContent="This is a helpful tooltip"
+    >
+      <Button
+        onClick={[Function]}
+        type="button"
+        variant="plain"
+      >
+        <Icon
+          isInline={true}
+        >
+          <HelpIcon />
+        </Icon>
+      </Button>
+    </Popover>
   </label>
   <div
     className="col-md-4"

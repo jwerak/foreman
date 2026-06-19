@@ -2,8 +2,6 @@ import { testComponentSnapshotsWithFixtures } from 'foremanReact/common/testHelp
 import { data, timeseriesData } from './LineChart.fixtures';
 import LineChart from './index';
 
-jest.mock('../../../../../services/charts/ChartService.consts');
-
 const fixtures = {
   'should render line chart': {
     data,
@@ -14,6 +12,10 @@ const fixtures = {
     xAxisDataLabel: 'x',
     config: 'timeseries',
     id: 'xyz',
+  },
+  'should render empty state when no data': {
+    data: undefined,
+    id: 'empty',
   },
 };
 

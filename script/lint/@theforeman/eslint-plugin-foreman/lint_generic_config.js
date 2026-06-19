@@ -3,13 +3,12 @@ const vendorEntry = require('../../../../config/webpack.vendor');
 
 module.exports = {
   plugins: [
-    'patternfly-react',
     'promise',
     'jquery',
     'react-hooks',
     '@theforeman/eslint-plugin-rules',
   ],
-  extends: ['plugin:patternfly-react/recommended', 'plugin:jquery/deprecated'],
+  extends: ['plugin:jquery/deprecated'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

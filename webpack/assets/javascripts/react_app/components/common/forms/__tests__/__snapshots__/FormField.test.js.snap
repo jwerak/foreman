@@ -2,20 +2,12 @@
 
 exports[`FormField rendering renders AutoComplete 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId={null}
-  disabled={false}
-  validationState={null}
+  fieldId={null}
+  isRequired={false}
+  label=""
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  />
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -38,7 +30,7 @@ exports[`FormField rendering renders AutoComplete 1`] = `
       setWarning={[Function]}
       type="autocomplete"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}
@@ -49,20 +41,12 @@ exports[`FormField rendering renders AutoComplete 1`] = `
 
 exports[`FormField rendering renders Date input 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId={null}
-  disabled={false}
-  validationState={null}
+  fieldId={null}
+  isRequired={false}
+  label=""
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  />
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -75,7 +59,7 @@ exports[`FormField rendering renders Date input 1`] = `
       setWarning={[Function]}
       type="date"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}
@@ -86,22 +70,12 @@ exports[`FormField rendering renders Date input 1`] = `
 
 exports[`FormField rendering renders DateTime complex options and error 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId="date-time"
-  disabled={false}
-  validationState="error"
+  fieldId="date-time"
+  isRequired={false}
+  label="DateTime with error"
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  >
-    DateTime with error
-  </ControlLabel>
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -113,9 +87,10 @@ exports[`FormField rendering renders DateTime complex options and error 1`] = `
       setError={[Function]}
       setWarning={[Function]}
       type="dateTime"
+      validated="error"
       value={1991-01-01T01:12:01.000Z}
     />
-  </Col>
+  </div>
   <InlineMessage
     error="can not be in the past"
     helpInline={null}
@@ -126,20 +101,12 @@ exports[`FormField rendering renders DateTime complex options and error 1`] = `
 
 exports[`FormField rendering renders DateTime input 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId={null}
-  disabled={false}
-  validationState={null}
+  fieldId={null}
+  isRequired={false}
+  label=""
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  />
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -152,7 +119,7 @@ exports[`FormField rendering renders DateTime input 1`] = `
       setWarning={[Function]}
       type="dateTime"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}
@@ -163,20 +130,12 @@ exports[`FormField rendering renders DateTime input 1`] = `
 
 exports[`FormField rendering renders Time input 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId={null}
-  disabled={false}
-  validationState={null}
+  fieldId={null}
+  isRequired={false}
+  label=""
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  />
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -189,7 +148,7 @@ exports[`FormField rendering renders Time input 1`] = `
       setWarning={[Function]}
       type="time"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}
@@ -200,32 +159,34 @@ exports[`FormField rendering renders Time input 1`] = `
 
 exports[`FormField rendering renders text complex options and help 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId="text-field"
-  disabled={false}
-  validationState={null}
->
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  >
-    textField
-    <FieldLevelHelp
-      buttonClass="field-help"
-      content={
+  fieldId="text-field"
+  isRequired={false}
+  label="textField"
+  labelIcon={
+    <Popover
+      bodyContent={
         <React.Fragment>
           This is more helpful text
         </React.Fragment>
       }
-      placement="right"
-      rootClose={true}
-    />
-  </ControlLabel>
-  <Col
-    bsClass="col"
+    >
+      <Button
+        className="field-help"
+        onClick={[Function]}
+        type="button"
+        variant="plain"
+      >
+        <Icon
+          isInline={true}
+        >
+          <HelpIcon />
+        </Icon>
+      </Button>
+    </Popover>
+  }
+>
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -238,7 +199,7 @@ exports[`FormField rendering renders text complex options and help 1`] = `
       setWarning={[Function]}
       type="text"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}
@@ -249,20 +210,12 @@ exports[`FormField rendering renders text complex options and help 1`] = `
 
 exports[`FormField rendering renders text input 1`] = `
 <FormGroup
-  bsClass="form-group"
-  controlId={null}
-  disabled={false}
-  validationState={null}
+  fieldId={null}
+  isRequired={false}
+  label=""
 >
-  <ControlLabel
-    bsClass="control-label"
-    className="col-md-2"
-    srOnly={false}
-  />
-  <Col
-    bsClass="col"
+  <div
     className="col-md-4"
-    componentClass="div"
   >
     <InputFactory
       className=""
@@ -275,7 +228,7 @@ exports[`FormField rendering renders text input 1`] = `
       setWarning={[Function]}
       type="text"
     />
-  </Col>
+  </div>
   <InlineMessage
     error={null}
     helpInline={null}

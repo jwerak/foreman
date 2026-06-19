@@ -29,7 +29,7 @@ describe('Editor', () => {
       await act(async () => jest.advanceTimersByTime(1000));
       expect(
         component
-          .find('li[role="presentation"]')
+          .find('EditorRadioButton li')
           .at(0)
           .hasClass('active')
       ).toBe(true);
@@ -54,7 +54,7 @@ describe('Editor', () => {
       await act(async () => jest.advanceTimersByTime(1000));
       expect(
         component
-          .find('li[role="presentation"]')
+          .find('EditorRadioButton li')
           .at(1)
           .hasClass('active')
       ).toBe(true);
@@ -74,7 +74,7 @@ describe('Editor', () => {
 
       expect(
         component
-          .find('li[role="presentation"]')
+          .find('EditorRadioButton li')
           .at(2)
           .hasClass('active')
       ).toBe(true);

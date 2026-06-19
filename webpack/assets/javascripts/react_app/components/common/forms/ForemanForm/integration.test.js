@@ -56,7 +56,7 @@ describe('ForemanForm integration test', () => {
 
     const component = testHelper.mount(<ConnectedFormComponent {...props} />);
 
-    const submitBtn = component.find('Button[bsStyle="primary"]');
+    const submitBtn = component.find('Button[variant="primary"]');
     submitBtn.simulate('submit');
     await IntegrationTestHelper.flushAllPromises();
     component.update();

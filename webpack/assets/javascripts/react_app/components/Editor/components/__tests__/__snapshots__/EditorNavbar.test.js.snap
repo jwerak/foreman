@@ -4,13 +4,8 @@ exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
 <div
   className="navbar navbar-form navbar-full-width navbar-editor"
 >
-  <Nav
-    bsClass="nav"
+  <ul
     className="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary"
-    justified={false}
-    pullLeft={false}
-    pullRight={false}
-    stacked={false}
   >
     <EditorRadioButton
       btnView="input"
@@ -42,7 +37,7 @@ exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
       handleSafeModeChange={[Function]}
       show={false}
     />
-  </Nav>
+  </ul>
   <EditorOptions
     autocompletion={true}
     changeDiffViewType={[Function]}

@@ -35,12 +35,12 @@ describe('ForemanModal - integration tests', () => {
 
     integrationTestHelper.takeStoreSnapshot('state after adding 3 modals');
 
-    // Check the show prop of the inner patternfly component
+    // Check the isOpen prop of the inner patternfly component
     const isModalShown = modal =>
       modal
         .find('Modal')
         .first()
-        .props().show;
+        .props().isOpen;
 
     // Modals should not be shown
     updateWrappers();

@@ -21,7 +21,7 @@ describe('Editor integration test', () => {
     );
     integrationTestHelper.takeStoreSnapshot('initial state');
 
-    const previewBtn = component.find('#preview-navitem').at(1);
+    const previewBtn = component.find('#preview-navitem').first().find('button').first();
     previewBtn.simulate('click');
 
     integrationTestHelper.takeStoreAndLastActionSnapshot(
@@ -29,7 +29,7 @@ describe('Editor integration test', () => {
     );
     expect(
       component
-        .find('li[role="presentation"]')
+        .find('EditorRadioButton li')
         .at(2)
         .hasClass('active')
     ).toBe(true);

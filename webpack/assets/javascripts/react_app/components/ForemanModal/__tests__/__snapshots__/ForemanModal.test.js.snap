@@ -14,47 +14,35 @@ exports[`ForemanModal rendering renders default header child when title prop is 
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Test modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
+    footer={
+      <ForemanModalFooter>
+        this is the footer
+      </ForemanModalFooter>
     }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={true}
+    hasNoBodyWrapper={false}
+    header={<ForemanModalHeader />}
+    id="defaultHeaderChild"
+    isOpen={true}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
   >
-    <ForemanModalHeader />
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
+    <div
+      key=".0"
     >
-      <div
-        key=".0"
-      >
-        This is the body
-      </div>
-    </ModalBody>
-    <ForemanModalFooter
-      key=".1"
-    >
-      this is the footer
-    </ForemanModalFooter>
+      This is the body
+    </div>
   </Modal>
 </ContextProvider>
 `;
@@ -73,51 +61,39 @@ exports[`ForemanModal rendering renders the supplied header child when title pro
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Foreman modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
+    footer={
+      <ForemanModalFooter>
+        this is the footer
+      </ForemanModalFooter>
     }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={true}
+    hasNoBodyWrapper={false}
+    header={
+      <ForemanModalHeader>
+        this is the header
+      </ForemanModalHeader>
+    }
+    id="customHeaderChild"
+    isOpen={true}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
   >
-    <ForemanModalHeader
-      key=".0"
+    <div
+      key=".1"
     >
-      this is the header
-    </ForemanModalHeader>
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
-    >
-      <div
-        key=".1"
-      >
-        This is the body
-      </div>
-    </ModalBody>
-    <ForemanModalFooter
-      key=".2"
-    >
-      this is the footer
-    </ForemanModalFooter>
+      This is the body
+    </div>
   </Modal>
 </ContextProvider>
 `;
@@ -136,51 +112,39 @@ exports[`ForemanModal rendering renders when header and footer are supplied 1`] 
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Test modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
+    footer={
+      <ForemanModalFooter>
+        this is the footer
+      </ForemanModalFooter>
     }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={true}
+    hasNoBodyWrapper={false}
+    header={
+      <ForemanModalHeader>
+        this is the header
+      </ForemanModalHeader>
+    }
+    id="withSuppliedChildren"
+    isOpen={true}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
   >
-    <ForemanModalHeader
-      key=".0"
+    <div
+      key=".1"
     >
-      this is the header
-    </ForemanModalHeader>
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
-    >
-      <div
-        key=".1"
-      >
-        This is the body
-      </div>
-    </ModalBody>
-    <ForemanModalFooter
-      key=".2"
-    >
-      this is the footer
-    </ForemanModalFooter>
+      This is the body
+    </div>
   </Modal>
 </ContextProvider>
 `;
@@ -199,46 +163,34 @@ exports[`ForemanModal rendering renders without header when neither <ForemanModa
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Foreman modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
+    footer={
+      <ForemanModalFooter>
+        this is the footer
+      </ForemanModalFooter>
     }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={true}
+    hasNoBodyWrapper={false}
+    id="noHeader"
+    isOpen={true}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
   >
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
+    <div
+      key=".0"
     >
-      <div
-        key=".0"
-      >
-        This is the body
-      </div>
-    </ModalBody>
-    <ForemanModalFooter
-      key=".1"
-    >
-      this is the footer
-    </ForemanModalFooter>
+      This is the body
+    </div>
   </Modal>
 </ContextProvider>
 `;
@@ -257,37 +209,25 @@ exports[`ForemanModal rendering should render 1`] = `
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Test modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
-    }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={true}
-  >
-    <ForemanModalHeader />
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
-    />
-  </Modal>
+    hasNoBodyWrapper={false}
+    header={<ForemanModalHeader />}
+    id="render"
+    isOpen={true}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
+  />
 </ContextProvider>
 `;
 
@@ -305,36 +245,24 @@ exports[`ForemanModal rendering should render closed 1`] = `
   }
 >
   <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
+    actions={Array []}
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label="Test modal"
+    aria-labelledby=""
     className="foreman-modal"
-    dialogComponentClass={[Function]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "add": [Function],
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "isTopModal": [Function],
-        "modals": Array [],
-        "remove": [Function],
-      }
-    }
-    onHide={[MockFunction]}
-    renderBackdrop={[Function]}
-    restoreFocus={true}
-    show={false}
-  >
-    <ForemanModalHeader />
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div"
-    />
-  </Modal>
+    hasNoBodyWrapper={false}
+    header={<ForemanModalHeader />}
+    id="closed"
+    isOpen={false}
+    onClose={[MockFunction]}
+    ouiaSafe={true}
+    position="default"
+    showClose={true}
+    title=""
+    titleIconVariant={null}
+    titleLabel=""
+    variant="default"
+  />
 </ContextProvider>
 `;

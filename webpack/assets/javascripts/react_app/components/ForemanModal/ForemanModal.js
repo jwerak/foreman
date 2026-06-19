@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Modal } from 'patternfly-react';
+import { Modal } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import ModalContext from './ForemanModalContext';
 import ForemanModalHeader from './subcomponents/ForemanModalHeader';
@@ -9,7 +9,7 @@ import { deprecate } from '../../common/DeprecationService';
 
 /**
  * A modal component that provides a standardized layout and context for modals in Foreman.
- * Should not be used in new components. use Patternfy 4 Modal instead.
+ * Should not be used in new components. use Patternfly 5 Modal instead.
  * @param {string} id - The ID of the modal.
  * @param {string} [title=''] - The title of the modal. will not be used if a custom header is provided.
  * @param {boolean} [isOpen=false] - Whether the modal is open or not.
@@ -70,14 +70,17 @@ const ForemanModal = props => {
   return (
     <ModalContext.Provider value={context}>
       <Modal
-        onHide={onClose}
-        show={isOpen}
+        onClose={onClose}
+        isOpen={isOpen}
         className="foreman-modal"
+        id={id}
+        title={!headerToRender ? title || undefined : undefined}
+        header={headerToRender || undefined}
+        footer={footerToRender || undefined}
+        aria-label={title || 'Foreman modal'}
         {...propsToPassDown}
       >
-        {headerToRender}
-        <Modal.Body>{otherChildren}</Modal.Body>
-        {footerToRender}
+        {otherChildren}
       </Modal>
     </ModalContext.Provider>
   );

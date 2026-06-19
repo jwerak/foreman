@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'patternfly-react';
-import { Spinner } from '@patternfly/react-core';
+import { Button, Spinner } from '@patternfly/react-core';
 
 import { noop } from '../../../common/helpers';
 import { translate as __ } from '../../../../react_app/common/I18n';
@@ -20,9 +19,9 @@ const FormActions = ({ onCancel, disabled, submitting }) => {
     <div className="clearfix">
       <div className="form-actions">
         <Button
-          bsStyle="primary"
+          variant="primary"
           type="submit"
-          disabled={disabled || submitting}
+          isDisabled={disabled || submitting}
         >
           &nbsp;
           {__('Submit')}
@@ -33,7 +32,7 @@ const FormActions = ({ onCancel, disabled, submitting }) => {
           )}
         </Button>
         {' ' /* adds whitespace between the buttons */}
-        <Button bsStyle="default" onClick={onCancel} disabled={submitting}>
+        <Button variant="secondary" onClick={onCancel} isDisabled={submitting}>
           {__('Cancel')}
         </Button>
       </div>

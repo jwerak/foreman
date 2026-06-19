@@ -1,22 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Modal } from 'patternfly-react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import ForemanModalHeader from '../ForemanModalHeader';
-import * as ModalContext from '../../ForemanModalHooks'; // so enzyme test works
-import { testComponentSnapshotsWithFixtures } from '../../../../common/testHelpers';
-
-const fixtures = {
-  'should render with default markup': {
-    title: 'foo',
-  },
-  'should render with supplied children': {
-    title: 'should not be in markup',
-    children: <h1>Modal Title</h1>,
-  },
-};
+import * as ModalContext from '../../ForemanModalHooks';
 
 const contextValues = {
   title: 'modal title passed thru mock context :)',
+  onClose: jest.fn(),
 };
 
 jest
@@ -25,34 +15,55 @@ jest
 
 describe('ForemanModal.Header', () => {
   describe('rendering', () => {
-    testComponentSnapshotsWithFixtures(ForemanModalHeader, fixtures);
-  });
-  describe('data flow', () => {
-    it('renders a <Modal.Title> and title prop', () => {
-      const wrapper = shallow(<ForemanModalHeader />);
-      expect(wrapper.find(Modal.Title)).toHaveLength(1);
+    it('should render with default markup', () => {
+      render(<ForemanModalHeader />);
       expect(
-        wrapper
-          .find(Modal.Title)
-          .dive()
-          .text()
-      ).toMatch(contextValues.title);
+        screen.getByText(contextValues.title)
+      ).toBeInTheDocument();
     });
-    it('passes props to PF component using spread', () => {
-      const wrapper = shallow(<ForemanModalHeader myCustomProp="hi" />);
-      expect(wrapper.find(Modal.Header).prop('myCustomProp')).toEqual('hi');
-    });
-    it('has a close button by default', () => {
-      const closeButtonHtml = `<button type="button" class="close">`;
-      const wrapper = shallow(<ForemanModalHeader />);
-      expect(wrapper.html()).toEqual(expect.stringContaining(closeButtonHtml));
-    });
-    it('has no close button if overridden via props', () => {
-      const closeButtonHtml = `<button type="button" class="close">`;
-      const wrapper = shallow(<ForemanModalHeader closeButton={false} />);
-      expect(wrapper.html()).not.toEqual(
-        expect.stringContaining(closeButtonHtml)
+
+    it('should render with supplied children', () => {
+      render(
+        <ForemanModalHeader>
+          <h1>Modal Title</h1>
+        </ForemanModalHeader>
       );
+      expect(screen.getByText('Modal Title')).toBeInTheDocument();
+      // title from context is also rendered
+      expect(
+        screen.getByText(contextValues.title)
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe('data flow', () => {
+    it('renders the title from context', () => {
+      render(<ForemanModalHeader />);
+      expect(
+        screen.getByText(contextValues.title)
+      ).toBeInTheDocument();
+    });
+
+    it('passes props to the wrapper element using spread', () => {
+      const { container } = render(
+        <ForemanModalHeader data-testid="custom-header" className="my-class" />
+      );
+      const header = container.querySelector('.foreman-modal-header');
+      expect(header).toHaveClass('my-class');
+    });
+
+    it('does not render title heading when context title is empty', () => {
+      jest
+        .spyOn(ModalContext, 'useModalContext')
+        .mockImplementation(() => ({ title: '', onClose: jest.fn() }));
+
+      const { container } = render(<ForemanModalHeader />);
+      expect(container.querySelector('h4')).not.toBeInTheDocument();
+
+      // Restore original mock
+      jest
+        .spyOn(ModalContext, 'useModalContext')
+        .mockImplementation(() => contextValues);
     });
   });
 });

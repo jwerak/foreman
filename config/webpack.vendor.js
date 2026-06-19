@@ -39,7 +39,6 @@ module.exports = [
   /**
    * Patternfly related
    */
-  'patternfly-react',
   '@patternfly/react-core',
   '@patternfly/react-icons',
   '@patternfly/react-table',

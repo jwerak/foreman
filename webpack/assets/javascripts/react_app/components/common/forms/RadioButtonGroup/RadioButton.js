@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Radio } from 'patternfly-react';
+import { Radio } from '@patternfly/react-core';
 import { deprecate } from '../../../../common/DeprecationService';
 
 const RadioButton = ({ input, item, disabled, checked }) => {
@@ -15,14 +15,13 @@ const RadioButton = ({ input, item, disabled, checked }) => {
   return (
     <Radio
       {...input}
-      inline
-      title={item.label}
-      checked={checked}
-      disabled={disabled}
+      id={input.id || `radio-${item.value}`}
+      label={item.label}
+      isChecked={checked}
+      isDisabled={disabled}
       value={item.value}
-    >
-      {item.label}
-    </Radio>
+      name={input.name}
+    />
   );
 };
 

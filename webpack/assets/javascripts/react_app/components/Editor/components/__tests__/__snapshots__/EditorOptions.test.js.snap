@@ -14,14 +14,10 @@ exports[`EditorOptions EditorOptions renders EditorOptions 1`] = `
     position="top"
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
       className="editor-button"
-      disabled={false}
       id="undo-btn"
       onClick={[Function]}
+      variant="link"
     >
       <Icon
         size="md"
@@ -35,25 +31,19 @@ exports[`EditorOptions EditorOptions renders EditorOptions 1`] = `
     position="top"
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
       className="import-button"
-      disabled={false}
       id="import-btn"
+      isDisabled={false}
       onClick={[Function]}
+      variant="link"
     >
       <Icon
         size="md"
       >
         <UploadIcon />
       </Icon>
-      <FormControl
-        bsClass="form-control"
+      <input
         className="hidden"
-        componentClass="input"
-        inputRef={[Function]}
         onChange={[Function]}
         type="file"
       />
@@ -97,14 +87,10 @@ exports[`EditorOptions EditorOptions renders EditorOptions 1`] = `
     position="top"
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
       className="editor-button"
-      disabled={false}
       id="fullscreen-btn"
       onClick={[Function]}
+      variant="link"
     >
       <Icon
         size="md"

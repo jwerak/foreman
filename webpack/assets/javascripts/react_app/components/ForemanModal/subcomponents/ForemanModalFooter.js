@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'patternfly-react';
 import { Button } from '@patternfly/react-core';
 import { useModalContext } from '../ForemanModalHooks';
 import { translate as __ } from '../../../common/I18n';
 
 import SubmitOrCancel from './SubmitOrCancel';
 
-const ForemanModalFooter = props => {
-  const childCount = React.Children.count(props.children);
+const ForemanModalFooter = ({ children, className, ...rest }) => {
+  const childCount = React.Children.count(children);
   const { onClose, isSubmitting, id, submitProps } = useModalContext();
 
   // Render the provided children, or default markup if none given
@@ -28,10 +27,10 @@ const ForemanModalFooter = props => {
   );
 
   return (
-    <Modal.Footer {...props}>
-      {props.children}
+    <div className={`foreman-modal-footer${className ? ` ${className}` : ''}`} {...rest}>
+      {children}
       {submitOrCancel || closeButton}
-    </Modal.Footer>
+    </div>
   );
 };
 

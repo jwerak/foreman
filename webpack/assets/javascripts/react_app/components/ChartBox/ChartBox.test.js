@@ -19,7 +19,6 @@ jest.mock('../common/charts/DonutChart', () => ({
   ),
 }));
 
-// Mock BarChart since it still uses C3-based patternfly-react which doesn't work in Jest
 jest.mock('../common/charts/BarChart', () => ({
   __esModule: true,
   default: ({ data }) => (
