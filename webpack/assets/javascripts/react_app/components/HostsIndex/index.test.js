@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import * as ReactRedux from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
@@ -9,8 +8,11 @@ import HostsIndex, { getScheduleJobSearch } from './index';
 
 const mockStore = configureMockStore([thunk]);
 
-// Mock useDispatch
-jest.spyOn(ReactRedux, 'useDispatch').mockImplementation(() => jest.fn());
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: () => mockDispatch,
+}));
 
 // Mock the API hook to return a controlled response
 jest.mock('../PF4/TableIndexPage/Table/TableIndexHooks', () => ({
@@ -108,6 +110,16 @@ jest.mock('../HostDetails/ActionsBar/actions', () => ({
 
 jest.mock('./BulkActions/bulkDelete', () => ({
   bulkDeleteHosts: jest.fn(),
+}));
+
+jest.mock('./BulkActions/changeOwner/BulkChangeOwnerModal', () => ({
+  __esModule: true,
+  default: () => null,
+}));
+
+jest.mock('./BulkActions/reassignHostGroup/BulkReassignHostgroupModal', () => ({
+  __esModule: true,
+  default: () => null,
 }));
 
 // Mock Table to capture the props it receives

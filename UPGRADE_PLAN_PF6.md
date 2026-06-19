@@ -521,3 +521,127 @@ Phase 0 steps can run **in parallel** with each other.
 Phase 1 depends on Phase 0 completion.
 Phase 2 depends on Phase 1 completion.
 Phases 4-5 are independent and can start after Phase 3.
+
+---
+
+## Completed Work
+
+### Step 0.2: Remove PatternFly 3 Legacy Dependencies ✅
+
+**Commit:** `e59e8de5e` — 2026-06-19
+**Files changed:** 117
+
+Migrated 29 files from `patternfly-react` (PF3) to `@patternfly/react-core` (PF5):
+- Modal, Nav, Button, Dropdown, Alert, Spinner → PF5 equivalents
+- FormGroup, FieldLevelHelp → PF5 `FormGroup` + `Popover`
+- TypeAheadSelect → PF5 `Select` / `MenuToggle` + `Menu`
+- c3-based charts (LineChart) → `@patternfly/react-charts`
+- Removed `patternfly-react` and `patternfly` from `package.json`
+- Removed PF3 SCSS imports from `vendor-core.scss`
+- Removed PF3 from `webpack.vendor.js` and ESLint config
+- Deleted 66 dead files in `common/table/` (legacy table directory)
+- All 244 tests passing after snapshot updates
+
+### Step 0.3: Convert Remaining Class Components to Functional ✅
+
+**Commit:** `16b23d082` — 2026-06-19
+**Files changed:** 10
+
+Converted 9 class components to functional components with hooks:
+- `i18nProviderWrapperFactory.js` → factory returning functional HOC
+- `ExpansiveView.js` → functional with `useState`
+- `BreadcrumbBar/index.js` → functional + `useSelector`/`useDispatch` (removed `connect`)
+- `Editor/index.js` (~300 lines) → functional with hooks
+- `EditorOptions.js` → functional
+- `Fill/index.js` → functional
+- `SearchInput/index.js` → functional
+- `Select.js` (forms) → functional
+- `StorageContainer` (vmware) → functional
+- `ErrorBoundary` remains a class (React requires `componentDidCatch`)
+- Updated `rtlTestHelpers.js` for new HOC wrapper API
+
+### Step 0.4: Migrate Enzyme Tests to React Testing Library ✅
+
+**Commit:** `8ab205f6e` — 2026-06-19
+**Files changed:** 123
+
+Fully removed Enzyme framework and migrated to React Testing Library:
+- Migrated 25 test files from `shallow()`/`mount()` → RTL `render()`
+- Rewrote `testComponentSnapshotsWithFixtures` to use RTL
+- Rewrote `shallowRenderComponentWithFixtures` to use RTL
+- Rewrote `IntegrationTestHelper.mount()` → RTL-based helpers
+- Created `rtlTestHelpers.js` with `renderWithStore`, `renderWithI18n`, `renderWithStoreAndI18n`
+- Removed `enzyme`, `enzyme-adapter-react-16`, `enzyme-to-json` from devDependencies
+- Removed enzyme snapshot serializer from `jest.config.js`
+- All 222 test suites pass (1139 tests, 378 snapshots)
+
+### Step 0.1: Upgrade React 16 → React 18 ✅
+
+**Date:** 2026-06-19
+**Files changed:** 24
+
+#### Package dependency changes
+| Package | Before | After | Installed |
+|---------|--------|-------|-----------|
+| `react` | ^16.9.0 | ^18.2.0 | 18.3.1 |
+| `react-dom` | ^16.8.1 | ^18.2.0 | 18.3.1 |
+| `react-redux` | ^7.1.0 | ^8.1.0 | 8.1.3 |
+| `connected-react-router` | 6.6.1 | 6.9.3 | 6.9.3 |
+| `@testing-library/react` | ^10.0.2 | ^14.0.0 | 14.3.1 |
+| `@testing-library/user-event` | ^13.2.1 | ^14.0.0 | 14.5.2 |
+| `@testing-library/react-hooks` | ^3.4.2 | *removed* | — |
+| `react-test-renderer` | ^17.0.1 | *removed* | — |
+| `pretty-format` | 26.6.2 | *removed (pin)* | — |
+
+#### Core migration
+- **`MountingService.js`** — `ReactDOM.render()` → `createRoot()` with cached root per DOM element
+  for efficient re-renders on attribute changes
+
+#### Testing infrastructure
+- **`global_test_setup.js`** — Added React 18 deprecation warning suppression (defaultProps,
+  act warnings, childContextTypes, overlapping act, post-teardown errors). These are expected
+  noise from PF5 components still using `defaultProps` and `react-intl` v2 using legacy context.
+- **`testHelper.js`** — `renderHook` import migrated from `@testing-library/react-hooks` →
+  `@testing-library/react`
+- **`APIHooks.test.js`** — `waitForNextUpdate` pattern replaced with `waitFor()` (RTL 14)
+- **`TableHooks.test.js`** — Import source updated to `@testing-library/react`
+- **`AuditsList.test.js`** — `act` import from `react-dom/test-utils` → `@testing-library/react`
+
+#### Test fixes for React 18 behavior changes
+- **VMware storage tests** (controller.test.js, integration.test.js) — `userEvent.setup({ advanceTimers })`
+  for fake timer compatibility with user-event v14
+- **InlineEdit tests** — `getByLabelText` → `findByLabelText` for async state updates after clicks
+- **Table test** — `waitFor` for async PF5 dropdown rendering
+- **FiltersForm test** — `waitFor` for async permission list loading
+- **OperatingSystem test** — `userEvent.setup({ advanceTimers })` for fake timer compat
+- **DateTimePicker test** — `waitFor` + robust future time calculation (hour overflow fix)
+- **Permitted tests** — Updated prop-type warning format assertions (React 18 uses `%s` placeholders)
+- **HostsIndex test** — `jest.mock('react-redux')` instead of `jest.spyOn` (react-redux 8 makes
+  exports non-configurable)
+- **14 snapshot files** updated for React 18 whitespace rendering changes
+
+#### Webpack build fix
+- Removed `react/jsx-runtime` and `react/jsx-dev-runtime` aliases from `config/webpack.config.js`.
+  These were a workaround for react-dnd on older React versions. React 18.3.x's `exports` field
+  natively maps `./jsx-runtime` → `./jsx-runtime.js`, so the aliases caused a "not exported"
+  error by bypassing the exports field resolution.
+
+#### Decisions & notes
+- `connected-react-router` kept at v6.9.3 — works with React 18 peer deps. Full removal
+  planned for Phase 4.1 (React Router v5 → v6).
+- `react-redux` v8 `connect()` HOC still works — no changes needed to the 9 files using it.
+  Migration to hooks planned for Phase 1.5.
+- `@theforeman/vendor` does not directly provide React — Module Federation `shared()` function
+  in `webpack.config.js` dynamically picks up versions from `package.json`. No vendor changes needed.
+- `react-intl` v2 works with React 18 (legacy context warnings suppressed in tests).
+- All **222 test suites pass** (1139 tests, 378 snapshots)
+- Container build (webpack + production bundle) verified clean
+- App deploys and serves on http://127.0.0.1:3000 with React 18
+
+---
+
+## Phase 0 Status: COMPLETE ✅
+
+All four pre-requisite steps are done. The codebase is on React 18, all PF3 dependencies
+are removed, all class components are functional, and all tests use React Testing Library.
+**Phase 1 (PF5 Cleanup) is unblocked.**

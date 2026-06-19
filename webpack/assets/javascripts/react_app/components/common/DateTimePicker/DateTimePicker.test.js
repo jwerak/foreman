@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DateTimePicker from './DateTimePicker';
 
@@ -240,15 +240,17 @@ describe('DateTimePicker', () => {
       expect(dateTimeInput).toHaveAttribute('aria-invalid', 'true');
     });
 
-    test('does not show error when current date with future time is entered with isFutureOnly', () => {
+    test('does not show error when current date with future time is entered with isFutureOnly', async () => {
       const now = new Date();
-      const futureTime = new Date(now);
-      futureTime.setHours(now.getHours() + 1);
-      const futureTimeString = `${now.getFullYear()}-${String(
-        now.getMonth() + 1
-      ).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(
-        futureTime.getHours()
-      ).padStart(2, '0')}:${String(futureTime.getMinutes()).padStart(2, '0')}`;
+      const futureTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+      const futureTimeString = `${futureTime.getFullYear()}-${String(
+        futureTime.getMonth() + 1
+      ).padStart(2, '0')}-${String(futureTime.getDate()).padStart(
+        2,
+        '0'
+      )} ${String(futureTime.getHours()).padStart(2, '0')}:${String(
+        futureTime.getMinutes()
+      ).padStart(2, '0')}`;
 
       const { container } = render(<DateTimePicker isFutureOnly />);
 
@@ -259,9 +261,11 @@ describe('DateTimePicker', () => {
       fireEvent.change(dateTimeInput, { target: { value: futureTimeString } });
       fireEvent.blur(dateTimeInput);
 
-      expect(
-        screen.queryByText('Date must be in the future')
-      ).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Date must be in the future')
+        ).not.toBeInTheDocument();
+      });
       expect(dateTimeInput).not.toHaveAttribute('aria-invalid', 'true');
     });
   });

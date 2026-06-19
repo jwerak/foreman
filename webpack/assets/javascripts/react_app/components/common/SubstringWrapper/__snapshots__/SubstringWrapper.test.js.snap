@@ -6,7 +6,6 @@ exports[`SubstringWrapper rendering should render with b tag 1`] = `
   <b>
     test
   </b>
-  
 </div>
 `;
 
@@ -18,7 +17,6 @@ exports[`SubstringWrapper rendering should work if regex failed 1`] = `
 
 exports[`SubstringWrapper rendering should wrap twice 1`] = `
 <div>
-  
   <b>
     test
   </b>
@@ -26,7 +24,6 @@ exports[`SubstringWrapper rendering should wrap twice 1`] = `
   <b>
     test
   </b>
-  
 </div>
 `;
 
@@ -36,7 +33,6 @@ exports[`SubstringWrapper rendering should wrap with another element 1`] = `
   <i>
     test
   </i>
-  
 </div>
 `;
 

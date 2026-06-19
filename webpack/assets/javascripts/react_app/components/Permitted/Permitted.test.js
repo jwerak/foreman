@@ -5,11 +5,8 @@ import Permitted from "./Permitted";
 import {
   invalidPermissionsArray,
   invalidPermissionString,
-  noPermissionPropWarning,
   permissionsArray,
   permissionString,
-  requiredPermissionsEmptyWarning,
-  requiredPermissionsTypeWarning,
   testString,
   unPermittedTestString,
 } from './Permitted.fixtures'
@@ -85,8 +82,12 @@ describe('Permitted', () => {
       render(<Permitted>{testString}</Permitted>);
 
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy).toHaveBeenCalledTimes(1)
-      expect(consoleSpy).toHaveBeenCalledWith(noPermissionPropWarning)
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.stringContaining('requiredPermissions'),
+        expect.anything()
+      );
 
     });
 
@@ -95,8 +96,12 @@ describe('Permitted', () => {
       render(<Permitted requiredPermissions={[]}>{testString}</Permitted>);
 
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy).toHaveBeenCalledTimes(1)
-      expect(consoleSpy).toHaveBeenCalledWith(requiredPermissionsEmptyWarning)
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.stringContaining('empty array'),
+        expect.anything()
+      );
 
     });
 
@@ -105,8 +110,9 @@ describe('Permitted', () => {
       render(<Permitted requiredPermissions={""}>{testString}</Permitted>);
 
       expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleSpy).toHaveBeenCalledTimes(1)
-      expect(consoleSpy).toHaveBeenCalledWith(requiredPermissionsTypeWarning)
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('expected `array`')
+      );
 
     });
 

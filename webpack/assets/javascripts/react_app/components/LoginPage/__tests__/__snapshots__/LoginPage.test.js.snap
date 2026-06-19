@@ -5,7 +5,6 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
   <div
     id="login-page"
   >
-    
     <div
       class="pf-v5-c-login login-pf"
     >
@@ -87,7 +86,6 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
                     </span>
                     some-error
                   </h4>
-                  
                 </div>
               </div>
               <div

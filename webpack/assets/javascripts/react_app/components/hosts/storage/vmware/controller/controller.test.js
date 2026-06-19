@@ -7,6 +7,7 @@ import { props } from './controller.fixtures';
 
 describe('Controller', () => {
   jest.useFakeTimers();
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
   const defaultProps = {
     ...props,
     config: {
@@ -77,9 +78,7 @@ describe('Controller', () => {
 
       const addButton = screen.getByRole('button', { name: 'Add volume' });
       expect(addButton).toBeInTheDocument();
-      await act(async () => {
-        await userEvent.click(addButton);
-      });
+      await user.click(addButton);
       expect(addDisk).toHaveBeenCalledTimes(1);
     });
 
@@ -96,10 +95,8 @@ describe('Controller', () => {
         name: 'Add another volume',
       });
       expect(addButton).toHaveAttribute('aria-disabled', 'true');
-      await act(async () => {
-        await userEvent.hover(addButton);
-        jest.advanceTimersByTime(1000);
-      });
+      await user.hover(addButton);
+      act(() => jest.advanceTimersByTime(1000));
       expect(
         screen.getByText(/Maximum number of disks/)
       ).toBeInTheDocument();
@@ -116,10 +113,8 @@ describe('Controller', () => {
         name: 'Add another volume',
       });
       expect(addButton).toHaveAttribute('aria-disabled', 'true');
-      await act(async () => {
-        await userEvent.hover(addButton);
-        jest.advanceTimersByTime(1000);
-      });
+      await user.hover(addButton);
+      act(() => jest.advanceTimersByTime(1000));
       expect(
         screen.getByText('Cannot add volumes to an existing VM')
       ).toBeInTheDocument();
@@ -146,9 +141,7 @@ describe('Controller', () => {
         name: 'Remove controller',
       });
       expect(deleteButton).toBeInTheDocument();
-      await act(async () => {
-        await userEvent.click(deleteButton);
-      });
+      await user.click(deleteButton);
       expect(removeController).toHaveBeenCalledTimes(1);
     });
 
@@ -227,12 +220,10 @@ describe('Controller', () => {
       ];
 
       render(<Controller {...defaultProps} datastores={datastores} />);
-      await act(async () => {
-        await userEvent.click(
-          screen.getByRole('button', { name: 'Data store select' })
-        );
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(
+        screen.getByRole('button', { name: 'Data store select' })
+      );
+      act(() => jest.advanceTimersByTime(1000));
       expect(
         screen.getByText(
           'datastore1 (free: 1.00 TB, prov: 1.00 TB, total: 2.00 TB)'
@@ -251,12 +242,10 @@ describe('Controller', () => {
       ];
 
       render(<Controller {...defaultProps} storagePods={storagePods} />);
-      await act(async () => {
-        await userEvent.click(
-          screen.getByRole('button', { name: 'Storage pod select' })
-        );
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(
+        screen.getByRole('button', { name: 'Storage pod select' })
+      );
+      act(() => jest.advanceTimersByTime(1000));
       expect(
         screen.getByText('pod1 (free: 2.5 TB, prov: 2.5 TB, total: 5.00 TB)')
       ).toBeInTheDocument();
@@ -273,10 +262,8 @@ describe('Controller', () => {
       const errorButton = screen.getByRole('button', {
         name: 'popover for datastores',
       });
-      await act(async () => {
-        await userEvent.click(errorButton);
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(errorButton);
+      act(() => jest.advanceTimersByTime(1000));
       expect(screen.getByText('Error message')).toBeInTheDocument();
     });
 
@@ -291,10 +278,8 @@ describe('Controller', () => {
       const errorButton = screen.getByRole('button', {
         name: 'popover for storagePods',
       });
-      await act(async () => {
-        await userEvent.click(errorButton);
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(errorButton);
+      act(() => jest.advanceTimersByTime(1000));
       expect(screen.getByText('Storage pod error')).toBeInTheDocument();
     });
   });
@@ -308,15 +293,11 @@ describe('Controller', () => {
       const controllerTypeButton = screen.getByRole('button', {
         name: 'LSI Logic Parallel',
       });
-      await act(async () => {
-        await userEvent.click(controllerTypeButton);
-      });
-      await act(async () => {
-        await userEvent.click(
-          screen.getByRole('option', { name: 'NVME Controller' })
-        );
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(controllerTypeButton);
+      await user.click(
+        screen.getByRole('option', { name: 'NVME Controller' })
+      );
+      act(() => jest.advanceTimersByTime(1000));
       expect(updateController).toHaveBeenCalledWith({
         type: 'VirtualNVMEController',
       });
@@ -347,17 +328,13 @@ describe('Controller', () => {
       const podSelect = screen.getByRole('button', {
         name: 'Storage pod select',
       });
-      await act(async () => {
-        await userEvent.click(podSelect);
-      });
-      await act(async () => {
-        await userEvent.click(
-          screen.getByRole('option', {
-            name: 'LX-DC1-EXAMPLE (free: 4.3 TB, prov: 690 GB, total: 5.00 TB)',
-          })
-        );
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(podSelect);
+      await user.click(
+        screen.getByRole('option', {
+          name: 'LX-DC1-EXAMPLE (free: 4.3 TB, prov: 690 GB, total: 5.00 TB)',
+        })
+      );
+      act(() => jest.advanceTimersByTime(1000));
       expect(updateDisk).toHaveBeenNthCalledWith(1, 'test-key', {
         storagePod: 'LX-DC1-EXAMPLE',
       });
@@ -367,18 +344,14 @@ describe('Controller', () => {
       const datastoreSelect = screen.getByRole('button', {
         name: 'Data store select',
       });
-      await act(async () => {
-        await userEvent.click(datastoreSelect);
-      });
-      await act(async () => {
-        await userEvent.click(
-          screen.getByRole('option', {
-            name:
-              'FC0001_LX_DC1_EXAMPLE_PROD_01 (free: 350 GB, prov: 4.9 TB, total: 2.00 TB)',
-          })
-        );
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(datastoreSelect);
+      await user.click(
+        screen.getByRole('option', {
+          name:
+            'FC0001_LX_DC1_EXAMPLE_PROD_01 (free: 350 GB, prov: 4.9 TB, total: 2.00 TB)',
+        })
+      );
+      act(() => jest.advanceTimersByTime(1000));
       expect(updateDisk).toHaveBeenNthCalledWith(3, 'test-key', {
         datastore: 'FC0001_LX_DC1_EXAMPLE_PROD_01',
       });
@@ -413,10 +386,8 @@ describe('Controller', () => {
       const deleteButton = screen.getByRole('button', {
         name: 'Remove volume',
       });
-      await act(async () => {
-        await userEvent.click(deleteButton);
-        jest.advanceTimersByTime(1000);
-      });
+      await user.click(deleteButton);
+      act(() => jest.advanceTimersByTime(1000));
       expect(removeDisk).toHaveBeenCalledWith('test-key');
     });
   });

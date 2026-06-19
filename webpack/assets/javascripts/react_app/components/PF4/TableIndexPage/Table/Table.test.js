@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import { fireEvent, screen, render, act } from '@testing-library/react';
+import { fireEvent, screen, render, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { Table } from './Table';
@@ -130,7 +130,10 @@ describe('Table', () => {
       </Provider>
     );
     fireEvent.click(screen.getByLabelText('Kebab toggle'));
-    expect(screen.getByRole('none', {description: 'Delete'})).toHaveClass('pf-m-aria-disabled');
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Delete').closest('li[role="none"]')).toHaveClass('pf-m-aria-disabled');
     await act(async () => {
       jest.advanceTimersByTime(1000); // to handle pf4 table actions popover
     });

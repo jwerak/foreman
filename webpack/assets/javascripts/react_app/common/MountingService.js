@@ -1,17 +1,19 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import React from 'react';
 import { AwaitedMount } from './AwaitedMount';
 
 export { default as registerReducer } from '../redux/reducers/registerReducer';
 
 function mountNode(component, reactNode, data, flattenData) {
-  ReactDOM.render(
+  if (!reactNode._reactRoot) {
+    reactNode._reactRoot = createRoot(reactNode);
+  }
+  reactNode._reactRoot.render(
     <AwaitedMount
       component={component}
       data={data}
       flattenData={flattenData}
-    />,
-    reactNode
+    />
   );
 }
 

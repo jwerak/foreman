@@ -350,9 +350,7 @@ exports[`RegistrationCommandsPage - General renders 1`] = `
           >
             <span
               class="pf-v5-c-helper-text__item-text"
-            >
-              
-            </span>
+            />
           </div>
         </div>
       </div>
@@ -459,9 +457,7 @@ exports[`RegistrationCommandsPage - General renders 1`] = `
           >
             <span
               class="pf-v5-c-helper-text__item-text"
-            >
-              
-            </span>
+            />
           </div>
         </div>
       </div>

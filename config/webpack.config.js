@@ -148,8 +148,6 @@ const commonConfig = function(buildName = 'core', tsConfig = 'tsconfig.json') {
           root,
           '/webpack/assets/javascripts/react_app'
         ),
-        'react/jsx-runtime': 'react/jsx-runtime.js', // for react-dnd
-        'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js', // for react-dnd
         'datatables.net': path.resolve(
           root,
           'node_modules/datatables.net/js/jquery.dataTables.js'

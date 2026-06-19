@@ -11,6 +11,7 @@ describe('StorageContainer integration test', () => {
   let store;
   let container;
   jest.useFakeTimers();
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
   beforeEach(() => {
     const initialState = {
       hosts: {
@@ -53,9 +54,7 @@ describe('StorageContainer integration test', () => {
       name: /add another volume/i,
     });
 
-    await act(async () => {
-      await userEvent.click(addButton);
-    });
+    await user.click(addButton);
 
     const updatedContainers = container.querySelectorAll('.disk-container');
     expect(updatedContainers).toHaveLength(2);
@@ -71,9 +70,7 @@ describe('StorageContainer integration test', () => {
       name: /create another controller/i,
     });
 
-    await act(async () => {
-      await userEvent.click(addButton);
-    });
+    await user.click(addButton);
 
     const updatedContainers = container.querySelectorAll(
       '.controller-container'
@@ -90,7 +87,7 @@ describe('StorageContainer integration test', () => {
     const removeButton = screen.getByRole('button', {
       name: /remove controller/i,
     });
-    await userEvent.click(removeButton);
+    await user.click(removeButton);
 
     const updatedContainers = container.querySelectorAll(
       '.controller-container'
@@ -107,14 +104,10 @@ describe('StorageContainer integration test', () => {
       name: 'LSI Logic Parallel',
     });
     expect(controllerTypeButton).toBeInTheDocument();
-    await act(async () => {
-      await userEvent.click(controllerTypeButton);
-    });
-    await act(async () => {
-      await userEvent.click(
-        screen.getByRole('option', { name: 'VMware Paravirtual' })
-      );
-    });
+    await user.click(controllerTypeButton);
+    await user.click(
+      screen.getByRole('option', { name: 'VMware Paravirtual' })
+    );
     act(() => jest.advanceTimersByTime(1000));
     expect(getControllerType()).toEqual('ParaVirtualSCSIController');
   });

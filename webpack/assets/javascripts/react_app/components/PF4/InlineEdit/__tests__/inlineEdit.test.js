@@ -13,12 +13,13 @@ const defaultProps = {
 
 test('Passed function is called after editing and clicking submit for text input', async () => {
   const mockEdit = jest.fn();
-  const { getByLabelText } = render(
+  const { getByLabelText, findByLabelText } = render(
     <InlineEdit {...defaultProps} onSave={mockEdit} />
   );
 
   getByLabelText(`edit ${attribute}`).click();
-  fireEvent.change(getByLabelText(`${attribute} text input`), {
+  const textInput = await findByLabelText(`${attribute} text input`);
+  fireEvent.change(textInput, {
     target: { value: actualValue },
   });
   getByLabelText(`submit ${attribute}`).click();
@@ -29,12 +30,13 @@ test('Passed function is called after editing and clicking submit for text input
 
 test('Passed function is called after editing and clicking submit for text area', async () => {
   const mockEdit = jest.fn();
-  const { getByLabelText } = render(
+  const { getByLabelText, findByLabelText } = render(
     <InlineEdit {...defaultProps} textArea={true} onSave={mockEdit} />
   );
 
   getByLabelText(`edit ${attribute}`).click();
-  fireEvent.change(getByLabelText(`${attribute} text area`), {
+  const textArea = await findByLabelText(`${attribute} text area`);
+  fireEvent.change(textArea, {
     target: { value: actualValue },
   });
   getByLabelText(`submit ${attribute}`).click();
@@ -45,13 +47,14 @@ test('Passed function is called after editing and clicking submit for text area'
 
 test('Passed function is called after editing and hitting enter', async () => {
   const mockEdit = jest.fn();
-  const { getByLabelText } = render(
+  const { getByLabelText, findByLabelText } = render(
     <InlineEdit {...defaultProps} onSave={mockEdit} />
   );
 
   getByLabelText(`edit ${attribute}`).click();
   const textInputLabel = `${attribute} text input`;
-  fireEvent.change(getByLabelText(textInputLabel), {
+  const textInput = await findByLabelText(textInputLabel);
+  fireEvent.change(textInput, {
     target: { value: actualValue },
   });
   fireEvent.keyDown(getByLabelText(textInputLabel), {
@@ -63,9 +66,9 @@ test('Passed function is called after editing and hitting enter', async () => {
   expect(mockEdit.mock.calls[0][0]).toBe(actualValue); // first arg
 });
 
-test('input is set back to original value after clearing', () => {
+test('input is set back to original value after clearing', async () => {
   const value = 'Sandwich';
-  const { getByLabelText } = render(<InlineEdit {...defaultProps} />);
+  const { getByLabelText, findByLabelText } = render(<InlineEdit {...defaultProps} />);
 
   // Show original value on load
   expect(getByLabelText(`${attribute} text value`)).toHaveTextContent(
@@ -73,14 +76,17 @@ test('input is set back to original value after clearing', () => {
   );
   getByLabelText(`edit ${attribute}`).click();
   // Update text input
-  fireEvent.change(getByLabelText(`${attribute} text input`), {
+  const textInput = await findByLabelText(`${attribute} text input`);
+  fireEvent.change(textInput, {
     target: { value },
   });
   expect(getByLabelText(`${attribute} text input`)).toHaveValue(value);
   // Clear text
   getByLabelText(`clear ${attribute}`).click();
   // Original value is still showing even though it's been edited
-  expect(getByLabelText(`${attribute} text value`)).toHaveTextContent(
-    actualValue
+  await waitFor(() =>
+    expect(getByLabelText(`${attribute} text value`)).toHaveTextContent(
+      actualValue
+    )
   );
 });

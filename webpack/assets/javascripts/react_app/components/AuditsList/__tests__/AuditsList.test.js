@@ -1,5 +1,5 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { rtlHelpers } from '../../../common/testHelpers';
 import AuditsList from '../../AuditsList';

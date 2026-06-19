@@ -24,14 +24,22 @@ describe('RegistrationCommandsPage fields - OperatingSystem', () => {
     jest.clearAllMocks();
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('should render the operating system form group', async () => {
     jest.useFakeTimers();
+    const user = userEvent.setup({
+      advanceTimers: jest.advanceTimersByTime,
+    });
     renderWithProvider();
 
     expect(screen.getByText('Operating system')).toBeInTheDocument();
     const tooltip = screen.getByRole('button');
-    await act(async () => userEvent.click(tooltip));
+    await user.click(tooltip);
     await act(async () => jest.advanceTimersByTime(1000));
+
     expect(
       screen.getByText(
         'Required for registration without subscription manager. Can be specified by host group.'
