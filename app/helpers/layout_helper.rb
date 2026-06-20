@@ -70,7 +70,7 @@ module LayoutHelper
     {
       apiUrl: "/api/v2/#{controller_name}",
       controller: controller_name,
-      createUrl: options[:create_url] || url_for(action: :new),
+      createUrl: options.fetch(:creatable, true) ? (options[:create_url] || url_for(action: :new)) : nil,
       exportUrl: options[:export_url],
       documentationUrl: options[:documentation_url] || documentation_url,
       searchable: options.fetch(:searchable, true),
@@ -79,6 +79,17 @@ module LayoutHelper
       hasHelpPage: options.fetch(:has_help_page, false),
       initialSearch: params[:search] || '',
     }
+  end
+
+  def react_taxonomy_index_props
+    klass = params[:controller].classify.constantize
+    react_index_props(klass).merge(
+      title: taxonomy_upcase,
+      taxonomyResource: params[:controller],
+      taxonomySingle: params[:controller].singularize,
+      mismatchesUrl: mismatches_taxonomies_path,
+      countNilHosts: @count_nil_hosts || 0
+    )
   end
 
   def button_group(*elements)

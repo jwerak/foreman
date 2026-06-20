@@ -52,6 +52,11 @@ import ArchitecturesIndex from './ArchitecturesIndex';
 import RealmsIndex from './RealmsIndex';
 import MediaIndex from './MediaIndex';
 import ComputeProfilesIndex from './ComputeProfilesIndex';
+import TaxonomiesIndex from './TaxonomiesIndex';
+import BookmarksIndex from './BookmarksIndex';
+import UserGroupsIndex from './UserGroupsIndex';
+import RolesIndex from './RolesIndex';
+import UsersIndex from './UsersIndex';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -194,6 +199,11 @@ const coreComponents = [
   { name: 'RealmsIndex', type: RealmsIndex },
   { name: 'MediaIndex', type: MediaIndex },
   { name: 'ComputeProfilesIndex', type: ComputeProfilesIndex },
+  { name: 'TaxonomiesIndex', type: TaxonomiesIndex },
+  { name: 'BookmarksIndex', type: BookmarksIndex },
+  { name: 'UserGroupsIndex', type: UserGroupsIndex },
+  { name: 'RolesIndex', type: RolesIndex },
+  { name: 'UsersIndex', type: UsersIndex },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {

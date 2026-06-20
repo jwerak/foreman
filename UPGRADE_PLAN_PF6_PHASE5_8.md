@@ -90,12 +90,19 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 - `config_reports/index`
 - `bookmarks/index`
 
-**Batch 6D — User management & access (5 pages):**
-- `users/index`
-- `usergroups/index`
-- `roles/index`
-- `filters/index`
-- `common_parameters/index`
+**Batch 6D — User management & access (3 of 5 pages) ✅ PARTIAL (2026-06-20):**
+- `users/index` ✅ — React IndexPage with login, name, mail, admin, last_login, auth source columns
+- `usergroups/index` ✅ — React IndexPage with name, user_names, usergroup_names columns
+- `roles/index` ✅ — React IndexPage with name, description, locked icon, conditional actions
+- `filters/index` — pending
+- `common_parameters/index` — pending
+
+**Batch 6F — Taxonomy pages (2 pages) ✅ COMPLETE (2026-06-20):**
+- `locations/index` (via `taxonomies/index`) ✅ — TaxonomiesIndex with hosts_count, warning banner, mismatches report
+- `organizations/index` (via `taxonomies/index`) ✅ — shared TaxonomiesIndex component
+
+**Batch 6G — Bookmarks ✅ COMPLETE (2026-06-20):**
+- `bookmarks/index` ✅ — React IndexPage with name, query, controller, public columns
 
 **Batch 6E — Remaining pages (4 pages):**
 - `hostgroups/index`
