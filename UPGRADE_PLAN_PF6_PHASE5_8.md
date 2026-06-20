@@ -70,12 +70,12 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 
 ### Migration order (by user impact):
 
-**Batch 6A — Core infrastructure pages (5 pages):**
-- `domains/index` — simplest CRUD table, good first target
-- `architectures/index` — minimal columns, validates the pattern
-- `realms/index` — similar structure
-- `media/index` — similar structure
-- `compute_profiles/index` — similar structure
+**Batch 6A — Core infrastructure pages (5 pages) ✅ COMPLETE (2026-06-20):**
+- `domains/index` ✅ — React IndexPage with fullname/name, hosts_count columns
+- `architectures/index` ✅ — React IndexPage with name, OS names, hosts_count columns
+- `realms/index` ✅ — React IndexPage with name, hosts_count columns
+- `media/index` ✅ — React IndexPage with name, path, OS family, OS names columns + clone action
+- `compute_profiles/index` ✅ — React IndexPage with name column, rename + delete actions
 
 **Batch 6B — Networking & provisioning (5 pages):**
 - `subnets/index`

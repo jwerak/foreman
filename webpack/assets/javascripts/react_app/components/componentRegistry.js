@@ -47,6 +47,11 @@ import { WelcomeArchitecture } from './Architectures/Welcome';
 import JwtTokens from './users/JwtTokens/JwtTokens';
 import Dashboard from './Dashboard';
 import IndexPage from './common/IndexPage';
+import DomainsIndex from './DomainsIndex';
+import ArchitecturesIndex from './ArchitecturesIndex';
+import RealmsIndex from './RealmsIndex';
+import MediaIndex from './MediaIndex';
+import ComputeProfilesIndex from './ComputeProfilesIndex';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -184,6 +189,11 @@ const coreComponents = [
   { name: 'WelcomeConfigReports', type: WelcomeConfigReports },
   { name: 'WelcomeArchitecture', type: WelcomeArchitecture },
   { name: 'IndexPage', type: IndexPage },
+  { name: 'DomainsIndex', type: DomainsIndex },
+  { name: 'ArchitecturesIndex', type: ArchitecturesIndex },
+  { name: 'RealmsIndex', type: RealmsIndex },
+  { name: 'MediaIndex', type: MediaIndex },
+  { name: 'ComputeProfilesIndex', type: ComputeProfilesIndex },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {

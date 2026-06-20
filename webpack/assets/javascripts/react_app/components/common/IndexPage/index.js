@@ -56,6 +56,7 @@ const IndexPage = ({
     onPagination,
     onSort,
     onSearch,
+    fetchData,
   } = useIndexData({
     apiUrl,
     initialSearch,
@@ -216,7 +217,7 @@ const IndexPage = ({
             )}
             {!error &&
               results.map(row => {
-                const actions = rowActions ? rowActions(row) : [];
+                const actions = rowActions ? rowActions(row, fetchData) : [];
                 return (
                   <Tr
                     key={row[idColumn] || row.id}
