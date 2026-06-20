@@ -8,59 +8,55 @@ This plan organizes the remaining migration into 4 phases, each independently me
 
 ---
 
-## Phase 5: Reusable Index Page Infrastructure
+## Phase 5: Reusable Index Page Infrastructure ✅ COMPLETE (2026-06-20)
 
 **Goal:** Create a generic `IndexPage` React component that replaces the repeating ERB pattern of `title + title_actions + search bar + table + pagination`. Once built, each index page migration becomes a ~30-line component + controller JSON serialization.
 
-### 5.1: Create `IndexPage` component
+**Commit:** `f905c44` — Add reusable IndexPage React infrastructure for ERB migration (Phase 5)
 
-**New file:** `webpack/.../components/common/IndexPage/index.js`
+### 5.1: Create `IndexPage` component ✅
 
-A generic wrapper that renders:
-- PF6 `PageSection` with title
-- PF6 `Toolbar` with action buttons (create, export, etc.) + search slot
-- PF6 `Table` (from `@patternfly/react-table`) with sortable columns
-- PF6 `Pagination` (already exists as React component)
-- Empty state when no data
+**File:** `webpack/.../components/common/IndexPage/index.js`
 
-Props: `title`, `columns`, `rows`, `actions`, `searchUrl`, `pagination`, `createUrl`, `documentationUrl`
+Renders PF6 Toolbar (with SearchBar + ActionButtons + Pagination) + composable PF6 Table + bottom Pagination + Loading/Empty/Error states.
 
-Reuse existing components:
-- `webpack/.../common/EmptyState/EmptyStatePattern.js` — empty state
-- `webpack/.../Pagination/index.js` — existing pagination component
-- `webpack/.../SearchBar/` — existing search bar
+Props: `apiUrl`, `title`, `columns`, `controller`, `creatable`, `createUrl`, `exportable`, `exportUrl`, `hasHelpPage`, `documentationUrl`, `rowActions`, `searchable`, `initialSearch`, `idColumn`, `isStriped`, `customActions`
 
-### 5.2: Create `useIndexData` hook
+Column format: `[{ key, title, sortKey, wrapper }]` — array-based, each migration is ~30 lines.
 
-**New file:** `webpack/.../components/common/IndexPage/useIndexData.js`
+**Design decisions:**
+- Uses PF6 `Pagination` directly from `@patternfly/react-core` (NOT the existing `Pagination` wrapper) to avoid `useHistory()` dependency — makes IndexPage work in ERB-mounted contexts without Router context
+- Reuses existing `SearchBar` (needs Redux store, provided automatically by componentRegistry)
+- Reuses existing `EmptyPage` component for loading/empty/error states
+- Registered in `componentRegistry.js` as `'IndexPage'` — mountable via `react_component('IndexPage', props)` from ERB
 
-Custom hook that handles:
-- Fetching JSON data from the controller (`GET /resource.json`)
-- Pagination state (page, perPage)
-- Sort state (column, direction)
-- Search query forwarding
-- Loading state
+### 5.2: Create `useIndexData` hook ✅
 
-This replaces the ERB pattern where the controller renders HTML with `will_paginate`.
+**File:** `webpack/.../components/common/IndexPage/useIndexData.js`
 
-### 5.3: Update `title_actions` helper to pass props
+Standalone hook using the axios `API` module directly (no Redux dependency for data fetching). Manages: `results`, `total`, `subtotal`, `page`, `perPage`, `sortBy`, `search`, `isLoading`, `error`, `canCreate`. Returns handler functions: `onPagination`, `onSort`, `onSearch`, `fetchData`.
+
+### 5.3: Add `react_index_props` helper ✅
 
 **File:** `app/helpers/layout_helper.rb`
 
-Add a `react_title_actions` helper that serializes action buttons as JSON props (label, url, method, icon) instead of rendering Bootstrap HTML. This enables gradual migration — pages can switch one at a time.
+Added `react_index_props(resource_class, options)` helper that serializes controller data (apiUrl, controller, createUrl, exportUrl, documentationUrl, searchable, creatable, exportable, hasHelpPage, initialSearch) as JSON props for React mounting.
 
-### 5.4: Create `ActionButtons` component
+### 5.4: Create `ActionButtons` component ✅
 
-**New file:** `webpack/.../components/common/IndexPage/ActionButtons.js`
+**File:** `webpack/.../components/common/IndexPage/ActionButtons.js`
 
-Renders action button props as PF6 `Button` and `Dropdown` components. Replaces:
-- `new_link` → PF6 primary Button
-- `select_action_button` → PF6 Dropdown with MenuItems
-- `documentation_button` → PF6 link Button with ExternalLinkAltIcon
+Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Replaces:
+- `new_link` → PF6 primary Button (with `createUrl` prop)
+- `select_action_button` → PF6 Dropdown with DropdownItems
+- `documentation_button` → PF6 link Button with QuestionCircleIcon
 
-### 5.5: Tests for IndexPage infrastructure
+### 5.5: Tests for IndexPage infrastructure ✅
 
-Test files for IndexPage, useIndexData, ActionButtons.
+28 tests across 3 test files, all passing:
+- `__tests__/useIndexData.test.js` — 9 tests (fetch, pagination, sort, search, errors, initial params)
+- `__tests__/ActionButtons.test.js` — 7 tests (render states, create/export/docs buttons, custom actions)
+- `__tests__/IndexPage.test.js` — 12 tests (table rendering, loading/empty/error states, row actions, pagination, search bar)
 
 ---
 
