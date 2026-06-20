@@ -75,4 +75,20 @@ describe('Dashboard', () => {
     render(<Dashboard {...defaultProps} />);
     expect(screen.getByTestId('slot')).toBeInTheDocument();
   });
+
+  it('renders auto-refresh toggle button', () => {
+    render(<Dashboard {...defaultProps} />);
+    expect(screen.getByLabelText('Toggle auto refresh')).toBeInTheDocument();
+  });
+
+  it('renders documentation link when URL is provided', () => {
+    render(<Dashboard {...defaultProps} documentationUrl="https://docs.example.com" />);
+    const link = screen.getByText('Documentation');
+    expect(link.closest('a')).toHaveAttribute('href', 'https://docs.example.com');
+  });
+
+  it('does not render documentation link when URL is empty', () => {
+    render(<Dashboard {...defaultProps} documentationUrl="" />);
+    expect(screen.queryByText('Documentation')).not.toBeInTheDocument();
+  });
 });

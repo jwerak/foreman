@@ -1,14 +1,1 @@
-// Dashboard styling is now handled by PF6 Card/Grid components.
-// Gridster styles have been removed.
-
-.auto-refresh {
-  background: none;
-
-  &.on {
-    color: var(--pf-t--global--color--brand--default);
-  }
-
-  &.off {
-    color: var(--pf-t--global--color--nonstatus--gray--default);
-  }
-}
+// Dashboard styling is now handled by PF6 React components.

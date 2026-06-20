@@ -1,12 +1,24 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   PageSection,
   Grid,
   GridItem,
+  Toolbar,
+  ToolbarContent,
+  ToolbarItem,
+  ToolbarGroup,
+  Button,
+  Tooltip,
 } from '@patternfly/react-core';
+import {
+  SyncAltIcon,
+  ExternalLinkAltIcon,
+} from '@patternfly/react-icons';
 import { translate as __ } from '../../common/I18n';
 import { foremanUrl } from '../../../foreman_tools';
+import { doesDocumentHasFocus } from '../../common/document';
+import { reloadPage } from '../../../foreman_navigation';
 import AggregateStatusCard from './AggregateStatusCard';
 import StatusChartCard from './StatusChartCard';
 import RunDistributionCard from './RunDistributionCard';
@@ -14,6 +26,8 @@ import LatestEventsCard from './LatestEventsCard';
 import NewHostsCard from './NewHostsCard';
 import BuildModeCard from './BuildModeCard';
 import Slot from '../common/Slot/Slot';
+
+const AUTO_REFRESH_INTERVAL = 60000;
 
 const Dashboard = ({
   status: initialStatus,
@@ -24,6 +38,7 @@ const Dashboard = ({
   hostsInBuildMode: initialBuildHosts,
   reportOrigins,
   searchUrl,
+  documentationUrl,
 }) => {
   const [selectedOrigin, setSelectedOrigin] = useState('All');
   const [status, setStatus] = useState(initialStatus);
@@ -33,6 +48,20 @@ const Dashboard = ({
   const [newHosts, setNewHosts] = useState(initialNewHosts);
   const [hostsInBuildMode, setHostsInBuildMode] = useState(initialBuildHosts);
   const [loading, setLoading] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState(false);
+  const refreshTimer = useRef(null);
+
+  useEffect(() => {
+    if (refreshTimer.current) clearTimeout(refreshTimer.current);
+    if (autoRefresh) {
+      refreshTimer.current = setTimeout(() => {
+        if (doesDocumentHasFocus()) reloadPage();
+      }, AUTO_REFRESH_INTERVAL);
+    }
+    return () => {
+      if (refreshTimer.current) clearTimeout(refreshTimer.current);
+    };
+  }, [autoRefresh]);
 
   const handleOriginChange = useCallback(async (origin) => {
     setSelectedOrigin(origin);
@@ -68,6 +97,36 @@ const Dashboard = ({
 
   return (
     <PageSection>
+      <Toolbar>
+        <ToolbarContent>
+          <ToolbarGroup align={{ default: 'alignEnd' }}>
+            <ToolbarItem>
+              <Tooltip content={autoRefresh ? __('Auto refresh on') : __('Auto refresh off')}>
+                <Button
+                  variant={autoRefresh ? 'primary' : 'plain'}
+                  onClick={() => setAutoRefresh(prev => !prev)}
+                  aria-label={__('Toggle auto refresh')}
+                  icon={<SyncAltIcon />}
+                />
+              </Tooltip>
+            </ToolbarItem>
+            {documentationUrl && (
+              <ToolbarItem>
+                <Button
+                  variant="link"
+                  component="a"
+                  href={documentationUrl}
+                  target="_blank"
+                  rel="external noopener noreferrer"
+                  icon={<ExternalLinkAltIcon />}
+                >
+                  {__('Documentation')}
+                </Button>
+              </ToolbarItem>
+            )}
+          </ToolbarGroup>
+        </ToolbarContent>
+      </Toolbar>
       <Grid hasGutter>
         <GridItem span={12}>
           <AggregateStatusCard
@@ -114,6 +173,7 @@ Dashboard.propTypes = {
   hostsInBuildMode: PropTypes.array,
   reportOrigins: PropTypes.array,
   searchUrl: PropTypes.string,
+  documentationUrl: PropTypes.string,
 };
 
 Dashboard.defaultProps = {
@@ -125,6 +185,7 @@ Dashboard.defaultProps = {
   hostsInBuildMode: [],
   reportOrigins: ['All'],
   searchUrl: '',
+  documentationUrl: '',
 };
 
 export default Dashboard;

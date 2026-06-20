@@ -29,6 +29,7 @@ class DashboardController < ApplicationController
       hostsInBuildMode: serialize_build_hosts(data),
       reportOrigins: available_report_origins,
       searchUrl: h.current_hosts_path(search: '~VAL~'),
+      documentationUrl: h.send(:documentation_url),
     }
   end
 
