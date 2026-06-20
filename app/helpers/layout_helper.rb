@@ -65,6 +65,22 @@ module LayoutHelper
     content_for(:title_actions) { elements.join(" ").html_safe }
   end
 
+  def react_index_props(resource_class, options = {})
+    controller_name = options[:controller] || params[:controller]
+    {
+      apiUrl: "/api/v2/#{controller_name}",
+      controller: controller_name,
+      createUrl: options[:create_url] || url_for(action: :new),
+      exportUrl: options[:export_url],
+      documentationUrl: options[:documentation_url] || documentation_url,
+      searchable: options.fetch(:searchable, true),
+      creatable: options.fetch(:creatable, true),
+      exportable: options.fetch(:exportable, false),
+      hasHelpPage: options.fetch(:has_help_page, false),
+      initialSearch: params[:search] || '',
+    }
+  end
+
   def button_group(*elements)
     content_tag(:div, :class => "btn-group") { elements.join(" ").html_safe }
   end

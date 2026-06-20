@@ -46,6 +46,7 @@ import { WelcomeConfigReports } from './ConfigReports/Welcome';
 import { WelcomeArchitecture } from './Architectures/Welcome';
 import JwtTokens from './users/JwtTokens/JwtTokens';
 import Dashboard from './Dashboard';
+import IndexPage from './common/IndexPage';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -182,6 +183,7 @@ const coreComponents = [
   { name: 'WelcomeAuthSource', type: WelcomeAuthSource },
   { name: 'WelcomeConfigReports', type: WelcomeConfigReports },
   { name: 'WelcomeArchitecture', type: WelcomeArchitecture },
+  { name: 'IndexPage', type: IndexPage },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {
