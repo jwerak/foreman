@@ -5,12 +5,12 @@ import {
 	Button,
 	Alert,
 	Stack,
-	StackItem
-} from '@patternfly/react-core';
-import {
+	StackItem,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { FormattedMessage } from 'react-intl';
 import { translate as __ } from '../../../common/I18n';
 import { useAPI } from '../../../common/hooks/API/APIHooks';
@@ -37,11 +37,63 @@ const BuildModal = ({ isModalOpen, onClose, hostFriendlyId, hostName }) => {
   return (
     <Modal
       ouiaId="review-build-modal"
-      variant={ModalVariant.medium}
-      title={__('Review before build')}
+      variant="medium"
       isOpen={isModalOpen}
       onClose={onClose}
-      actions={[
+      aria-labelledby="review-build-modal-title"
+    >
+      <ModalHeader title={__('Review before build')} labelId="review-build-modal-title" />
+      <ModalBody>
+        <Stack hasGutter>
+          <StackItem>
+            <FormattedMessage
+              id="build"
+              values={{
+                hostName: <b>{hostName}</b>,
+              }}
+              defaultMessage={__(
+                'Build enables host {hostName} to rebuild on next boot'
+              )}
+            />
+          </StackItem>
+
+          <StackItem>
+            <Alert
+              ouiaId="warning-alert"
+              variant="warning"
+              isInline
+              title={__(
+                'This action will delete this host and all its data (i.e facts, report)'
+              )}
+            />
+          </StackItem>
+          <StackItem>
+            <SkeletonLoader
+              skeletonProps={{ count: Object.keys(SUPPORTED_ERRORS).length }}
+              status={status || STATUS.PENDING}
+            >
+              {noErrors ? (
+                <StatusIcon
+                  label={__('No errors detected')}
+                  statusNumber={OK_STATUS_STATE}
+                />
+              ) : (
+                <>
+                  <StatusIcon
+                    label={__(
+                      'The following errors may prevent a successful build:'
+                    )}
+                    statusNumber={ERROR_STATUS_STATE}
+                  />
+
+                  <ErrorsTree data={errorsTree} />
+                </>
+              )}
+            </SkeletonLoader>
+          </StackItem>
+        </Stack>
+      </ModalBody>
+      <ModalFooter>
         <Button
           ouiaId="confirm-button"
           key="confirm"
@@ -52,7 +104,7 @@ const BuildModal = ({ isModalOpen, onClose, hostFriendlyId, hostName }) => {
           }}
         >
           {__('Build')}
-        </Button>,
+        </Button>
         <Button
           ouiaId="cancel-button"
           key="cancel"
@@ -60,57 +112,8 @@ const BuildModal = ({ isModalOpen, onClose, hostFriendlyId, hostName }) => {
           onClick={onClose}
         >
           {__('Cancel')}
-        </Button>,
-      ]}
-    >
-      <Stack hasGutter>
-        <StackItem>
-          <FormattedMessage
-            id="build"
-            values={{
-              hostName: <b>{hostName}</b>,
-            }}
-            defaultMessage={__(
-              'Build enables host {hostName} to rebuild on next boot'
-            )}
-          />
-        </StackItem>
-
-        <StackItem>
-          <Alert
-            ouiaId="warning-alert"
-            variant="warning"
-            isInline
-            title={__(
-              'This action will delete this host and all its data (i.e facts, report)'
-            )}
-          />
-        </StackItem>
-        <StackItem>
-          <SkeletonLoader
-            skeletonProps={{ count: Object.keys(SUPPORTED_ERRORS).length }}
-            status={status || STATUS.PENDING}
-          >
-            {noErrors ? (
-              <StatusIcon
-                label={__('No errors detected')}
-                statusNumber={OK_STATUS_STATE}
-              />
-            ) : (
-              <>
-                <StatusIcon
-                  label={__(
-                    'The following errors may prevent a successful build:'
-                  )}
-                  statusNumber={ERROR_STATUS_STATE}
-                />
-
-                <ErrorsTree data={errorsTree} />
-              </>
-            )}
-          </SkeletonLoader>
-        </StackItem>
-      </Stack>
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

@@ -52,7 +52,10 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.(png|gif|css|scss)$': `${nodeModules}/identity-obj-proxy/src/index.js`,
     ...moduleNameMapper,
-    '^@patternfly/react-table/deprecated$': `${nodeModules}/@patternfly/react-table/deprecated`,
+    '^@patternfly/react-core$': `${nodeModules}/@patternfly/react-core/dist/js/index.js`,
+    '^@patternfly/react-core/deprecated$': `${nodeModules}/@patternfly/react-core/dist/js/deprecated/index.js`,
+    '^@patternfly/react-table$': `${nodeModules}/@patternfly/react-table/dist/js/index.js`,
+    '^@patternfly/react-table/deprecated$': `${nodeModules}/@patternfly/react-table/dist/js/deprecated/index.js`,
     '^@patternfly/react-icons/dist/esm/(.*)$': `${nodeModules}/@patternfly/react-icons/dist/js/$1`,
     '^dnd-core$': `${nodeModules}/dnd-core/dist/cjs`,
     '^react-dnd$': `${nodeModules}/react-dnd/dist/cjs`,

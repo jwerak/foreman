@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	Icon,
-	Button
+	Button,
+	Modal,
+	ModalBody,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { TimesIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
@@ -47,20 +47,23 @@ const DiffModal = ({
       isOpen={isOpen}
       onClose={toggleModal}
       className="diff-modal"
-      header={header}
       aria-labelledby="diff-modal-h4"
-      hasNoBodyWrapper
     >
-      <div className="diff-modal-body">
-        <div id="diff-table">
-          <DiffView
-            oldText={oldText}
-            newText={newText}
-            patch={diff}
-            viewType={diffViewType}
-          />
+      <ModalHeader labelId="diff-modal-h4">
+        {header}
+      </ModalHeader>
+      <ModalBody>
+        <div className="diff-modal-body">
+          <div id="diff-table">
+            <DiffView
+              oldText={oldText}
+              newText={newText}
+              patch={diff}
+              viewType={diffViewType}
+            />
+          </div>
         </div>
-      </div>
+      </ModalBody>
     </Modal>
   );
 };

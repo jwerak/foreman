@@ -8,12 +8,11 @@ import {
 	Flex,
 	FlexItem,
 	Spinner,
-	Icon
-} from '@patternfly/react-core';
-import {
+	Icon,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalHeader
+} from '@patternfly/react-core';
 import { ErrorCircleOIcon } from '@patternfly/react-icons';
 import classNames from 'classnames';
 import DonutChart from '../common/charts/DonutChart';
@@ -142,12 +141,15 @@ const ChartBox = ({
         <Modal
           ouiaId={`chart-${chart.id}-modal`}
           className="chart-box-modal"
-          variant={ModalVariant.small}
-          title={title}
+          variant="small"
           isOpen={showModal}
           onClose={closeModal}
+          aria-labelledby="chart-box-modal-title"
         >
-          <Chart {...chartProps} config={config} />
+          <ModalHeader title={title} labelId="chart-box-modal-title" />
+          <ModalBody>
+            <Chart {...chartProps} config={config} />
+          </ModalBody>
         </Modal>
       </CardBody>
     </Card>

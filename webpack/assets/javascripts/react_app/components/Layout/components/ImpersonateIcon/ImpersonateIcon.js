@@ -6,12 +6,12 @@ import {
 	Tooltip,
 	TooltipPosition,
 	Button,
-	Icon
-} from '@patternfly/react-core';
-import {
+	Icon,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { translate as __ } from '../../../../common/I18n';
 import { stopImpersonating } from './ImpersonateIconActions';
 
@@ -39,12 +39,19 @@ const ImpersonateIcon = ({ stopImpersonationUrl }) => {
       </Tooltip>
       <Modal
         ouiaId="impersonate-modal"
-        variant={ModalVariant.small}
-        position="top"
+        variant="small"
         isOpen={showModal}
         onClose={toggleModal}
-        title={__('Confirm Action')}
-        actions={[
+        aria-labelledby="impersonate-modal-title"
+      >
+        <ModalHeader
+          title={__('Confirm Action')}
+          labelId="impersonate-modal-title"
+        />
+        <ModalBody>
+          {__('You are about to stop impersonating other user. Are you sure?')}
+        </ModalBody>
+        <ModalFooter>
           <Button
             ouiaId="stop-impersonating"
             key="confirm"
@@ -52,7 +59,7 @@ const ImpersonateIcon = ({ stopImpersonationUrl }) => {
             onClick={() => dispatch(stopImpersonating(stopImpersonationUrl))}
           >
             {__('Confirm')}
-          </Button>,
+          </Button>
           <Button
             ouiaId="cancel-impersonating-modal"
             key="cancel"
@@ -60,10 +67,8 @@ const ImpersonateIcon = ({ stopImpersonationUrl }) => {
             onClick={toggleModal}
           >
             {__('Cancel')}
-          </Button>,
-        ]}
-      >
-        {__('You are about to stop impersonating other user. Are you sure?')}
+          </Button>
+        </ModalFooter>
       </Modal>
     </React.Fragment>
   );

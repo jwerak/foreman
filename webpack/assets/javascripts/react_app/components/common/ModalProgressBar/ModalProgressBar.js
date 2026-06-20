@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	Progress
+	Progress,
+	Modal,
+	ModalBody,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { sprintf, translate as __ } from '../../../common/I18n';
 import './ModalProgressBar.scss';
 
@@ -15,17 +15,18 @@ const ModalProgressBar = ({ show, container, title, progress }) => (
     ouiaId="modal-progress-bar"
     variant="small"
     isOpen={show}
-    aria-label={title || 'modal-progress-bar'}
+    aria-labelledby="modal-progress-bar-title"
     appendTo={container}
-    title={title}
     disableFocusTrap
-    showClose={false}
   >
-    <Progress
-      value={progress}
-      label={sprintf(__('%s%% Complete'), progress)}
-      aria-label="progress-bar"
-    />
+    {title && <ModalHeader title={title} labelId="modal-progress-bar-title" />}
+    <ModalBody>
+      <Progress
+        value={progress}
+        label={sprintf(__('%s%% Complete'), progress)}
+        aria-label="progress-bar"
+      />
+    </ModalBody>
   </Modal>
 );
 

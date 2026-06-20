@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {
 	Title,
-	TitleSizes
+	TitleSizes,
+	Modal,
+	ModalBody,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import StatusTable from './StatusTable';
 import { translate as __ } from '../../../common/I18n';
 import { noop } from '../../../common/helpers';
@@ -35,18 +35,22 @@ const StatusModal = ({
     <Modal
       ouiaId="statuses-modal"
       width="50%"
-      aria-label="statuses modal"
+      aria-labelledby="statuses-modal-header"
       isOpen={isOpen}
-      header={header}
       onClose={onClose}
       appendTo={document.body}
     >
-      <br />
-      <StatusTable
-        canForgetStatuses={canForgetStatuses}
-        statuses={statuses}
-        hostName={hostName}
-      />
+      <ModalHeader labelId="statuses-modal-header">
+        {header}
+      </ModalHeader>
+      <ModalBody>
+        <br />
+        <StatusTable
+          canForgetStatuses={canForgetStatuses}
+          statuses={statuses}
+          hostName={hostName}
+        />
+      </ModalBody>
     </Modal>
   );
 };

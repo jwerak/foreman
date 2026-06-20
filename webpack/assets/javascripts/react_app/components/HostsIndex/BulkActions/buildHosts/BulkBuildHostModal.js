@@ -6,11 +6,12 @@ import {
 	Button,
 	Content,
 	Checkbox,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Radio
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import { failedHostsToastParams } from '../helpers';
@@ -87,67 +88,70 @@ const BulkBuildHostModal = ({
       isOpen={isOpen}
       onClose={handleModalClose}
       onEscapePress={handleModalClose}
-      title={__('Build management')}
       width="50%"
       position="top"
-      actions={modalActions}
       id="bulk-build-hosts-modal"
       key="bulk-build-hosts-modal"
       ouiaId="bulk-build-hosts-modal"
+      aria-labelledby="bulk-build-hosts-modal-title"
     >
-      <Content>
-        <Content component="p" ouiaId="bulk-set-build-options">
-          <FormattedMessage
-            defaultMessage={__(
-              'Choose an action that will be performed on {hosts}.'
-            )}
-            values={{
-              hosts: (
-                <strong>
-                  <FormattedMessage
-                    defaultMessage="{count, plural, one {# {singular}} other {# {plural}}}"
-                    values={{
-                      count: selectedCount,
-                      singular: __('selected host'),
-                      plural: __('selected hosts'),
-                    }}
-                    id="bulk-build-hosts-selected-hosts"
-                  />
-                </strong>
-              ),
-            }}
-            id="bulk-build-host-description"
-          />
+      <ModalHeader title={__('Build management')} labelId="bulk-build-hosts-modal-title" />
+      <ModalBody>
+        <Content>
+          <Content component="p" ouiaId="bulk-set-build-options">
+            <FormattedMessage
+              defaultMessage={__(
+                'Choose an action that will be performed on {hosts}.'
+              )}
+              values={{
+                hosts: (
+                  <strong>
+                    <FormattedMessage
+                      defaultMessage="{count, plural, one {# {singular}} other {# {plural}}}"
+                      values={{
+                        count: selectedCount,
+                        singular: __('selected host'),
+                        plural: __('selected hosts'),
+                      }}
+                      id="bulk-build-hosts-selected-hosts"
+                    />
+                  </strong>
+                ),
+              }}
+              id="bulk-build-host-description"
+            />
+          </Content>
         </Content>
-      </Content>
-      <hr />
-      <Radio
-        isChecked={buildRadioChecked}
-        name="buildHostRadioGroup"
-        onChange={(_event, checked) => handleBuildRadioSelected(checked)}
-        label={__('Build')}
-        id="build-host-radio"
-        ouiaId="build-host-radio"
-        body={
-          <Checkbox
-            label={__('Reboot now')}
-            id="reboot-now-checkbox-id"
-            name="reboot-now"
-            isChecked={rebootChecked}
-            isDisabled={!buildRadioChecked}
-            onChange={(_event, val) => setRebootChecked(val)}
-            ouiaId="build-reboot-checkbox"
-          />
-        }
-      />
-      <hr />
-      <Radio
-        name="buildHostRadioGroup"
-        onChange={(_event, checked) => handleBuildRadioSelected(!checked)}
-        label={__('Rebuild provisioning configuration only')}
-        id="rebuild-host-radio"
-        ouiaId="rebuild-host-radio"
-      />
+        <hr />
+        <Radio
+          isChecked={buildRadioChecked}
+          name="buildHostRadioGroup"
+          onChange={(_event, checked) => handleBuildRadioSelected(checked)}
+          label={__('Build')}
+          id="build-host-radio"
+          ouiaId="build-host-radio"
+          body={
+            <Checkbox
+              label={__('Reboot now')}
+              id="reboot-now-checkbox-id"
+              name="reboot-now"
+              isChecked={rebootChecked}
+              isDisabled={!buildRadioChecked}
+              onChange={(_event, val) => setRebootChecked(val)}
+              ouiaId="build-reboot-checkbox"
+            />
+          }
+        />
+        <hr />
+        <Radio
+          name="buildHostRadioGroup"
+          onChange={(_event, checked) => handleBuildRadioSelected(!checked)}
+          label={__('Rebuild provisioning configuration only')}
+          id="rebuild-host-radio"
+          ouiaId="rebuild-host-radio"
+        />
+      </ModalBody>
+      <ModalFooter>{modalActions}</ModalFooter>
     </Modal>
   );
 };

@@ -14,12 +14,12 @@ import {
 	FormHelperText,
 	HelperText,
 	HelperTextItem,
-	Icon
-} from '@patternfly/react-core';
-import {
+	Icon,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { translate as __ } from '../../../common/I18n';
@@ -170,11 +170,147 @@ const PersonalAccessTokenModal = ({ controller, url }) => {
         ouiaId="new-token-modal"
         id="new-token-modal"
         className="token-modal"
-        variant={ModalVariant.small}
-        title={__('Create Personal Access Token')}
+        variant="small"
         isOpen={isModalOpen}
         onClose={closeModal}
-        actions={[
+        aria-labelledby="new-token-modal-title"
+      >
+        <ModalHeader title={__('Create Personal Access Token')} labelId="new-token-modal-title" />
+        <ModalBody>
+          <Form className="add-personal-access-token-form">
+            <FormGroup label={__('Name')} isRequired>
+              <TextInput
+                ouiaId="personal-token-name"
+                aria-label="personal access token name input"
+                id="personal-token-name"
+                isRequired
+                validated={nameHelperText().length ? 'error' : 'default'}
+                value={name}
+                onChange={(_event, val) => setName(val)}
+                onBlur={() => setShowNameErrors(true)}
+              />
+              {nameValidationError && (
+                <FormHelperText>
+                  <HelperText>
+                    <HelperTextItem
+                      icon={
+                        <Icon>
+                          <ExclamationCircleIcon />
+                        </Icon>
+                      }
+                      variant="error"
+                    >
+                      {nameHelperText()}
+                    </HelperTextItem>
+                  </HelperText>
+                </FormHelperText>
+              )}
+            </FormGroup>
+            <FormGroup label={__('Expires')}>
+              <div className="pf-v6-c-form">
+                <FormGroup fieldId="token-expires-never">
+                  <Radio
+                    ouiaId="expires-never"
+                    isChecked={endsNever}
+                    onChange={() => {
+                      clearDateTimeState();
+                      setEndsNever(true);
+                      setIsDateTimeDisabled(true);
+                    }}
+                    id="expires-never"
+                    label={__('Never')}
+                  />
+                </FormGroup>
+                <FormGroup fieldId="token-expires-datetime">
+                  <Radio
+                    ouiaId="expires-at"
+                    isChecked={!endsNever}
+                    onChange={() => {
+                      setEndsNever(false);
+                      setIsDateTimeDisabled(false);
+                    }}
+                    className="token-expires-radio"
+                    id="expires-at"
+                    label={
+                      <div className="token-expires-radio-wrapper">
+                        <div className="token-expires-radio-title">
+                          {__('At')}
+                        </div>
+                        <InputGroup>
+                          <InputGroupItem>
+                            <DatePicker
+                              aria-label="expiration date picker"
+                              isDisabled={isDateTimeDisabled}
+                              value={date}
+                              onChange={(_e, v) => validateDateChange(v)}
+                              appendTo={() => document.body}
+                              invalidFormatText={
+                                isDateValid
+                                  ? ''
+                                  : __('Enter valid date: YYYY-MM-DD')
+                              }
+                              // for undisplaying invalidFormatText when changing to 'Never'
+                              dateParse={() =>
+                                date === ''
+                                  ? new Date()
+                                  : date.split('-').length === 3 &&
+                                    new Date(`${date}T00:00:00`)
+                              }
+                            />
+                          </InputGroupItem>
+                          <InputGroupItem>
+                            <TimePicker
+                              aria-label="expiration time picker"
+                              isDisabled={
+                                !isDateValid ||
+                                isDateTimeDisabled ||
+                                date.length === 0
+                              }
+                              is24Hour
+                              includeSeconds
+                              menuAppendTo={() => document.body}
+                              placeholder={__('HH:MM:SS')}
+                              onChange={(e, v) => validateTimeChange(v)}
+                              invalidFormatErrorMessage={__(
+                                'Enter valid time: HH:MM:SS'
+                              )}
+                              invalidMinMaxErrorMessage=""
+                              validateTime={() => isTimeValid}
+                              inputProps={{
+                                validated: isTimeValid ? 'default' : 'error',
+                                // for undisplaying time when changing to 'Never'
+                                value: time,
+                              }}
+                            />
+                          </InputGroupItem>
+                        </InputGroup>
+                      </div>
+                    }
+                  />
+                </FormGroup>
+              </div>
+              {expiresValidattionError && (
+                <FormHelperText>
+                  <HelperText>
+                    <HelperTextItem
+                      icon={
+                        <Icon>
+                          <ExclamationCircleIcon />
+                        </Icon>
+                      }
+                      variant="error"
+                    >
+                      {!isDateTimeInFuture()
+                        ? __('Cannot be in the past')
+                        : __('Fill out the date and time')}
+                    </HelperTextItem>
+                  </HelperText>
+                </FormHelperText>
+              )}
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
           <Button
             ouiaId="confirm-button"
             id="confirm-button"
@@ -194,7 +330,7 @@ const PersonalAccessTokenModal = ({ controller, url }) => {
             }
           >
             {__('Confirm')}
-          </Button>,
+          </Button>
           <Button
             ouiaId="cancel-button"
             key="cancel"
@@ -203,141 +339,8 @@ const PersonalAccessTokenModal = ({ controller, url }) => {
             isDisabled={isSubmitting}
           >
             {__('Cancel')}
-          </Button>,
-        ]}
-      >
-        <Form className="add-personal-access-token-form">
-          <FormGroup label={__('Name')} isRequired>
-            <TextInput
-              ouiaId="personal-token-name"
-              aria-label="personal access token name input"
-              id="personal-token-name"
-              isRequired
-              validated={nameHelperText().length ? 'error' : 'default'}
-              value={name}
-              onChange={(_event, val) => setName(val)}
-              onBlur={() => setShowNameErrors(true)}
-            />
-            {nameValidationError && (
-              <FormHelperText>
-                <HelperText>
-                  <HelperTextItem
-                    icon={
-                      <Icon>
-                        <ExclamationCircleIcon />
-                      </Icon>
-                    }
-                    variant="error"
-                  >
-                    {nameHelperText()}
-                  </HelperTextItem>
-                </HelperText>
-              </FormHelperText>
-            )}
-          </FormGroup>
-          <FormGroup label={__('Expires')}>
-            <div className="pf-v6-c-form">
-              <FormGroup fieldId="token-expires-never">
-                <Radio
-                  ouiaId="expires-never"
-                  isChecked={endsNever}
-                  onChange={() => {
-                    clearDateTimeState();
-                    setEndsNever(true);
-                    setIsDateTimeDisabled(true);
-                  }}
-                  id="expires-never"
-                  label={__('Never')}
-                />
-              </FormGroup>
-              <FormGroup fieldId="token-expires-datetime">
-                <Radio
-                  ouiaId="expires-at"
-                  isChecked={!endsNever}
-                  onChange={() => {
-                    setEndsNever(false);
-                    setIsDateTimeDisabled(false);
-                  }}
-                  className="token-expires-radio"
-                  id="expires-at"
-                  label={
-                    <div className="token-expires-radio-wrapper">
-                      <div className="token-expires-radio-title">
-                        {__('At')}
-                      </div>
-                      <InputGroup>
-                        <InputGroupItem>
-                          <DatePicker
-                            aria-label="expiration date picker"
-                            isDisabled={isDateTimeDisabled}
-                            value={date}
-                            onChange={(_e, v) => validateDateChange(v)}
-                            appendTo={() => document.body}
-                            invalidFormatText={
-                              isDateValid
-                                ? ''
-                                : __('Enter valid date: YYYY-MM-DD')
-                            }
-                            // for undisplaying invalidFormatText when changing to 'Never'
-                            dateParse={() =>
-                              date === ''
-                                ? new Date()
-                                : date.split('-').length === 3 &&
-                                  new Date(`${date}T00:00:00`)
-                            }
-                          />
-                        </InputGroupItem>
-                        <InputGroupItem>
-                          <TimePicker
-                            aria-label="expiration time picker"
-                            isDisabled={
-                              !isDateValid ||
-                              isDateTimeDisabled ||
-                              date.length === 0
-                            }
-                            is24Hour
-                            includeSeconds
-                            menuAppendTo={() => document.body}
-                            placeholder={__('HH:MM:SS')}
-                            onChange={(e, v) => validateTimeChange(v)}
-                            invalidFormatErrorMessage={__(
-                              'Enter valid time: HH:MM:SS'
-                            )}
-                            invalidMinMaxErrorMessage=""
-                            validateTime={() => isTimeValid}
-                            inputProps={{
-                              validated: isTimeValid ? 'default' : 'error',
-                              // for undisplaying time when changing to 'Never'
-                              value: time,
-                            }}
-                          />
-                        </InputGroupItem>
-                      </InputGroup>
-                    </div>
-                  }
-                />
-              </FormGroup>
-            </div>
-            {expiresValidattionError && (
-              <FormHelperText>
-                <HelperText>
-                  <HelperTextItem
-                    icon={
-                      <Icon>
-                        <ExclamationCircleIcon />
-                      </Icon>
-                    }
-                    variant="error"
-                  >
-                    {!isDateTimeInFuture()
-                      ? __('Cannot be in the past')
-                      : __('Fill out the date and time')}
-                  </HelperTextItem>
-                </HelperText>
-              </FormHelperText>
-            )}
-          </FormGroup>
-        </Form>
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

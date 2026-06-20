@@ -6,11 +6,11 @@ import {
 	Button,
 	Switch,
 	Tooltip,
-	Icon
+	Icon,
+	Modal,
+	ModalBody,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { OutlinedWindowRestoreIcon } from '@patternfly/react-icons';
 import { FormattedMessage } from 'react-intl';
 import { translate as __ } from '../../../../../../common/I18n';
@@ -35,7 +35,9 @@ export const ReviewModal = ({
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
       variant="large"
-      title={
+      aria-labelledby="review-modal-title"
+    >
+      <ModalHeader labelId="review-modal-title">
         <div>
           {template.name}{' '}
           <Tooltip content={__('Open in a new tab')}>
@@ -56,63 +58,64 @@ export const ReviewModal = ({
             />
           </Tooltip>
         </div>
-      }
-    >
-      <div>
-        <FormattedMessage
-          id="build"
-          values={{
-            openTemplate: (
-              <Button
-                ouiaId="open-template-edit-button"
-                aria-label="Open template edit page"
-                component="a"
-                key="edit-template"
-                href={`/templates/provisioning_templates/${template.id}/edit`}
-                variant="link"
-                target="_blank"
-                rel="external noreferrer noopener"
-                isInline
-              >
-                {template.name}
-              </Button>
-            ),
-          }}
-          defaultMessage={__('View provisioning template {openTemplate}.')}
-        />
-      </div>
-      {!safeMode && (
-        <div
-          style={{
-            paddingTop: "var(--pf-t--global--spacer--lg)",
-            paddingBottom: "var(--pf-t--global--spacer--lg)",
-          }}
-        >
-          <Switch
-            ouiaId="safe-mode-switch"
-            id="safe-mode-switch"
-            label={__('Safe mode on')}
-            
-            isChecked={showSafe}
-            onChange={(_event, val) => setShowSafe(val)}
+      </ModalHeader>
+      <ModalBody>
+        <div>
+          <FormattedMessage
+            id="build"
+            values={{
+              openTemplate: (
+                <Button
+                  ouiaId="open-template-edit-button"
+                  aria-label="Open template edit page"
+                  component="a"
+                  key="edit-template"
+                  href={`/templates/provisioning_templates/${template.id}/edit`}
+                  variant="link"
+                  target="_blank"
+                  rel="external noreferrer noopener"
+                  isInline
+                >
+                  {template.name}
+                </Button>
+              ),
+            }}
+            defaultMessage={__('View provisioning template {openTemplate}.')}
           />
         </div>
-      )}
-      <SkeletonLoader
-        skeletonProps={{ count: 10 }}
-        status={status || STATUS.PENDING}
-      >
-        {response && (
-          <ClipboardCopy
-            isExpanded
-            isReadOnly
-            isCode
-            variant={ClipboardCopyVariant.expansion}
+        {!safeMode && (
+          <div
+            style={{
+              paddingTop: "var(--pf-t--global--spacer--lg)",
+              paddingBottom: "var(--pf-t--global--spacer--lg)",
+            }}
           >
-            {response}
-          </ClipboardCopy>
+            <Switch
+              ouiaId="safe-mode-switch"
+              id="safe-mode-switch"
+              label={__('Safe mode on')}
+
+              isChecked={showSafe}
+              onChange={(_event, val) => setShowSafe(val)}
+            />
+          </div>
         )}
-      </SkeletonLoader>
+        <SkeletonLoader
+          skeletonProps={{ count: 10 }}
+          status={status || STATUS.PENDING}
+        >
+          {response && (
+            <ClipboardCopy
+              isExpanded
+              isReadOnly
+              isCode
+              variant={ClipboardCopyVariant.expansion}
+            >
+              {response}
+            </ClipboardCopy>
+          )}
+        </SkeletonLoader>
+      </ModalBody>
     </Modal>
   );
 };

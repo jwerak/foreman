@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	Button,
 	Content,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Select,
 	SelectOption,
 	SelectList,
 	SelectGroup,
 	MenuToggle
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import {
@@ -170,77 +171,80 @@ const BulkChangeOwnerModal = ({
       isOpen={isOpen}
       onClose={handleModalClose}
       onEscapePress={handleModalClose}
-      title={__('Change Owner')}
       width="50%"
       position="top"
-      actions={modalActions}
       id="bulk-change-owner-modal"
       key="bulk-change-owner-modal"
       ouiaId="bulk-change-owner-modal"
+      aria-labelledby="bulk-change-owner-modal-title"
     >
-      <Content>
-        <Content component="p" ouiaId="bulk-change-owner-options">
-          {selectAllHostsMode ? (
-            <FormattedMessage
-              id="bulk-change-owner-warning-message-all"
-              defaultMessage="Changing the owner will affect {boldCount} selected hosts. Some hosts may already have been associated with the selected owner."
-              values={{
-                boldCount: <strong>{__('All')}</strong>,
-              }}
-            />
-          ) : (
-            <FormattedMessage
-              id="bulk-change-owner-warning-message"
-              defaultMessage="Changing the owner will affect {boldCount} selected {count, plural, one {host} other {hosts}}. Some hosts may already have been associated with the selected owner."
-              values={{
-                count: selectedCount,
-                boldCount: <strong>{selectedCount}</strong>,
-              }}
-            />
-          )}
+      <ModalHeader title={__('Change Owner')} labelId="bulk-change-owner-modal-title" />
+      <ModalBody>
+        <Content>
+          <Content component="p" ouiaId="bulk-change-owner-options">
+            {selectAllHostsMode ? (
+              <FormattedMessage
+                id="bulk-change-owner-warning-message-all"
+                defaultMessage="Changing the owner will affect {boldCount} selected hosts. Some hosts may already have been associated with the selected owner."
+                values={{
+                  boldCount: <strong>{__('All')}</strong>,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                id="bulk-change-owner-warning-message"
+                defaultMessage="Changing the owner will affect {boldCount} selected {count, plural, one {host} other {hosts}}. Some hosts may already have been associated with the selected owner."
+                values={{
+                  count: selectedCount,
+                  boldCount: <strong>{selectedCount}</strong>,
+                }}
+              />
+            )}
+          </Content>
         </Content>
-      </Content>
-      {userStatus === STATUS.RESOLVED && usergroupStatus === STATUS.RESOLVED && (
-        <Select
-          id="single-grouped-select"
-          isOpen={ownerSelectOpen}
-          selected={ownerId}
-          onSelect={handleOwnerSelect}
-          onOpenChange={isSelectOpen => setOwnerSelectOpen(isSelectOpen)}
-          toggle={toggle}
-          shouldFocusToggleOnSelect
-          ouiaId="bulk-change-owner-select"
-        >
-          {users && (
-            <SelectGroup label="Users">
-              <SelectList>
-                {users.results?.map(u => (
-                  <SelectOption key={`${u.id}-Users`} value={`${u.id}-Users`}>
-                    {u.login}
-                  </SelectOption>
-                ))}
-              </SelectList>
-            </SelectGroup>
-          )}
-          {usergroups && (
-            // eslint-disable-next-line spellcheck/spell-checker
-            <SelectGroup label="Usergroups">
-              <SelectList>
-                {usergroups?.results?.map(ug => (
-                  <SelectOption
-                    // eslint-disable-next-line spellcheck/spell-checker
-                    key={`${ug.id}-Usergroups`}
-                    // eslint-disable-next-line spellcheck/spell-checker
-                    value={`${ug.id}-Usergroups`}
-                  >
-                    {ug.name}
-                  </SelectOption>
-                ))}
-              </SelectList>
-            </SelectGroup>
-          )}
-        </Select>
-      )}
+        {userStatus === STATUS.RESOLVED && usergroupStatus === STATUS.RESOLVED && (
+          <Select
+            id="single-grouped-select"
+            isOpen={ownerSelectOpen}
+            selected={ownerId}
+            onSelect={handleOwnerSelect}
+            onOpenChange={isSelectOpen => setOwnerSelectOpen(isSelectOpen)}
+            toggle={toggle}
+            shouldFocusToggleOnSelect
+            ouiaId="bulk-change-owner-select"
+          >
+            {users && (
+              <SelectGroup label="Users">
+                <SelectList>
+                  {users.results?.map(u => (
+                    <SelectOption key={`${u.id}-Users`} value={`${u.id}-Users`}>
+                      {u.login}
+                    </SelectOption>
+                  ))}
+                </SelectList>
+              </SelectGroup>
+            )}
+            {usergroups && (
+              // eslint-disable-next-line spellcheck/spell-checker
+              <SelectGroup label="Usergroups">
+                <SelectList>
+                  {usergroups?.results?.map(ug => (
+                    <SelectOption
+                      // eslint-disable-next-line spellcheck/spell-checker
+                      key={`${ug.id}-Usergroups`}
+                      // eslint-disable-next-line spellcheck/spell-checker
+                      value={`${ug.id}-Usergroups`}
+                    >
+                      {ug.name}
+                    </SelectOption>
+                  ))}
+                </SelectList>
+              </SelectGroup>
+            )}
+          </Select>
+        )}
+      </ModalBody>
+      <ModalFooter>{modalActions}</ModalFooter>
     </Modal>
   );
 };

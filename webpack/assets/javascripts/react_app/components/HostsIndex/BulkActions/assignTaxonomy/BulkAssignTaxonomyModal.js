@@ -5,13 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import {
 	Button,
 	MenuToggle,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	SelectOption,
 	Content,
 	TreeView
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import { STATUS } from '../../../../constants';
@@ -197,43 +198,46 @@ const BulkAssignTaxonomyModal = ({
       isOpen={isOpen}
       onClose={handleModalClose}
       onEscapePress={handleModalClose}
-      title={org ? __('Change organization') : __('Change location')}
       width="50%"
       position="top"
-      actions={modalActions}
       id={`bulk-assign-${taxType}-modal`}
       key={`bulk-assign-${taxType}-modal`}
       ouiaId={`bulk-assign-${taxType}-modal`}
+      aria-labelledby={`bulk-assign-${taxType}-modal-title`}
     >
-      <Content>
-        <Content component="p" ouiaId={`bulk-assign-${taxType}-text`}>{modalText}</Content>
-      </Content>
-      {taxResults && status === STATUS.RESOLVED && (
-        <TaxonomySelect
-          headerText={org ? __('Select organization') : __('Select location')}
-          taxonomy={taxType}
-          isOpen={selectOpen}
-          selected={taxId}
-          onSelect={handleSelect}
-          onOpenChange={isSelectOpen => setSelectOpen(isSelectOpen)}
-          toggle={toggle}
-          radioChecked={fixRadioChecked}
-          setRadioChecked={setFixRadioChecked}
-        >
-          {taxResults.results?.map(tax => (
-            <SelectOption key={tax.id} value={tax.id}>
-              {tax.name}
-            </SelectOption>
-          ))}
-        </TaxonomySelect>
-      )}
-      <div style={{ width: '70%', maxHeight: '50%', marginLeft: '-1rem' }}>
-        <TreeView
-          data={selectedTreeViewData}
-          aria-label={__('Selected hosts')}
-          hasBadges
-        />
-      </div>
+      <ModalHeader title={org ? __('Change organization') : __('Change location')} labelId={`bulk-assign-${taxType}-modal-title`} />
+      <ModalBody>
+        <Content>
+          <Content component="p" ouiaId={`bulk-assign-${taxType}-text`}>{modalText}</Content>
+        </Content>
+        {taxResults && status === STATUS.RESOLVED && (
+          <TaxonomySelect
+            headerText={org ? __('Select organization') : __('Select location')}
+            taxonomy={taxType}
+            isOpen={selectOpen}
+            selected={taxId}
+            onSelect={handleSelect}
+            onOpenChange={isSelectOpen => setSelectOpen(isSelectOpen)}
+            toggle={toggle}
+            radioChecked={fixRadioChecked}
+            setRadioChecked={setFixRadioChecked}
+          >
+            {taxResults.results?.map(tax => (
+              <SelectOption key={tax.id} value={tax.id}>
+                {tax.name}
+              </SelectOption>
+            ))}
+          </TaxonomySelect>
+        )}
+        <div style={{ width: '70%', maxHeight: '50%', marginLeft: '-1rem' }}>
+          <TreeView
+            data={selectedTreeViewData}
+            aria-label={__('Selected hosts')}
+            hasBadges
+          />
+        </div>
+      </ModalBody>
+      <ModalFooter>{modalActions}</ModalFooter>
     </Modal>
   );
 };

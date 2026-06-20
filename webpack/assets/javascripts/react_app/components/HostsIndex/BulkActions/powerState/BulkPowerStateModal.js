@@ -2,16 +2,16 @@ import React, { useState, useContext } from 'react';
 import {
 	Button,
 	Content,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Select,
 	SelectOption,
 	SelectList,
 	MenuToggle,
 	FormGroup
 } from '@patternfly/react-core';
-import {
-	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { translate as __, sprintf } from '../../../../common/I18n';
@@ -114,13 +114,73 @@ const BulkPowerStateModal = ({
 
   return (
     <Modal
-      variant={ModalVariant.small}
-      title={__('Change power state')}
+      variant="small"
       isOpen={isOpen}
       onClose={closeModal}
       ouiaId="bulk-power-state-modal"
-      aria-labelledby="power-state-modal"
-      actions={[
+      aria-labelledby="power-state-modal-title"
+    >
+      <ModalHeader title={__('Change power state')} labelId="power-state-modal-title" />
+      <ModalBody>
+        {selectedHostsCount > 0 && (
+          <Content className="pf-v6-u-mb-md">
+            <Content
+              component="small"
+              className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
+              ouiaId="power-state-modal-hosts-count"
+            >
+              {sprintf(
+                selectedHostsCount === 1
+                  ? __('%s host is selected for power state change')
+                  : __('%s hosts are selected for power state change'),
+                selectedHostsCount
+              )}
+            </Content>
+          </Content>
+        )}
+        <FormGroup
+          label={__('Power state')}
+          isRequired
+          fieldId="power-state-select"
+        >
+          <Select
+            id="power-state-select"
+            isOpen={isSelectOpen}
+            selected={selectedPowerState}
+            onSelect={handleSelect}
+            onOpenChange={open => setIsSelectOpen(open)}
+            popperProps={{ direction: 'down' }}
+            ouiaId="power-state-select"
+            toggle={toggleRef => (
+              <MenuToggle
+                ref={toggleRef}
+                onClick={() => setIsSelectOpen(!isSelectOpen)}
+                isExpanded={isSelectOpen}
+                style={{ width: '100%' }}
+              >
+                {selectedPowerState
+                  ? __(
+                      POWER_STATES.find(ps => ps.value === selectedPowerState)
+                        ?.label
+                    )
+                  : __('Select power state')}
+              </MenuToggle>
+            )}
+          >
+            <SelectList className="bulk-power-state-select-list">
+              <SelectOption key="placeholder" value="">
+                {__('None')}
+              </SelectOption>
+              {POWER_STATES.map(state => (
+                <SelectOption key={state.value} value={state.value}>
+                  {__(state.label)}
+                </SelectOption>
+              ))}
+            </SelectList>
+          </Select>
+        </FormGroup>
+      </ModalBody>
+      <ModalFooter>
         <Button
           key="submit"
           variant="primary"
@@ -131,7 +191,7 @@ const BulkPowerStateModal = ({
           ouiaId="bulk-power-state-apply"
         >
           {__('Apply')}
-        </Button>,
+        </Button>
         <Button
           key="cancel"
           variant="link"
@@ -140,66 +200,8 @@ const BulkPowerStateModal = ({
           ouiaId="bulk-power-state-cancel"
         >
           {__('Cancel')}
-        </Button>,
-      ]}
-    >
-      {selectedHostsCount > 0 && (
-        <Content className="pf-v6-u-mb-md">
-          <Content
-            component="small"
-            className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
-            ouiaId="power-state-modal-hosts-count"
-          >
-            {sprintf(
-              selectedHostsCount === 1
-                ? __('%s host is selected for power state change')
-                : __('%s hosts are selected for power state change'),
-              selectedHostsCount
-            )}
-          </Content>
-        </Content>
-      )}
-      <FormGroup
-        label={__('Power state')}
-        isRequired
-        fieldId="power-state-select"
-      >
-        <Select
-          id="power-state-select"
-          isOpen={isSelectOpen}
-          selected={selectedPowerState}
-          onSelect={handleSelect}
-          onOpenChange={open => setIsSelectOpen(open)}
-          popperProps={{ direction: 'down' }}
-          ouiaId="power-state-select"
-          toggle={toggleRef => (
-            <MenuToggle
-              ref={toggleRef}
-              onClick={() => setIsSelectOpen(!isSelectOpen)}
-              isExpanded={isSelectOpen}
-              style={{ width: '100%' }}
-            >
-              {selectedPowerState
-                ? __(
-                    POWER_STATES.find(ps => ps.value === selectedPowerState)
-                      ?.label
-                  )
-                : __('Select power state')}
-            </MenuToggle>
-          )}
-        >
-          <SelectList className="bulk-power-state-select-list">
-            <SelectOption key="placeholder" value="">
-              {__('None')}
-            </SelectOption>
-            {POWER_STATES.map(state => (
-              <SelectOption key={state.value} value={state.value}>
-                {__(state.label)}
-              </SelectOption>
-            ))}
-          </SelectList>
-        </Select>
-      </FormGroup>
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

@@ -5,11 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import {
 	Button,
 	Content,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	SelectOption
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import { failedHostsToastParams } from '../helpers';
@@ -221,62 +222,65 @@ const BulkReassignHostgroupModal = ({
       isOpen={isOpen}
       onClose={handleModalClose}
       onEscapePress={handleModalClose}
-      title={__('Change host group')}
       width="50%"
       position="top"
-      actions={modalActions}
       id="bulk-reassign-hg-modal"
       key="bulk-reassign-hg-modal"
       ouiaId="bulk-reassign-hg-modal"
+      aria-labelledby="bulk-reassign-hg-modal-title"
     >
-      <Content>
-        <Content component="p" ouiaId="bulk-reassign-hg-options">
-          <FormattedMessage
-            defaultMessage={__(
-              'Change the host group of {hosts}. Some hosts may already be in your chosen host group.'
-            )}
-            values={{
-              hosts: (
-                <strong>
-                  <FormattedMessage
-                    defaultMessage="{count, plural, one {# {singular}} other {# {plural}}}"
-                    values={{
-                      count: selectedCount,
-                      singular: __('selected host'),
-                      plural: __('selected hosts'),
-                    }}
-                    id="bulk-hg-selected-host-options"
-                  />
-                </strong>
-              ),
-            }}
-            id="bulk-reassign-hg-description"
-          />
+      <ModalHeader title={__('Change host group')} labelId="bulk-reassign-hg-modal-title" />
+      <ModalBody>
+        <Content>
+          <Content component="p" ouiaId="bulk-reassign-hg-options">
+            <FormattedMessage
+              defaultMessage={__(
+                'Change the host group of {hosts}. Some hosts may already be in your chosen host group.'
+              )}
+              values={{
+                hosts: (
+                  <strong>
+                    <FormattedMessage
+                      defaultMessage="{count, plural, one {# {singular}} other {# {plural}}}"
+                      values={{
+                        count: selectedCount,
+                        singular: __('selected host'),
+                        plural: __('selected hosts'),
+                      }}
+                      id="bulk-hg-selected-host-options"
+                    />
+                  </strong>
+                ),
+              }}
+              id="bulk-reassign-hg-description"
+            />
+          </Content>
         </Content>
-      </Content>
-      <SkeletonLoader status={hostgroupStatus} skeletonProps={{ count: 3 }}>
-        <HostGroupSelect
-          onClear={handleClear}
-          headerText={__('Select host group')}
-          selected={selectedName}
-          isOpen={hgSelectOpen}
-          onToggle={setHgSelectOpen}
-          inputValue={inputValue}
-          onInputValueChange={handleInputValueChange}
-          onSelect={handleSelect}
-          placeholder={__('Select host group')}
-        >
-          {filteredHostgroups.map(hg => {
-            const formattedTitle = formatHostgroupTitle(hg.title);
-            return (
-              <SelectOption key={hg.id} value={hg.name}>
-                <HostgroupOptionLabel formattedTitle={formattedTitle} />
-              </SelectOption>
-            );
-          })}
-        </HostGroupSelect>
-      </SkeletonLoader>
-      <hr />
+        <SkeletonLoader status={hostgroupStatus} skeletonProps={{ count: 3 }}>
+          <HostGroupSelect
+            onClear={handleClear}
+            headerText={__('Select host group')}
+            selected={selectedName}
+            isOpen={hgSelectOpen}
+            onToggle={setHgSelectOpen}
+            inputValue={inputValue}
+            onInputValueChange={handleInputValueChange}
+            onSelect={handleSelect}
+            placeholder={__('Select host group')}
+          >
+            {filteredHostgroups.map(hg => {
+              const formattedTitle = formatHostgroupTitle(hg.title);
+              return (
+                <SelectOption key={hg.id} value={hg.name}>
+                  <HostgroupOptionLabel formattedTitle={formattedTitle} />
+                </SelectOption>
+              );
+            })}
+          </HostGroupSelect>
+        </SkeletonLoader>
+        <hr />
+      </ModalBody>
+      <ModalFooter>{modalActions}</ModalFooter>
     </Modal>
   );
 };

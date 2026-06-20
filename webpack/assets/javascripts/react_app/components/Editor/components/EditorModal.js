@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-	Title
+	Title,
+	Modal,
+	ModalBody,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import PropTypes from 'prop-types';
 
 import EditorView from './EditorView';
@@ -55,31 +55,35 @@ const EditorModal = ({
       variant="primary"
       isOpen={isMaximized}
       onClose={toggleModal}
-      header={header}
     >
-      {selectedView === 'diff' ? (
-        <div id="diff-table">
-          <DiffView
-            oldText={template}
-            newText={editorValue}
-            viewType={diffViewType}
+      <ModalHeader labelId="editor-modal-h4">
+        {header}
+      </ModalHeader>
+      <ModalBody>
+        {selectedView === 'diff' ? (
+          <div id="diff-table">
+            <DiffView
+              oldText={template}
+              newText={editorValue}
+              viewType={diffViewType}
+            />
+          </div>
+        ) : (
+          <EditorView
+            value={isRendering ? previewValue : editorValue}
+            name={name}
+            mode={isRendering ? 'text' : mode}
+            theme={theme}
+            keyBinding={keyBinding}
+            onChange={changeEditorValue}
+            readOnly={readOnly || selectedView === 'preview'}
+            className="editor ace_editor_modal"
+            isMasked={isMasked}
+            autocompletion={autocompletion}
+            liveAutocompletion={liveAutocompletion}
           />
-        </div>
-      ) : (
-        <EditorView
-          value={isRendering ? previewValue : editorValue}
-          name={name}
-          mode={isRendering ? 'text' : mode}
-          theme={theme}
-          keyBinding={keyBinding}
-          onChange={changeEditorValue}
-          readOnly={readOnly || selectedView === 'preview'}
-          className="editor ace_editor_modal"
-          isMasked={isMasked}
-          autocompletion={autocompletion}
-          liveAutocompletion={liveAutocompletion}
-        />
-      )}
+        )}
+      </ModalBody>
     </Modal>
   );
 };

@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-	Button
+	Button,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 
 import { sprintf, translate as __ } from '../../../../common/I18n';
 import { APIActions } from '../../../../redux/API';
@@ -48,12 +49,20 @@ export const DeleteModal = ({
   return (
     <Modal
       ouiaId="delete-modal"
-      title={__('Confirm Deletion')}
-      titleIconVariant="danger"
       variant="small"
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
-      actions={[
+      aria-labelledby="delete-modal-title"
+    >
+      <ModalHeader
+        title={__('Confirm Deletion')}
+        titleIconVariant="danger"
+        labelId="delete-modal-title"
+      />
+      <ModalBody>
+        {sprintf(__('You are about to delete %s. Are you sure?'), name)}
+      </ModalBody>
+      <ModalFooter>
         <Button
           key="confirm"
           onClick={onSubmit}
@@ -61,7 +70,7 @@ export const DeleteModal = ({
           ouiaId="confirm-delete"
         >
           {__('Delete')}
-        </Button>,
+        </Button>
         <Button
           key="cancel"
           variant="link"
@@ -69,10 +78,8 @@ export const DeleteModal = ({
           ouiaId="cancel-delete"
         >
           {__('Cancel')}
-        </Button>,
-      ]}
-    >
-      {sprintf(__('You are about to delete %s. Are you sure?'), name)}
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

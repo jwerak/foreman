@@ -3,12 +3,12 @@ import { PropTypes } from 'prop-types';
 import {
 	Button,
 	TreeView,
-	Icon
-} from '@patternfly/react-core';
-import {
+	Icon,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { ColumnsIcon } from '@patternfly/react-icons';
 import { cloneDeep } from 'lodash';
 import { translate as __ } from '../../common/I18n';
@@ -171,14 +171,21 @@ const ColumnSelector = props => {
         </Button>
         <Modal
           ouiaId="manage-columns-modal"
-          variant={ModalVariant.small}
-          title={__('Manage columns')}
+          variant="small"
           isOpen={isModalOpen}
           onClose={toggleModal}
           tabIndex={0}
-          description={__('Select columns to display in the table.')}
-          position="top"
-          actions={[
+          aria-labelledby="manage-columns-modal-title"
+        >
+          <ModalHeader
+            title={__('Manage columns')}
+            description={__('Select columns to display in the table.')}
+            labelId="manage-columns-modal-title"
+          />
+          <ModalBody>
+            <TreeView data={selectedColumns} onCheck={onCheck} hasCheckboxes />
+          </ModalBody>
+          <ModalFooter>
             <Button
               ouiaId="save-columns-button"
               key="save"
@@ -188,7 +195,7 @@ const ColumnSelector = props => {
               onClick={() => updateTablePreference()}
             >
               {__('Save')}
-            </Button>,
+            </Button>
             <Button
               ouiaId="cancel-columns-button"
               key="cancel"
@@ -196,10 +203,8 @@ const ColumnSelector = props => {
               onClick={toggleModal}
             >
               {__('Cancel')}
-            </Button>,
-          ]}
-        >
-          <TreeView data={selectedColumns} onCheck={onCheck} hasCheckboxes />
+            </Button>
+          </ModalFooter>
         </Modal>
       </div>
     </div>

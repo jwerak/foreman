@@ -5,11 +5,12 @@ import {
 	Alert,
 	Button,
 	Content,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	TreeView
 } from '@patternfly/react-core';
-import {
-	Modal
-} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { foremanUrl } from '../../../../common/helpers';
 import { translate as __ } from '../../../../common/I18n';
@@ -128,56 +129,59 @@ const BulkDisassociateModal = ({
       isOpen={isOpen}
       onClose={closeModal}
       onEscapePress={closeModal}
-      title={__('Disassociate hosts')}
       width="50%"
       position="top"
-      actions={modalActions}
       id="bulk-disassociate-modal"
       key="bulk-disassociate-modal"
       ouiaId="bulk-disassociate-modal"
+      aria-labelledby="bulk-disassociate-modal-title"
     >
-      <Content>
-        <Content component="p" ouiaId="bulk-disassociate-options">
-          {__(
-            'This will disassociate the host in Foreman from its compute resource.'
-          )}
-          <br />
-          {__(
-            'After disassociating, a host can be deleted from Foreman without affecting its virtual machine.'
-          )}
+      <ModalHeader title={__('Disassociate hosts')} labelId="bulk-disassociate-modal-title" />
+      <ModalBody>
+        <Content>
+          <Content component="p" ouiaId="bulk-disassociate-options">
+            {__(
+              'This will disassociate the host in Foreman from its compute resource.'
+            )}
+            <br />
+            {__(
+              'After disassociating, a host can be deleted from Foreman without affecting its virtual machine.'
+            )}
+          </Content>
         </Content>
-      </Content>
-      <Alert
-        style={{ marginTop: '2rem', marginBottom: '1rem' }}
-        variant="warning"
-        isInline
-        isPlain
-        title={__('Hosts without a compute resource will be excluded.')}
-        ouiaId="warning-alert"
-      />
-      <div style={{ width: '70%', maxHeight: '50%', marginLeft: '-1rem' }}>
-        {selectedResultsEmpty && (
-          <TreeView
-            data={selectedTreeViewData}
-            aria-label={__('Selected hosts')}
-            hasBadges
-          />
-        )}
-        {!selectedResultsEmpty && (
-          <>
+        <Alert
+          style={{ marginTop: '2rem', marginBottom: '1rem' }}
+          variant="warning"
+          isInline
+          isPlain
+          title={__('Hosts without a compute resource will be excluded.')}
+          ouiaId="warning-alert"
+        />
+        <div style={{ width: '70%', maxHeight: '50%', marginLeft: '-1rem' }}>
+          {selectedResultsEmpty && (
             <TreeView
-              data={applicableTreeViewData}
-              aria-label={__('Hosts associated to compute resources')}
+              data={selectedTreeViewData}
+              aria-label={__('Selected hosts')}
               hasBadges
             />
-            <TreeView
-              data={excludedTreeViewData}
-              aria-label={__('Excluded hosts')}
-              hasBadges
-            />
-          </>
-        )}
-      </div>
+          )}
+          {!selectedResultsEmpty && (
+            <>
+              <TreeView
+                data={applicableTreeViewData}
+                aria-label={__('Hosts associated to compute resources')}
+                hasBadges
+              />
+              <TreeView
+                data={excludedTreeViewData}
+                aria-label={__('Excluded hosts')}
+                hasBadges
+              />
+            </>
+          )}
+        </div>
+      </ModalBody>
+      <ModalFooter>{modalActions}</ModalFooter>
     </Modal>
   );
 };

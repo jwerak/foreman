@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	Button,
-	Checkbox
-} from '@patternfly/react-core';
-import {
+	Checkbox,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { translate as __ } from '../../common/I18n';
 import { closeConfirmModal, selectConfirmModal } from './slice';
 
@@ -79,19 +79,22 @@ const ConfirmModal = () => {
     <Modal
       ouiaId="app-confirm-modal"
       id={id ?? 'app-confirm-modal'}
-      aria-label="application confirm modal"
-      variant={ModalVariant.small}
-      title={title}
+      aria-labelledby="confirm-modal-title"
+      variant="small"
       isOpen={isOpen}
       onClose={closeModal}
-      actions={actions}
-      titleIconVariant={isWarning ? 'warning' : null}
       {...modalProps}
     >
-      <>
+      <ModalHeader
+        title={title}
+        titleIconVariant={isWarning ? 'warning' : null}
+        labelId="confirm-modal-title"
+      />
+      <ModalBody>
         {message}
         {isDireWarning && direWarningCheckbox}
-      </>
+      </ModalBody>
+      <ModalFooter>{actions}</ModalFooter>
     </Modal>
   );
 };

@@ -7,12 +7,12 @@ import {
 	Button,
 	Grid,
 	GridItem,
-	Icon
-} from '@patternfly/react-core';
-import {
+	Icon,
 	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 import LabelIcon from '../../../../../components/common/LabelIcon';
 
@@ -120,26 +120,60 @@ const RepositoryModal = ({
 
   return (
     <Modal
-      variant={ModalVariant.medium}
+      variant="medium"
       ouiaId="host_reg_repo_modal"
-      title={__('Repository list')}
       isOpen={isModalOpen}
       onClose={handleConfirm}
-      actions={[
+      aria-labelledby="repo-modal-title"
+    >
+      <ModalHeader title={__('Repository list')} labelId="repo-modal-title" />
+      <ModalBody>
+        <Grid hasGutter>
+          <GridItem span={5}>
+            <FormGroup
+              label={__('Repository')}
+              fieldId="reg_repo"
+              labelHelp={
+                <LabelIcon
+                  text={__(
+                    "A repository to be added before the registration is performed. For Red Hat and SUSE family distributions, this should be the URL of the repository, e.g. 'http://rpm.example.com/'. For Debian OS families, it's the whole list file content, e.g. 'deb http://deb.example.com/ buster 1.0'."
+                  )}
+                />
+              }
+            />
+          </GridItem>
+          <GridItem span={5}>
+            <FormGroup
+              label={__('Repository GPG key URL')}
+              fieldId="reg_gpg_key_url"
+              labelHelp={
+                <LabelIcon
+                  text={__(
+                    'If packages are GPG signed, the public key can be specified here to verify the packages signatures. It needs to be specified in the ascii form with the GPG public key header.'
+                  )}
+                />
+              }
+            />
+          </GridItem>
+          <GridItem span={2} />
+          {repoData.map(r => renderRepo(r))}
+        </Grid>
+      </ModalBody>
+      <ModalFooter>
         <Button
           ouiaId="reg_modal_confirm"
           variant="primary"
           onClick={handleConfirm}
         >
           {__('Confirm')}
-        </Button>,
+        </Button>
         <Button
           ouiaId="reg_modal_reset"
           variant="link"
           onClick={clearRepositories}
         >
           {__('Reset form')}
-        </Button>,
+        </Button>
         <Button
           ouiaId="host_reg_modal_add_new_repo"
           variant="link"
@@ -151,39 +185,8 @@ const RepositoryModal = ({
           onClick={addRepositoryModalInput}
         >
           {__('Add repository')}
-        </Button>,
-      ]}
-    >
-      <Grid hasGutter>
-        <GridItem span={5}>
-          <FormGroup
-            label={__('Repository')}
-            fieldId="reg_repo"
-            labelHelp={
-              <LabelIcon
-                text={__(
-                  "A repository to be added before the registration is performed. For Red Hat and SUSE family distributions, this should be the URL of the repository, e.g. 'http://rpm.example.com/'. For Debian OS families, it's the whole list file content, e.g. 'deb http://deb.example.com/ buster 1.0'."
-                )}
-              />
-            }
-          />
-        </GridItem>
-        <GridItem span={5}>
-          <FormGroup
-            label={__('Repository GPG key URL')}
-            fieldId="reg_gpg_key_url"
-            labelHelp={
-              <LabelIcon
-                text={__(
-                  'If packages are GPG signed, the public key can be specified here to verify the packages signatures. It needs to be specified in the ascii form with the GPG public key header.'
-                )}
-              />
-            }
-          />
-        </GridItem>
-        <GridItem span={2} />
-        {repoData.map(r => renderRepo(r))}
-      </Grid>
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

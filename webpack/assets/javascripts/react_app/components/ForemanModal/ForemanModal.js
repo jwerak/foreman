@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import {
-	Modal
-} from '@patternfly/react-core/deprecated';
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader
+} from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import ModalContext from './ForemanModalContext';
 import ForemanModalHeader from './subcomponents/ForemanModalHeader';
@@ -76,13 +79,12 @@ const ForemanModal = props => {
         isOpen={isOpen}
         className="foreman-modal"
         id={id}
-        title={!headerToRender ? title || undefined : undefined}
-        header={headerToRender || undefined}
-        footer={footerToRender || undefined}
         aria-label={title || 'Foreman modal'}
         {...propsToPassDown}
       >
-        {otherChildren}
+        {headerToRender && <ModalHeader>{headerToRender}</ModalHeader>}
+        <ModalBody>{otherChildren}</ModalBody>
+        {footerToRender && <ModalFooter>{footerToRender}</ModalFooter>}
       </Modal>
     </ModalContext.Provider>
   );

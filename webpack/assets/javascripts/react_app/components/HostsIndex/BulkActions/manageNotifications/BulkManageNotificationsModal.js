@@ -5,13 +5,13 @@ import {
 	Button,
 	Content,
 	FormGroup,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	ToggleGroup,
 	ToggleGroupItem
 } from '@patternfly/react-core';
-import {
-	Modal,
-	ModalVariant
-} from '@patternfly/react-core/deprecated';
 import { FormattedMessage } from 'react-intl';
 import { translate as __ } from '../../../../common/I18n';
 import { bulkManageNotifications } from './actions';
@@ -76,13 +76,74 @@ const BulkManageNotificationsModal = ({
 
   return (
     <Modal
-      variant={ModalVariant.small}
-      title={__('Manage notifications')}
+      variant="small"
       isOpen={isOpen}
       onClose={handleModalClose}
       ouiaId="bulk-manage-notifications-modal"
-      aria-labelledby="manage-notifications-modal"
-      actions={[
+      aria-labelledby="manage-notifications-modal-title"
+    >
+      <ModalHeader title={__('Manage notifications')} labelId="manage-notifications-modal-title" />
+      <ModalBody>
+        <Content className="pf-v6-u-mb-md">
+          <Content
+            component="p"
+            className="pf-v6-u-font-size-md"
+            ouiaId="manage-notifications-hosts-count"
+          >
+            <FormattedMessage
+              id="bulk-manage-notifications-description"
+              defaultMessage="Enable or disable email notification alerts for {boldCount} selected {count, plural, one {host} other {hosts}}."
+              values={{
+                count: selectedCount,
+                boldCount: <strong>{selectedCount}</strong>,
+              }}
+            />
+          </Content>
+          <Content
+            component="small"
+            className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
+            ouiaId="manage-notifications-explanation"
+          >
+            {__(
+              'Notifications are sent when a host reports a configuration error via Puppet, Ansible, or another configuration management tool.'
+            )}
+          </Content>
+          <Content
+            component="small"
+            className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
+            ouiaId="manage-notifications-enablement-state-notice"
+          >
+            {__('Enablement state of the selected hosts may vary.')}
+          </Content>
+        </Content>
+        <FormGroup fieldId="manage-notifications-toggle">
+          <ToggleGroup aria-label={__('Notification state')}>
+            <ToggleGroupItem
+              text={__('Enable')}
+              buttonId="manage-notifications-enable"
+              isSelected={notificationsEnabled === true}
+              onChange={() =>
+                setNotificationsEnabled(
+                  notificationsEnabled === true ? null : true
+                )
+              }
+              isDisabled={isLoading}
+            />
+            <ToggleGroupItem
+              text={__('Disable')}
+              buttonId="manage-notifications-disable"
+              isSelected={notificationsEnabled === false}
+              onChange={() =>
+                setNotificationsEnabled(
+                  notificationsEnabled === false ? null : false
+                )
+              }
+              isDisabled={isLoading}
+            />
+          </ToggleGroup>
+        </FormGroup>
+      </ModalBody>
+      <ModalFooter>
         <Button
           key="confirm"
           variant="primary"
@@ -93,7 +154,7 @@ const BulkManageNotificationsModal = ({
           ouiaId="bulk-manage-notifications-confirm"
         >
           {__('Confirm')}
-        </Button>,
+        </Button>
         <Button
           key="cancel"
           variant="link"
@@ -102,67 +163,8 @@ const BulkManageNotificationsModal = ({
           ouiaId="bulk-manage-notifications-cancel"
         >
           {__('Cancel')}
-        </Button>,
-      ]}
-    >
-      <Content className="pf-v6-u-mb-md">
-        <Content
-          component="p"
-          className="pf-v6-u-font-size-md"
-          ouiaId="manage-notifications-hosts-count"
-        >
-          <FormattedMessage
-            id="bulk-manage-notifications-description"
-            defaultMessage="Enable or disable email notification alerts for {boldCount} selected {count, plural, one {host} other {hosts}}."
-            values={{
-              count: selectedCount,
-              boldCount: <strong>{selectedCount}</strong>,
-            }}
-          />
-        </Content>
-        <Content
-          component="small"
-          className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
-          ouiaId="manage-notifications-explanation"
-        >
-          {__(
-            'Notifications are sent when a host reports a configuration error via Puppet, Ansible, or another configuration management tool.'
-          )}
-        </Content>
-        <Content
-          component="small"
-          className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
-          ouiaId="manage-notifications-enablement-state-notice"
-        >
-          {__('Enablement state of the selected hosts may vary.')}
-        </Content>
-      </Content>
-      <FormGroup fieldId="manage-notifications-toggle">
-        <ToggleGroup aria-label={__('Notification state')}>
-          <ToggleGroupItem
-            text={__('Enable')}
-            buttonId="manage-notifications-enable"
-            isSelected={notificationsEnabled === true}
-            onChange={() =>
-              setNotificationsEnabled(
-                notificationsEnabled === true ? null : true
-              )
-            }
-            isDisabled={isLoading}
-          />
-          <ToggleGroupItem
-            text={__('Disable')}
-            buttonId="manage-notifications-disable"
-            isSelected={notificationsEnabled === false}
-            onChange={() =>
-              setNotificationsEnabled(
-                notificationsEnabled === false ? null : false
-              )
-            }
-            isDisabled={isLoading}
-          />
-        </ToggleGroup>
-      </FormGroup>
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };
