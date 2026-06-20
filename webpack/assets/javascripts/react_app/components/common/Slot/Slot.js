@@ -1,16 +1,21 @@
 import { cloneElement, isValidElement, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { selectFillsComponents } from './SlotSelectors';
 
 const Slot = ({
-  fills,
   id,
   multi,
+  fillID,
   children = null,
   deprecated,
   replacedBy,
   versionDeadline, // version deadline for depracation
   ...props
 }) => {
+  const fills = useSelector(state =>
+    selectFillsComponents(state, { id, multiple: multi, fillID })
+  );
   const [warned, setWarned] = useState(false);
   const addProps = object => {
     if (deprecated && fills?.length && !warned) {
@@ -43,9 +48,9 @@ const Slot = ({
 };
 
 Slot.propTypes = {
-  fills: PropTypes.array,
   id: PropTypes.string.isRequired,
   multi: PropTypes.bool,
+  fillID: PropTypes.string,
   children: PropTypes.node,
   deprecated: PropTypes.bool,
   replacedBy: PropTypes.string,
@@ -53,8 +58,8 @@ Slot.propTypes = {
 };
 
 Slot.defaultProps = {
-  fills: [],
   multi: false,
+  fillID: undefined,
   children: undefined,
   deprecated: false,
   replacedBy: '',

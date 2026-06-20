@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Alert, Button } from '@patternfly/react-core';
 
 import { sprintf, translate as __ } from '../../common/I18n';
+import { selectGeneratingProps } from './TemplateGeneratorSelectors';
 
 const pollingMsg = `
   Report %s is now being generated, the download will start once it's done.
@@ -29,11 +31,10 @@ const AlertBlock = ({ variant, message, links }) => (
 
 const TemplateGenerator = ({
   data: { templateName },
-  polling,
-  dataUrl,
-  generatingError,
-  generatingErrorMessages,
 }) => {
+  const { polling, dataUrl, generatingError, generatingErrorMessages } =
+    useSelector(selectGeneratingProps);
+
   const errors = useMemo(() => {
     const joined =
       (generatingErrorMessages &&
@@ -90,19 +91,6 @@ TemplateGenerator.propTypes = {
   data: PropTypes.shape({
     templateName: PropTypes.string.isRequired,
   }).isRequired,
-  polling: PropTypes.bool,
-  dataUrl: PropTypes.string,
-  generatingError: PropTypes.string,
-  generatingErrorMessages: PropTypes.arrayOf(
-    PropTypes.shape({ message: PropTypes.string })
-  ),
-};
-
-TemplateGenerator.defaultProps = {
-  polling: false,
-  dataUrl: null,
-  generatingError: null,
-  generatingErrorMessages: null,
 };
 
 export default TemplateGenerator;

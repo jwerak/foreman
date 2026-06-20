@@ -1,34 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { noop } from '../../common/helpers';
 import Breadcrumb from './components/Breadcrumb';
 import PF4BreadcrumbSwitcher from '../PF4/BreadcrumbSwitcher';
-import { BREADCRUMB_SWITCHER_PER_PAGE } from './BreadcrumbBarConstants';
+import {
+  selectResourceSwitcherItems,
+  selectIsSwitcherOpen,
+  selectResourceUrl,
+  selectIsLoadingResources,
+  selectHasError,
+  selectCurrentPage,
+  selectTotal,
+  selectSearchQuery,
+  selectTitleReplacement,
+  selectPerPage,
+} from './BreadcrumbBarSelector';
+import {
+  openSwitcher as openSwitcherAction,
+  closeSwitcher as closeSwitcherAction,
+  loadSwitcherResourcesByResource as loadSwitcherResourcesByResourceAction,
+  removeSearchQuery as removeSearchQueryAction,
+} from './BreadcrumbBarActions';
 import './BreadcrumbBar.scss';
 
 const BreadcrumbBar = ({
   breadcrumbItems,
   isSwitchable,
   resource,
-  currentPage,
-  total,
-  resourceSwitcherItems,
-  resourceUrl,
-  isLoadingResources,
-  hasError,
-  isSwitcherOpen,
-  openSwitcher,
-  closeSwitcher,
-  loadSwitcherResourcesByResource,
-  searchQuery,
-  removeSearchQuery,
   searchDebounceTimeout,
   onSwitcherItemClick,
-  titleReplacement,
-  perPage,
   isPf4,
 }) => {
+  const dispatch = useDispatch();
+  const resourceSwitcherItems = useSelector(selectResourceSwitcherItems);
+  const isSwitcherOpen = useSelector(selectIsSwitcherOpen);
+  const resourceUrl = useSelector(selectResourceUrl);
+  const isLoadingResources = useSelector(selectIsLoadingResources);
+  const hasError = useSelector(selectHasError);
+  const currentPage = useSelector(selectCurrentPage);
+  const total = useSelector(selectTotal);
+  const searchQuery = useSelector(selectSearchQuery);
+  const titleReplacement = useSelector(selectTitleReplacement);
+  const perPage = useSelector(selectPerPage);
+
+  const openSwitcher = () => dispatch(openSwitcherAction());
+  const closeSwitcher = () => dispatch(closeSwitcherAction());
+  const loadSwitcherResourcesByResource = (res, opts) =>
+    dispatch(loadSwitcherResourcesByResourceAction(res, opts));
+  const removeSearchQuery = res => dispatch(removeSearchQueryAction(res));
   const handleOpen = () => {
     const isUrlFormatValid = resourceSwitcherItems.length
       ? resourceSwitcherItems[0].href ===
@@ -114,27 +134,7 @@ BreadcrumbBar.propTypes = {
   }),
   breadcrumbItems: Breadcrumb.propTypes.items,
   searchDebounceTimeout: PropTypes.number,
-  searchQuery: PropTypes.string,
-  currentPage: PropTypes.number,
-  total: PropTypes.number,
-  resourceSwitcherItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      name: PropTypes.string.isRequired,
-      href: PropTypes.string,
-    })
-  ),
-  resourceUrl: PropTypes.string,
-  isLoadingResources: PropTypes.bool,
-  hasError: PropTypes.bool,
-  isSwitcherOpen: PropTypes.bool,
-  titleReplacement: PropTypes.string,
-  openSwitcher: PropTypes.func,
-  closeSwitcher: PropTypes.func,
-  loadSwitcherResourcesByResource: PropTypes.func,
   onSwitcherItemClick: PropTypes.func,
-  removeSearchQuery: PropTypes.func,
-  perPage: PropTypes.number,
   isPf4: PropTypes.bool,
 };
 
@@ -142,22 +142,8 @@ BreadcrumbBar.defaultProps = {
   isSwitchable: false,
   resource: {},
   breadcrumbItems: [],
-  searchQuery: '',
-  currentPage: null,
-  total: 1,
-  resourceSwitcherItems: [],
-  resourceUrl: null,
-  isLoadingResources: false,
-  hasError: false,
-  isSwitcherOpen: false,
   searchDebounceTimeout: 300,
-  titleReplacement: null,
-  openSwitcher: noop,
-  closeSwitcher: noop,
-  loadSwitcherResourcesByResource: noop,
   onSwitcherItemClick: null,
-  removeSearchQuery: noop,
-  perPage: BREADCRUMB_SWITCHER_PER_PAGE,
   isPf4: false,
 };
 

@@ -1,86 +1,217 @@
 import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
-import { testComponentSnapshotsWithFixtures } from '../../../common/testHelpers';
-
+import API from '../../../redux/API/API';
 import BreadcrumbBar from '../BreadcrumbBar';
 import {
-  breadcrumbBar,
-  breadcrumbBarSwithcable,
+  resource,
+  breadcrumbItems,
   mockBreadcrumbItemOnClick,
 } from '../BreadcrumbBar.fixtures';
+import { rtlHelpers } from '../../../common/rtlTestHelpers';
 
-const createStubs = () => ({
-  openSwitcher: jest.fn(),
-  closeSwitcher: jest.fn(),
-  loadSwitcherResourcesByResource: jest.fn(),
-});
-
-const fixtures = {
-  'renders breadcrumb-bar': breadcrumbBar,
-  'renders switchable breadcrumb-bar': breadcrumbBarSwithcable,
-};
-
+jest.mock('../../../redux/API/API');
 jest.useFakeTimers();
 
+const defaultBreadcrumbBarState = {
+  resourceSwitcherItems: [],
+  isLoadingResources: false,
+  isSwitcherOpen: false,
+  resourceUrl: null,
+  requestError: null,
+  currentPage: null,
+  searchQuery: '',
+  pages: null,
+  titleReplacement: null,
+  total: 0,
+  perPage: 10,
+};
+
 describe('BreadcrumbBar', () => {
-  describe('rendering', () =>
-    testComponentSnapshotsWithFixtures(BreadcrumbBar, fixtures));
+  beforeEach(() => {
+    mockBreadcrumbItemOnClick.mockClear();
+    // Make API.get return a never-resolving promise so async thunks
+    // stay in the loading state for assertion purposes.
+    API.get.mockImplementation(() => new Promise(() => {}));
+  });
+
+  describe('rendering', () => {
+    it('renders breadcrumb-bar', () => {
+      const { container } = rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable={false}
+        />,
+        { breadcrumbBar: defaultBreadcrumbBarState }
+      );
+      expect(container).toMatchSnapshot();
+    });
+
+    it('renders switchable breadcrumb-bar', () => {
+      const { container } = rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            searchQuery: 'some value',
+          },
+        }
+      );
+      expect(container).toMatchSnapshot();
+    });
+  });
 
   describe('triggering', () => {
-    it('should trigger callbacks', async () => {
-      const props = { ...breadcrumbBarSwithcable, ...createStubs() };
-      const { rerender } = render(<BreadcrumbBar {...props} />);
+    it('should dispatch open switcher action on button click', async () => {
+      const { store } = rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            searchQuery: 'some value',
+          },
+        }
+      );
 
-      expect(props.openSwitcher.mock.calls).toHaveLength(0);
-      expect(props.closeSwitcher.mock.calls).toHaveLength(0);
-      expect(props.loadSwitcherResourcesByResource.mock.calls).toHaveLength(0);
+      expect(store.getState().breadcrumbBar.isSwitcherOpen).toBe(false);
 
       await act(async () =>
         fireEvent.click(screen.getByLabelText('open breadcrumb switcher'))
       );
-      expect(props.openSwitcher.mock.calls).toHaveLength(1);
-      rerender(<BreadcrumbBar {...{ ...props, isSwitcherOpen: true }} />);
-      await act(async () => jest.runAllTimers());
-      expect(props.loadSwitcherResourcesByResource.mock.calls).toHaveLength(1);
-      rerender(
+
+      expect(store.getState().breadcrumbBar.isSwitcherOpen).toBe(true);
+    });
+
+    it('should dispatch load resources on open when no current page', async () => {
+      const { store } = rtlHelpers.renderWithStore(
         <BreadcrumbBar
-          {...{ ...props, isSwitcherOpen: true, currentPage: 2, total: 40 }}
-        />
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            searchQuery: 'some value',
+          },
+        }
       );
+
+      await act(async () =>
+        fireEvent.click(screen.getByLabelText('open breadcrumb switcher'))
+      );
+
+      // The open handler calls loadSwitcherResourcesByResource when no currentPage,
+      // which dispatches BREADCRUMB_BAR_RESOURCES_REQUEST synchronously
+      await act(async () => jest.runAllTimers());
+
+      expect(store.getState().breadcrumbBar.isLoadingResources).toBe(true);
+      expect(store.getState().breadcrumbBar.resourceUrl).toBe(
+        resource.resourceUrl
+      );
+    });
+
+    it('should dispatch pagination actions on next page', async () => {
+      const { store } = rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            isSwitcherOpen: true,
+            currentPage: 2,
+            total: 40,
+            perPage: 10,
+            searchQuery: '',
+          },
+        }
+      );
+
       await act(async () =>
         fireEvent.click(screen.getByLabelText('Go to next page'))
       );
-      expect(props.loadSwitcherResourcesByResource.mock.calls).toHaveLength(2);
+
+      // loadSwitcherResourcesByResource dispatches RESOURCES_REQUEST synchronously
+      expect(store.getState().breadcrumbBar.isLoadingResources).toBe(true);
+    });
+
+    it('should dispatch pagination actions on previous page', async () => {
+      const { store } = rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            isSwitcherOpen: true,
+            currentPage: 2,
+            total: 40,
+            perPage: 10,
+            searchQuery: '',
+          },
+        }
+      );
 
       await act(async () =>
         fireEvent.click(screen.getByLabelText('Go to previous page'))
       );
-      expect(props.loadSwitcherResourcesByResource.mock.calls).toHaveLength(3);
 
-      expect(props.loadSwitcherResourcesByResource.mock.calls).toMatchSnapshot(
-        'loadSwitcherResourcesByResource calls'
-      );
+      expect(store.getState().breadcrumbBar.isLoadingResources).toBe(true);
     });
 
     it('onclick callbacks should work', async () => {
       window.history.pushState({}, 'Test Title', '/hosts/1');
-      const props = {
-        ...breadcrumbBarSwithcable,
-        ...createStubs(),
-        onSwitcherItemClick: jest.fn(),
-        resourceSwitcherItems: [{ name: 'breadcrumb item 3', id: '1' }],
-        isSwitcherOpen: true,
-      };
+      const onSwitcherItemClick = jest.fn();
 
-      render(<BreadcrumbBar {...props} />);
+      rtlHelpers.renderWithStore(
+        <BreadcrumbBar
+          resource={resource}
+          breadcrumbItems={breadcrumbItems.items}
+          isSwitchable
+          searchDebounceTimeout={0}
+          onSwitcherItemClick={onSwitcherItemClick}
+        />,
+        {
+          breadcrumbBar: {
+            ...defaultBreadcrumbBarState,
+            isSwitcherOpen: true,
+            resourceSwitcherItems: [{ name: 'breadcrumb item 3', id: '1' }],
+            currentPage: 1,
+            total: 1,
+            perPage: 10,
+            searchQuery: '',
+          },
+        }
+      );
+
       await act(async () => jest.runAllTimers());
-      expect(props.onSwitcherItemClick.mock.calls).toHaveLength(0);
+      expect(onSwitcherItemClick.mock.calls).toHaveLength(0);
+
       // test breadcrumb switcher item click
       await act(async () =>
         fireEvent.click(screen.getByText('breadcrumb item 3'))
       );
-      expect(props.onSwitcherItemClick.mock.calls).toHaveLength(1);
+      expect(onSwitcherItemClick.mock.calls).toHaveLength(1);
 
       // test breadcrumb item click
       await act(async () =>

@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import {
+  registerFillComponent,
+  unregisterFillComponent,
+} from './FillActions';
 
 const Fill = ({
   children,
   overrideProps,
-  registerFillComponent,
-  unregisterFillComponent,
   slotId,
   weight,
   id,
 }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    registerFillComponent(slotId, overrideProps, id, children, weight);
+    dispatch(registerFillComponent(slotId, overrideProps, id, children, weight));
 
     return () => {
-      unregisterFillComponent(slotId, id);
+      dispatch(unregisterFillComponent(slotId, id));
     };
   }, []);
 
@@ -24,8 +29,6 @@ const Fill = ({
 Fill.propTypes = {
   // a component to be injected on a slot
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-  registerFillComponent: PropTypes.func.isRequired,
-  unregisterFillComponent: PropTypes.func.isRequired,
   slotId: PropTypes.string.isRequired,
   // ordering between slot's fills, higher will be rendered first
   weight: PropTypes.number.isRequired,

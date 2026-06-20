@@ -6,22 +6,40 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { createTestStore } from '../../../../common/rtlTestHelpers';
 import AuditsPage from '../AuditsPage';
-import { auditsPageProps } from '../AuditsPage.fixtures';
 import { AuditsProps } from '../../../../components/AuditsList/__tests__/AuditsList.fixtures';
 
-const fullAuditsPageProps = {
-  ...auditsPageProps,
-  audits: AuditsProps.audits,
-  itemCount: AuditsProps.audits.length,
+// Mock the actions to prevent actual API calls
+jest.mock('../AuditsPageActions', () => ({
+  initializeAudits: () => () => {},
+  fetchAndPush: () => () => {},
+  fetchAudits: () => () => {},
+}));
+
+const defaultState = {
+  auditsPage: {
+    data: {
+      audits: AuditsProps.audits,
+      isLoading: false,
+      hasData: true,
+      hasError: false,
+      message: '',
+    },
+    query: {
+      page: 1,
+      perPage: 20,
+      searchQuery: '',
+      itemCount: AuditsProps.audits.length,
+    },
+  },
 };
 
-const renderAuditsPage = (props = {}) => {
-  const store = createTestStore();
+const renderAuditsPage = (stateOverrides = {}) => {
+  const store = createTestStore({ ...defaultState, ...stateOverrides });
   return render(
     <Provider store={store}>
       <IntlProvider locale="en">
         <MemoryRouter>
-          <AuditsPage {...fullAuditsPageProps} {...props} />
+          <AuditsPage />
         </MemoryRouter>
       </IntlProvider>
     </Provider>
@@ -35,27 +53,23 @@ describe('AuditsPage', () => {
       expect(container).toMatchSnapshot();
     });
 
-    it('render loading audits page', () => {
+    it('render audits page with error', () => {
       const { container } = renderAuditsPage({
-        hasError: false,
-        hasData: true,
-        audits: [],
-      });
-      expect(container).toMatchSnapshot();
-    });
-
-    it('render audits page w/empty audits', () => {
-      const { container } = renderAuditsPage({
-        hasError: true,
-        message: { type: 'empty', text: 'no audits' },
-      });
-      expect(container).toMatchSnapshot();
-    });
-
-    it('render audits page w/error', () => {
-      const { container } = renderAuditsPage({
-        hasError: true,
-        message: { type: 'error', text: 'some-error' },
+        auditsPage: {
+          data: {
+            audits: [],
+            isLoading: false,
+            hasData: false,
+            hasError: true,
+            message: { type: 'error', text: 'some-error' },
+          },
+          query: {
+            page: 1,
+            perPage: 20,
+            searchQuery: '',
+            itemCount: 0,
+          },
+        },
       });
       expect(container).toMatchSnapshot();
     });

@@ -1,19 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactPasswordStrength from 'react-password-strength';
 import { translate as __ } from '../../../react_app/common/I18n';
 import CommonForm from '../common/forms/CommonForm';
-import { noop } from '../../common/helpers';
+import {
+  updatePassword as updatePasswordAction,
+  updatePasswordConfirmation as updatePasswordConfirmationAction,
+} from './PasswordStrengthActions';
+import {
+  doesPasswordsMatch as selectDoesPasswordsMatch,
+  passwordPresent as selectPasswordPresent,
+} from './PasswordStrengthSelectors';
 
 import './PasswordStrength.scss';
 
 const PasswordStrength = ({
-  updatePassword,
-  updatePasswordConfirmation,
-  doesPasswordsMatch,
-  passwordPresent,
   data: { className, id, name, verify, error, userInputIds, required },
 }) => {
+  const dispatch = useDispatch();
+  const doesPasswordsMatch = useSelector(state =>
+    selectDoesPasswordsMatch(state.passwordStrength)
+  );
+  const passwordPresent = useSelector(state =>
+    selectPasswordPresent(state.passwordStrength)
+  );
+  const updatePassword = password =>
+    dispatch(updatePasswordAction(password));
+  const updatePasswordConfirmation = password =>
+    dispatch(updatePasswordConfirmationAction(password));
   const userInputs =
     userInputIds && userInputIds.length > 0
       ? userInputIds.map(input => document.getElementById(input).value)
@@ -66,10 +81,6 @@ const PasswordStrength = ({
 };
 
 PasswordStrength.propTypes = {
-  updatePassword: PropTypes.func,
-  updatePasswordConfirmation: PropTypes.func,
-  doesPasswordsMatch: PropTypes.bool,
-  passwordPresent: PropTypes.bool,
   data: PropTypes.shape({
     className: PropTypes.string,
     id: PropTypes.string,
@@ -82,13 +93,6 @@ PasswordStrength.propTypes = {
       error: PropTypes.node,
     }),
   }).isRequired,
-};
-
-PasswordStrength.defaultProps = {
-  updatePassword: noop,
-  updatePasswordConfirmation: noop,
-  doesPasswordsMatch: false,
-  passwordPresent: false,
 };
 
 export default PasswordStrength;

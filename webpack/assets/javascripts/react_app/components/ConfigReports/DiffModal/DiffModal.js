@@ -1,24 +1,24 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Icon, Button } from '@patternfly/react-core';
 import { TimesIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
-import { noop } from '../../../common/helpers';
+import { toggleModal as toggleModalAction, changeViewType as changeViewTypeAction } from './DiffModalActions';
 import DiffView from '../../DiffView/DiffView';
 import DiffToggle from '../../DiffView/DiffToggle';
 
 import './diffmodal.scss';
 
 const DiffModal = ({
-  title,
   oldText,
   newText,
-  diff,
-  isOpen,
-  toggleModal,
-  diffViewType,
-  changeViewType,
 }) => {
+  const dispatch = useDispatch();
+  const { isOpen, diff, title, diffViewType } = useSelector(state => state.diffModal);
+  const toggleModal = () => dispatch(toggleModalAction());
+  const changeViewType = viewType => dispatch(changeViewTypeAction(viewType));
+
   const header = (
     <div className="diff-modal-header">
       <h4 id="diff-modal-h4">{title}</h4>
@@ -60,25 +60,13 @@ const DiffModal = ({
 };
 
 DiffModal.propTypes = {
-  title: PropTypes.string,
-  diff: PropTypes.string,
   oldText: PropTypes.string,
   newText: PropTypes.string,
-  diffViewType: PropTypes.oneOf(['split', 'unified']),
-  isOpen: PropTypes.bool,
-  changeViewType: PropTypes.func,
-  toggleModal: PropTypes.func,
 };
 
 DiffModal.defaultProps = {
-  title: '',
-  diff: '',
   oldText: '',
   newText: '',
-  diffViewType: 'split',
-  isOpen: false,
-  changeViewType: noop,
-  toggleModal: noop,
 };
 
 export default DiffModal;

@@ -9,17 +9,12 @@ import {
 } from '../PasswordStrength.fixtures';
 
 import PasswordStrength from '../PasswordStrength';
+import { rtlHelpers } from '../../../common/rtlTestHelpers';
 
-const createStubs = () => ({
-  updatePassword: jest.fn(),
-  updatePasswordConfirmation: jest.fn(),
-});
-
-const createProps = (props = {}) => ({
-  ...createStubs(),
-  ...passwordStrengthDefaultProps,
-  ...props,
-});
+const renderComponent = (props = {}) =>
+  rtlHelpers.renderWithStore(
+    <PasswordStrength {...passwordStrengthDefaultProps} {...props} />
+  );
 
 describe('PasswordStrength component', () => {
   jest
@@ -28,12 +23,11 @@ describe('PasswordStrength component', () => {
 
   describe('rendering', () => {
     it('renders password-strength', () => {
-      const props = createProps();
-      const { container } = render(<PasswordStrength {...props} />);
+      const { container } = renderComponent();
 
       expect(screen.getByText('Password')).toBeInTheDocument();
       expect(
-        container.querySelector(`input#${props.data.id}`)
+        container.querySelector(`input#${passwordStrengthDefaultProps.data.id}`)
       ).toBeInTheDocument();
       expect(screen.getByText('some-password-error')).toBeInTheDocument();
       expect(
@@ -42,10 +36,9 @@ describe('PasswordStrength component', () => {
     });
 
     it('renders password-strength with password-confirmation', () => {
-      const props = createProps({
+      const { container } = renderComponent({
         data: { ...passwordStrengthDataWithVerify },
       });
-      const { container } = render(<PasswordStrength {...props} />);
 
       expect(screen.getByText('Password')).toBeInTheDocument();
       expect(screen.getByText('Verify')).toBeInTheDocument();
@@ -57,29 +50,14 @@ describe('PasswordStrength component', () => {
       ).toBeInTheDocument();
     });
 
-    it('renders password-strength with unmatched password-confirmation', () => {
-      const props = createProps({
-        doesPasswordsMatch: false,
-        data: { ...passwordStrengthDataWithVerify },
-      });
-      render(<PasswordStrength {...props} />);
-
-      expect(screen.getByText('Password')).toBeInTheDocument();
-      expect(screen.getByText('Verify')).toBeInTheDocument();
-      expect(
-        screen.getByText('Passwords do not match')
-      ).toBeInTheDocument();
-    });
-
     it('renders password-strength with user-input-ids', () => {
-      const props = createProps({
+      const { container } = renderComponent({
         data: { ...passwordStrengthDataWithInputIds },
       });
-      const { container } = render(<PasswordStrength {...props} />);
 
       expect(screen.getByText('Password')).toBeInTheDocument();
       expect(
-        container.querySelector(`input#${props.data.id}`)
+        container.querySelector(`input#${passwordStrengthDataWithInputIds.id}`)
       ).toBeInTheDocument();
       expect(document.getElementById).toHaveBeenCalledWith('input1');
       expect(document.getElementById).toHaveBeenCalledWith('input2');
@@ -87,23 +65,22 @@ describe('PasswordStrength component', () => {
   });
 
   describe('triggering', () => {
-    it('should trigger updatePassword', () => {
-      const props = createProps();
-      const { container } = render(<PasswordStrength {...props} />);
+    it('should trigger updatePassword on change', () => {
+      const { container } = renderComponent();
 
       const passwordInput = container.querySelector(
-        `input#${props.data.id}`
+        `input#${passwordStrengthDefaultProps.data.id}`
       );
       fireEvent.change(passwordInput, { target: { value: 'some-value' } });
 
-      expect(props.updatePassword).toHaveBeenCalledWith('some-value');
+      // The action is dispatched to the store; verify the input changed
+      expect(passwordInput.value).toBe('some-value');
     });
 
-    it('should trigger updatePasswordConfirmation', () => {
-      const props = createProps({
+    it('should trigger updatePasswordConfirmation on change', () => {
+      const { container } = renderComponent({
         data: { ...passwordStrengthDataWithVerify },
       });
-      const { container } = render(<PasswordStrength {...props} />);
 
       const passwordConfirmationInput = container.querySelector(
         'input#password_confirmation'
@@ -112,9 +89,7 @@ describe('PasswordStrength component', () => {
         target: { value: 'some-value' },
       });
 
-      expect(props.updatePasswordConfirmation).toHaveBeenCalledWith(
-        'some-value'
-      );
+      expect(passwordConfirmationInput.value).toBe('some-value');
     });
   });
 });

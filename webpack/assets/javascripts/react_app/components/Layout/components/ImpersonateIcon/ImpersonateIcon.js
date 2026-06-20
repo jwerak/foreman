@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { EyeIcon } from '@patternfly/react-icons';
 import {
   Tooltip,
@@ -10,10 +11,12 @@ import {
   Icon,
 } from '@patternfly/react-core';
 import { translate as __ } from '../../../../common/I18n';
+import { stopImpersonating } from './ImpersonateIconActions';
 
 import './ImpersonateIcon.scss';
 
-const ImpersonateIcon = props => {
+const ImpersonateIcon = ({ stopImpersonationUrl }) => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
@@ -44,7 +47,7 @@ const ImpersonateIcon = props => {
             ouiaId="stop-impersonating"
             key="confirm"
             variant="primary"
-            onClick={() => props.stopImpersonating(props.stopImpersonationUrl)}
+            onClick={() => dispatch(stopImpersonating(stopImpersonationUrl))}
           >
             {__('Confirm')}
           </Button>,
@@ -66,7 +69,6 @@ const ImpersonateIcon = props => {
 
 ImpersonateIcon.propTypes = {
   stopImpersonationUrl: PropTypes.string.isRequired,
-  stopImpersonating: PropTypes.func.isRequired,
 };
 
 export default ImpersonateIcon;

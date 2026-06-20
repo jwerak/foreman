@@ -232,39 +232,3 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
   </div>
 </div>
 `;
-
-exports[`BreadcrumbBar triggering should trigger callbacks: loadSwitcherResourcesByResource calls 1`] = `
-Array [
-  Array [
-    Object {
-      "nameField": "name",
-      "resourceUrl": "some/url",
-      "switcherItemUrl": "some/url/:id",
-    },
-  ],
-  Array [
-    Object {
-      "nameField": "name",
-      "resourceUrl": "some/url",
-      "switcherItemUrl": "some/url/:id",
-    },
-    Object {
-      "page": 3,
-      "perPage": 10,
-      "searchQuery": "some value",
-    },
-  ],
-  Array [
-    Object {
-      "nameField": "name",
-      "resourceUrl": "some/url",
-      "switcherItemUrl": "some/url/:id",
-    },
-    Object {
-      "page": 2,
-      "perPage": 10,
-      "searchQuery": "some value",
-    },
-  ],
-]
-`;

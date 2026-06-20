@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
 
 import { noop } from '../../common/helpers';
@@ -12,52 +13,85 @@ import {
   EDITOR_KEYBINDINGS,
   EDITOR_MODES,
 } from './EditorConstants';
+import {
+  navFilteredHostsSelector,
+  navHostsSelector,
+  selectChosenHost,
+  selectChosenView,
+  selectDiffType,
+  selectEditorName,
+  selectErrorText,
+  selectIsFetchingHosts,
+  selectIsLoading,
+  selectIsMasked,
+  selectIsMaximized,
+  selectIsReadOnly,
+  selectIsRendering,
+  selectIsSearchingHosts,
+  selectIsSelectOpen,
+  selectKeyBind,
+  selectMode,
+  selectPreviewResult,
+  selectRenderedEditorValue,
+  selectSearchQuery,
+  selectShowError,
+  selectTheme,
+  selectAutocompletion,
+  selectLiveAutocompletion,
+  selectValue,
+  selectTemplateKindId,
+} from './EditorSelectors';
+import * as editorActions from './EditorActions';
 import './editor.scss';
 
-const Editor = ({
-  data,
-  changeDiffViewType,
-  changeEditorValue,
-  changeSetting,
-  changeTab,
-  diffViewType,
-  dismissErrorToast,
-  editorName,
-  errorText,
-  fetchAndPreview,
-  filteredHosts,
-  hosts,
-  importFile,
-  initializeEditor,
-  isFetchingHosts,
-  isLoading,
-  isMasked,
-  isMaximized,
-  isRendering,
-  isSearchingHosts,
-  isSelectOpen,
-  keyBinding,
-  mode,
-  onHostSearch,
-  onHostSelectToggle,
-  onSearchClear,
-  previewResult,
-  previewTemplate,
-  readOnly,
-  renderedEditorValue,
-  revertChanges,
-  searchQuery,
-  selectedHost,
-  selectedView,
-  showError,
-  theme,
-  autocompletion,
-  liveAutocompletion,
-  toggleModal,
-  toggleRenderView,
-  value,
-  templateKindId,
-}) => {
+const Editor = ({ data }) => {
+  const dispatch = useDispatch();
+
+  // Redux state
+  const diffViewType = useSelector(selectDiffType);
+  const editorName = useSelector(selectEditorName);
+  const errorText = useSelector(selectErrorText);
+  const filteredHosts = useSelector(navFilteredHostsSelector);
+  const hosts = useSelector(navHostsSelector);
+  const isFetchingHosts = useSelector(selectIsFetchingHosts);
+  const isLoading = useSelector(selectIsLoading);
+  const isMasked = useSelector(selectIsMasked);
+  const isMaximized = useSelector(selectIsMaximized);
+  const isRendering = useSelector(selectIsRendering);
+  const isSearchingHosts = useSelector(selectIsSearchingHosts);
+  const isSelectOpen = useSelector(selectIsSelectOpen);
+  const keyBinding = useSelector(selectKeyBind);
+  const mode = useSelector(selectMode);
+  const previewResult = useSelector(selectPreviewResult);
+  const renderedEditorValue = useSelector(selectRenderedEditorValue);
+  const readOnly = useSelector(selectIsReadOnly);
+  const searchQuery = useSelector(selectSearchQuery);
+  const selectedHost = useSelector(selectChosenHost);
+  const selectedView = useSelector(selectChosenView);
+  const showError = useSelector(selectShowError);
+  const theme = useSelector(selectTheme);
+  const autocompletion = useSelector(selectAutocompletion);
+  const liveAutocompletion = useSelector(selectLiveAutocompletion);
+  const value = useSelector(selectValue);
+  const templateKindId = useSelector(selectTemplateKindId);
+
+  // Redux actions
+  const changeDiffViewType = viewType => dispatch(editorActions.changeDiffViewType(viewType));
+  const changeEditorValue = val => dispatch(editorActions.changeEditorValue(val));
+  const changeSetting = setting => dispatch(editorActions.changeSetting(setting));
+  const changeTab = view => dispatch(editorActions.changeTab(view));
+  const dismissErrorToast = () => dispatch(editorActions.dismissErrorToast());
+  const fetchAndPreview = (renderPath, kindId, skip) => dispatch(editorActions.fetchAndPreview(renderPath, kindId, skip));
+  const importFile = e => dispatch(editorActions.importFile(e));
+  const initializeEditor = initData => dispatch(editorActions.initializeEditor(initData));
+  const onHostSearch = e => dispatch(editorActions.onHostSearch(e));
+  const onHostSelectToggle = () => dispatch(editorActions.onHostSelectToggle());
+  const onSearchClear = () => dispatch(editorActions.onSearchClear());
+  const previewTemplate = params => dispatch(editorActions.previewTemplate(params));
+  const revertChanges = tmpl => dispatch(editorActions.revertChanges(tmpl));
+  const toggleModal = () => dispatch(editorActions.toggleModal());
+  const toggleRenderView = rendering => dispatch(editorActions.toggleRenderView(rendering));
+
   const {
     name,
     isSafemodeEnabled,
@@ -245,54 +279,6 @@ Editor.propTypes = {
     type: PropTypes.string,
     dslCache: PropTypes.string,
   }).isRequired,
-  selectedHost: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    name: PropTypes.string,
-  }).isRequired,
-  changeDiffViewType: PropTypes.func.isRequired,
-  changeEditorValue: PropTypes.func.isRequired,
-  changeSetting: PropTypes.func.isRequired,
-  changeTab: PropTypes.func.isRequired,
-  diffViewType: PropTypes.string.isRequired,
-  dismissErrorToast: PropTypes.func.isRequired,
-  editorName: PropTypes.string.isRequired,
-  errorText: PropTypes.string.isRequired,
-  hosts: PropTypes.array.isRequired,
-  filteredHosts: PropTypes.array.isRequired,
-  importFile: PropTypes.func.isRequired,
-  initializeEditor: PropTypes.func.isRequired,
-  isMasked: PropTypes.bool.isRequired,
-  isMaximized: PropTypes.bool.isRequired,
-  isRendering: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  isFetchingHosts: PropTypes.bool.isRequired,
-  keyBinding: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  previewTemplate: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  previewResult: PropTypes.string.isRequired,
-  revertChanges: PropTypes.func.isRequired,
-  selectedView: PropTypes.string.isRequired,
-  showError: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
-  autocompletion: PropTypes.bool.isRequired,
-  liveAutocompletion: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  toggleRenderView: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-  templateKindId: PropTypes.string,
-  renderedEditorValue: PropTypes.string.isRequired,
-  isSelectOpen: PropTypes.bool.isRequired,
-  searchQuery: PropTypes.string.isRequired,
-  onHostSelectToggle: PropTypes.func.isRequired,
-  onHostSearch: PropTypes.func.isRequired,
-  onSearchClear: PropTypes.func.isRequired,
-  isSearchingHosts: PropTypes.bool.isRequired,
-  fetchAndPreview: PropTypes.func.isRequired,
-};
-
-Editor.defaultProps = {
-  templateKindId: '',
 };
 
 export default Editor;

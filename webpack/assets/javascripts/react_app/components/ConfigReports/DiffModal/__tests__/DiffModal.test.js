@@ -1,42 +1,48 @@
 import React from 'react';
-import { screen, fireEvent, render, act } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import { configure } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 import DiffModal from '../DiffModal';
-import { diffModalMock } from '../DiffModal.fixtures';
+import { rtlHelpers } from '../../../../common/rtlTestHelpers';
 
-const toggleModal = jest.fn();
-const changeState = jest.fn();
-const fixtures = {
-  renders: {
-    ...diffModalMock,
-    toggleModal: toggleModal,
-    changeViewType: changeState,
+configure({ testIdAttribute: 'data-ouia-component-id' });
+
+const initialState = {
+  diffModal: {
+    isOpen: true,
+    diff: 'some diff',
+    title: 'log1',
+    diffViewType: 'split',
   },
 };
-configure({ testIdAttribute: 'data-ouia-component-id'})
 
 describe('DiffModal', () => {
   describe('rendering', () => {
-      it('should render modal with title and close button', () => {
-        render(<DiffModal {...fixtures.renders} />);
+    it('should render modal with title and close button', () => {
+      rtlHelpers.renderWithStore(
+        <DiffModal oldText="old" newText="new" />,
+        initialState
+      );
 
-        expect(screen.getByText('log1')).toBeInTheDocument();
-        const closeButton = document.querySelector('.diff-modal-close');
-        expect(closeButton).toBeInTheDocument();
-        expect(closeButton).toHaveClass('close', 'diff-modal-close');
-      });
+      expect(screen.getByText('log1')).toBeInTheDocument();
+      const closeButton = document.querySelector('.diff-modal-close');
+      expect(closeButton).toBeInTheDocument();
+      expect(closeButton).toHaveClass('close', 'diff-modal-close');
+    });
   });
 
   describe('triggering..', () => {
     it('should trigger onHide', async () => {
-      render(<DiffModal {...fixtures.renders} />);
+      rtlHelpers.renderWithStore(
+        <DiffModal oldText="old" newText="new" />,
+        initialState
+      );
       const closeButton = screen.getByTestId('diff-modal-close-button');
 
       await act(async () => await fireEvent.click(closeButton));
 
-      expect(toggleModal).toHaveBeenCalled();
+      expect(screen.queryByText('log1')).not.toBeInTheDocument();
     });
   });
 });
