@@ -1019,3 +1019,61 @@ and FOUC prevention.
 - `webpack/global_test_setup.js` — added global `window.matchMedia` mock for jsdom
 
 **Test results:** 223 suites pass, 1145 tests (1144 pass, 1 skipped), 375 snapshots.
+
+### Step 4.11: Dashboard Redesign with PF6 Native Components ✅
+
+Replaced the legacy jQuery/Gridster-based dashboard with a modern React + PF6 component
+architecture. All data is now passed as props from the controller (no per-widget AJAX).
+
+**Key changes:**
+- **Controller** (`app/controllers/dashboard_controller.rb`): Rebuilt to serialize all dashboard
+  data (status, charts, events, hosts) as JSON props. Removed widget CRUD actions.
+- **ERB** (`app/views/dashboard/index.html.erb`): Replaced Gridster grid with single
+  `react_component('Dashboard', @dashboard_props)` call.
+- **React components** (7 new files in `webpack/.../Dashboard/`):
+  - `Dashboard/index.js` — main layout with PF6 Grid, origin filter, fetch-on-change
+  - `AggregateStatusCard.js` — status summary bar with origin dropdown (PF6 Select)
+  - `StatusChartCard.js` — donut chart (reuses existing `DonutChart`)
+  - `RunDistributionCard.js` — bar chart (reuses existing `BarChart`)
+  - `LatestEventsCard.js` — PF6 Table with color-coded Labels
+  - `NewHostsCard.js` — PF6 Table with relative dates
+  - `BuildModeCard.js` — PF6 Table with status icons (conditional render)
+- **Component registry** (`componentRegistry.js`): Registered `Dashboard` component.
+- **Gridster removal**: Removed `dsmorse-gridster` dependency, Gridster JS/SCSS, jQuery
+  plugin require, vendor CSS import. Cleaned up `bundle.js` dashboard import.
+- **Routes** (`config/routes.rb`): Removed widget CRUD routes (show/create/destroy/save_positions/reset_default).
+- **Plugin extensibility**: `<Slot id="dashboard-cards" multi />` at bottom of grid.
+- **Dark mode**: All components use PF6 design tokens — no hardcoded colors.
+
+**Files added:**
+- `webpack/.../Dashboard/index.js`
+- `webpack/.../Dashboard/AggregateStatusCard.js`
+- `webpack/.../Dashboard/StatusChartCard.js`
+- `webpack/.../Dashboard/RunDistributionCard.js`
+- `webpack/.../Dashboard/LatestEventsCard.js`
+- `webpack/.../Dashboard/NewHostsCard.js`
+- `webpack/.../Dashboard/BuildModeCard.js`
+- `webpack/.../Dashboard/__tests__/Dashboard.test.js`
+- `webpack/.../Dashboard/__tests__/AggregateStatusCard.test.js`
+- `webpack/.../Dashboard/__tests__/StatusChartCard.test.js`
+- `webpack/.../Dashboard/__tests__/LatestEventsCard.test.js`
+- `webpack/.../Dashboard/__tests__/NewHostsCard.test.js`
+- `webpack/.../Dashboard/__tests__/BuildModeCard.test.js`
+
+**Files modified:**
+- `app/controllers/dashboard_controller.rb`
+- `app/views/dashboard/index.html.erb`
+- `webpack/.../componentRegistry.js`
+- `webpack/assets/javascripts/bundle.js`
+- `webpack/assets/javascripts/jquery.js`
+- `webpack/assets/javascripts/dashboard/index.js` (gutted)
+- `webpack/assets/javascripts/dashboard/index.scss` (gutted)
+- `webpack/.../common/scss/vendor-core.scss`
+- `webpack/assets/javascripts/all_react_app_exports.js` (regenerated)
+- `config/routes.rb`
+- `package.json`
+
+**Files removed:**
+- `webpack/assets/javascripts/dashboard/gridster.scss`
+
+**Test results:** 229 suites pass, 1172 tests (1171 pass, 1 skipped), 375 snapshots.

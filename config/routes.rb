@@ -455,13 +455,6 @@ Foreman::Application.routes.draw do
     end
   end
 
-  resources :widgets, controller: 'dashboard', only: [:show, :create, :destroy] do
-    collection do
-      post 'save_positions', to: 'dashboard#save_positions'
-      put 'reset_default', to: 'dashboard#reset_default'
-    end
-  end
-
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index', as: "dashboard"
   get 'dashboard/auto_complete_search', to: 'hosts#auto_complete_search', as: "auto_complete_search_dashboard"

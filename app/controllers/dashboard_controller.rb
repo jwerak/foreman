@@ -1,84 +1,99 @@
 class DashboardController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
-  include Foreman::Controller::Parameters::Widget
 
-  before_action :init_widget_data, :only => :show
-  before_action :find_resource, :only => [:show, :destroy]
   skip_before_action :welcome
 
   def index
+    origin = params[:origin]
+    settings = origin.present? ? { origin: origin } : {}
+    @data = Dashboard::Data.new(params[:search], settings)
+    @dashboard_props = build_dashboard_props(@data, origin)
+
     respond_to do |format|
       format.html
-      format.yaml { render :plain => @report.to_yaml }
-      format.json
+      format.yaml { render :plain => @data.report.to_yaml }
+      format.json { render :json => @dashboard_props }
     end
-  end
-
-  def show
-    if @widget.present? && @widget.user == User.current
-      render(:partial => @widget.template, :locals => @widget.data)
-    else
-      render_403 "User #{User.current} attempted to access another user's widget"
-    end
-  rescue ActionView::MissingTemplate, ActionView::Template::Error => exception
-    process_ajax_error exception, "load widget"
-  end
-
-  def create
-    widget = Dashboard::Manager.find_default_widget_by_name(params[:name])
-    unless widget.present?
-      not_found
-      return
-    end
-    Dashboard::Manager.add_widget_to_user(User.current, widget.first)
-    render :json => { :name => params[:name] }, :status => :ok
-  end
-
-  def destroy
-    if @widget.present? && @widget.user == User.current
-      User.current.widgets.destroy(@widget)
-      status = :ok
-    else
-      status = :forbidden
-      logger.warn "#{User.current} attempted to remove widget id #{params[:id]} and failed."
-    end
-    respond_to do |format|
-      format.json { render :json => params[:id], :status => status }
-    end
-  end
-
-  def reset_default
-    Dashboard::Manager.reset_user_to_default(User.current)
-    redirect_to root_path
-  end
-
-  def save_positions
-    errors = []
-    filter = self.class.widget_params_filter
-    params.fetch(:widgets, []).each do |id, values|
-      widget = User.current.widgets.where(:id => id).first
-      values = filter.filter_params(values, parameter_filter_context, :none)
-      errors << widget.errors unless widget.update(values)
-    end
-    respond_to do |format|
-      if errors.empty?
-        format.json { render :json => {}, :status => :ok }
-      else
-        format.json { render :json => errors, :status => :bad_request }
-      end
-    end
-  rescue => exception
-    process_ajax_error exception, 'save positions'
-  end
-
-  def resource_name
-    "widget"
   end
 
   private
 
-  def init_widget_data
-    find_resource unless @widget
-    @data = Dashboard::Data.new(params[:search], @widget.data[:settings])
+  def build_dashboard_props(data, origin)
+    h = helpers
+    {
+      status: data.report,
+      overview: h.get_overview(data.report, origin: origin),
+      runDistribution: h.get_run_distribution_data(data.hosts, origin: origin),
+      latestEvents: serialize_latest_events(data),
+      newHosts: serialize_new_hosts(data),
+      hostsInBuildMode: serialize_build_hosts(data),
+      reportOrigins: available_report_origins,
+      searchUrl: h.current_hosts_path(search: '~VAL~'),
+    }
+  end
+
+  def serialize_latest_events(data)
+    h = helpers
+    data.latest_events.map do |report|
+      {
+        id: report.id,
+        hostName: report.host.try(:name) || 'N/A',
+        reportsUrl: report.host ? host_config_reports_path(report.host) : '#',
+        applied: report.applied,
+        restarted: report.restarted,
+        failed: report.failed,
+        failedRestarts: report.failed_restarts,
+        skipped: report.skipped,
+        pending: report.pending,
+      }
+    end
+  end
+
+  def serialize_new_hosts(data)
+    h = helpers
+    data.hosts.includes(:operatingsystem).preload(:owner).order(created_at: :desc).limit(9).map do |host|
+      {
+        id: host.id,
+        name: host.name,
+        hostUrl: h.current_host_details_path(host),
+        operatingSystem: host.operatingsystem.present? ? host.operatingsystem.to_label : nil,
+        owner: host.owner.try(:to_s),
+        createdAt: host.created_at&.iso8601,
+        installedAt: host.installed_at&.iso8601,
+      }
+    end
+  end
+
+  def serialize_build_hosts(data)
+    h = helpers
+    hosts = data.hosts.in_build_mode.or(data.hosts.with_build_errors)
+               .includes(:token).preload(:owner)
+               .order(created_at: :desc).limit(9)
+    hosts.map do |host|
+      {
+        id: host.id,
+        name: host.name,
+        hostUrl: h.current_host_details_path(host),
+        owner: host.owner.try(:to_s),
+        buildDuration: h.build_duration(host),
+        tokenExpiry: host.token&.expires&.iso8601,
+        buildStatus: host_build_status(host),
+      }
+    end
+  end
+
+  def host_build_status(host)
+    if host.token_expired?
+      'token_expired'
+    elsif host.build_errors.present?
+      'build_error'
+    else
+      'in_progress'
+    end
+  end
+
+  def available_report_origins
+    origins = Foreman::Plugin.report_origin_registry.all_origins || []
+    ['All'] + origins.sort
   end
 end

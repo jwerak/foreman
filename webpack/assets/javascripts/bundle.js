@@ -24,7 +24,6 @@ import * as templateInputs from './foreman_template_inputs';
 import * as templateKind from './foreman_template_kind';
 import * as advancedFields from './foreman_advanced_fields';
 import * as configReportsModalDiff from './foreman_config_reports_modal_diff';
-import * as dashboard from './dashboard';
 import * as spice from './spice';
 import * as lookupKeys from './foreman_lookup_keys';
 import './react_app/common/MountingService';
@@ -53,7 +52,6 @@ window.tfm = Object.assign(window.tfm || {}, {
   templateKind,
   advancedFields,
   configReportsModalDiff,
-  dashboard,
   i18n,
   spice,
   document,
