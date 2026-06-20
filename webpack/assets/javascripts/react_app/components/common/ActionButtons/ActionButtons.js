@@ -46,9 +46,7 @@ export const ActionButtons = ({ buttons }) => {
           aria-label="Menu toggle with action split button"
           isExpanded={isOpen}
           isDisabled={firstButton.action?.disabled}
-          splitButtonOptions={{
-            variant: 'action',
-            items: [
+          splitButtonItems={[
               <MenuToggleAction
                 key={firstButton.title}
                 className="action-buttons-menu-toggle-action"
@@ -58,8 +56,7 @@ export const ActionButtons = ({ buttons }) => {
               >
                 {firstButton.title}
               </MenuToggleAction>,
-            ],
-          }}
+            ]}
           onClick={() => setIsOpen(!isOpen)}
         />
       )}

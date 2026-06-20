@@ -3,7 +3,7 @@ div#mismatch-radio-container {
   align-items: baseline;
   margin-top: 1em;
 
-  div .pf-v5-c-radio__input {
+  div .pf-v6-c-radio__input {
     position: relative;
     top: -0.2em;
   }

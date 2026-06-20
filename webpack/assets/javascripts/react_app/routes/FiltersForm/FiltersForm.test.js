@@ -206,8 +206,14 @@ describe('FiltersForm', () => {
     );
 
     await waitFor(() => screen.getByDisplayValue('test role for edit'));
-    expect(screen.getByLabelText(roleLabel).value).toBe(editProps.roleName);
-    expect(screen.getByLabelText(responseTypeLabel).value).toBe('_Host_');
+    // In PF6, both MenuToggle and TextInputGroupMain can have the same aria-label.
+    // Use getAllByLabelText and check the input element specifically.
+    const roleInputs = screen.getAllByLabelText(roleLabel);
+    const roleInput = roleInputs.find(el => el.tagName === 'INPUT');
+    expect(roleInput.value).toBe(editProps.roleName);
+    const resourceTypeInputs = screen.getAllByLabelText(responseTypeLabel);
+    const resourceTypeInput = resourceTypeInputs.find(el => el.tagName === 'INPUT');
+    expect(resourceTypeInput.value).toBe('_Host_');
     await waitFor(() => {
       expect(screen.queryAllByText('access_dashboard')).toHaveLength(0);
     });
@@ -224,7 +230,9 @@ describe('FiltersForm', () => {
     );
 
     await waitFor(() => screen.getByText('test role for new'));
-    expect(screen.getByLabelText(responseTypeLabel).value).toBe(
+    const resourceTypeInputsNew = screen.getAllByLabelText(responseTypeLabel);
+    const resourceTypeInputNew = resourceTypeInputsNew.find(el => el.tagName === 'INPUT');
+    expect(resourceTypeInputNew.value).toBe(
       '(Miscellaneous)'
     );
     expect(screen.queryAllByText('access_dashboard')).toHaveLength(1);

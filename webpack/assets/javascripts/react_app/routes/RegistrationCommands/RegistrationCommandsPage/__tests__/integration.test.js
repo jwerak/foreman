@@ -45,7 +45,7 @@ describe('RegistrationCommandsPage integration', () => {
 
     const submitBtn = container.querySelector('#generate_btn');
     const commandField = container.querySelector(
-      '.pf-v5-c-clipboard-copy__expandable-content pre'
+      '.pf-v6-c-clipboard-copy__expandable-content pre'
     );
 
     expect(submitBtn).not.toHaveClass('pf-m-disabled');

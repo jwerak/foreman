@@ -29,16 +29,14 @@ const SettingValueCell = ({ setting, index }) => {
           </FlexItem>
           <FlexItem>
             {!setting.readonly && (
-              <Button
+              <Button icon={<Icon>
+                  <PencilAltIcon />
+                </Icon>}
                 onClick={() => setEditingRow(true)}
                 variant="plain"
                 ouiaId={`edit-row-${index}-icon`}
                 id={setting.name}
-              >
-                <Icon>
-                  <PencilAltIcon />
-                </Icon>
-              </Button>
+               />
             )}
           </FlexItem>
         </Flex>

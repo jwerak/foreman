@@ -118,13 +118,11 @@ export const SelectResourceType = ({
               />
               {(filterValue || type.translation) && (
                 <TextInputGroupUtilities>
-                  <Button
+                  <Button icon={<TimesIcon />}
                     variant="plain"
                     onClick={handleClear}
                     aria-label="Clear"
-                  >
-                    <TimesIcon />
-                  </Button>
+                   />
                 </TextInputGroupUtilities>
               )}
             </TextInputGroup>

@@ -77,13 +77,11 @@ export const SelectRole = ({ role, setRole }) => {
               />
               {(filterValue || selectedName) && (
                 <TextInputGroupUtilities>
-                  <Button
+                  <Button icon={<TimesIcon />}
                     variant="plain"
                     onClick={handleClear}
                     aria-label="Clear"
-                  >
-                    <TimesIcon />
-                  </Button>
+                   />
                 </TextInputGroupUtilities>
               )}
             </TextInputGroup>

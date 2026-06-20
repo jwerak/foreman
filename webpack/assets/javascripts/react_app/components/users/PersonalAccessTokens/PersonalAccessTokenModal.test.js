@@ -42,7 +42,9 @@ describe('Personal access token modal', () => {
     const nameField = screen.getByLabelText('personal access token name input');
     const dateField = screen.getByLabelText('expiration date picker');
     const timeField = screen.getByLabelText('expiration time picker');
-    const confirmButton = screen.getByText('Confirm');
+    // In PF6, getByText('Confirm') returns the inner <span> of the button.
+    // Use closest('button') to get the actual button element for disabled checks.
+    const confirmButton = screen.getByText('Confirm').closest('button');
 
     await act(async () => {
       fireEvent.change(nameField, {

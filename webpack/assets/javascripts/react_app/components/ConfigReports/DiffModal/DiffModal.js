@@ -1,6 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal, Icon, Button } from '@patternfly/react-core';
+import {
+	Icon,
+	Button
+} from '@patternfly/react-core';
+import {
+	Modal
+} from '@patternfly/react-core/deprecated';
 import { TimesIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
@@ -22,15 +28,15 @@ const DiffModal = ({
   const header = (
     <div className="diff-modal-header">
       <h4 id="diff-modal-h4">{title}</h4>
-      <Button
+      <Button icon={<Icon>
+          <TimesIcon />
+        </Icon>}
         ouiaId="diff-modal-close-button"
         className="close diff-modal-close"
         onClick={toggleModal}
         variant="link"
       >
-        <Icon>
-          <TimesIcon />
-        </Icon>
+        
       </Button>
       <DiffToggle changeState={changeViewType} stateView={diffViewType} />
     </div>

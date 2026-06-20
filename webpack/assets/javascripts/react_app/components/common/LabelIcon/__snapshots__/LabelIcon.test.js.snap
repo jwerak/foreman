@@ -6,17 +6,17 @@ exports[`LabelIcon renders 1`] = `
     style="display: contents;"
   >
     <button
-      class="pf-v5-c-form__group-label-help"
+      class="pf-v6-c-form__group-label-help"
     >
       <span
-        class="pf-v5-c-icon pf-m-inline"
+        class="pf-v6-c-icon pf-m-inline"
       >
         <span
-          class="pf-v5-c-icon__content"
+          class="pf-v6-c-icon__content"
         >
           <svg
             aria-hidden="true"
-            class="pf-v5-svg"
+            class="pf-v6-svg"
             fill="currentColor"
             height="1em"
             role="img"

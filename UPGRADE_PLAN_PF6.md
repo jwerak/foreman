@@ -721,3 +721,132 @@ Zero `@patternfly/react-core/deprecated` or `@patternfly/react-table/deprecated`
 remain in the codebase. All Dropdown, Select, ContextSelector, Table, and EmptyState components
 use the current composable PF5 patterns that the PF6 codemods can cleanly transform.
 **Phase 2 (PF6 Core Migration) is unblocked for steps 1.1-1.4.**
+
+### Step 2.1: Update Package Dependencies ✅
+
+**Date:** 2026-06-20
+**Files changed:** 1 (package.json)
+
+Updated all PatternFly packages to v6.4.x stable:
+
+| Package | Before | After |
+|---------|--------|-------|
+| `@patternfly/patternfly` | ^5.4.2 | ~6.4.0 |
+| `@patternfly/react-core` | ^5.4.8 | ~6.4.3 |
+| `@patternfly/react-icons` | ^5.4.2 | ~6.4.0 |
+| `@patternfly/react-styles` | ^5.4.1 | ~6.4.0 |
+| `@patternfly/react-table` | ^5.4.8 | ~6.4.3 |
+| `@patternfly/react-tokens` | ^5.4.1 | ~6.4.0 |
+| `@patternfly/react-templates` | ^1.1.8 | ~6.4.3 |
+| `@patternfly/react-charts` | ~7.4.5 | ~8.4.1 |
+
+Added 17 `victory-*` peer dependencies (^37.3.6) required by `@patternfly/react-charts` v8.
+
+### Step 2.2: Run PatternFly Codemods ✅
+
+**Date:** 2026-06-20
+**Files changed:** 84
+
+Ran `npx @patternfly/pf-codemods@latest ./webpack --v6 --fix` which auto-fixed 199 issues:
+- `text-replace-with-content` (84) — `Text`/`TextContent`/`TextList`/`TextListItem` → `Content`
+- `button-moveIcons-icon-prop` (32) — Button icon children → `icon` prop
+- `modal-deprecated` (21) — Modal imports moved to `@patternfly/react-core/deprecated`
+- `formGroup-rename-labelIcon` (17) — `labelIcon` → `labelHelp` prop
+- `tokens-update` (13) — PF5 React tokens → PF6 equivalents
+- `emptyState-nonExported-components` (9) — EmptyStateHeader/Icon inlined into EmptyState
+- `pageSection-update-variant-values` (7) — PageSection variant value changes
+- `chartsImport-moved` (5) — Chart imports → `@patternfly/react-charts/victory`
+- `emptyStateHeader-move-into-emptyState` (4) — EmptyState restructuring
+- `toolbar-update-align-values` (3) — `alignLeft`/`alignRight` → `alignStart`/`alignEnd`
+- Various other component API updates
+
+### Steps 2.3-2.5: CSS Class, Token, and SCSS Variable Updates ✅
+
+**Date:** 2026-06-20
+**Files changed:** 70 (36 SCSS/CSS + 22 JS source + 12 test/fixture)
+
+#### CSS class prefix updates
+All `pf-v5-c-*`, `pf-v5-u-*`, `pf-v5-l-*`, `pf-v5-svg` class references → `pf-v6-*` across
+all SCSS, CSS, JS, and test files. Zero `pf-v5-` references remain.
+
+#### Global CSS variable mappings (PF5 → PF6 semantic tokens)
+- `--pf-v5-global--BackgroundColor--100` → `--pf-t--global--background--color--primary--default`
+- `--pf-v5-global--BackgroundColor--200` → `--pf-t--global--background--color--secondary--default`
+- `--pf-v5-global--BorderColor--100` → `--pf-t--global--border--color--default`
+- `--pf-v5-global--Color--100` → `--pf-t--global--text--color--regular`
+- `--pf-v5-global--Color--200` → `--pf-t--global--text--color--subtle`
+- `--pf-v5-global--disabled-color--100` → `--pf-t--global--text--color--disabled`
+- `--pf-v5-global--success-color--100` → `--pf-t--global--icon--color--status--success--default`
+- `--pf-v5-global--danger-color--100` → `--pf-t--global--icon--color--status--danger--default`
+- `--pf-v5-global--warning-color--100` → `--pf-t--global--icon--color--status--warning--default`
+- `--pf-v5-global--spacer--*` → `--pf-t--global--spacer--*` (xs/sm/md/lg)
+- `--pf-v5-global--FontSize--*` → `--pf-t--global--font--size--body--*`
+- Component variables: `--pf-v5-c-*` → `--pf-v6-c-*`
+- Sass variables: `$pf-v5-global--*` → `$pf-v6-global--*`, `$pf-prefix: 'pf-v6-'`
+
+#### Codemod placeholder tokens resolved
+Replaced all `--pf-t--temp--dev--tbd` placeholders with correct PF6 semantic tokens.
+
+### Build & Infrastructure Fixes ✅
+
+**Date:** 2026-06-20
+**Files changed:** 5
+
+#### SCSS build fix (variables.scss)
+- Replaced `@import '~@patternfly/patternfly/base/patternfly-variables'` with
+  `@import '~@patternfly/patternfly/sass-utilities/scss-variables'` — PF6's
+  `patternfly-variables.scss` uses Sass `@use` modules internally which conflicts
+  with our `@import`-based system.
+- Changed PF6 CSS import in `vendor-core.scss` from `.scss` source to pre-compiled
+  `.css` to avoid `@use`/`@import` `$fa-font-path` variable collision.
+
+#### Webpack config fixes
+- `webpack.vendor.js` — Changed `@patternfly/react-charts` → `@patternfly/react-charts/victory`
+  (PF6 react-charts v8 has no main entry, only subpath exports).
+- `webpack.config.js` — Excluded `@patternfly/react-charts` from Module Federation shared
+  config (no main entry to resolve).
+- `jest.config.js` — Added moduleNameMapper for `@patternfly/react-icons/dist/esm/` → `dist/js/`
+  (PF6 icons ESM not parseable by Jest 26).
+
+### Test Fixes ✅
+
+**Date:** 2026-06-20
+**Files changed:** 33
+
+#### Component fixes for PF6 API changes
+- `DiskForm.js` — `TypeaheadSelect` props: `selectOptions` → `initialOptions`, moved `selected`
+  state into option objects (PF6 `@patternfly/react-templates` API change).
+- `ActionButtons.js` — `DropdownItem` `href` → `to` prop (PF6 MenuItem API change).
+- `FieldConstructor.js` — `FormGroup` `labelIcon` → `labelHelp` prop.
+
+#### Test assertion fixes for PF6 DOM changes
+- Button text wrapping: PF6 wraps button text in `<span class="pf-v6-c-button__text">`, so
+  `getByText()` returns the span not the button. Fixed with `.closest('button')` or
+  `.closest('a')` in EmptyState, UpgradePage, PersonalAccessTokenModal tests.
+- NotificationBadge: `span.pf-m-expanded` → `[aria-expanded="true"]` (PF6 uses button attrs).
+- Select `aria-label` duplication: `getByLabelText()` → `getAllByLabelText()` + filter for INPUT
+  (PF6 composable Select puts aria-label on both toggle and input).
+- TaxonomySelect: `.scrollable-container` → OUIA attribute queries (PF6 Select only renders
+  Menu when open).
+- FormField snapshots: Added time-value normalization to `stabilizeHtml` for deterministic
+  Time/DateTime snapshots.
+
+#### Snapshot updates
+58 snapshots updated across 40 test suites for PF6 HTML/class changes.
+
+**All 222 test suites pass (1139 tests, 375 snapshots).**
+
+---
+
+## Phase 2 Status (Steps 2.1-2.5): COMPLETE ✅
+
+All PatternFly packages upgraded to v6.4.x. All CSS classes, tokens, and variables updated.
+Webpack build compiles cleanly. All 222 test suites pass. App deploys and serves on
+http://127.0.0.1:3000 with PF6.
+
+**Remaining Phase 2 follow-up (Phase 2.6-2.11):**
+- 22 files use `@patternfly/react-core/deprecated` for the old Modal API (functional but
+  should migrate to PF6 promoted Modal — Step 2.8)
+- Manual token replacement audit (Step 2.6) — visual verification may reveal missed tokens
+- Breakpoint logic audit (Step 2.10) — verify any JS pixel breakpoints
+- CSS override review (Step 2.11) — visual verification of custom SCSS overrides

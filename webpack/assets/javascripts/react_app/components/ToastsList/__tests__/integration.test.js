@@ -16,7 +16,7 @@ describe('ToastsList', () => {
     );
 
     expect(
-      document.body.querySelectorAll('.pf-v5-c-alert.foreman-toast')
+      document.body.querySelectorAll('.pf-v6-c-alert.foreman-toast')
     ).toHaveLength(0);
 
     act(() => {
@@ -24,7 +24,7 @@ describe('ToastsList', () => {
     });
 
     const alerts = document.body.querySelectorAll(
-      '.pf-v5-c-alert.foreman-toast'
+      '.pf-v6-c-alert.foreman-toast'
     );
     expect(alerts).toHaveLength(1);
     expect(screen.getByText(/message/)).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('ToastsList', () => {
     });
 
     expect(
-      document.body.querySelectorAll('.pf-v5-c-alert.foreman-toast')
+      document.body.querySelectorAll('.pf-v6-c-alert.foreman-toast')
     ).toHaveLength(0);
   });
 });

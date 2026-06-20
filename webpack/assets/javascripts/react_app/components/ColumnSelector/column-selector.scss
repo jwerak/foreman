@@ -1,14 +1,14 @@
-.pf-v5-c-input-group {
+.pf-v6-c-input-group {
   .columns-selector {
     padding-left: 0px;
 
-    .pf-v5-c-button__icon.pf-m-start {
+    .pf-v6-c-button__icon.pf-m-start {
       padding-right: 4px;
     }
   }
 }
 
-.pf-v5-c-tree-view {
+.pf-v6-c-tree-view {
   padding-top: 0px
 }
 
@@ -20,6 +20,6 @@
   }
 }
 
-div [data-ouia-component-id="manage-columns-modal"].pf-v5-c-modal-box {                                                                                                                                        
+div [data-ouia-component-id="manage-columns-modal"].pf-v6-c-modal-box {                                                                                                                                        
   max-height: calc(100% - 128px);                                                                                                                                                          
 }

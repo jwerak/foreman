@@ -40,16 +40,14 @@ const DateTime = ({
           tooltipHelp={
             info && (
               <Popover bodyContent={<Fragment>{info}</Fragment>}>
-                <Button
+                <Button icon={<Icon isInline>
+                    <HelpIcon />
+                  </Icon>}
                   type="button"
                   variant="plain"
                   className="field-help"
                   onClick={e => e.preventDefault()}
-                >
-                  <Icon isInline>
-                    <HelpIcon />
-                  </Icon>
-                </Button>
+                 />
               </Popover>
             )
           }

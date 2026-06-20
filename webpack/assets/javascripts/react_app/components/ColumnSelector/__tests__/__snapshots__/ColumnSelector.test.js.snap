@@ -3,34 +3,33 @@
 exports[`ColumnSelector should render 1`] = `
 <div>
   <div
-    class="pf-v5-c-select-input"
+    class="pf-v6-c-select-input"
   >
     <div
-      class="pf-v5-c-input-group"
+      class="pf-v6-c-input-group"
       id="column-selector"
     >
       <button
-        aria-disabled="false"
-        class="pf-v5-c-button pf-m-link columns-selector"
+        class="pf-v6-c-button pf-m-link columns-selector"
         data-ouia-component-id="manage-columns-button"
-        data-ouia-component-type="PF5/Button"
+        data-ouia-component-type="PF6/Button"
         data-ouia-safe="true"
         id="btn-select-columns"
         title="Manage columns"
         type="button"
       >
         <span
-          class="pf-v5-c-button__icon pf-m-start"
+          class="pf-v6-c-button__icon pf-m-start"
         >
           <span
-            class="pf-v5-c-icon"
+            class="pf-v6-c-icon"
           >
             <span
-              class="pf-v5-c-icon__content"
+              class="pf-v6-c-icon__content"
             >
               <svg
                 aria-hidden="true"
-                class="pf-v5-svg"
+                class="pf-v6-svg"
                 fill="currentColor"
                 height="1em"
                 role="img"
@@ -45,9 +44,13 @@ exports[`ColumnSelector should render 1`] = `
           </span>
         </span>
         <span
-          class="columns-selector-text"
+          class="pf-v6-c-button__text"
         >
-          Manage columns
+          <span
+            class="columns-selector-text"
+          >
+            Manage columns
+          </span>
         </span>
       </button>
     </div>

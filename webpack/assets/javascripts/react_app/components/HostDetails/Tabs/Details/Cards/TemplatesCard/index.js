@@ -73,18 +73,16 @@ const TemplatesCard = ({ hostName }) => {
                 </Td>
                 {editTemplatePermission && (
                   <Td>
-                    <Button
+                    <Button icon={<Icon>
+                        <PencilAltIcon />
+                      </Icon>}
                       ouiaId={`provisioning-templates-table-row-${template.name}-edit`}
                       component="a"
                       key="edit"
                       href={editTemplateUrl(template.id)}
                       variant="plain"
                       target="_blank"
-                    >
-                      <Icon>
-                        <PencilAltIcon />
-                      </Icon>
-                    </Button>
+                     />
                   </Td>
                 )}
               </Tr>

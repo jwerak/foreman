@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
   Spinner,
-  Text,
-  TextVariants,
+  Content,
+  ContentVariants,
   Button,
   Split,
   SplitItem,
@@ -43,28 +43,24 @@ const InlineEdit = ({ onSave, value, textArea, attribute }) => {
           />
         </SplitItem>
         <SplitItem>
-          <Button
+          <Button icon={<Icon>
+              <CheckIcon />
+            </Icon>}
             ouiaId={`submit-${attribute}-button`}
             aria-label={`submit ${attribute}`}
             variant="plain"
             onClick={onSubmit}
-          >
-            <Icon>
-              <CheckIcon />
-            </Icon>
-          </Button>
+           />
         </SplitItem>
         <SplitItem>
-          <Button
+          <Button icon={<Icon>
+              <TimesIcon />
+            </Icon>}
             ouiaId={`clear-${attribute}-button`}
             aria-label={`clear ${attribute}`}
             variant="plain"
             onClick={onClear}
-          >
-            <Icon>
-              <TimesIcon />
-            </Icon>
-          </Button>
+           />
         </SplitItem>
       </Split>
     );
@@ -72,26 +68,24 @@ const InlineEdit = ({ onSave, value, textArea, attribute }) => {
   return (
     <Split>
       <SplitItem>
-        <Text
+        <Content
           aria-label={`${attribute} text value`}
           ouiaId={`${attribute}-text`}
-          component={TextVariants.p}
+          component={ContentVariants.p}
         >
           {inputValue || <i>{__('None provided')}</i>}
-        </Text>
+        </Content>
       </SplitItem>
       <SplitItem>
-        <Button
+        <Button icon={<Icon>
+            <PencilAltIcon />
+          </Icon>}
           ouiaId={`edit-${attribute}-button`}
           className="foreman-edit-icon"
           aria-label={`edit ${attribute}`}
           variant="plain"
           onClick={() => setEditing(true)}
-        >
-          <Icon>
-            <PencilAltIcon />
-          </Icon>
-        </Button>
+         />
       </SplitItem>
     </Split>
   );

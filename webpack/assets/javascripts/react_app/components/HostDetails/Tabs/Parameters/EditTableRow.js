@@ -212,7 +212,9 @@ export const EditParametersTableRow = ({
         <Td isActionCell className="parameters-row-actions">
           <>
             <Tooltip content={__('Cancel')}>
-              <Button
+              <Button icon={<Icon>
+                  <TimesIcon />
+                </Icon>}
                 ouiaId={`edit-parameters-table-row-cancel-${rowIndex}`}
                 aria-label={`cancel ${param.name} edit`}
                 variant="plain"
@@ -222,14 +224,12 @@ export const EditParametersTableRow = ({
                   setType(param.parameter_type);
                   setValue(param.value);
                 }}
-              >
-                <Icon>
-                  <TimesIcon />
-                </Icon>
-              </Button>
+               />
             </Tooltip>
             <Tooltip content={__('Submit edit')}>
-              <Button
+              <Button icon={<Icon>
+                  <CheckIcon />
+                </Icon>}
                 ouiaId={`edit-parameters-table-row-submit-${rowIndex}`}
                 aria-label={`submit ${param.name} edit`}
                 variant="plain"
@@ -238,11 +238,7 @@ export const EditParametersTableRow = ({
                   onSubmit();
                 }}
                 isDisabled={name.includes(' ')}
-              >
-                <Icon>
-                  <CheckIcon />
-                </Icon>
-              </Button>
+               />
             </Tooltip>
           </>
         </Td>

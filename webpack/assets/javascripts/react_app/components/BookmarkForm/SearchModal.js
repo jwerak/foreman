@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody } from '@patternfly/react-core/next';
+import {
+	Modal /* data-codemods */,
+	ModalHeader /* data-codemods */,
+	ModalBody /* data-codemods */
+} from '@patternfly/react-core';
 import { translate as __ } from '../../common/I18n';
 import BookmarkForm from './BookmarkForm';
 

@@ -106,19 +106,17 @@ const FormField = ({
       fieldId={id}
       label={label}
       isRequired={required}
-      labelIcon={
+      labelHelp={
         labelHelp ? (
           <Popover bodyContent={<React.Fragment>{labelHelp}</React.Fragment>}>
-            <Button
+            <Button icon={<Icon isInline>
+                <HelpIcon />
+              </Icon>}
               type="button"
               variant="plain"
               className="field-help"
               onClick={e => e.preventDefault()}
-            >
-              <Icon isInline>
-                <HelpIcon />
-              </Icon>
-            </Button>
+             />
           </Popover>
         ) : undefined
       }

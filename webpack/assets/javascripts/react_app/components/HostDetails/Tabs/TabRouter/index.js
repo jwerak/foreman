@@ -9,8 +9,8 @@ import TabsWithHashHistory from './Tabs';
 
 const TabRouter = ({ children, tabs, hostName, response, status, router }) => (
   <HashRouter>
-    <PageSection
-      variant="light"
+    <PageSection hasBodyWrapper={false}
+      
       padding={{ default: 'noPadding' }}
       className="host-details-tabs-section"
     >

@@ -23,14 +23,16 @@ const dependencies = packageJson.dependencies || {};
 const devDependencies = packageJson.devDependencies || {};
 const allDependencies = { ...dependencies, ...devDependencies };
 const shared = isPlugin => {
-  const sharedArr = Object.keys(allDependencies).map(dep => ({
-    [dep]: {
-      eager: !isPlugin, // core should load all dependencies eagerly so they will be available for plugins
-      singleton: true,
-      requiredVersion: allDependencies[dep],
-      import: isPlugin ? false : dep,
-    },
-  }));
+  const sharedArr = Object.keys(allDependencies)
+    .filter(dep => dep !== '@patternfly/react-charts')
+    .map(dep => ({
+      [dep]: {
+        eager: !isPlugin,
+        singleton: true,
+        requiredVersion: allDependencies[dep],
+        import: isPlugin ? false : dep,
+      },
+    }));
   return [
     ...sharedArr,
     {

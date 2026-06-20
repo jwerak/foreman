@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ClipboardCopy,
-  ClipboardCopyVariant,
-  Button,
-  Modal,
-  Switch,
-  Tooltip,
-  Icon,
+	ClipboardCopy,
+	ClipboardCopyVariant,
+	Button,
+	Switch,
+	Tooltip,
+	Icon
 } from '@patternfly/react-core';
+import {
+	Modal
+} from '@patternfly/react-core/deprecated';
 import { OutlinedWindowRestoreIcon } from '@patternfly/react-icons';
 import { FormattedMessage } from 'react-intl';
 import { translate as __ } from '../../../../../../common/I18n';
@@ -82,15 +84,15 @@ export const ReviewModal = ({
       {!safeMode && (
         <div
           style={{
-            paddingTop: 'var(--pf-v5-global--spacer--lg)',
-            paddingBottom: 'var(--pf-v5-global--spacer--lg)',
+            paddingTop: "var(--pf-t--global--spacer--lg)",
+            paddingBottom: "var(--pf-t--global--spacer--lg)",
           }}
         >
           <Switch
             ouiaId="safe-mode-switch"
             id="safe-mode-switch"
             label={__('Safe mode on')}
-            labelOff={__('Safe mode off')}
+            
             isChecked={showSafe}
             onChange={(_event, val) => setShowSafe(val)}
           />

@@ -268,7 +268,7 @@ const RegistrationCommandsPage = () => {
               id="generalSection"
               ref={generalTabRef}
             >
-              <div className="pf-v5-c-form">
+              <div className="pf-v6-c-form">
                 <General
                   organizationId={organizationId}
                   organizations={organizations}
@@ -318,7 +318,7 @@ const RegistrationCommandsPage = () => {
               ref={advancedTabRef}
               hidden
             >
-              <div className="pf-v5-c-form">
+              <div className="pf-v6-c-form">
                 <Advanced
                   configParams={configParams}
                   setupRemoteExecution={setupRemoteExecution}

@@ -43,16 +43,20 @@ export const ActionButtons = ({ buttons: originalButtons }) => {
           )}
         >
           <DropdownList>
-            {buttons.map(button => (
-              <DropdownItem
-                ouiaId={`${button.title}-dropdown-item`}
-                key={button.title}
-                title={button.title}
-                {...button.action}
-              >
-                {button.icon} {button.title}
-              </DropdownItem>
-            ))}
+            {buttons.map(button => {
+              const { href, ...restAction } = button.action || {};
+              return (
+                <DropdownItem
+                  ouiaId={`${button.title}-dropdown-item`}
+                  key={button.title}
+                  title={button.title}
+                  to={href}
+                  {...restAction}
+                >
+                  {button.icon} {button.title}
+                </DropdownItem>
+              );
+            })}
           </DropdownList>
         </Dropdown>
       )}

@@ -204,7 +204,7 @@ const FieldConstructor = ({
     fieldId={fieldId ?? `id-${name}`}
     label={label}
     isRequired={required}
-    labelIcon={
+    labelHelp={
       labelHelp ? (
         <Popover bodyContent={labelHelp}>
           <Button
@@ -218,9 +218,7 @@ const FieldConstructor = ({
             </Icon>
           </Button>
         </Popover>
-      ) : (
-        ''
-      )
+      ) : undefined
     }
   >
     <FormField

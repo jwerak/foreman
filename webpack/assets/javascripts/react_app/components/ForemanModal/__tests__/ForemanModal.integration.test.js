@@ -35,7 +35,7 @@ describe('ForemanModal - integration tests', () => {
     // PF Modal renders with class 'pf-m-open' or the isOpen attribute controls visibility.
     // Since RTL renders to the actual DOM, we check if the modal dialog is visible.
     const isModalShown = container => {
-      const modal = container.querySelector('.pf-v5-c-modal-box, .pf-c-modal-box');
+      const modal = container.querySelector('.pf-v6-c-modal-box, .pf-c-modal-box');
       return modal !== null;
     };
 

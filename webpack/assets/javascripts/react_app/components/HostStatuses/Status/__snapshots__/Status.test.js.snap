@@ -3,71 +3,74 @@
 exports[`Status renders Status 1`] = `
 <div>
   <div
-    class="pf-v5-l-grid__item pf-m-12-col-on-sm pf-m-6-col-on-2xl"
+    class="pf-v6-l-grid__item pf-m-12-col-on-sm pf-m-6-col-on-2xl"
   >
     <div
-      class="pf-v5-c-card pf-v5-c-alert pf-m-danger"
+      class="pf-v6-c-card pf-v6-c-alert pf-m-danger"
       data-ouia-component-id="status-card"
-      data-ouia-component-type="PF5/Card"
+      data-ouia-component-type="PF6/Card"
       data-ouia-safe="true"
       id=""
     >
       <div
-        class="pf-v5-c-card__header"
+        class="pf-v6-c-card__header"
       >
         <div
-          class="pf-v5-c-card__header-toggle"
+          class="pf-v6-c-card__header-toggle"
         >
           <button
-            aria-disabled="false"
             aria-expanded="false"
             aria-label="Details"
             aria-labelledby="titleId toggle-button"
-            class="pf-v5-c-button pf-m-plain"
+            class="pf-v6-c-button pf-m-plain"
             data-ouia-component-id="OUIA-Generated-Button-plain-1"
-            data-ouia-component-type="PF5/Button"
+            data-ouia-component-type="PF6/Button"
             data-ouia-safe="true"
             id="toggle-button"
             type="button"
           >
             <span
-              class="pf-v5-c-card__header-toggle-icon"
+              class="pf-v6-c-button__icon"
             >
-              <svg
-                aria-hidden="true"
-                class="pf-v5-svg"
-                fill="currentColor"
-                height="1em"
-                role="img"
-                viewBox="0 0 256 512"
-                width="1em"
+              <span
+                class="pf-v6-c-card__header-toggle-icon"
               >
-                <path
-                  d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                />
-              </svg>
+                <svg
+                  aria-hidden="true"
+                  class="pf-v6-svg"
+                  fill="currentColor"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 256 512"
+                  width="1em"
+                >
+                  <path
+                    d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                  />
+                </svg>
+              </span>
             </span>
           </button>
         </div>
         <div
-          class="pf-v5-c-card__header-main"
+          class="pf-v6-c-card__header-main"
         >
           <div
-            class="pf-v5-l-grid pf-m-gutter w-100"
+            class="pf-v6-l-grid pf-m-gutter w-100"
           >
             <div
-              class="pf-v5-l-grid__item pf-m-1-col pf-m-2-row"
+              class="pf-v6-l-grid__item pf-m-1-col pf-m-2-row"
               style="font-size: 2.2em;"
             >
               <span
-                class="pf-v5-c-icon"
+                class="pf-v6-c-icon"
               >
                 <span
-                  class="pf-v5-c-icon__content"
+                  class="pf-v6-c-icon__content"
                 >
                   <svg
                     aria-hidden="true"
-                    class="pf-v5-svg"
+                    class="pf-v6-svg"
                     fill="currentColor"
                     height="1em"
                     role="img"
@@ -82,26 +85,26 @@ exports[`Status renders Status 1`] = `
               </span>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-5-col"
+              class="pf-v6-l-grid__item pf-m-5-col"
               style="font-size: 1.5em;"
             >
               Status Name
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+              class="pf-v6-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
             >
               <div
                 style="font-size: 1.5em;"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon__content"
                   >
                     <svg
                       aria-hidden="true"
-                      class="pf-v5-svg"
+                      class="pf-v6-svg"
                       fill="currentColor"
                       height="1em"
                       role="img"
@@ -127,20 +130,20 @@ exports[`Status renders Status 1`] = `
               </a>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+              class="pf-v6-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
             >
               <div
                 style="font-size: 1.5em;"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon__content"
                   >
                     <svg
                       aria-hidden="true"
-                      class="pf-v5-svg"
+                      class="pf-v6-svg"
                       fill="currentColor"
                       height="1em"
                       role="img"
@@ -166,20 +169,20 @@ exports[`Status renders Status 1`] = `
               </a>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
+              class="pf-v6-l-grid__item pf-m-2-col pf-m-2-row status-count text-center"
             >
               <div
                 style="font-size: 1.5em;"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon__content"
                   >
                     <svg
                       aria-hidden="true"
-                      class="pf-v5-svg"
+                      class="pf-v6-svg"
                       fill="currentColor"
                       height="1em"
                       role="img"
@@ -205,7 +208,7 @@ exports[`Status renders Status 1`] = `
               </a>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-5-col"
+              class="pf-v6-l-grid__item pf-m-5-col"
             >
               Description of the status
             </div>

@@ -3,7 +3,7 @@
 exports[`UserDetails render user info 1`] = `
 <div>
   <span
-    class="pf-v5-u-font-weight-bold pf-v5-u-font-size-sm"
+    class="pf-v6-u-font-weight-bold pf-v6-u-font-size-sm"
   >
     <div
       style="display: contents;"
@@ -29,7 +29,7 @@ exports[`UserDetails render user info 1`] = `
 exports[`UserDetails render user info with audit login 1`] = `
 <div>
   <span
-    class="pf-v5-u-font-weight-bold pf-v5-u-font-size-sm"
+    class="pf-v6-u-font-weight-bold pf-v6-u-font-size-sm"
   >
     <div
       style="display: contents;"

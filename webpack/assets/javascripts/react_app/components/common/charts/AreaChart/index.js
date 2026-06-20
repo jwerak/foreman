@@ -6,18 +6,18 @@ import React, {
   useEffect,
 } from 'react';
 import {
-  Chart,
-  ChartArea,
-  ChartAxis,
-  ChartGroup,
-  ChartStack,
-  ChartLegend,
-  ChartLegendTooltip,
-  ChartLabel,
-  ChartThemeColor,
-  createContainer,
-  getTheme,
-} from '@patternfly/react-charts';
+	Chart,
+	ChartArea,
+	ChartAxis,
+	ChartGroup,
+	ChartStack,
+	ChartLegend,
+	ChartLegendTooltip,
+	ChartLabel,
+	ChartThemeColor,
+	createContainer,
+	getTheme
+} from '@patternfly/react-charts/victory';
 import { Icon } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 import { processChartData, getYTickValues } from './AreaChartHelpers';

@@ -7,10 +7,10 @@ exports[`ExternalLogout rendering renders ExternalLogout 1`] = `
     style="background-image: url(/some-background);"
   >
     <div
-      class="pf-v5-l-grid"
+      class="pf-v6-l-grid"
     >
       <div
-        class="pf-v5-l-grid__item pf-m-12-col pf-m-8-col-on-sm pf-m-offset-2-col-on-sm pf-m-6-col-on-md pf-m-offset-3-col-on-md"
+        class="pf-v6-l-grid__item pf-m-12-col pf-m-8-col-on-sm pf-m-offset-2-col-on-sm pf-m-6-col-on-md pf-m-offset-3-col-on-md"
       >
         <header
           class="login-pf-page-header"
@@ -36,14 +36,17 @@ exports[`ExternalLogout rendering renders ExternalLogout 1`] = `
           </div>
         </header>
         <a
-          aria-disabled="false"
-          class="pf-v5-c-button pf-m-primary pf-m-block pf-m-display-lg login-pf-submit-button"
+          class="pf-v6-c-button pf-m-primary pf-m-block pf-m-display-lg login-pf-submit-button"
           data-ouia-component-id="login-pf-submit-button"
-          data-ouia-component-type="PF5/Button"
+          data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           href="some link"
         >
-          Click to log in again
+          <span
+            class="pf-v6-c-button__text"
+          >
+            Click to log in again
+          </span>
         </a>
       </div>
     </div>

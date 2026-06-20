@@ -13,7 +13,7 @@ describe('ActionLinks', () => {
     Object.entries(actionLinksFixture).forEach(([description, props]) => {
       it(description, () => {
         const { container } = render(<ActionLinks {...props} />);
-        expect(container.querySelectorAll('a.pf-v5-c-button')).toHaveLength(1);
+        expect(container.querySelectorAll('a.pf-v6-c-button')).toHaveLength(1);
         expect(container).toMatchSnapshot();
       });
     });

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Chart,
-  ChartAxis,
-  ChartGroup,
-  ChartLine,
-  ChartVoronoiContainer,
-  ChartLegend,
-  ChartThemeColor,
-} from '@patternfly/react-charts';
+	Chart,
+	ChartAxis,
+	ChartGroup,
+	ChartLine,
+	ChartVoronoiContainer,
+	ChartLegend,
+	ChartThemeColor
+} from '@patternfly/react-charts/victory';
 import { Icon } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 

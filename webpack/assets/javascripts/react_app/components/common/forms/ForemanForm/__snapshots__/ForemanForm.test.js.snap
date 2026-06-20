@@ -73,27 +73,33 @@ exports[`ForemanForm render foreman form with fields 1`] = `
         class="form-actions"
       >
         <button
-          aria-disabled="true"
-          class="pf-v5-c-button pf-m-primary pf-m-disabled"
+          class="pf-v6-c-button pf-m-primary"
           data-ouia-component-id="OUIA-Generated-Button-primary-1"
-          data-ouia-component-type="PF5/Button"
+          data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           disabled=""
           type="submit"
         >
-           
-          Submit
+          <span
+            class="pf-v6-c-button__text"
+          >
+             
+            Submit
+          </span>
         </button>
          
         <button
-          aria-disabled="false"
-          class="pf-v5-c-button pf-m-secondary"
+          class="pf-v6-c-button pf-m-secondary"
           data-ouia-component-id="OUIA-Generated-Button-secondary-1"
-          data-ouia-component-type="PF5/Button"
+          data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           type="button"
         >
-          Cancel
+          <span
+            class="pf-v6-c-button__text"
+          >
+            Cancel
+          </span>
         </button>
       </div>
     </div>

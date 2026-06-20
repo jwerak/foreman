@@ -14,8 +14,7 @@ import {
   MenuList,
   Split,
   SplitItem,
-  TextContent,
-  Text,
+  Content,
   Icon,
   Dropdown,
   DropdownItem,
@@ -459,11 +458,11 @@ const HostsIndex = () => {
       justifyContent={{ default: 'justifyContentSpaceBetween' }}
     >
       <FlexItem>
-        <TextContent>
-          <Text ouiaId="host-header-text" component="h1">
+        <Content>
+          <Content ouiaId="host-header-text" component="h1">
             {__('Hosts')}
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </FlexItem>
       <FlexItem align={{ default: 'alignRight' }}>
         <Split hasGutter>

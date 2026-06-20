@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import {
-  Button,
-  Modal,
-  ModalVariant,
-  TreeView,
-  Icon,
+	Button,
+	TreeView,
+	Icon
 } from '@patternfly/react-core';
+import {
+	Modal,
+	ModalVariant
+} from '@patternfly/react-core/deprecated';
 import { ColumnsIcon } from '@patternfly/react-icons';
 import { cloneDeep } from 'lodash';
 import { translate as __ } from '../../common/I18n';
@@ -149,8 +151,8 @@ const ColumnSelector = props => {
   };
 
   return (
-    <div className="pf-v5-c-select-input">
-      <div className="pf-v5-c-input-group" id="column-selector">
+    <div className="pf-v6-c-select-input">
+      <div className="pf-v6-c-input-group" id="column-selector">
         <Button
           ouiaId="manage-columns-button"
           id="btn-select-columns"

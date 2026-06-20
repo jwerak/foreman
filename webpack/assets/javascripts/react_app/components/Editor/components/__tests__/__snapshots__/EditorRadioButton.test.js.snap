@@ -7,14 +7,17 @@ exports[`EditorRadioButton renders EditorRadioButton 1`] = `
     id="input-navitem"
   >
     <button
-      aria-disabled="false"
-      class="pf-v5-c-button pf-m-link pf-m-inline"
+      class="pf-v6-c-button pf-m-link pf-m-inline"
       data-ouia-component-id="OUIA-Generated-Button-link-1"
-      data-ouia-component-type="PF5/Button"
+      data-ouia-component-type="PF6/Button"
       data-ouia-safe="true"
       type="button"
     >
-      Editor
+      <span
+        class="pf-v6-c-button__text"
+      >
+        Editor
+      </span>
     </button>
   </li>
 </div>

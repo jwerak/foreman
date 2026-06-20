@@ -157,15 +157,13 @@ const BreadcrumbSwitcher = ({
           </div>
         }
       >
-        <Button
+        <Button icon={<Icon>
+            <ExchangeAltIcon />
+          </Icon>}
           ouiaId="breadcrumb-button"
           variant="plain"
           aria-label="open breadcrumb switcher"
-        >
-          <Icon>
-            <ExchangeAltIcon />
-          </Icon>
-        </Button>
+         />
       </Popover>
     </div>
   );

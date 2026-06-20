@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { EyeIcon } from '@patternfly/react-icons';
 import {
-  Tooltip,
-  TooltipPosition,
-  Modal,
-  ModalVariant,
-  Button,
-  Icon,
+	Tooltip,
+	TooltipPosition,
+	Button,
+	Icon
 } from '@patternfly/react-core';
+import {
+	Modal,
+	ModalVariant
+} from '@patternfly/react-core/deprecated';
 import { translate as __ } from '../../../../common/I18n';
 import { stopImpersonating } from './ImpersonateIconActions';
 

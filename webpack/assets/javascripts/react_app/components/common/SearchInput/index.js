@@ -37,16 +37,14 @@ const SearchInput = ({ onSearchChange, searchValue, timeout, onClear, focus }) =
         debounceTimeout={timeout}
         onChange={onSearchChange}
       />
-      <Button
+      <Button icon={<Icon>
+          <TimesIcon />
+        </Icon>}
         variant="plain"
         onClick={() => onClear()}
         aria-label="Clear"
         ouiaId="clear-search-input-button"
-      >
-        <Icon>
-          <TimesIcon />
-        </Icon>
-      </Button>
+       />
     </div>
   );
 };

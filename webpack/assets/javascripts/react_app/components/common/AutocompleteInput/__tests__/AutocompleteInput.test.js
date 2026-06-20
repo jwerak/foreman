@@ -165,7 +165,7 @@ describe('AutocompleteInput RTL Tests', () => {
       fireEvent.keyDown(input, { key: 'ArrowDown' });
       await waitFor(() => {
         expect(screen.getByText('Option 1')).toHaveClass(
-          'pf-v5-c-menu__item-text'
+          'pf-v6-c-menu__item-text'
         );
       });
     });

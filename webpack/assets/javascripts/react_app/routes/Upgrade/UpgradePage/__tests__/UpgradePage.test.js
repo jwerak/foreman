@@ -16,13 +16,13 @@ describe('UpgradePage', () => {
     // Main page
     expect(screen.getByText(/Foreman upgrade/i)).toBeInTheDocument();
 
-    // Button from DocumentationCard
-    const docsLinkBtn = screen.getByText(/View upgrade documentation/i);
+    // Button from DocumentationCard - PF6 wraps text in <span>, href is on the <a> parent
+    const docsLinkBtn = screen.getByText(/View upgrade documentation/i).closest('a');
     expect(docsLinkBtn).toBeInTheDocument();
     expect(docsLinkBtn).toHaveAttribute('href', '/links/upgrade/documentation');
 
-    // Button from DocumentationFooter
-    const helpLinkBtn = screen.getByText(/Visit the community forum/i);
+    // Button from DocumentationFooter - PF6 wraps text in <span>, href is on the <a> parent
+    const helpLinkBtn = screen.getByText(/Visit the community forum/i).closest('a');
     expect(helpLinkBtn).toBeInTheDocument();
     expect(helpLinkBtn).toHaveAttribute('href', '/links/support');
   });

@@ -1,11 +1,11 @@
 @import '../../../../common/variables';
 
-.pf-v5-c-masthead .pf-v5-c-toolbar {
+.pf-v6-c-masthead .pf-v6-c-toolbar {
   .current-taxonomy-v {
     margin-right: 2px;
   }
   .organizations_clear,
   .locations_clear {
-    border-bottom: 1px solid var(--pf-v5-global--BorderColor--100, #d2d2d2);
+    border-bottom: 1px solid var(--pf-t--global--border--color--default, #d2d2d2);
   }
 }

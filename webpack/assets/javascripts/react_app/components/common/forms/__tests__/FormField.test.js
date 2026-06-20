@@ -14,6 +14,18 @@ const stabilizeHtml = container => {
   clone.querySelectorAll('[id]').forEach(el => {
     el.id = el.id.replace(/time-picker-\w+/g, 'time-picker-stable');
   });
+  // Stabilize time-dependent values in date/time inputs
+  clone.querySelectorAll('input').forEach(el => {
+    const val = el.getAttribute('value') || '';
+    // Replace datetime values like "2026-06-20 12:33" with a stable placeholder
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(val)) {
+      el.setAttribute('value', '2020-01-01 00:00');
+    }
+    // Replace time-only values like "12:33"
+    if (/^\d{2}:\d{2}$/.test(val) && el.getAttribute('placeholder') === 'hh:mm') {
+      el.setAttribute('value', '00:00');
+    }
+  });
   return clone;
 };
 

@@ -51,7 +51,9 @@ const EditorOptions = ({
           content={__('Revert Local Changes')}
           position={TooltipPosition.top}
         >
-          <Button
+          <Button icon={<Icon size="md">
+              <UndoIcon />
+            </Icon>}
             className="editor-button"
             id="undo-btn"
             onClick={() => {
@@ -66,35 +68,33 @@ const EditorOptions = ({
             }}
             variant="link"
           >
-            <Icon size="md">
-              <UndoIcon />
-            </Icon>
+            
           </Button>
         </Tooltip>
       ) : (
-        <Button
+        <Button icon={<Icon size="md">
+            <UndoIcon />
+          </Icon>}
           isDisabled
           className="editor-button"
           id="undo-btn"
           variant="link"
         >
-          <Icon size="md">
-            <UndoIcon />
-          </Icon>
+          
         </Button>
       )}
       {showImport && (
         <Tooltip content={__('Import File')} position={TooltipPosition.top}>
-          <Button
+          <Button icon={<Icon size="md">
+              <UploadIcon />
+            </Icon>}
             isDisabled={selectedView !== 'input'}
             className="import-button"
             id="import-btn"
             variant="link"
             onClick={fileDialog}
           >
-            <Icon size="md">
-              <UploadIcon />
-            </Icon>
+            
             <input
               ref={fileInputRef}
               className="hidden"
@@ -117,15 +117,15 @@ const EditorOptions = ({
         liveAutocompletion={liveAutocompletion}
       />
       <Tooltip content={__('Maximize')} position={TooltipPosition.top}>
-        <Button
+        <Button icon={<Icon size="md">
+            <ArrowsAltIcon />
+          </Icon>}
           className="editor-button"
           id="fullscreen-btn"
           onClick={toggleModal}
           variant="link"
         >
-          <Icon size="md">
-            <ArrowsAltIcon />
-          </Icon>
+          
         </Button>
       </Tooltip>
     </div>

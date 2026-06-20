@@ -65,14 +65,12 @@ const HostGroupSelect = ({
         <TextInputGroupUtilities
           {...(!inputValue ? { style: { display: 'none' } } : {})}
         >
-          <Button
+          <Button icon={<TimesIcon aria-hidden />}
             variant="plain"
             onClick={onClearButtonClick}
             aria-label="Clear input value"
             ouiaId="hostgroup-select-clear-button"
-          >
-            <TimesIcon aria-hidden />
-          </Button>
+           />
         </TextInputGroupUtilities>
       </TextInputGroup>
     </MenuToggle>

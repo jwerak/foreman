@@ -158,7 +158,7 @@ const DateTimePicker = ({
         }
       >
         <InputGroup>
-          <InputGroupItem className="pf-v5-c-date-picker__input pf-v5-c-date-picker ">
+          <InputGroupItem className="pf-v6-c-date-picker__input pf-v6-c-date-picker ">
             <TextInput
               ouiaId="datetime-picker-input"
               type="text"
@@ -174,18 +174,18 @@ const DateTimePicker = ({
               isRequired={required}
               validated={errorText ? 'error' : 'default'}
               placeholder="YYYY-MM-DD HH:MM"
-              className=" pf-v5-c-form-control"
+              className=" pf-v6-c-form-control"
               {...inputProps}
             />
           </InputGroupItem>
           <InputGroupItem className="date-picker-input-item">
-            <Button
+            <Button icon={<OutlinedCalendarAltIcon />}
               ouiaId="toggle-calendar-button"
               variant="control"
               aria-label="Toggle date picker"
               onClick={onToggleCalendar}
             >
-              <OutlinedCalendarAltIcon />
+              
             </Button>
           </InputGroupItem>
           <InputGroupItem className="date-picker-input-item">

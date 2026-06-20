@@ -3,33 +3,33 @@
 exports[`RegistrationCommandsPage fields - HostGroup renders 1`] = `
 <div>
   <div
-    class="pf-v5-c-form__group"
+    class="pf-v6-c-form__group"
   >
     <div
-      class="pf-v5-c-form__group-label"
+      class="pf-v6-c-form__group-label"
     >
       <label
-        class="pf-v5-c-form__label"
+        class="pf-v6-c-form__label"
         for="reg_host_group"
       >
         <span
-          class="pf-v5-c-form__label-text"
+          class="pf-v6-c-form__label-text"
         >
           Host group
         </span>
       </label>
-       
+        
     </div>
     <div
-      class="pf-v5-c-form__group-control"
+      class="pf-v6-c-form__group-control"
     >
       <span
-        class="pf-v5-c-form-control without_select2"
+        class="pf-v6-c-form-control without_select2"
       >
         <select
           aria-invalid="false"
           data-ouia-component-id="reg_host_group"
-          data-ouia-component-type="PF5/FormSelect"
+          data-ouia-component-type="PF6/FormSelect"
           data-ouia-safe="true"
           id="reg_host_group"
         >
@@ -45,14 +45,14 @@ exports[`RegistrationCommandsPage fields - HostGroup renders 1`] = `
           </option>
         </select>
         <span
-          class="pf-v5-c-form-control__utilities"
+          class="pf-v6-c-form-control__utilities"
         >
           <span
-            class="pf-v5-c-form-control__toggle-icon"
+            class="pf-v6-c-form-control__toggle-icon"
           >
             <svg
               aria-hidden="true"
-              class="pf-v5-svg"
+              class="pf-v6-svg"
               fill="currentColor"
               height="1em"
               role="img"

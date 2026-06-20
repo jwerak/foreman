@@ -3,24 +3,24 @@
 exports[`SettingsTableSnapshot should render 1`] = `
 <div>
   <table
-    class="pf-v5-c-table pf-m-grid-md pf-m-compact pf-m-striped"
+    class="pf-v6-c-table pf-m-grid-md pf-m-compact pf-m-striped"
     data-ouia-component-id="settings-table"
-    data-ouia-component-type="PF5/Table"
+    data-ouia-component-type="PF6/Table"
     data-ouia-safe="true"
     id="settings-table"
     role="grid"
   >
     <thead
-      class="pf-v5-c-table__thead"
+      class="pf-v6-c-table__thead"
     >
       <tr
-        class="pf-v5-c-table__tr"
+        class="pf-v6-c-table__tr"
         data-ouia-component-id="setting-table-heading-row"
-        data-ouia-component-type="PF5/TableRow"
+        data-ouia-component-type="PF6/TableRow"
         data-ouia-safe="true"
       >
         <th
-          class="pf-v5-c-table__th pf-m-width-30"
+          class="pf-v6-c-table__th pf-m-width-30"
           scope="col"
           tabindex="-1"
         >
@@ -29,7 +29,7 @@ exports[`SettingsTableSnapshot should render 1`] = `
            
         </th>
         <th
-          class="pf-v5-c-table__th pf-m-width-35"
+          class="pf-v6-c-table__th pf-m-width-35"
           scope="col"
           tabindex="-1"
         >
@@ -38,7 +38,7 @@ exports[`SettingsTableSnapshot should render 1`] = `
            
         </th>
         <th
-          class="pf-v5-c-table__th pf-m-width-35"
+          class="pf-v6-c-table__th pf-m-width-35"
           scope="col"
           tabindex="-1"
         >
@@ -49,17 +49,17 @@ exports[`SettingsTableSnapshot should render 1`] = `
       </tr>
     </thead>
     <tbody
-      class="pf-v5-c-table__tbody"
+      class="pf-v6-c-table__tbody"
       role="rowgroup"
     >
       <tr
-        class="pf-v5-c-table__tr"
+        class="pf-v6-c-table__tr"
         data-ouia-component-id="setting-table-heading-row-0"
-        data-ouia-component-type="PF5/TableRow"
+        data-ouia-component-type="PF6/TableRow"
         data-ouia-safe="true"
       >
         <td
-          class="pf-v5-c-table__td pf-m-width-30"
+          class="pf-v6-c-table__td pf-m-width-30"
           tabindex="-1"
         >
           <div
@@ -71,11 +71,11 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           <div
-            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+            class="pf-v6-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
           >
             <div
               class="setting-value"
@@ -96,33 +96,36 @@ exports[`SettingsTableSnapshot should render 1`] = `
               class=""
             >
               <button
-                aria-disabled="false"
-                class="pf-v5-c-button pf-m-plain"
+                class="pf-v6-c-button pf-m-plain"
                 data-ouia-component-id="edit-row-0-icon"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 id="administrator"
                 type="button"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-button__icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="pf-v5-svg"
-                      fill="currentColor"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      width="1em"
+                    <span
+                      class="pf-v6-c-icon__content"
                     >
-                      <path
-                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                      />
-                    </svg>
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v6-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        />
+                      </svg>
+                    </span>
                   </span>
                 </span>
               </button>
@@ -130,20 +133,20 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           The default administrator email address
         </td>
       </tr>
       <tr
-        class="pf-v5-c-table__tr"
+        class="pf-v6-c-table__tr"
         data-ouia-component-id="setting-table-heading-row-1"
-        data-ouia-component-type="PF5/TableRow"
+        data-ouia-component-type="PF6/TableRow"
         data-ouia-safe="true"
       >
         <td
-          class="pf-v5-c-table__td pf-m-width-30"
+          class="pf-v6-c-table__td pf-m-width-30"
           tabindex="-1"
         >
           <div
@@ -155,11 +158,11 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           <div
-            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+            class="pf-v6-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
           >
             <div
               class="setting-value"
@@ -182,33 +185,36 @@ exports[`SettingsTableSnapshot should render 1`] = `
               class=""
             >
               <button
-                aria-disabled="false"
-                class="pf-v5-c-button pf-m-plain"
+                class="pf-v6-c-button pf-m-plain"
                 data-ouia-component-id="edit-row-1-icon"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 id="display_fqdn_for_hosts"
                 type="button"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-button__icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="pf-v5-svg"
-                      fill="currentColor"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      width="1em"
+                    <span
+                      class="pf-v6-c-icon__content"
                     >
-                      <path
-                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                      />
-                    </svg>
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v6-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        />
+                      </svg>
+                    </span>
                   </span>
                 </span>
               </button>
@@ -216,20 +222,20 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           Foreman will append domain names when new hosts are provisioned
         </td>
       </tr>
       <tr
-        class="pf-v5-c-table__tr"
+        class="pf-v6-c-table__tr"
         data-ouia-component-id="setting-table-heading-row-2"
-        data-ouia-component-type="PF5/TableRow"
+        data-ouia-component-type="PF6/TableRow"
         data-ouia-safe="true"
       >
         <td
-          class="pf-v5-c-table__td pf-m-width-30"
+          class="pf-v6-c-table__td pf-m-width-30"
           tabindex="-1"
         >
           <div
@@ -241,11 +247,11 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           <div
-            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+            class="pf-v6-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
           >
             <div
               class="setting-value"
@@ -266,33 +272,36 @@ exports[`SettingsTableSnapshot should render 1`] = `
               class=""
             >
               <button
-                aria-disabled="false"
-                class="pf-v5-c-button pf-m-plain"
+                class="pf-v6-c-button pf-m-plain"
                 data-ouia-component-id="edit-row-2-icon"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 id="default_timezone"
                 type="button"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-button__icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="pf-v5-svg"
-                      fill="currentColor"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      width="1em"
+                    <span
+                      class="pf-v6-c-icon__content"
                     >
-                      <path
-                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                      />
-                    </svg>
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v6-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        />
+                      </svg>
+                    </span>
                   </span>
                 </span>
               </button>
@@ -300,20 +309,20 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           Timezone to use for new users
         </td>
       </tr>
       <tr
-        class="pf-v5-c-table__tr"
+        class="pf-v6-c-table__tr"
         data-ouia-component-id="setting-table-heading-row-3"
-        data-ouia-component-type="PF5/TableRow"
+        data-ouia-component-type="PF6/TableRow"
         data-ouia-safe="true"
       >
         <td
-          class="pf-v5-c-table__td pf-m-width-30"
+          class="pf-v6-c-table__td pf-m-width-30"
           tabindex="-1"
         >
           <div
@@ -325,11 +334,11 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           <div
-            class="pf-v5-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
+            class="pf-v6-l-flex pf-m-align-items-center pf-m-justify-content-space-between"
           >
             <div
               class="setting-value"
@@ -350,33 +359,36 @@ exports[`SettingsTableSnapshot should render 1`] = `
               class=""
             >
               <button
-                aria-disabled="false"
-                class="pf-v5-c-button pf-m-plain"
+                class="pf-v6-c-button pf-m-plain"
                 data-ouia-component-id="edit-row-3-icon"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 id="http_proxy_except_list"
                 type="button"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-button__icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="pf-v5-svg"
-                      fill="currentColor"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      width="1em"
+                    <span
+                      class="pf-v6-c-icon__content"
                     >
-                      <path
-                        d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                      />
-                    </svg>
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v6-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                        />
+                      </svg>
+                    </span>
                   </span>
                 </span>
               </button>
@@ -384,7 +396,7 @@ exports[`SettingsTableSnapshot should render 1`] = `
           </div>
         </td>
         <td
-          class="pf-v5-c-table__td pf-m-width-35"
+          class="pf-v6-c-table__td pf-m-width-35"
           tabindex="-1"
         >
           Set hostnames to which requests are not to be proxied. Requests to the local host are excluded by default.

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ChartDonut,
-  ChartThemeColor,
-  ChartTooltip,
-} from '@patternfly/react-charts';
+	ChartDonut,
+	ChartThemeColor,
+	ChartTooltip
+} from '@patternfly/react-charts/victory';
 import { Icon } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 import { getDonutChartConfig } from '../../../../../services/charts/DonutChartService';

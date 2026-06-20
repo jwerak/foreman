@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {
-  Modal,
-  Button,
-  MenuToggle,
-  SelectOption,
-  TextContent,
-  Text,
-  TreeView,
+	Button,
+	MenuToggle,
+	SelectOption,
+	Content,
+	TreeView
 } from '@patternfly/react-core';
+import {
+	Modal
+} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import { STATUS } from '../../../../constants';
@@ -204,9 +205,9 @@ const BulkAssignTaxonomyModal = ({
       key={`bulk-assign-${taxType}-modal`}
       ouiaId={`bulk-assign-${taxType}-modal`}
     >
-      <TextContent>
-        <Text ouiaId={`bulk-assign-${taxType}-text`}>{modalText}</Text>
-      </TextContent>
+      <Content>
+        <Content component="p" ouiaId={`bulk-assign-${taxType}-text`}>{modalText}</Content>
+      </Content>
       {taxResults && status === STATUS.RESOLVED && (
         <TaxonomySelect
           headerText={org ? __('Select organization') : __('Select location')}

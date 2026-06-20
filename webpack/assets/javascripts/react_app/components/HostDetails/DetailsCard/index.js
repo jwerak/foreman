@@ -146,7 +146,9 @@ const DetailsCard = ({
                       </span>
                     </FlexItem>
                     <FlexItem>
-                      <Button
+                      <Button icon={<Icon>
+                          <PencilAltIcon />
+                        </Icon>}
                         ouiaId="host-group-edit-link"
                         component="a"
                         href={foremanUrl(
@@ -157,11 +159,7 @@ const DetailsCard = ({
                         variant="plain"
                         target="_blank"
                         isInline
-                      >
-                        <Icon>
-                          <PencilAltIcon />
-                        </Icon>
-                      </Button>
+                       />
                     </FlexItem>
                   </Flex>
                 )}

@@ -53,6 +53,7 @@ module.exports = {
     '^.+\\.(png|gif|css|scss)$': `${nodeModules}/identity-obj-proxy/src/index.js`,
     ...moduleNameMapper,
     '^@patternfly/react-table/deprecated$': `${nodeModules}/@patternfly/react-table/deprecated`,
+    '^@patternfly/react-icons/dist/esm/(.*)$': `${nodeModules}/@patternfly/react-icons/dist/js/$1`,
     '^dnd-core$': `${nodeModules}/dnd-core/dist/cjs`,
     '^react-dnd$': `${nodeModules}/react-dnd/dist/cjs`,
     '^react-dnd-html5-backend$': `${nodeModules}/react-dnd-html5-backend/dist/cjs`,

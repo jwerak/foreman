@@ -3,17 +3,20 @@
 exports[`ActionLinks rendering render action links 1`] = `
 <div>
   <div
-    class="pf-v5-l-grid__item pf-m-12-col actions-btns"
+    class="pf-v6-l-grid__item pf-m-12-col actions-btns"
   >
     <a
-      aria-disabled="false"
-      class="pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right"
+      class="pf-v6-c-button pf-m-primary pf-m-small pf-v6-u-float-right"
       data-ouia-component-id="action-links-btn"
-      data-ouia-component-type="PF5/Button"
+      data-ouia-component-type="PF6/Button"
       data-ouia-safe="true"
       href="/hosts/foo.example.com"
     >
-      Host details
+      <span
+        class="pf-v6-c-button__text"
+      >
+        Host details
+      </span>
     </a>
   </div>
 </div>

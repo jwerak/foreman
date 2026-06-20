@@ -3,54 +3,47 @@
 exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
 <div>
   <div
-    class="pf-v5-c-toolbar pf-m-full-height pf-m-static"
+    class="pf-v6-c-toolbar pf-m-full-height pf-m-static"
     data-ouia-component-id="data-toolbar"
-    data-ouia-component-type="PF5/Toolbar"
+    data-ouia-component-type="PF6/Toolbar"
     data-ouia-safe="true"
     id="data-toolbar"
   >
     <div
-      class="pf-v5-c-toolbar__content"
+      class="pf-v6-c-toolbar__content"
     >
       <div
-        class="pf-v5-c-toolbar__content-section"
+        class="pf-v6-c-toolbar__content-section"
       >
         <div
-          class="pf-v5-c-toolbar__group header-tool-item-hidden-lg"
+          class="pf-v6-c-toolbar__group header-tool-item-hidden-lg"
         >
           <div
-            class="pf-v5-c-toolbar__item"
+            class="pf-v6-c-toolbar__item"
           >
-            <div
-              class="pf-v5-c-context-selector context-selector"
+            <button
+              aria-expanded="false"
+              aria-label="Selected Taxonomy:"
+              class="pf-v6-c-menu-toggle pf-m-full-width"
               data-ouia-component-id="taxonomy-context-selector-organization"
-              data-ouia-component-type="PF5/ContextSelector"
+              data-ouia-component-type="PF6/MenuToggle"
               data-ouia-safe="true"
+              type="button"
             >
               <span
-                hidden=""
-                id="pf-v5-context-selector-label-id-organization-dropdown"
+                class="pf-v6-c-menu-toggle__text"
               >
-                Selected Taxonomy:
+                Default Organization
               </span>
-              <button
-                aria-expanded="false"
-                aria-labelledby="pf-v5-context-selector-label-id-organization-dropdown pf-v5-context-selector-toggle-id-organization-dropdown"
-                class="pf-v5-c-context-selector__toggle"
-                id="pf-v5-context-selector-toggle-id-organization-dropdown"
-                type="button"
+              <span
+                class="pf-v6-c-menu-toggle__controls"
               >
                 <span
-                  class="pf-v5-c-context-selector__toggle-text"
-                >
-                  Default Organization
-                </span>
-                <span
-                  class="pf-v5-c-context-selector__toggle-icon"
+                  class="pf-v6-c-menu-toggle__toggle-icon"
                 >
                   <svg
                     aria-hidden="true"
-                    class="pf-v5-svg"
+                    class="pf-v6-svg"
                     fill="currentColor"
                     height="1em"
                     role="img"
@@ -62,42 +55,35 @@ exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
                     />
                   </svg>
                 </span>
-              </button>
-            </div>
+              </span>
+            </button>
           </div>
           <div
-            class="pf-v5-c-toolbar__item"
+            class="pf-v6-c-toolbar__item"
           >
-            <div
-              class="pf-v5-c-context-selector context-selector"
+            <button
+              aria-expanded="false"
+              aria-label="Selected Taxonomy:"
+              class="pf-v6-c-menu-toggle pf-m-full-width"
               data-ouia-component-id="taxonomy-context-selector-location"
-              data-ouia-component-type="PF5/ContextSelector"
+              data-ouia-component-type="PF6/MenuToggle"
               data-ouia-safe="true"
+              type="button"
             >
               <span
-                hidden=""
-                id="pf-v5-context-selector-label-id-location-dropdown"
+                class="pf-v6-c-menu-toggle__text"
               >
-                Selected Taxonomy:
+                Default Location
               </span>
-              <button
-                aria-expanded="false"
-                aria-labelledby="pf-v5-context-selector-label-id-location-dropdown pf-v5-context-selector-toggle-id-location-dropdown"
-                class="pf-v5-c-context-selector__toggle"
-                id="pf-v5-context-selector-toggle-id-location-dropdown"
-                type="button"
+              <span
+                class="pf-v6-c-menu-toggle__controls"
               >
                 <span
-                  class="pf-v5-c-context-selector__toggle-text"
-                >
-                  Default Location
-                </span>
-                <span
-                  class="pf-v5-c-context-selector__toggle-icon"
+                  class="pf-v6-c-menu-toggle__toggle-icon"
                 >
                   <svg
                     aria-hidden="true"
-                    class="pf-v5-svg"
+                    class="pf-v6-svg"
                     fill="currentColor"
                     height="1em"
                     role="img"
@@ -109,32 +95,31 @@ exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
                     />
                   </svg>
                 </span>
-              </button>
-            </div>
+              </span>
+            </button>
           </div>
         </div>
         <div
-          class="pf-v5-c-toolbar__group pf-m-align-right"
+          class="pf-v6-c-toolbar__group pf-m-align-end"
         >
           <div
-            class="pf-v5-c-toolbar__item"
+            class="pf-v6-c-toolbar__item"
           >
             <button
-              aria-disabled="false"
               aria-expanded="false"
-              class="pf-v5-c-button pf-m-plain"
-              data-ouia-component-id="OUIA-Generated-Button-plain-1"
-              data-ouia-component-type="PF5/Button"
+              class="pf-v6-c-button pf-m-stateful pf-m-read"
+              data-ouia-component-id="OUIA-Generated-Button-stateful-1"
+              data-ouia-component-type="PF6/Button"
               data-ouia-safe="true"
               id="notification-badge"
               type="button"
             >
               <span
-                class="pf-v5-c-notification-badge pf-m-read"
+                class="pf-v6-c-button__icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="pf-v5-svg"
+                  class="pf-v6-svg"
                   fill="currentColor"
                   height="1em"
                   role="img"
@@ -149,7 +134,7 @@ exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
             </button>
           </div>
           <div
-            class="pf-v5-c-toolbar__item impersonation-item"
+            class="pf-v6-c-toolbar__item impersonation-item"
           >
             <div
               style="display: contents;"
@@ -158,14 +143,14 @@ exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
                 class="nav-item-iconic"
               >
                 <span
-                  class="pf-v5-c-icon blink-image"
+                  class="pf-v6-c-icon blink-image"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon__content"
                   >
                     <svg
                       aria-hidden="true"
-                      class="pf-v5-svg"
+                      class="pf-v6-svg"
                       fill="currentColor"
                       height="1em"
                       role="img"
@@ -182,79 +167,53 @@ exports[`HeaderToolbar rendering render HeaderToolbar 1`] = `
             </div>
           </div>
           <div
-            class="pf-v5-c-toolbar__item header-tool-item-hidden-lg user-nav-item"
+            class="pf-v6-c-toolbar__item header-tool-item-hidden-lg user-nav-item"
           >
-            <div
-              class="pf-v5-c-dropdown pf-m-align-right"
-              data-ouia-component-id="user-info-dropdown"
-              data-ouia-component-type="PF5/Dropdown"
+            <button
+              aria-expanded="false"
+              class="pf-v6-c-menu-toggle pf-m-plain"
+              data-ouia-component-id="user-dropdown-toggle"
+              data-ouia-component-type="PF6/MenuToggle"
               data-ouia-safe="true"
+              type="button"
             >
-              <button
-                aria-expanded="false"
-                aria-haspopup="true"
-                class="pf-v5-c-dropdown__toggle pf-m-plain"
-                data-ouia-component-id="user-dropdown-toggle"
-                data-ouia-component-type="PF5/DropdownToggle"
-                data-ouia-safe="true"
-                id="pf-dropdown-toggle-id-0"
-                type="button"
+              <span
+                class="pf-v6-c-menu-toggle__text"
               >
                 <span
-                  class="pf-v5-c-dropdown__toggle-text"
+                  class="pf-v6-c-icon user-icon"
                 >
                   <span
-                    class="pf-v5-c-icon user-icon"
+                    class="pf-v6-c-icon__content"
                   >
-                    <span
-                      class="pf-v5-c-icon__content"
+                    <svg
+                      aria-hidden="true"
+                      class="pf-v6-svg"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 512 512"
+                      width="1em"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="pf-v5-svg"
-                        fill="currentColor"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                      >
-                        <path
-                          d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"
-                        />
-                      </svg>
-                    </span>
+                      <path
+                        d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"
+                      />
+                    </svg>
                   </span>
-                  Admin User
                 </span>
-                <span
-                  class="pf-v5-c-dropdown__toggle-icon"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="pf-v5-svg"
-                    fill="currentColor"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 320 512"
-                    width="1em"
-                  >
-                    <path
-                      d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </div>
+                Admin User
+              </span>
+            </button>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="pf-v5-c-toolbar__content pf-m-hidden"
+      class="pf-v6-c-toolbar__content pf-m-hidden"
       hidden=""
     >
       <div
-        class="pf-v5-c-toolbar__group"
+        class="pf-v6-c-toolbar__group"
       />
     </div>
   </div>

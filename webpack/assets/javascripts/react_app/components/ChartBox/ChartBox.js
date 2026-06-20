@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardHeader,
-  Flex,
-  FlexItem,
-  Modal,
-  ModalVariant,
-  Spinner,
-  Icon,
+	Card,
+	CardBody,
+	CardTitle,
+	CardHeader,
+	Flex,
+	FlexItem,
+	Spinner,
+	Icon
 } from '@patternfly/react-core';
+import {
+	Modal,
+	ModalVariant
+} from '@patternfly/react-core/deprecated';
 import { ErrorCircleOIcon } from '@patternfly/react-icons';
 import classNames from 'classnames';
 import DonutChart from '../common/charts/DonutChart';

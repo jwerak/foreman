@@ -2,10 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {
   EmptyState,
-  EmptyStateIcon,
-  EmptyStateHeader,
-} from '@patternfly/react-core';
-import { global_success_color_100 as successColor } from '@patternfly/react-tokens';
+  } from '@patternfly/react-core';
+
 import { CheckCircleIcon, BanIcon } from '@patternfly/react-icons';
 import { translate as __ } from '../../../common/I18n';
 import { STATUS } from '../../../constants';
@@ -23,20 +21,10 @@ const GlobalState = ({
       ? __('All statuses cleared')
       : __('All statuses OK');
     return (
-      <EmptyState style={{ marginTop: '-1px' }} isFullHeight>
-        <EmptyStateHeader
-          titleText={
+      <EmptyState  headingLevel="h4" icon={showBanIcon ? BanIcon : CheckCircleIcon}  titleText={
             <>{cannotViewStatuses ? __('No statuses to show') : statusText}</>
-          }
-          icon={
-            <EmptyStateIcon
-              icon={showBanIcon ? BanIcon : CheckCircleIcon}
-              color={showBanIcon ? undefined : successColor.value}
-            />
-          }
-          headingLevel="h4"
-        />
-      </EmptyState>
+          } style={{ marginTop: '-1px' }} isFullHeight>
+        </EmptyState>
     );
   }
 

@@ -28,7 +28,7 @@ import RelativeDateTime from '../../../common/dates/RelativeDateTime';
 const statusMapper = {
   failed: amount => (
     <>
-      <Icon style={{ color: 'var(--pf-v5-global--palette--red-100)' }}>
+      <Icon style={{ color: "var(--pf-t--global--icon--color--status--danger--default)" }}>
         <ExclamationCircleIcon />
       </Icon>
       {amount}
@@ -36,7 +36,7 @@ const statusMapper = {
   ),
   failed_restarts: amount => (
     <>
-      <Icon style={{ color: 'var(--pf-v5-global--palette--red-100)' }}>
+      <Icon style={{ color: "var(--pf-t--global--icon--color--status--danger--default)" }}>
         <SyncAltIcon />
       </Icon>{' '}
       {amount}
@@ -44,7 +44,7 @@ const statusMapper = {
   ),
   restarted: amount => (
     <>
-      <Icon style={{ color: 'var(--pf-v5-global--palette--orange-300)' }}>
+      <Icon style={{ color: "var(--pf-t--global--icon--color--status--warning--default)" }}>
         <SyncAltIcon />
       </Icon>{' '}
       {amount}
@@ -52,7 +52,7 @@ const statusMapper = {
   ),
   applied: amount => (
     <>
-      <Icon style={{ color: 'var(--pf-v5-global--success-color--100)' }}>
+      <Icon style={{ color: "var(--pf-t--global--icon--color--status--success--default)" }}>
         <CheckCircleIcon />
       </Icon>{' '}
       {amount}

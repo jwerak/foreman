@@ -2,22 +2,24 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  DatePicker,
-  Modal,
-  Radio,
-  ModalVariant,
-  Button,
-  Form,
-  FormGroup,
-  InputGroup,
-  TimePicker,
-  TextInput,
-  InputGroupItem,
-  FormHelperText,
-  HelperText,
-  HelperTextItem,
-  Icon,
+	DatePicker,
+	Radio,
+	Button,
+	Form,
+	FormGroup,
+	InputGroup,
+	TimePicker,
+	TextInput,
+	InputGroupItem,
+	FormHelperText,
+	HelperText,
+	HelperTextItem,
+	Icon
 } from '@patternfly/react-core';
+import {
+	Modal,
+	ModalVariant
+} from '@patternfly/react-core/deprecated';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { translate as __ } from '../../../common/I18n';
@@ -234,7 +236,7 @@ const PersonalAccessTokenModal = ({ controller, url }) => {
             )}
           </FormGroup>
           <FormGroup label={__('Expires')}>
-            <div className="pf-v5-c-form">
+            <div className="pf-v6-c-form">
               <FormGroup fieldId="token-expires-never">
                 <Radio
                   ouiaId="expires-never"

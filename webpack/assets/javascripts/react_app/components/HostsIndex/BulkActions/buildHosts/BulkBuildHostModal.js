@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {
-  Modal,
-  Button,
-  TextContent,
-  Text,
-  Checkbox,
-  Radio,
+	Button,
+	Content,
+	Checkbox,
+	Radio
 } from '@patternfly/react-core';
+import {
+	Modal
+} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { translate as __ } from '../../../../common/I18n';
 import { failedHostsToastParams } from '../helpers';
@@ -94,8 +95,8 @@ const BulkBuildHostModal = ({
       key="bulk-build-hosts-modal"
       ouiaId="bulk-build-hosts-modal"
     >
-      <TextContent>
-        <Text ouiaId="bulk-set-build-options">
+      <Content>
+        <Content component="p" ouiaId="bulk-set-build-options">
           <FormattedMessage
             defaultMessage={__(
               'Choose an action that will be performed on {hosts}.'
@@ -117,8 +118,8 @@ const BulkBuildHostModal = ({
             }}
             id="bulk-build-host-description"
           />
-        </Text>
-      </TextContent>
+        </Content>
+      </Content>
       <hr />
       <Radio
         isChecked={buildRadioChecked}

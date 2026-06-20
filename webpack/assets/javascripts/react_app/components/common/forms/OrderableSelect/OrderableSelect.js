@@ -126,7 +126,7 @@ const OrderableSelect = ({
         />
         {(filterValue || internalValue.length > 0) && (
           <TextInputGroupUtilities>
-            <Button
+            <Button icon={<TimesIcon aria-hidden />}
               variant="plain"
               onClick={() => {
                 setFilterValue('');
@@ -135,9 +135,7 @@ const OrderableSelect = ({
                 textInputRef.current?.focus();
               }}
               aria-label="Clear input value"
-            >
-              <TimesIcon aria-hidden />
-            </Button>
+             />
           </TextInputGroupUtilities>
         )}
       </TextInputGroup>

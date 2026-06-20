@@ -3,39 +3,46 @@
 exports[`ShowTaxonomyInline render organizations 1`] = `
 <div>
   <div
-    class="pf-v5-l-grid"
+    class="pf-v6-l-grid"
   >
     <div
-      class="pf-v5-l-grid__item pf-m-3-col"
+      class="pf-v6-l-grid__item pf-m-3-col"
     >
       <span>
         Affected Organizations
       </span>
     </div>
     <div
-      class="pf-v5-l-grid__item pf-m-9-col"
+      class="pf-v6-l-grid__item pf-m-9-col"
     >
       <strong>
         <a
-          aria-disabled="false"
-          class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+          class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
           data-ouia-component-id="taxonomy-inline-btn"
-          data-ouia-component-type="PF5/Button"
+          data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           href="/organizations/1-testOrg/edit"
         >
-          testOrg
+          <span
+            class="pf-v6-c-button__text"
+          >
+            testOrg
+          </span>
         </a>
         <a
           aria-disabled="true"
-          class="pf-v5-c-button pf-m-link pf-m-disabled pf-m-inline apply-comma disabled"
+          class="pf-v6-c-button pf-m-link pf-m-disabled pf-m-inline apply-comma disabled"
           data-ouia-component-id="taxonomy-inline-btn"
-          data-ouia-component-type="PF5/Button"
+          data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           href="#"
           tabindex="-1"
         >
-          testOrg2
+          <span
+            class="pf-v6-c-button__text"
+          >
+            testOrg2
+          </span>
         </a>
       </strong>
     </div>

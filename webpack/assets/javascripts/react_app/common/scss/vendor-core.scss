@@ -10,6 +10,6 @@
 @import "~dsmorse-gridster/dist/jquery.gridster";
 @import "~datatables.net-bs/css/dataTables.bootstrap.css";
 
-// patternfly v5
-@import '~@patternfly/patternfly/patternfly';
-@import '~@patternfly/patternfly/patternfly-addons';
+// patternfly v6 (use pre-compiled CSS to avoid @use/@import conflicts)
+@import '~@patternfly/patternfly/patternfly.css';
+@import '~@patternfly/patternfly/patternfly-addons.css';

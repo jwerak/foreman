@@ -16,12 +16,12 @@ const FormStatus = ({ status, errorMessage, fieldName }) => {
           aria-label={`error popover for ${fieldName}`}
           bodyContent={errorMessage}
         >
-          <Button
+          <Button icon={<ExclamationCircleIcon />}
             variant="control"
             aria-label={`popover for ${fieldName}`}
             ouiaId={`error-popover-button-${fieldName}`}
           >
-            <ExclamationCircleIcon />
+            
           </Button>
         </Popover>
       );

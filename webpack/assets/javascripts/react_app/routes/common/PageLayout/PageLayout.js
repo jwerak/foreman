@@ -7,10 +7,8 @@ import {
   ToolbarGroup,
   ToolbarItem,
   PageSection,
-  PageSectionVariants,
-  TextContent,
-  Text,
-} from '@patternfly/react-core';
+  Content,
+  } from '@patternfly/react-core';
 import { changeQuery } from '../../../common/urlHelpers';
 import BreadcrumbBar from '../../../components/BreadcrumbBar';
 import SearchBar from '../../../components/SearchBar';
@@ -34,11 +32,11 @@ const PageLayout = ({
   children,
 }) => {
   const titleSectionBody = customHeader ?? (
-    <TextContent>
-      <Text ouiaId="breadcrumb_title" component="h1">
+    <Content>
+      <Content ouiaId="breadcrumb_title" component="h1">
         {header}
-      </Text>
-    </TextContent>
+      </Content>
+    </Content>
   );
 
   const showStandaloneTitleSection = searchable || !toolbarButtons;
@@ -56,7 +54,7 @@ const PageLayout = ({
       </Head>
 
       {(customBreadcrumbs || breadcrumbOptions) && (
-        <PageSection variant={PageSectionVariants.light} type="breadcrumb">
+        <PageSection hasBodyWrapper={false}  type="breadcrumb">
           <div id="breadcrumb">
             {customBreadcrumbs ||
               (breadcrumbOptions && <BreadcrumbBar {...breadcrumbOptions} />)}
@@ -65,8 +63,8 @@ const PageLayout = ({
       )}
 
       {showStandaloneTitleSection && (
-        <PageSection
-          variant={PageSectionVariants.light}
+        <PageSection hasBodyWrapper={false}
+          
           className="page-title-section"
         >
           <div id="page-title">{titleSectionBody}</div>
@@ -76,8 +74,8 @@ const PageLayout = ({
       {beforeToolbarComponent}
 
       {showToolbarSection && (
-        <PageSection
-          variant={PageSectionVariants.light}
+        <PageSection hasBodyWrapper={false}
+          
           className="page-toolbar-section"
         >
           {customToolbar || (
@@ -108,7 +106,7 @@ const PageLayout = ({
                     </ToolbarItem>
                   )}
                 </ToolbarGroup>
-                <ToolbarGroup align={{ default: 'alignRight' }}>
+                <ToolbarGroup align={{ default: "alignEnd" }}>
                   {toolbarButtons}
                 </ToolbarGroup>
               </ToolbarContent>
@@ -116,9 +114,9 @@ const PageLayout = ({
           )}
         </PageSection>
       )}
-      <PageSection
+      <PageSection hasBodyWrapper={false}
         className="page-content-section"
-        variant={PageSectionVariants.light}
+        
         type={pageSectionType}
       >
         {children}

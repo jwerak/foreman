@@ -39,14 +39,12 @@ describe('Default Empty State', () => {
     expect(docLink).toHaveAttribute('target', '_blank');
     expect(docLink).toHaveAttribute('rel', 'external noreferrer noopener');
 
-    // Test action button - PatternFly Button renders as <a> with button classes
-    const actionButton = screen.getByText('action-title');
+    // Test action button - PF6 Button wraps text in <span class="pf-v6-c-button__text">
+    const actionButtonText = screen.getByText('action-title');
+    expect(actionButtonText).toBeInTheDocument();
+    const actionButton = actionButtonText.closest('[data-ouia-component-id="empty-state-action-button"]');
     expect(actionButton).toBeInTheDocument();
-    expect(actionButton).toHaveAttribute(
-      'data-ouia-component-id',
-      'empty-state-action-button'
-    );
-    expect(actionButton).toHaveClass('pf-v5-c-button', 'pf-m-primary');
+    expect(actionButton).toHaveClass('pf-v6-c-button', 'pf-m-primary');
   });
 
   it('should render secondary actions', () => {
@@ -63,7 +61,7 @@ describe('Default Empty State', () => {
       '[data-ouia-component-id="empty-state-action-button"]'
     );
     expect(primaryButton).toBeInTheDocument();
-    expect(primaryButton).toHaveClass('pf-v5-c-button', 'pf-m-primary');
+    expect(primaryButton).toHaveClass('pf-v6-c-button', 'pf-m-primary');
     expect(primaryButton).toHaveTextContent('action-title');
 
     // Test secondary action
@@ -71,7 +69,7 @@ describe('Default Empty State', () => {
       '[data-ouia-component-id="empty-state-secondary-action-button"]'
     );
     expect(secondaryButton).toBeInTheDocument();
-    expect(secondaryButton).toHaveClass('pf-v5-c-button', 'pf-m-secondary');
+    expect(secondaryButton).toHaveClass('pf-v6-c-button', 'pf-m-secondary');
     expect(secondaryButton).toHaveTextContent('action-title');
   });
 

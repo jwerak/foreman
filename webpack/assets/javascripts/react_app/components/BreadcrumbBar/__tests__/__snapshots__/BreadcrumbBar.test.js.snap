@@ -7,21 +7,21 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
   >
     <nav
       aria-label="Breadcrumb"
-      class="pf-v5-c-breadcrumb breadcrumbs-list"
+      class="pf-v6-c-breadcrumb breadcrumbs-list"
       data-ouia-component-id="breadcrumbs-list"
-      data-ouia-component-type="PF5/Breadcrumb"
+      data-ouia-component-type="PF6/Breadcrumb"
       data-ouia-safe="true"
     >
       <ol
-        class="pf-v5-c-breadcrumb__list"
+        class="pf-v6-c-breadcrumb__list"
         role="list"
       >
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item"
           item="[object Object]"
         >
           <a
-            class="pf-v5-c-breadcrumb__link"
+            class="pf-v6-c-breadcrumb__link"
             href="/some-url"
           >
              
@@ -29,15 +29,15 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
           </a>
         </li>
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item"
           item="[object Object]"
         >
           <span
-            class="pf-v5-c-breadcrumb__item-divider"
+            class="pf-v6-c-breadcrumb__item-divider"
           >
             <svg
               aria-hidden="true"
-              class="pf-v5-svg"
+              class="pf-v6-svg"
               fill="currentColor"
               height="1em"
               role="img"
@@ -53,15 +53,15 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
           child with onClick
         </li>
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item active"
           item="[object Object]"
         >
           <span
-            class="pf-v5-c-breadcrumb__item-divider"
+            class="pf-v6-c-breadcrumb__item-divider"
           >
             <svg
               aria-hidden="true"
-              class="pf-v5-svg"
+              class="pf-v6-svg"
               fill="currentColor"
               height="1em"
               role="img"
@@ -74,19 +74,16 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
             </svg>
           </span>
            
-          <div
-            style="display: contents;"
+          <span
+            class="pf-v6-c-truncate"
+            tabindex="0"
           >
             <span
-              class="pf-v5-c-truncate"
+              class="pf-v6-c-truncate__start"
             >
-              <span
-                class="pf-v5-c-truncate__start"
-              >
-                active child
-              </span>
+              active child
             </span>
-          </div>
+          </span>
         </li>
       </ol>
     </nav>
@@ -104,21 +101,21 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
   >
     <nav
       aria-label="Breadcrumb"
-      class="pf-v5-c-breadcrumb breadcrumbs-list"
+      class="pf-v6-c-breadcrumb breadcrumbs-list"
       data-ouia-component-id="breadcrumbs-list"
-      data-ouia-component-type="PF5/Breadcrumb"
+      data-ouia-component-type="PF6/Breadcrumb"
       data-ouia-safe="true"
     >
       <ol
-        class="pf-v5-c-breadcrumb__list"
+        class="pf-v6-c-breadcrumb__list"
         role="list"
       >
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item"
           item="[object Object]"
         >
           <a
-            class="pf-v5-c-breadcrumb__link"
+            class="pf-v6-c-breadcrumb__link"
             href="/some-url"
           >
              
@@ -126,15 +123,15 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
           </a>
         </li>
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item"
           item="[object Object]"
         >
           <span
-            class="pf-v5-c-breadcrumb__item-divider"
+            class="pf-v6-c-breadcrumb__item-divider"
           >
             <svg
               aria-hidden="true"
-              class="pf-v5-svg"
+              class="pf-v6-svg"
               fill="currentColor"
               height="1em"
               role="img"
@@ -150,15 +147,15 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
           child with onClick
         </li>
         <li
-          class="pf-v5-c-breadcrumb__item breadcrumb-item active"
+          class="pf-v6-c-breadcrumb__item breadcrumb-item active"
           item="[object Object]"
         >
           <span
-            class="pf-v5-c-breadcrumb__item-divider"
+            class="pf-v6-c-breadcrumb__item-divider"
           >
             <svg
               aria-hidden="true"
-              class="pf-v5-svg"
+              class="pf-v6-svg"
               fill="currentColor"
               height="1em"
               role="img"
@@ -171,19 +168,16 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
             </svg>
           </span>
            
-          <div
-            style="display: contents;"
+          <span
+            class="pf-v6-c-truncate"
+            tabindex="0"
           >
             <span
-              class="pf-v5-c-truncate"
+              class="pf-v6-c-truncate__start"
             >
-              <span
-                class="pf-v5-c-truncate__start"
-              >
-                active child
-              </span>
+              active child
             </span>
-          </div>
+          </span>
           <div
             class="pf4-breadcrumb-switcher"
           >
@@ -191,33 +185,36 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
               style="display: contents;"
             >
               <button
-                aria-disabled="false"
                 aria-label="open breadcrumb switcher"
-                class="pf-v5-c-button pf-m-plain"
+                class="pf-v6-c-button pf-m-plain"
                 data-ouia-component-id="breadcrumb-button"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 type="button"
               >
                 <span
-                  class="pf-v5-c-icon"
+                  class="pf-v6-c-button__icon"
                 >
                   <span
-                    class="pf-v5-c-icon__content"
+                    class="pf-v6-c-icon"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="pf-v5-svg"
-                      fill="currentColor"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      width="1em"
+                    <span
+                      class="pf-v6-c-icon__content"
                     >
-                      <path
-                        d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z"
-                      />
-                    </svg>
+                      <svg
+                        aria-hidden="true"
+                        class="pf-v6-svg"
+                        fill="currentColor"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                      >
+                        <path
+                          d="M0 168v-16c0-13.255 10.745-24 24-24h360V80c0-21.367 25.899-32.042 40.971-16.971l80 80c9.372 9.373 9.372 24.569 0 33.941l-80 80C409.956 271.982 384 261.456 384 240v-48H24c-13.255 0-24-10.745-24-24zm488 152H128v-48c0-21.314-25.862-32.08-40.971-16.971l-80 80c-9.372 9.373-9.372 24.569 0 33.941l80 80C102.057 463.997 128 453.437 128 432v-48h360c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24z"
+                        />
+                      </svg>
+                    </span>
                   </span>
                 </span>
               </button>

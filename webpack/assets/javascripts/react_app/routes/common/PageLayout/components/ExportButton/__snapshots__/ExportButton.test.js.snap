@@ -3,15 +3,18 @@
 exports[`ExportButton render with props 1`] = `
 <div>
   <a
-    aria-disabled="false"
-    class="pf-v5-c-button pf-m-secondary export-csv"
+    class="pf-v6-c-button pf-m-secondary export-csv"
     data-ouia-component-id="OUIA-Generated-Button-secondary-2"
-    data-ouia-component-type="PF5/Button"
+    data-ouia-component-type="PF6/Button"
     data-ouia-safe="true"
     href="url"
     title="title info"
   >
-    info
+    <span
+      class="pf-v6-c-button__text"
+    >
+      info
+    </span>
   </a>
 </div>
 `;
@@ -19,15 +22,18 @@ exports[`ExportButton render with props 1`] = `
 exports[`ExportButton render without props 1`] = `
 <div>
   <a
-    aria-disabled="false"
-    class="pf-v5-c-button pf-m-secondary export-csv"
+    class="pf-v6-c-button pf-m-secondary export-csv"
     data-ouia-component-id="OUIA-Generated-Button-secondary-1"
-    data-ouia-component-type="PF5/Button"
+    data-ouia-component-type="PF6/Button"
     data-ouia-safe="true"
     href="/?format=csv"
     title="Export to CSV"
   >
-    Export
+    <span
+      class="pf-v6-c-button__text"
+    >
+      Export
+    </span>
   </a>
 </div>
 `;

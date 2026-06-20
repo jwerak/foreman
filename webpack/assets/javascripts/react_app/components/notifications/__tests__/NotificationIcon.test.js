@@ -34,7 +34,9 @@ describe('Notification Icon', () => {
       fireEvent.click(icon);
     })
 
-    const iconExpanded = document.querySelector('#notification-badge span.pf-m-expanded');;
+    // In PF6, NotificationBadge uses Button with isClicked which adds pf-m-clicked
+    // class to the button element and sets aria-expanded="true", rather than pf-m-expanded on a span.
+    const iconExpanded = document.querySelector('#notification-badge[aria-expanded="true"]');
     expect(iconExpanded).toBeInTheDocument();
 
   });

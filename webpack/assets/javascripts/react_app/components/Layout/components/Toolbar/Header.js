@@ -5,7 +5,7 @@ import {
   Masthead,
   MastheadToggle,
   MastheadMain,
-  MastheadBrand,
+  MastheadLogo, MastheadBrand,
   MastheadContent,
   Button,
   Icon,
@@ -25,22 +25,20 @@ const Header = ({
   isLoading,
 }) => (
   <Masthead display={{ default: 'inline' }}>
-    <MastheadToggle>
-      <Button ouiaId="nav-toggle" onClick={onNavToggle} variant="plain">
-        <Icon>
+    
+    <MastheadMain><MastheadToggle>
+      <Button icon={<Icon>
           <BarsIcon />
-        </Icon>
-      </Button>
+        </Icon>} ouiaId="nav-toggle" onClick={onNavToggle} variant="plain" />
     </MastheadToggle>
-    <MastheadMain>
-      <MastheadBrand component="a" href={root}>
+      <MastheadBrand data-codemods><MastheadLogo data-codemods component="a" href={root}>
         <React.Fragment>
           <Brand src={logo} alt={brand} href={root} />
           <span className="navbar-brand-txt">
             <span>{brand}</span>
           </span>
         </React.Fragment>
-      </MastheadBrand>
+      </MastheadLogo></MastheadBrand>
     </MastheadMain>
     <MastheadContent>
       <HeaderToolbar {...props} isLoading={isLoading} />

@@ -4,64 +4,66 @@ exports[`AuditsList render resources list 1`] = `
 <div>
   <ul
     aria-label="Audits data list"
-    class="pf-v5-c-data-list pf-m-compact pf-m-grid-md"
+    class="pf-v6-c-data-list pf-m-compact pf-m-grid-md"
     id="audit-list"
     role="list"
   >
     <li
-      aria-labelledby=""
-      class="pf-v5-c-data-list__item audits-data-list main-info-minimize-padding"
+      class="pf-v6-c-data-list__item audits-data-list main-info-minimize-padding"
       id="234"
     >
       <div
-        class="pf-v5-c-data-list__item-row audits-list-item-row"
+        class="pf-v6-c-data-list__item-row audits-list-item-row"
       >
         <div
-          class="pf-v5-c-data-list__item-control"
+          class="pf-v6-c-data-list__item-control"
         >
           <div
-            class="pf-v5-c-data-list__toggle"
+            class="pf-v6-c-data-list__toggle"
           >
             <button
               aria-controls="false"
-              aria-disabled="false"
               aria-expanded="false"
               aria-label="Details"
               aria-labelledby=" undefined"
-              class="pf-v5-c-button pf-m-plain"
+              class="pf-v6-c-button pf-m-plain"
               data-ouia-component-id="OUIA-Generated-Button-plain-1"
-              data-ouia-component-type="PF5/Button"
+              data-ouia-component-type="PF6/Button"
               data-ouia-safe="true"
               type="button"
             >
-              <div
-                class="pf-v5-c-data-list__toggle-icon"
+              <span
+                class="pf-v6-c-button__icon"
               >
-                <svg
-                  aria-hidden="true"
-                  class="pf-v5-svg"
-                  fill="currentColor"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 256 512"
-                  width="1em"
+                <div
+                  class="pf-v6-c-data-list__toggle-icon"
                 >
-                  <path
-                    d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    aria-hidden="true"
+                    class="pf-v6-svg"
+                    fill="currentColor"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 256 512"
+                    width="1em"
+                  >
+                    <path
+                      d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </button>
           </div>
         </div>
         <div
-          class="pf-v5-c-data-list__item-content"
+          class="pf-v6-c-data-list__item-content"
         >
           <div
-            class="pf-v5-c-data-list__cell pf-m-flex-3"
+            class="pf-v6-c-data-list__cell pf-m-flex-3"
           >
             <span
-              class="pf-v5-u-font-weight-bold pf-v5-u-font-size-sm"
+              class="pf-v6-u-font-weight-bold pf-v6-u-font-size-sm"
             >
               <div
                 style="display: contents;"
@@ -83,19 +85,19 @@ exports[`AuditsList render resources list 1`] = `
             </span>
           </div>
           <div
-            class="pf-v5-c-data-list__cell"
+            class="pf-v6-c-data-list__cell"
           >
             updated
           </div>
           <div
-            class="pf-v5-c-data-list__cell pf-m-flex-3 pf-m-align-right additional-info-item item-name"
+            class="pf-v6-c-data-list__cell pf-m-flex-3 pf-m-align-right additional-info-item item-name"
           >
             <span>
               HOST
             </span>
           </div>
           <div
-            class="pf-v5-c-data-list__cell pf-m-flex-5 additional-info-item item-resource pf-m-truncate"
+            class="pf-v6-c-data-list__cell pf-m-flex-5 additional-info-item item-resource pf-m-truncate"
           >
             <span>
               <div
@@ -112,7 +114,7 @@ exports[`AuditsList render resources list 1`] = `
           </div>
         </div>
         <div
-          class="pf-v5-c-data-list__item-action audits-list-actions"
+          class="pf-v6-c-data-list__item-action audits-list-actions"
           rowid=""
         >
           <span
@@ -129,150 +131,174 @@ exports[`AuditsList render resources list 1`] = `
         </div>
       </div>
       <section
-        class="pf-v5-c-data-list__expandable-content data-list-content"
+        class="pf-v6-c-data-list__expandable-content data-list-content"
         hidden=""
         id=""
       >
         <div
-          class="pf-v5-c-data-list__expandable-content-body"
+          class="pf-v6-c-data-list__expandable-content-body"
         >
           <div
-            class="pf-v5-l-grid"
+            class="pf-v6-l-grid"
           >
             <div
-              class="pf-v5-l-grid__item pf-m-12-col actions-btns"
+              class="pf-v6-l-grid__item pf-m-12-col actions-btns"
             >
               <a
-                aria-disabled="false"
-                class="pf-v5-c-button pf-m-primary pf-m-small pf-v5-u-float-right"
+                class="pf-v6-c-button pf-m-primary pf-m-small pf-v6-u-float-right"
                 data-ouia-component-id="action-links-btn"
-                data-ouia-component-type="PF5/Button"
+                data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 href="/hosts/host-foo.example.com"
               >
-                Host details
+                <span
+                  class="pf-v6-c-button__text"
+                >
+                  Host details
+                </span>
               </a>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-12-col taxonomy-section"
+              class="pf-v6-l-grid__item pf-m-12-col taxonomy-section"
             >
               <div
-                class="pf-v5-l-grid"
+                class="pf-v6-l-grid"
               >
                 <div
-                  class="pf-v5-l-grid__item pf-m-3-col"
+                  class="pf-v6-l-grid__item pf-m-3-col"
                 >
                   <span>
                     Affected Organizations
                   </span>
                 </div>
                 <div
-                  class="pf-v5-l-grid__item pf-m-9-col"
+                  class="pf-v6-l-grid__item pf-m-9-col"
                 >
                   <strong>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/organizations/1-test_org1/edit"
                     >
-                      test_org1
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_org1
+                      </span>
                     </a>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/organizations/3-test_org2/edit"
                     >
-                      test_org2
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_org2
+                      </span>
                     </a>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/organizations/5-test_org3/edit"
                     >
-                      test_org3
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_org3
+                      </span>
                     </a>
                   </strong>
                 </div>
               </div>
               <div
-                class="pf-v5-l-grid"
+                class="pf-v6-l-grid"
               >
                 <div
-                  class="pf-v5-l-grid__item pf-m-3-col"
+                  class="pf-v6-l-grid__item pf-m-3-col"
                 >
                   <span>
                     Affected Locations
                   </span>
                 </div>
                 <div
-                  class="pf-v5-l-grid__item pf-m-9-col"
+                  class="pf-v6-l-grid__item pf-m-9-col"
                 >
                   <strong>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/locations/2-test_loc1/edit"
                     >
-                      test_loc1
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_loc1
+                      </span>
                     </a>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/locations/6-test_loc2/edit"
                     >
-                      test_loc2
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_loc2
+                      </span>
                     </a>
                     <a
-                      aria-disabled="false"
-                      class="pf-v5-c-button pf-m-link pf-m-inline apply-comma "
+                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
-                      data-ouia-component-type="PF5/Button"
+                      data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
                       href="/locations/9-test_loc3/edit"
                     >
-                      test_loc3
+                      <span
+                        class="pf-v6-c-button__text"
+                      >
+                        test_loc3
+                      </span>
                     </a>
                   </strong>
                 </div>
               </div>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-3-col"
+              class="pf-v6-l-grid__item pf-m-3-col"
             >
               <span>
                 Request UUID
               </span>
             </div>
             <div
-              class="pf-v5-l-grid__item pf-m-9-col value"
+              class="pf-v6-l-grid__item pf-m-9-col value"
             >
               <div
                 style="display: contents;"
               >
                 <button
-                  aria-disabled="false"
-                  class="pf-v5-c-button pf-m-link pf-m-inline"
+                  class="pf-v6-c-button pf-m-link pf-m-inline"
                   data-ouia-component-id="request-uuid-btn"
-                  data-ouia-component-type="PF5/Button"
+                  data-ouia-component-type="PF6/Button"
                   data-ouia-safe="true"
                   type="button"
                 >
-                  c134239d-8ac3-494b-9962-35133fe153ba
+                  <span
+                    class="pf-v6-c-button__text"
+                  >
+                    c134239d-8ac3-494b-9962-35133fe153ba
+                  </span>
                 </button>
               </div>
             </div>

@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import {
-  Modal,
-  Alert,
-  Button,
-  TextContent,
-  Text,
-  TreeView,
+	Alert,
+	Button,
+	Content,
+	TreeView
 } from '@patternfly/react-core';
+import {
+	Modal
+} from '@patternfly/react-core/deprecated';
 import { addToast } from '../../../ToastsList/slice';
 import { foremanUrl } from '../../../../common/helpers';
 import { translate as __ } from '../../../../common/I18n';
@@ -135,8 +136,8 @@ const BulkDisassociateModal = ({
       key="bulk-disassociate-modal"
       ouiaId="bulk-disassociate-modal"
     >
-      <TextContent>
-        <Text ouiaId="bulk-disassociate-options">
+      <Content>
+        <Content component="p" ouiaId="bulk-disassociate-options">
           {__(
             'This will disassociate the host in Foreman from its compute resource.'
           )}
@@ -144,8 +145,8 @@ const BulkDisassociateModal = ({
           {__(
             'After disassociating, a host can be deleted from Foreman without affecting its virtual machine.'
           )}
-        </Text>
-      </TextContent>
+        </Content>
+      </Content>
       <Alert
         style={{ marginTop: '2rem', marginBottom: '1rem' }}
         variant="warning"

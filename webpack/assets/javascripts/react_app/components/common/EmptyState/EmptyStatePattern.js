@@ -5,7 +5,6 @@ import {
   EmptyStateVariant,
   EmptyStateBody,
   EmptyStateActions,
-  EmptyStateHeader,
   EmptyStateFooter,
   Icon,
 } from '@patternfly/react-core';
@@ -62,11 +61,10 @@ const EmptyStatePattern = props => {
   };
 
   return (
-    <EmptyState variant={variant}>
+    <EmptyState  headingLevel="h5"   titleText={<>{header}</>} variant={variant}>
       <span className="empty-state-icon">
         <EmptyStateIcon />
       </span>
-      <EmptyStateHeader titleText={<>{header}</>} headingLevel="h5" />
       <EmptyStateBody>
         <div className="empty-state-description">{description}</div>
         <DocumentationBlock />

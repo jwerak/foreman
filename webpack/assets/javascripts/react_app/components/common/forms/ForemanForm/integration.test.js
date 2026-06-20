@@ -65,11 +65,11 @@ describe('ForemanForm integration test', () => {
     });
 
     await waitFor(() => {
-      const alert = container.querySelector('.pf-v5-c-alert, .pf-c-alert');
+      const alert = container.querySelector('.pf-v6-c-alert, .pf-c-alert');
       expect(alert).toBeInTheDocument();
     });
 
-    const alert = container.querySelector('.pf-v5-c-alert, .pf-c-alert');
+    const alert = container.querySelector('.pf-v6-c-alert, .pf-c-alert');
     expect(alert).toMatchSnapshot();
   });
 });

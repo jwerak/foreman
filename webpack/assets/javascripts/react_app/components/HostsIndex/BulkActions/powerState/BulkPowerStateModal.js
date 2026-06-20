@@ -1,16 +1,17 @@
 import React, { useState, useContext } from 'react';
 import {
-  Modal,
-  ModalVariant,
-  Button,
-  TextContent,
-  Text,
-  Select,
-  SelectOption,
-  SelectList,
-  MenuToggle,
-  FormGroup,
+	Button,
+	Content,
+	Select,
+	SelectOption,
+	SelectList,
+	MenuToggle,
+	FormGroup
 } from '@patternfly/react-core';
+import {
+	Modal,
+	ModalVariant
+} from '@patternfly/react-core/deprecated';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { translate as __, sprintf } from '../../../../common/I18n';
@@ -143,10 +144,10 @@ const BulkPowerStateModal = ({
       ]}
     >
       {selectedHostsCount > 0 && (
-        <TextContent className="pf-v5-u-mb-md">
-          <Text
+        <Content className="pf-v6-u-mb-md">
+          <Content
             component="small"
-            className="pf-v5-u-color-200 pf-v5-u-font-size-sm"
+            className="pf-v6-u-color-200 pf-v6-u-font-size-sm"
             ouiaId="power-state-modal-hosts-count"
           >
             {sprintf(
@@ -155,8 +156,8 @@ const BulkPowerStateModal = ({
                 : __('%s hosts are selected for power state change'),
               selectedHostsCount
             )}
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       )}
       <FormGroup
         label={__('Power state')}

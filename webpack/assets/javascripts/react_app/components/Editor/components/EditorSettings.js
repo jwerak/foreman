@@ -146,10 +146,10 @@ const EditorSettings = ({
       triggerRef={() => document.getElementById('cog-btn')}
     />
     <Tooltip content={__('Settings')} position={TooltipPosition.top}>
-      <Button className="editor-button" id="cog-btn" variant="link">
-        <Icon size="md">
+      <Button icon={<Icon size="md">
           <CogIcon />
-        </Icon>
+        </Icon>} className="editor-button" id="cog-btn" variant="link">
+        
       </Button>
     </Tooltip>
   </>
