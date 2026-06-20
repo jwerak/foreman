@@ -2,18 +2,23 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, FlexItem, Flex, Icon } from '@patternfly/react-core';
 import {
+  Button,
+  FlexItem,
+  Flex,
+  Icon,
   Dropdown,
   DropdownItem,
-  KebabToggle,
-} from '@patternfly/react-core/deprecated';
+  DropdownList,
+  MenuToggle,
+} from '@patternfly/react-core';
 import {
   ExclamationCircleIcon,
   SyncAltIcon,
   CheckCircleIcon,
   PendingIcon,
   AngleDoubleRightIcon,
+  EllipsisVIcon,
 } from '@patternfly/react-icons';
 import { openConfirmModal } from '../../../ConfirmModal';
 import { APIActions } from '../../../../redux/API';
@@ -136,17 +141,25 @@ export const ActionFormatter = ({ id, can_delete }, fetchReports) => {
       <FlexItem align={{ default: 'alignRight' }}>
         <Dropdown
           ouiaId="action-dropdown"
-          onSelect={v => setOpen(!v)}
-          toggle={
-            <KebabToggle
-              onToggle={(_event, val) => setOpen(val)}
-              id="toggle-action"
-            />
-          }
+          onSelect={() => setOpen(false)}
+          onOpenChange={setOpen}
           isOpen={isOpen}
-          isPlain
-          dropdownItems={dropdownItems}
-        />
+          toggle={(toggleRef) => (
+            <MenuToggle
+              ref={toggleRef}
+              variant="plain"
+              onClick={() => setOpen(!isOpen)}
+              isExpanded={isOpen}
+              id="toggle-action"
+            >
+              <EllipsisVIcon />
+            </MenuToggle>
+          )}
+        >
+          <DropdownList>
+            {dropdownItems}
+          </DropdownList>
+        </Dropdown>
       </FlexItem>
     </Flex>
   );

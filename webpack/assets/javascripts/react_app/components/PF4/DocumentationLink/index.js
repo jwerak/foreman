@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DropdownItem } from '@patternfly/react-core/deprecated';
-import { Icon } from '@patternfly/react-core';
+import { DropdownItem, Icon } from '@patternfly/react-core';
 import { QuestionCircleIcon } from '@patternfly/react-icons';
 import { newWindowOnClick } from '../../../common/helpers';
 import { translate as __ } from '../../../../react_app/common/I18n';

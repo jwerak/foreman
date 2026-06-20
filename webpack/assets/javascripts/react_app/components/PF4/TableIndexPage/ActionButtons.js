@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
-import {
-  Dropdown,
-  KebabToggle,
-  DropdownItem,
-} from '@patternfly/react-core/deprecated';
+import { Button, Dropdown, DropdownItem, DropdownList, MenuToggle } from '@patternfly/react-core';
+import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
 
 /**
  * Generate a button or a dropdown of buttons
@@ -31,25 +27,34 @@ export const ActionButtons = ({ buttons: originalButtons }) => {
       {buttons.length > 0 && (
         <Dropdown
           ouiaId="action-buttons-dropdown"
-          toggle={
-            <KebabToggle
-              aria-label="toggle action dropdown"
-              onToggle={(_event, val) => setIsOpen(val)}
-            />
-          }
           isOpen={isOpen}
-          isPlain
-          dropdownItems={buttons.map(button => (
-            <DropdownItem
-              ouiaId={`${button.title}-dropdown-item`}
-              key={button.title}
-              title={button.title}
-              {...button.action}
+          onOpenChange={setIsOpen}
+          onSelect={() => setIsOpen(false)}
+          toggle={(toggleRef) => (
+            <MenuToggle
+              ref={toggleRef}
+              variant="plain"
+              onClick={() => setIsOpen(!isOpen)}
+              isExpanded={isOpen}
+              aria-label="toggle action dropdown"
             >
-              {button.icon} {button.title}
-            </DropdownItem>
-          ))}
-        />
+              <EllipsisVIcon />
+            </MenuToggle>
+          )}
+        >
+          <DropdownList>
+            {buttons.map(button => (
+              <DropdownItem
+                ouiaId={`${button.title}-dropdown-item`}
+                key={button.title}
+                title={button.title}
+                {...button.action}
+              >
+                {button.icon} {button.title}
+              </DropdownItem>
+            ))}
+          </DropdownList>
+        </Dropdown>
       )}
     </>
   );

@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, GridItem, Icon } from '@patternfly/react-core';
 import {
-  ContextSelector,
-  ContextSelectorItem,
-  ContextSelectorFooter,
-} from '@patternfly/react-core/deprecated';
+  Button,
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownList,
+  Grid,
+  GridItem,
+  Icon,
+  MenuToggle,
+  SearchInput,
+} from '@patternfly/react-core';
 import { CheckIcon, GlobeIcon, BuildingIcon } from '@patternfly/react-icons';
 import { foremanUrl } from '../../../../common/helpers';
 import { translate as __ } from '../../../../common/I18n';
@@ -38,14 +44,8 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
     onSearchButtonClick();
   }, [searchValue, onSearchButtonClick]);
 
-  const onToggle = (event, newIsOpen) => {
-    setIsOpen(newIsOpen);
-  };
   const onSelect = () => {
-    setIsOpen(!isOpen);
-  };
-  const onSearchInputChange = event => {
-    setSearchValue(event.target.value);
+    setIsOpen(false);
   };
 
   const selectedIcon = (
@@ -58,86 +58,101 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
       {taxonomyType === 'organization' ? <BuildingIcon /> : <GlobeIcon />}
     </Icon>
   );
-  const anyTaxonomyItem = (
-    <ContextSelectorItem
-      key={0}
-      className={`${taxonomyType}s_clear`}
-      onClick={() => {
-        window.location.assign(anyTaxonomyURL);
-      }}
-      isDisabled={!currentTaxonomy}
-    >
-      <Grid hasGutter>
-        <GridItem span={1}>{anyIcon}</GridItem>
-        <GridItem span={9} style={{ textAlign: 'left' }}>
-          {anyTaxonomyText}
-        </GridItem>
-        <GridItem span={2}>{!currentTaxonomy && selectedIcon}</GridItem>
-      </Grid>
-    </ContextSelectorItem>
-  );
-  const footer = (
-    <ContextSelectorFooter>
-      <Button
-        ouiaId={`manage-taxonomy-button-${taxonomyType}`}
-        size="sm"
-        component="a"
-        className={taxonomyType}
-        variant="secondary"
-        href={manageTaxonomyURL}
-      >
-        {taxonomyType === 'organization'
-          ? __('Manage Organizations')
-          : __('Manage Locations')}
-      </Button>
-    </ContextSelectorFooter>
-  );
+
   return (
-    <ContextSelector
-      ouiaId={`taxonomy-context-selector-${taxonomyType}`}
+    <Dropdown
       id={id}
-      toggleText={
-        currentTaxonomy || (
-          <>
-            {anyIcon}
-            {anyTaxonomyText}
-          </>
-        )
-      }
-      onSearchInputChange={onSearchInputChange}
-      isOpen={isOpen}
-      searchInputValue={searchValue}
-      onToggle={onToggle}
-      onSelect={onSelect}
-      onSearchButtonClick={onSearchButtonClick}
-      screenReaderLabel="Selected Taxonomy:"
       className="context-selector"
-      footer={footer}
+      isOpen={isOpen}
+      onOpenChange={open => {
+        setIsOpen(open);
+        if (!open) setSearchValue('');
+      }}
+      onSelect={onSelect}
+      toggle={toggleRef => (
+        <MenuToggle
+          ref={toggleRef}
+          onClick={() => setIsOpen(prev => !prev)}
+          isExpanded={isOpen}
+          isFullWidth
+          aria-label="Selected Taxonomy:"
+          ouiaId={`taxonomy-context-selector-${taxonomyType}`}
+        >
+          {currentTaxonomy || (
+            <>
+              {anyIcon}
+              {anyTaxonomyText}
+            </>
+          )}
+        </MenuToggle>
+      )}
     >
-      {anyTaxonomyItem}
-      {filteredItems.map(({ title, href }, i) => (
-        <ContextSelectorItem
-          key={i + 1}
-          id={`select_taxonomy_${title}`}
-          className={`${taxonomyType}_menuitem`}
+      <SearchInput
+        value={searchValue}
+        onChange={(_event, val) => setSearchValue(val)}
+        onClear={() => setSearchValue('')}
+        aria-label="Filter taxonomies"
+      />
+      <Divider />
+      <DropdownList>
+        <DropdownItem
+          key={0}
+          className={`${taxonomyType}s_clear`}
           onClick={() => {
-            if (href) {
-              window.location.assign(href);
-            }
+            window.location.assign(anyTaxonomyURL);
           }}
-          isDisabled={title === currentTaxonomy}
+          isDisabled={!currentTaxonomy}
         >
           <Grid hasGutter>
-            <GridItem span={11} style={{ textAlign: 'left' }}>
-              {title}
+            <GridItem span={1}>{anyIcon}</GridItem>
+            <GridItem span={9} style={{ textAlign: 'left' }}>
+              {anyTaxonomyText}
             </GridItem>
-            <GridItem span={1}>
-              {title === currentTaxonomy && selectedIcon}
-            </GridItem>
+            <GridItem span={2}>{!currentTaxonomy && selectedIcon}</GridItem>
           </Grid>
-        </ContextSelectorItem>
-      ))}
-    </ContextSelector>
+        </DropdownItem>
+        {filteredItems.map(({ title, href }, i) => (
+          <DropdownItem
+            key={i + 1}
+            id={`select_taxonomy_${title}`}
+            className={`${taxonomyType}_menuitem`}
+            onClick={() => {
+              if (href) {
+                window.location.assign(href);
+              }
+            }}
+            isDisabled={title === currentTaxonomy}
+          >
+            <Grid hasGutter>
+              <GridItem span={11} style={{ textAlign: 'left' }}>
+                {title}
+              </GridItem>
+              <GridItem span={1}>
+                {title === currentTaxonomy && selectedIcon}
+              </GridItem>
+            </Grid>
+          </DropdownItem>
+        ))}
+        <Divider key="separator" />
+        <DropdownItem
+          key="manage"
+          component="a"
+          href={manageTaxonomyURL}
+        >
+          <Button
+            ouiaId={`manage-taxonomy-button-${taxonomyType}`}
+            size="sm"
+            component="span"
+            className={taxonomyType}
+            variant="secondary"
+          >
+            {taxonomyType === 'organization'
+              ? __('Manage Organizations')
+              : __('Manage Locations')}
+          </Button>
+        </DropdownItem>
+      </DropdownList>
+    </Dropdown>
   );
 };
 

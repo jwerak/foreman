@@ -17,12 +17,12 @@ import {
   TextContent,
   Text,
   Icon,
-} from '@patternfly/react-core';
-import {
   Dropdown,
   DropdownItem,
-  KebabToggle,
-} from '@patternfly/react-core/deprecated';
+  DropdownList,
+  MenuToggle,
+} from '@patternfly/react-core';
+import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
 import { UndoIcon } from '@patternfly/react-icons';
 import { Table } from '../PF4/TableIndexPage/Table/Table';
 import { translate as __ } from '../../common/I18n';
@@ -418,17 +418,24 @@ const HostsIndex = () => {
     <Dropdown
       ouiaId="legacy-ui-kebab"
       id="legacy-ui-kebab"
-      position="right"
-      toggle={
-        <KebabToggle
+      isOpen={legacyUIKebabOpen}
+      onOpenChange={setLegacyUIKebabOpen}
+      onSelect={() => setLegacyUIKebabOpen(false)}
+      popperProps={{ position: 'end' }}
+      toggle={(toggleRef) => (
+        <MenuToggle
+          ref={toggleRef}
+          variant="plain"
+          onClick={() => setLegacyUIKebabOpen(!legacyUIKebabOpen)}
+          isExpanded={legacyUIKebabOpen}
           aria-label="legacy-ui-kebab-toggle"
           id="legacy-ui-kebab-toggle"
-          onToggle={(_event, val) => setLegacyUIKebabOpen(val)}
-        />
-      }
-      isOpen={legacyUIKebabOpen}
-      isPlain
-      dropdownItems={[
+        >
+          <EllipsisVIcon />
+        </MenuToggle>
+      )}
+    >
+      <DropdownList>
         <DropdownItem
           component="a"
           ouiaId="legacy-ui-link-dropdown-item"
@@ -441,9 +448,9 @@ const HostsIndex = () => {
           }
         >
           {__('Legacy UI')}
-        </DropdownItem>,
-      ]}
-    />
+        </DropdownItem>
+      </DropdownList>
+    </Dropdown>
   );
 
   const hostsIndexHeader = (

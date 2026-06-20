@@ -1,11 +1,6 @@
 import React from 'react';
 import { PlusIcon } from '@patternfly/react-icons';
-import { Spinner, Icon } from '@patternfly/react-core';
-import {
-  DropdownItem,
-  DropdownGroup,
-  DropdownSeparator,
-} from '@patternfly/react-core/deprecated';
+import { Spinner, Icon, DropdownItem, DropdownGroup, Divider } from '@patternfly/react-core';
 import { sprintf, translate as __ } from '../../../common/I18n';
 import { STATUS } from '../../../constants';
 import DocumentationUrl from '../DocumentationLink';
@@ -24,8 +19,7 @@ export const addBookmarkItem = setModalOpen => (
       </Icon>{' '}
       {__('Bookmark this search')}
     </DropdownItem>
-    <DropdownSeparator
-      ouiaId="new-bookmark-dropdown-separator"
+    <Divider
       key="separator"
     />
   </DropdownGroup>
@@ -98,8 +92,7 @@ export const savedBookmarksItems = ({
 
 export const manageBookmarksItem = ({ onClick, documentationUrl }) => (
   <DropdownGroup key="manage bookmarks">
-    <DropdownSeparator
-      ouiaId="manage-bookmarks-dropdown-separator"
+    <Divider
       key="separator"
     />
 

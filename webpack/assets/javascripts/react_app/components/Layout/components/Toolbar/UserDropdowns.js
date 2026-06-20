@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dropdown,
-  DropdownToggle,
   DropdownItem,
-  DropdownSeparator,
-} from '@patternfly/react-core/deprecated';
-import { Icon } from '@patternfly/react-core';
+  DropdownList,
+  MenuToggle,
+  Divider,
+  Icon,
+} from '@patternfly/react-core';
 import { UserAltIcon } from '@patternfly/react-icons';
 
 import { userPropType } from '../../LayoutHelper';
@@ -15,9 +16,6 @@ import { translate as __ } from '../../../../common/I18n';
 const UserDropdowns = ({ user, notificationUrl, instanceTitle, ...props }) => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const onDropdownToggle = newUserDropdownOpen => {
-    setUserDropdownOpen(newUserDropdownOpen);
-  };
   const onDropdownSelect = () => {
     setUserDropdownOpen(userDropdownOpen);
   };
@@ -25,7 +23,7 @@ const UserDropdowns = ({ user, notificationUrl, instanceTitle, ...props }) => {
 
   const userDropdownItems = user.user_dropdown[0].children.map((item, i) =>
     item.type === 'divider' ? (
-      <DropdownSeparator ouiaId="user-dropdown-separator" key={i} />
+      <Divider component="li" key={i} />
     ) : (
       <DropdownItem
         ouiaId={`user-dropdown-item-${i}`}
@@ -43,26 +41,30 @@ const UserDropdowns = ({ user, notificationUrl, instanceTitle, ...props }) => {
     userInfo && (
       <Dropdown
         ouiaId="user-info-dropdown"
-        isPlain
-        position="right"
+        popperProps={{ position: 'end' }}
         onSelect={onDropdownSelect}
+        onOpenChange={setUserDropdownOpen}
         isOpen={userDropdownOpen}
-        toggle={
-          <DropdownToggle
+        toggle={(toggleRef) => (
+          <MenuToggle
+            ref={toggleRef}
             ouiaId="user-dropdown-toggle"
-            onToggle={(_event, newUserDropdownOpen) =>
-              onDropdownToggle(newUserDropdownOpen)
-            }
+            variant="plain"
+            onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+            isExpanded={userDropdownOpen}
           >
             <Icon className="user-icon">
               <UserAltIcon />
             </Icon>
             {userInfo.name}
-          </DropdownToggle>
-        }
-        dropdownItems={userDropdownItems}
+          </MenuToggle>
+        )}
         {...props}
-      />
+      >
+        <DropdownList>
+          {userDropdownItems}
+        </DropdownList>
+      </Dropdown>
     )
   );
 };

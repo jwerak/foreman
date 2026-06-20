@@ -645,3 +645,79 @@ Fully removed Enzyme framework and migrated to React Testing Library:
 All four pre-requisite steps are done. The codebase is on React 18, all PF3 dependencies
 are removed, all class components are functional, and all tests use React Testing Library.
 **Phase 1 (PF5 Cleanup) is unblocked.**
+
+### Step 1.1: Replace Deprecated PF5 Dropdown/Select/ContextSelector Components ✅
+
+**Date:** 2026-06-20
+**Files changed:** 18
+
+Removed all imports from `@patternfly/react-core/deprecated` and `@patternfly/react-table/deprecated`:
+
+#### Dropdown migrations (10 files)
+- `PowerStatusDropDown.js` — `DropdownToggle` → `MenuToggle variant="plain"` + render function
+- `UserDropdowns.js` — `DropdownToggle` + `DropdownSeparator` → `MenuToggle` + `Divider`
+- `Bookmarks.js` + `BookmarkItems.js` — `DropdownToggle` + `DropdownGroup` + `DropdownSeparator`
+  → `MenuToggle` + `DropdownGroup` + `Divider` (from `@patternfly/react-core`)
+- `ActionButtons.js` — `KebabToggle` → `MenuToggle variant="plain"` + `EllipsisVIcon`
+- `HostsIndex/index.js` — `KebabToggle` in legacyUIKebab → `MenuToggle` + `EllipsisVIcon`
+- `helpers.js` (ReportsTab) — `KebabToggle` → `MenuToggle variant="plain"` + `EllipsisVIcon`
+- `SelectAllCheckbox` — `DropdownToggleCheckbox` → `MenuToggleCheckbox`, split button pattern
+- `DocumentationLink` — import moved from deprecated to `@patternfly/react-core`
+
+#### Deprecated Select migrations (3 files)
+- `SelectResourceType.js` — `Select` + `SelectVariant.typeahead` → composable `Select` +
+  `MenuToggle variant="typeahead"` + `TextInputGroup` + `SelectList` + `SelectOption`
+- `SelectRole.js` — Same typeahead Select migration pattern
+- `EditTableRow.js` — Two `Select` instances (single variant) → composable `Select` +
+  `MenuToggle` + `SelectList` + `SelectOption`
+
+#### ContextSelector migration (1 file)
+- `TaxonomyDropdown.js` — `ContextSelector` + `ContextSelectorItem` + `ContextSelectorFooter`
+  → `Dropdown` + `MenuToggle` + `SearchInput` + `DropdownList` + `DropdownItem` + `Divider`
+- `TaxonomyDropdown.scss` — Removed ContextSelector-specific CSS variable overrides
+
+#### Deprecated Table migrations (2 files)
+- `StatusTable.js` — `Table`/`TableHeader`/`TableBody` from deprecated → composable
+  `Table`/`Thead`/`Th`/`Tbody`/`Tr`/`Td`/`ActionsColumn`
+- `Details.js` (HostStatuses) — Same composable table pattern
+
+#### ESLint config update (1 file)
+- `require-ouiaid.js` — Removed deprecated component names (`Chip`, `ChipGroup`,
+  `ContextSelector`, `DropdownSeparator`, `DropdownToggle`, `DropdownToggleCheckbox`,
+  `TableComposable`), added new names (`MenuToggle`, `MenuToggleCheckbox`, `ActionsColumn`)
+
+### Step 1.2: Replace Chip Component with Label ✅
+
+**Date:** 2026-06-20
+**Files changed:** 0
+
+Audit found zero usage of `Chip` or `ChipGroup` in the codebase. No migration needed.
+
+### Step 1.3: Replace Text/TextContent with Content ✅ (Deferred)
+
+**Date:** 2026-06-20
+**Files changed:** 0
+
+`Content` component is NOT available in PF5 — it's a PF6-only component. The 15 files
+using `Text`/`TextContent`/`TextList`/`TextListItem` will be automatically migrated by
+the PF6 codemods in Phase 2. No manual migration needed at this stage.
+
+### Step 1.4: Standardize EmptyState Usage ✅
+
+**Date:** 2026-06-20
+**Files changed:** 1
+
+- `Loading.js` — Moved conditional title text from `Title` inside `EmptyStateFooter` to
+  `titleText` prop on `EmptyStateHeader` (PF6 codemod-compatible pattern). Added `headingLevel`.
+  Removed unused `Title` and `EmptyStateFooter` imports.
+- `GlobalState.js` — Already uses correct PF5 composable pattern. No changes needed.
+- `EmptyStatePattern.js` — Already uses `EmptyStateHeader` with `titleText`. No changes needed.
+
+---
+
+## Phase 1 Status (Steps 1.1-1.4): COMPLETE ✅
+
+Zero `@patternfly/react-core/deprecated` or `@patternfly/react-table/deprecated` imports
+remain in the codebase. All Dropdown, Select, ContextSelector, Table, and EmptyState components
+use the current composable PF5 patterns that the PF6 codemods can cleanly transform.
+**Phase 2 (PF6 Core Migration) is unblocked for steps 1.1-1.4.**

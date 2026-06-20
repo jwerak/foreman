@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Tooltip } from '@patternfly/react-core';
 import {
+  Tooltip,
   Dropdown,
-  DropdownToggle,
   DropdownItem,
-} from '@patternfly/react-core/deprecated';
+  DropdownList,
+  MenuToggle,
+} from '@patternfly/react-core';
 
 import { foremanUrl } from '../../../../common/helpers';
 import { useAPI } from '../../../../common/hooks/API/APIHooks';
@@ -58,30 +59,35 @@ const PowerStatusDropDown = ({ hostID, hasPowerPermission, isBmc }) => {
     ));
   };
 
-  const onDropdownSelect = event => setOpen(false);
-  const onToggle = open => setOpen(open);
+  const onDropdownSelect = () => setOpen(false);
   return (
     <Tooltip content={statusText || title}>
       <Dropdown
         ouiaId="power-status-dropdown"
         isOpen={isOpen}
         onSelect={onDropdownSelect}
-        isPlain
-        dropdownItems={dropdownItems()}
-        toggle={
-          <DropdownToggle
+        onOpenChange={setOpen}
+        toggle={(toggleRef) => (
+          <MenuToggle
+            ref={toggleRef}
             ouiaId="power-status-dropdown-toggle"
+            variant="plain"
             isDisabled={!hasPowerPermission || currentState === 'na'}
-            onToggle={(_event, open) => onToggle(open)}
+            onClick={() => setOpen(!isOpen)}
+            isExpanded={isOpen}
           >
             <PowerStatusIcon
               state={currentState}
               title={title}
               responseStatus={responseStatus}
             />
-          </DropdownToggle>
-        }
-      />
+          </MenuToggle>
+        )}
+      >
+        <DropdownList>
+          {dropdownItems()}
+        </DropdownList>
+      </Dropdown>
     </Tooltip>
   );
 };

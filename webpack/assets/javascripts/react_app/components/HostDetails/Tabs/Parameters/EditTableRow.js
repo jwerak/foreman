@@ -19,12 +19,11 @@ import {
   HelperText,
   HelperTextItem,
   Icon,
-} from '@patternfly/react-core';
-import {
-  SelectVariant,
   Select,
   SelectOption,
-} from '@patternfly/react-core/deprecated';
+  SelectList,
+  MenuToggle,
+} from '@patternfly/react-core';
 import { APIActions } from '../../../../redux/API';
 import { sprintf, translate as __ } from '../../../../common/I18n';
 import { HOST_PARAM, columnNames, typeOptions } from './ParametersConstants';
@@ -90,19 +89,6 @@ export const EditParametersTableRow = ({
     }
   };
 
-  const onSelect = (event, selection, isPlaceholder) => {
-    if (isPlaceholder) clearSelection();
-    else {
-      setValue(selection);
-      setSelectValueIsOpen(false);
-    }
-  };
-
-  const clearSelection = () => {
-    setValue('');
-    setSelectValueIsOpen(false);
-  };
-
   return (
     <Tr ouiaId={`edit-parameters-table-row-${rowIndex}`} key={rowIndex}>
       <Td dataLabel={columnNames.name}>
@@ -138,19 +124,32 @@ export const EditParametersTableRow = ({
       <Td dataLabel={columnNames.type}>
         <Select
           ouiaId={`edit-parameters-table-row-type-${rowIndex}`}
-          variant={SelectVariant.single}
           aria-label={`Select ${param.name} type`}
-          onToggle={(_event, val) => setSelectIsOpen(val)}
-          selections={type}
           isOpen={selectIsOpen}
-          onSelect={(event, selection) => {
+          onOpenChange={setSelectIsOpen}
+          onSelect={(_event, selection) => {
             setSelectIsOpen(false);
             setType(selection);
           }}
+          selected={type}
+          toggle={toggleRef => (
+            <MenuToggle
+              ref={toggleRef}
+              onClick={() => setSelectIsOpen(!selectIsOpen)}
+              isExpanded={selectIsOpen}
+              isFullWidth
+            >
+              {type}
+            </MenuToggle>
+          )}
         >
-          {typeOptions.map((option, index) => (
-            <SelectOption key={index} value={option} />
-          ))}
+          <SelectList>
+            {typeOptions.map((option, index) => (
+              <SelectOption key={index} value={option}>
+                {option}
+              </SelectOption>
+            ))}
+          </SelectList>
         </Select>
       </Td>
       <Td dataLabel={columnNames.value}>
@@ -158,16 +157,34 @@ export const EditParametersTableRow = ({
           {type === 'boolean' ? (
             <Select
               ouiaId={`edit-parameters-table-row-boolean-${rowIndex}`}
-              variant={SelectVariant.single}
               aria-label={`Select ${param.name} value`}
-              selections={value?.toString()}
-              onToggle={(_event, val) => setSelectValueIsOpen(val)}
               isOpen={selectValueIsOpen}
-              onSelect={onSelect}
+              onOpenChange={setSelectValueIsOpen}
+              onSelect={(_event, selection) => {
+                if (selection === 'select') {
+                  setValue('');
+                } else {
+                  setValue(selection);
+                }
+                setSelectValueIsOpen(false);
+              }}
+              selected={value?.toString()}
+              toggle={toggleRef => (
+                <MenuToggle
+                  ref={toggleRef}
+                  onClick={() => setSelectValueIsOpen(!selectValueIsOpen)}
+                  isExpanded={selectValueIsOpen}
+                  isFullWidth
+                >
+                  {value?.toString() || __('select')}
+                </MenuToggle>
+              )}
             >
-              <SelectOption value="select" isPlaceholder />
-              <SelectOption value="true" />
-              <SelectOption value="false" />
+              <SelectList>
+                <SelectOption value="select">{__('select')}</SelectOption>
+                <SelectOption value="true">true</SelectOption>
+                <SelectOption value="false">false</SelectOption>
+              </SelectList>
             </Select>
           ) : (
             <TextArea

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, DropdownToggle } from '@patternfly/react-core/deprecated';
-import { Icon } from '@patternfly/react-core';
+import { Dropdown, DropdownList, MenuToggle, Icon } from '@patternfly/react-core';
 import { OutlinedBookmarkIcon } from '@patternfly/react-icons';
 import BookmarkModal from '../../BookmarkForm/SearchModal';
 import { STATUS } from '../../../constants';
@@ -32,9 +31,10 @@ const Bookmarks = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onToggle = isOpen => {
-    setIsDropdownOpen(isOpen);
-    if (bookmarks.length === 0 && status !== STATUS.PENDING) {
+  const onToggle = () => {
+    const willOpen = !isDropdownOpen;
+    setIsDropdownOpen(willOpen);
+    if (willOpen && bookmarks.length === 0 && status !== STATUS.PENDING) {
       getBookmarks();
     }
   };
@@ -75,25 +75,31 @@ const Bookmarks = ({
       />
       <Dropdown
         ouiaId="bookmarks-dropdown"
-        position={bookmarksPosition}
+        popperProps={{ position: bookmarksPosition === 'right' ? 'end' : 'start' }}
         isOpen={isDropdownOpen}
         onSelect={() => setIsDropdownOpen(false)}
-        toggle={
-          <DropdownToggle
-            onToggle={(_event, isOpen) => onToggle(isOpen)}
+        onOpenChange={setIsDropdownOpen}
+        toggle={toggleRef => (
+          <MenuToggle
+            ref={toggleRef}
+            onClick={onToggle}
+            isExpanded={isDropdownOpen}
             title={__('Bookmarks')}
             aria-label="bookmarks dropdown toggle"
             ouiaId="bookmarks-dropdown-toggle"
+            variant="plain"
           >
             <Icon>
               <OutlinedBookmarkIcon />
             </Icon>
-          </DropdownToggle>
-        }
+          </MenuToggle>
+        )}
         id={controller}
-        dropdownItems={dropdownItems}
-        isGrouped
-      />
+      >
+        <DropdownList>
+          {dropdownItems}
+        </DropdownList>
+      </Dropdown>
     </>
   );
 };

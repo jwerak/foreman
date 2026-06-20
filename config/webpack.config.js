@@ -152,6 +152,10 @@ const commonConfig = function(buildName = 'core', tsConfig = 'tsconfig.json') {
           root,
           'node_modules/datatables.net/js/jquery.dataTables.js'
         ), // otherwise we get datatables.net-bs Cannot read properties of undefined (reading 'classes') since dataTables.mjs is a module.
+        // react-dnd imports react/jsx-runtime which can fail under webpack 5.107+'s
+        // module-sync condition in certain build environments (e.g. container builds)
+        'react/jsx-runtime': path.resolve(root, 'node_modules/react/jsx-runtime.js'),
+        'react/jsx-dev-runtime': path.resolve(root, 'node_modules/react/jsx-dev-runtime.js'),
       },
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },

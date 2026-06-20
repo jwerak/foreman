@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dropdown,
-  DropdownToggle,
-  DropdownToggleCheckbox,
   DropdownItem,
-} from '@patternfly/react-core/deprecated';
+  DropdownList,
+  MenuToggle,
+  MenuToggleCheckbox,
+} from '@patternfly/react-core';
 import { translate as __ } from '../../../../../common/I18n';
 import { noop } from '../../../../../common/helpers';
 
@@ -131,14 +132,21 @@ const SelectAllCheckbox = ({
 
   return (
     <Dropdown
-      toggle={
-        <DropdownToggle
-          onToggle={onSelectAllDropdownToggle}
+      isOpen={isSelectAllDropdownOpen}
+      onOpenChange={setSelectAllDropdownOpen}
+      id="selection-checkbox"
+      ouiaId="selection-checkbox"
+      toggle={(toggleRef) => (
+        <MenuToggle
+          ref={toggleRef}
+          onClick={onSelectAllDropdownToggle}
+          isExpanded={isSelectAllDropdownOpen}
           id="select-all-checkbox-dropdown-toggle"
           ouiaId="select-all-checkbox-dropdown-toggle"
           splitButtonItems={[
-            <DropdownToggleCheckbox
+            <MenuToggleCheckbox
               key="table-select-all-checkbox"
+              id="table-select-all-checkbox"
               ouiaId="select-all-checkbox-dropdown-toggle-checkbox"
               aria-label="Select all"
               onChange={(_event, checked) => onSelectAllCheckboxChange(checked)}
@@ -146,15 +154,15 @@ const SelectAllCheckbox = ({
               isDisabled={totalCount === 0 && selectedCount === 0}
             >
               {selectedCount > 0 && `${selectedCount} selected`}
-            </DropdownToggleCheckbox>,
+            </MenuToggleCheckbox>,
           ]}
         />
-      }
-      isOpen={isSelectAllDropdownOpen}
-      dropdownItems={selectAllDropdownItems}
-      id="selection-checkbox"
-      ouiaId="selection-checkbox"
-    />
+      )}
+    >
+      <DropdownList>
+        {selectAllDropdownItems}
+      </DropdownList>
+    </Dropdown>
   );
 };
 

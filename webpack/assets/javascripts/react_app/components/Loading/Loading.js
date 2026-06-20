@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Bullseye,
-  Title,
   EmptyState,
   EmptyStateIcon,
   Spinner,
   EmptyStateHeader,
-  EmptyStateFooter,
 } from '@patternfly/react-core';
 import { translate as __ } from '../../common/I18n';
 
-// Centered patternfly 4 loading icon
+// Centered patternfly loading icon
 const Loading = ({ textSize, iconSize, showText }) => {
   const LoadingSpinner = () => (
     <Spinner size={iconSize} aria-label="loading icon" />
@@ -19,14 +17,11 @@ const Loading = ({ textSize, iconSize, showText }) => {
   return (
     <Bullseye>
       <EmptyState>
-        <EmptyStateHeader icon={<EmptyStateIcon icon={LoadingSpinner} />} />
-        <EmptyStateFooter>
-          {showText && (
-            <Title ouiaId="loading-title" size={textSize} headingLevel="h4">
-              {__('Loading')}
-            </Title>
-          )}
-        </EmptyStateFooter>
+        <EmptyStateHeader
+          titleText={showText ? __('Loading') : undefined}
+          headingLevel="h4"
+          icon={<EmptyStateIcon icon={LoadingSpinner} />}
+        />
       </EmptyState>
     </Bullseye>
   );

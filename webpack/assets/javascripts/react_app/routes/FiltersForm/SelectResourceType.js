@@ -1,11 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup } from '@patternfly/react-core';
 import {
+  FormGroup,
   Select,
   SelectOption,
-  SelectVariant,
-} from '@patternfly/react-core/deprecated';
+  SelectList,
+  MenuToggle,
+  TextInputGroup,
+  TextInputGroupMain,
+  TextInputGroupUtilities,
+  Button,
+} from '@patternfly/react-core';
+import TimesIcon from '@patternfly/react-icons/dist/esm/icons/times-icon';
 import { useAPI } from '../../common/hooks/API/APIHooks';
 import { EMPTY_RESOURCE_TYPE } from './FiltersFormConstants';
 import { translate as __ } from '../../common/I18n';
@@ -43,45 +49,95 @@ export const SelectResourceType = ({
     apiOption
   );
   const [isOpen, setIsOpen] = useState(false);
+  const [filterValue, setFilterValue] = useState('');
+
+  const allOptions = [
+    { key: EMPTY_RESOURCE_TYPE.name, translation: EMPTY_RESOURCE_TYPE.translation, data: EMPTY_RESOURCE_TYPE },
+    ...types.map(option => ({ key: option.name, translation: option.translation, data: option })),
+  ];
+
+  const filteredOptions = filterValue
+    ? allOptions.filter(opt =>
+        opt.translation?.toLowerCase().includes(filterValue.toLowerCase())
+      )
+    : allOptions;
+
+  const handleSelect = (_event, value) => {
+    const selected = allOptions.find(opt => opt.translation === value);
+    if (selected) {
+      if (selected.key === EMPTY_RESOURCE_TYPE.name) {
+        setType(EMPTY_RESOURCE_TYPE);
+        setIsGranular(false);
+      } else {
+        setType(selected.data);
+        setIsGranular(selected.data.granular);
+      }
+      setAutocompleteQuery('');
+    }
+    setFilterValue('');
+    setIsOpen(false);
+  };
+
+  const handleClear = () => {
+    setType(EMPTY_RESOURCE_TYPE);
+    setIsGranular(false);
+    setAutocompleteQuery('');
+    setFilterValue('');
+    setIsOpen(false);
+  };
+
   return (
     <FormGroup label={__('Resource Type')} isRequired>
       <Select
         ouiaId="resource-type-select"
         className="without_select2"
-        maxHeight="45vh"
-        variant={SelectVariant.typeahead}
-        typeAheadAriaLabel="Select a resource type"
-        onToggle={(_event, val) => setIsOpen(val)}
-        selections={type.translation}
+        maxMenuHeight="45vh"
         isOpen={isOpen}
-        aria-labelledby="resource type"
-        onSelect={() => {
-          setIsOpen(false);
-        }}
-        toggleAriaLabel="resource type toggle"
+        onOpenChange={setIsOpen}
+        onSelect={handleSelect}
+        selected={type.translation}
+        toggle={toggleRef => (
+          <MenuToggle
+            ref={toggleRef}
+            onClick={() => setIsOpen(!isOpen)}
+            isExpanded={isOpen}
+            variant="typeahead"
+            isFullWidth
+            aria-label="resource type toggle"
+          >
+            <TextInputGroup isPlain>
+              <TextInputGroupMain
+                value={filterValue || type.translation || ''}
+                onChange={(_event, val) => {
+                  setFilterValue(val);
+                  setIsOpen(true);
+                }}
+                autoComplete="off"
+                placeholder={__('Select a resource type')}
+                aria-label="Select a resource type"
+              />
+              {(filterValue || type.translation) && (
+                <TextInputGroupUtilities>
+                  <Button
+                    variant="plain"
+                    onClick={handleClear}
+                    aria-label="Clear"
+                  >
+                    <TimesIcon />
+                  </Button>
+                </TextInputGroupUtilities>
+              )}
+            </TextInputGroup>
+          </MenuToggle>
+        )}
       >
-        {[
-          <SelectOption
-            onClick={() => {
-              setType(EMPTY_RESOURCE_TYPE);
-              setIsGranular(false);
-              setAutocompleteQuery('');
-            }}
-            key={EMPTY_RESOURCE_TYPE.name}
-            value={EMPTY_RESOURCE_TYPE.translation}
-          />,
-          ...types.map(option => (
-            <SelectOption
-              onClick={() => {
-                setType(option);
-                setIsGranular(option.granular);
-                setAutocompleteQuery('');
-              }}
-              key={option.name}
-              value={option.translation}
-            />
-          )),
-        ]}
+        <SelectList>
+          {filteredOptions.map(opt => (
+            <SelectOption key={opt.key} value={opt.translation}>
+              {opt.translation}
+            </SelectOption>
+          ))}
+        </SelectList>
       </Select>
     </FormGroup>
   );
