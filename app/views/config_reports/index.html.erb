@@ -15,5 +15,4 @@
   ]
 ) if @host %>
 <% title _("Reports") %>
-<% title_actions csv_link, documentation_button('3.5.4PuppetReports') %>
-<%= render :partial => 'list' %>
+<%= react_component('ConfigReportsIndex', react_index_props(ConfigReport, creatable: false, exportable: true, export_url: url_for(format: :csv, search: params[:search]), documentation_url: documentation_url('3.5.4PuppetReports'))) %>

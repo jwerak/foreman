@@ -62,6 +62,9 @@ import ComputeResourcesIndex from './ComputeResourcesIndex';
 import HttpProxiesIndex from './HttpProxiesIndex';
 import OperatingsystemsIndex from './OperatingsystemsIndex';
 import PtablesIndex from './PtablesIndex';
+import ProvisioningTemplatesIndex from './ProvisioningTemplatesIndex';
+import ReportTemplatesIndex from './ReportTemplatesIndex';
+import ConfigReportsIndex from './ConfigReportsIndex';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -214,6 +217,9 @@ const coreComponents = [
   { name: 'HttpProxiesIndex', type: HttpProxiesIndex },
   { name: 'OperatingsystemsIndex', type: OperatingsystemsIndex },
   { name: 'PtablesIndex', type: PtablesIndex },
+  { name: 'ProvisioningTemplatesIndex', type: ProvisioningTemplatesIndex },
+  { name: 'ReportTemplatesIndex', type: ReportTemplatesIndex },
+  { name: 'ConfigReportsIndex', type: ConfigReportsIndex },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {

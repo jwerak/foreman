@@ -84,11 +84,10 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 - `operatingsystems/index` ✅ — React IndexPage with title, hosts_count columns + clone action
 - `ptables/index` ✅ — React IndexPage with name, os_family, operatingsystem_names, snippet/locked icons + clone/lock/unlock actions
 
-**Batch 6C — Templates & reports (4 pages):**
-- `provisioning_templates/index`
-- `report_templates/index`
-- `config_reports/index`
-- `bookmarks/index`
+**Batch 6C — Templates & reports (3 pages) ✅ COMPLETE (2026-06-20):**
+- `provisioning_templates/index` ✅ — React IndexPage with name, combination, kind, snippet/locked icons + clone/export/lock/unlock actions + Build PXE Default custom action
+- `report_templates/index` ✅ — React IndexPage with name, snippet/locked icons + clone/generate/export/lock/unlock actions
+- `config_reports/index` ✅ — React IndexPage with host, reported_at, origin, applied/restarted/failed/failed_restarts/skipped/pending columns + CSV export + delete action
 
 **Batch 6D — User management & access (3 of 5 pages) ✅ PARTIAL (2026-06-20):**
 - `users/index` ✅ — React IndexPage with login, name, mail, admin, last_login, auth source columns
