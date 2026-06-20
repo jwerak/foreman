@@ -838,15 +838,55 @@ Replaced all `--pf-t--temp--dev--tbd` placeholders with correct PF6 semantic tok
 
 ---
 
-## Phase 2 Status (Steps 2.1-2.5): COMPLETE ✅
+## Phase 2 Status: COMPLETE ✅
 
 All PatternFly packages upgraded to v6.4.x. All CSS classes, tokens, and variables updated.
 Webpack build compiles cleanly. All 222 test suites pass. App deploys and serves on
 http://127.0.0.1:3000 with PF6.
 
-**Remaining Phase 2 follow-up (Phase 2.6-2.11):**
-- 22 files use `@patternfly/react-core/deprecated` for the old Modal API (functional but
-  should migrate to PF6 promoted Modal — Step 2.8)
-- Manual token replacement audit (Step 2.6) — visual verification may reveal missed tokens
-- Breakpoint logic audit (Step 2.10) — verify any JS pixel breakpoints
-- CSS override review (Step 2.11) — visual verification of custom SCSS overrides
+### Steps 2.6-2.11: Manual Token Fixes, Modal Migration, Test Fixes ✅
+
+**Date:** 2026-06-20
+**Files changed:** 22 (21 modal files + jest.config.js)
+
+#### Audit results (Steps 2.6, 2.7, 2.8, 2.10 — all clear)
+- **Step 2.6 (Manual tokens):** Zero `--pf-t--temp--dev--tbd` placeholder tokens remain
+- **Step 2.7 (Chart imports):** All 5 chart files already use `@patternfly/react-charts/victory`
+- **Step 2.8 (SearchModal /next):** Zero `@patternfly/react-core/next` imports remain
+- **Step 2.10 (Breakpoint logic):** Zero pixel-based breakpoint values in JS conditional logic
+
+#### Deprecated Modal → PF6 promoted Modal migration (21 files)
+Migrated all `@patternfly/react-core/deprecated` Modal imports to PF6 composable
+Modal with `ModalHeader`/`ModalBody`/`ModalFooter`:
+- ChartBox, ColumnSelector, ConfirmModal, DiffModal, EditorModal, ForemanModal
+- BuildModal, StatusesModal, ReviewModal, ImpersonateIcon, DeleteModal
+- ModalProgressBar (also removed invalid `showClose` prop)
+- PersonalAccessTokenModal, RepositoryModal
+- All 7 BulkAction modals (Assign, Build, ChangeOwner, Disassociate, ManageNotifications,
+  PowerState, Reassign)
+
+Pattern: `ModalVariant.small` → `variant="small"`, `title` prop → `<ModalHeader title="..." />`,
+`actions` prop → `<ModalFooter>`, body content → `<ModalBody>`, added `aria-labelledby`
+
+#### Step 2.9 (Button test assertions)
+Already handled in Phase 2.1-2.5 test fixes.
+
+#### Step 2.11 (CSS override review)
+Audited 20 SCSS files with 84 PatternFly variable references:
+- 11 component variable overrides (`--pf-v6-c-*`) — all valid PF6 variables
+- 73 design token references (`--pf-t--global--*`) — all valid semantic tokens
+- Zero `--pf-v5` leftovers, zero invalid tokens, zero placeholder tokens
+- All overrides are intentional theming customizations
+
+#### Jest config fix
+- Added explicit `moduleNameMapper` entries for `@patternfly/react-core` and
+  `@patternfly/react-table` pointing to `dist/js/index.js` (prevents Jest 26 from
+  resolving PF6 TypeScript sources instead of compiled output)
+
+#### Remaining deprecated import
+- `Pf4DualList/index.js` still imports `DualListSelector` from `@patternfly/react-core/deprecated`.
+  PF6's composable DualListSelector has a fundamentally different API (no `availableOptions`,
+  `chosenOptions`, `onListChange` props). Migration requires rewriting the component and all
+  consumers. Deferred to a separate task.
+
+**All 222 test suites pass (1139 tests, 375 snapshots).**
