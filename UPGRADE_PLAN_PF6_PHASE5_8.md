@@ -77,12 +77,12 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 - `media/index` ✅ — React IndexPage with name, path, OS family, OS names columns + clone action
 - `compute_profiles/index` ✅ — React IndexPage with name column, rename + delete actions
 
-**Batch 6B — Networking & provisioning (5 pages):**
-- `subnets/index`
-- `compute_resources/index`
-- `http_proxies/index`
-- `operatingsystems/index`
-- `ptables/index`
+**Batch 6B — Networking & provisioning (5 pages) ✅ COMPLETE (2026-06-20):**
+- `subnets/index` ✅ — React IndexPage with name, network, vlanid, dhcp_name, hosts_count columns
+- `compute_resources/index` ✅ — React IndexPage with name, provider_friendly_name columns + edit action
+- `http_proxies/index` ✅ — React IndexPage with name, url columns
+- `operatingsystems/index` ✅ — React IndexPage with title, hosts_count columns + clone action
+- `ptables/index` ✅ — React IndexPage with name, os_family, operatingsystem_names, snippet/locked icons + clone/lock/unlock actions
 
 **Batch 6C — Templates & reports (4 pages):**
 - `provisioning_templates/index`
@@ -271,6 +271,17 @@ Convert `common/403.html.erb`, `404.html.erb`, `500.html.erb`, `503.html.erb` to
 - `hosts/_interfaces.html.erb` — network interface editor
 - `hosts/_list.html.erb` — bulk operations
 - `hosts/show.html.erb` — host detail modals
+
+---
+
+## Known Issues
+
+- **Logout link** — The "Log Out" link in the User menu does not respond (no navigation, no POST). Likely caused by `data-method: post` not being processed by React/PF6 navigation — Rails UJS or Turbo needs to handle it.
+- **My Account link** — The "My Account" link in the User menu also does not respond. Same root cause — the React Layout renders these as plain links but the click handler or navigation is not wired up.
+
+Both are in the Layout/sidebar React component, not in the index page migration. Needs investigation as a separate fix.
+
+- **Dark mode contrast** — The dark mode toggle works (added in Phase 4) but table text and links in the migrated React IndexPage components have poor contrast against the dark background. The PF6 dark theme tokens (`pf-v6-theme-dark`) are applied correctly but some custom or inherited styles may be overriding the expected text colors. Needs a dark-mode-specific CSS pass across the IndexPage, ActionButtons, and table cell link styles.
 
 ---
 

@@ -57,6 +57,11 @@ import BookmarksIndex from './BookmarksIndex';
 import UserGroupsIndex from './UserGroupsIndex';
 import RolesIndex from './RolesIndex';
 import UsersIndex from './UsersIndex';
+import SubnetsIndex from './SubnetsIndex';
+import ComputeResourcesIndex from './ComputeResourcesIndex';
+import HttpProxiesIndex from './HttpProxiesIndex';
+import OperatingsystemsIndex from './OperatingsystemsIndex';
+import PtablesIndex from './PtablesIndex';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -204,6 +209,11 @@ const coreComponents = [
   { name: 'UserGroupsIndex', type: UserGroupsIndex },
   { name: 'RolesIndex', type: RolesIndex },
   { name: 'UsersIndex', type: UsersIndex },
+  { name: 'SubnetsIndex', type: SubnetsIndex },
+  { name: 'ComputeResourcesIndex', type: ComputeResourcesIndex },
+  { name: 'HttpProxiesIndex', type: HttpProxiesIndex },
+  { name: 'OperatingsystemsIndex', type: OperatingsystemsIndex },
+  { name: 'PtablesIndex', type: PtablesIndex },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {
