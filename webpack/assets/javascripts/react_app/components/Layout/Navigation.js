@@ -106,11 +106,15 @@ const Navigation = ({
   const [currentExpandedSecondary, setCurrentExpandedSecondary] = useState(
     null
   );
-  const [currentExpanded, setCurrentExpanded] = useState(
-    subItemToItemMap[pathFragment(getCurrentPath())]
-  );
+  const [expandedSections, setExpandedSections] = useState(() => {
+    const initial = subItemToItemMap[pathFragment(getCurrentPath())];
+    return new Set(initial ? [initial] : []);
+  });
   useEffect(() => {
-    setCurrentExpanded(subItemToItemMap[pathFragment(getCurrentPath())]);
+    const active = subItemToItemMap[pathFragment(getCurrentPath())];
+    if (active) {
+      setExpandedSections(prev => new Set([...prev, active]));
+    }
     groupedItems.some(({ groups }) =>
       groups.some(({ groupItems, title }) =>
         groupItems.some(({ href }) => {
@@ -151,20 +155,23 @@ const Navigation = ({
               isActive={
                 subItemToItemMap[pathFragment(getCurrentPath())] === title
               }
-              isExpanded={currentExpanded === title}
+              isExpanded={expandedSections.has(title)}
               className={className}
               onClick={() => onMouseOver(index)}
               onFocus={() => {
                 onMouseOver(index);
               }}
               onExpand={() => {
-                // if the current expanded item is the same as the clicked item, collapse it
-                const isExpanded = currentExpanded === title;
-                // close the Secondary nav if it's open
-                if (isExpanded) setCurrentExpandedSecondary(null);
-                // only have 1 item expanded at a time
-                setCurrentExpanded(isExpanded ? null : title);
-                setCurrentExpandedSecondary(null);
+                setExpandedSections(prev => {
+                  const next = new Set(prev);
+                  if (next.has(title)) {
+                    next.delete(title);
+                    setCurrentExpandedSecondary(null);
+                  } else {
+                    next.add(title);
+                  }
+                  return next;
+                });
               }}
             >
               {groups.map((group, groupIndex) =>

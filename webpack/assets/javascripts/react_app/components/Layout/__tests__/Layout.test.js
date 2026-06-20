@@ -29,8 +29,23 @@ describe('Layout', () => {
       await fireEvent.click(screen.getByText('Hosts'));
     });
     expect(screen.getByText('Monitor')).toBeVisible();
-    expect(screen.getByText('Dashboard')).not.toBeVisible();
+    expect(screen.getByText('Dashboard')).toBeVisible();
     expect(screen.getByText('All Hosts')).toBeVisible();
     expect(screen.getByText('Production')).toBeVisible();
+  });
+
+  it('collapses a section on re-click', async () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <Layout data={layoutData} />
+        </Router>
+      </Provider>
+    );
+    expect(screen.getByText('Dashboard')).toBeVisible();
+    await act(async () => {
+      await fireEvent.click(screen.getByText('Monitor'));
+    });
+    expect(screen.getByText('Dashboard')).not.toBeVisible();
   });
 });

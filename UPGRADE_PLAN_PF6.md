@@ -890,3 +890,132 @@ Audited 20 SCSS files with 84 PatternFly variable references:
   consumers. Deferred to a separate task.
 
 **All 222 test suites pass (1139 tests, 375 snapshots).**
+
+---
+
+## Phase 3 Status: COMPLETE ✅
+
+### Step 3.1: Fix Failing Tests ✅
+
+**Date:** 2026-06-20
+**Files changed:** 0
+
+Full test suite run: **222 test suites pass (1139 tests, 375 snapshots, 1 skipped).**
+All snapshot files are current — zero obsolete, zero needing update. No test fixes required
+beyond what was already done in Phase 2.
+
+### Step 3.2: Stabilization Audit ✅
+
+**Date:** 2026-06-20
+
+Comprehensive audit for remaining PF5/deprecated patterns:
+- **`@patternfly/react-core/deprecated`:** 1 file — `Pf4DualList/index.js` (DualListSelector,
+  already documented as deferred due to fundamental API change)
+- **`@patternfly/react-core/next`:** None
+- **`pf-v5-` CSS classes:** None
+- **`--pf-v5` CSS variables:** None
+- **`$pf-v5` Sass variables:** None
+- **`--pf-t--temp--dev--tbd` placeholders:** None
+- **Legacy PF3 imports:** None
+- **Deprecated `TextContent`/`TextList`/`TextListItem`:** None (all migrated to `Content`)
+
+The codebase is clean except for the one known deferred DualListSelector migration.
+
+### Step 3.2b: Visual Regression Testing ✅
+
+**Date:** 2026-06-20
+
+Container rebuild with PF6 code deployed and verified on http://127.0.0.1:3000:
+- Webpack production build compiles cleanly (27 warnings — all Sass `/` division deprecations
+  from the `patternfly` PF3 npm package in `variables.scss`, cosmetic only)
+- App deploys and serves with PF6 styling
+- Login page renders correctly
+- Dashboard loads with PF6 components (`pf-v6-c-page`, `pf-v6-c-page__main-section`)
+- Hosts, Settings, Audits, Models pages all respond HTTP 200
+- Zero `pf-v5` CSS classes in rendered HTML output
+
+#### Additional fixes discovered during visual testing
+
+**ERB template fixes (2 files):**
+- `app/views/layouts/base.html.erb` — `pf-v5-c-page` → `pf-v6-c-page`
+- `app/views/layouts/_application_content.html.erb` — 3× `pf-v5-c-page__*` → `pf-v6-c-page__*`
+
+**Ruby integration test selector updates (12 files, ~30 changes):**
+- `test/integration_test_helper.rb` — `pf-v5-c-nav__link`, `pf-v5-c-nav__item` → `pf-v6-c-*`;
+  `pf-v5-c-context-selector__toggle` → `pf-v6-c-menu-toggle` (ContextSelector → Dropdown in PF6);
+  `pf-v5-c-context-selector__menu` → `pf-v6-c-menu`
+- 11 integration test files — all `pf-v5-c-*` selectors → `pf-v6-c-*` (pagination, button,
+  breadcrumb, menu, modal-box, skeleton, masthead, text-input-group, page__main-breadcrumb)
+
+### Steps 3.3-3.4: @theforeman Packages & Plugin Communication
+
+**Status:** Out of scope for this PR. These are coordination tasks:
+- `@theforeman/vendor` update to provide PF6 as shared dependency
+- `@theforeman/builder` Babel config review
+- Plugin maintainer notification and migration guide
+
+These require upstream coordination and will be handled as separate follow-up tasks.
+
+## Phase 4 Status: PF6 Native Sidebar, Dark Mode, Multi-Expand Nav
+
+**Date:** 2026-06-20
+
+### Step 4.6: Remove Custom Sidebar Color Overrides ✅
+
+Removed hardcoded dark teal (#024d6c) sidebar color overrides so PF6 design-token-based
+theming takes over (light gray in light mode, dark gray in dark mode).
+
+**Files changed:**
+- `app/assets/stylesheets/patternfly_colors_overrides.scss` — removed `@import './colors.scss'`,
+  `--pf-v6-c-page__sidebar--BackgroundColor`, `.pf-v6-c-nav__link` color overrides,
+  `.pf-v6-c-nav__subnav` and `.pf-v6-c-nav__item` blocks. Added `.pf-v6-c-nav__toggle { display: none }`
+  to hide expand/collapse chevrons.
+- `app/assets/stylesheets/colors.scss` — removed unused nav variables (`$navbar-default-link-color`,
+  `$topbar-default-color`, `$nav-pf-vertical-*-bg-color`)
+- `webpack/.../common/colors.scss` — removed unused nav variables
+
+### Step 4.7: Remove Masthead Background Image & Fix Brand Colors ✅
+
+**Files changed:**
+- `app/assets/stylesheets/navigation.scss` — replaced `background: ... image-url('navbar.png')`
+  with `background-color: var(--pf-v6-c-masthead--BackgroundColor)`
+- `webpack/.../Toolbar/HeaderToolbar.scss` — brand text `color: white` → `var(--pf-t--global--text--color--regular)`
+- `webpack/.../Layout/layout.scss` — removed `background-repeat`/`background-size` from masthead,
+  fixed hover color to use PF6 token, fixed search bar alignment (padding instead of hardcoded width),
+  hid nav toggle chevrons
+
+### Step 4.8: Multi-Expand Navigation ✅
+
+Replaced accordion behavior (one section at a time) with multi-expand (multiple sections
+open simultaneously, like OpenShift Console).
+
+**Files changed:**
+- `webpack/.../Layout/Navigation.js` — replaced `currentExpanded` string state with
+  `expandedSections` Set; `isExpanded` checks `set.has(title)`; `onExpand` toggles set membership.
+  Secondary NavExpandables remain accordion-style within each section.
+
+### Step 4.9: Dark/Light Mode Toggle ✅
+
+Added a toolbar toggle button for dark/light mode with system preference support
+and FOUC prevention.
+
+**New files:**
+- `webpack/.../ThemeToggle/useTheme.js` — custom hook managing localStorage key
+  `foreman-theme-preference`, `prefers-color-scheme` media query, and `pf-v6-theme-dark` class
+- `webpack/.../ThemeToggle/ThemeToggle.js` — plain Button with MoonIcon/SunIcon and Tooltip
+
+**Files changed:**
+- `webpack/.../Toolbar/HeaderToolbar.js` — added ThemeToggle ToolbarItem before notification icon
+- `app/views/layouts/base.html.erb` — added inline `<script>` in `<head>` to apply dark class
+  synchronously (prevents flash of light theme)
+
+### Step 4.10: Test Updates ✅
+
+**Files changed:**
+- `webpack/.../Layout/__tests__/Layout.test.js` — updated assertions for multi-expand
+  (Dashboard stays visible after expanding Hosts), added collapse-on-re-click test
+- `webpack/.../ThemeToggle/ThemeToggle.test.js` — **new**, 4 tests for render, toggle, persist, round-trip
+- `webpack/.../Toolbar/__snapshots__/HeaderToolbar.test.js.snap` — regenerated with ThemeToggle
+- `webpack/global_test_setup.js` — added global `window.matchMedia` mock for jsdom
+
+**Test results:** 223 suites pass, 1145 tests (1144 pass, 1 skipped), 375 snapshots.

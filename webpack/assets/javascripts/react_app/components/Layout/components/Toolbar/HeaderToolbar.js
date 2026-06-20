@@ -17,6 +17,7 @@ import {
   userPropType,
 } from '../../LayoutHelper';
 import './HeaderToolbar.scss';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import NotificationIcon from '../../../notifications/components/NotificationIcon';
 import { NotificationsContextWrapper } from '../../../notifications/NotificationsContext';
 import Notifications from '../../../notifications';
@@ -39,6 +40,9 @@ const HeaderToolbar = ({
         />
       </ToolbarGroup>
       <ToolbarGroup align={{ default: "alignEnd" }}>
+        <ToolbarItem>
+          <ThemeToggle />
+        </ToolbarItem>
         <ToolbarItem>
           <NotificationsContextWrapper>
             <NotificationIcon />

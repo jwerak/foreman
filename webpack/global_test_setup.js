@@ -3,6 +3,13 @@ import 'core-js/shim';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'regenerator-runtime/runtime';
 
+window.matchMedia = window.matchMedia || (query => ({
+  matches: false,
+  media: query,
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+}));
+
 // https://github.com/facebook/jest/issues/6121
 // eslint-disable-next-line no-console
 const { error } = console;

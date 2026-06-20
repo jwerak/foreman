@@ -12,7 +12,7 @@ html {
   right: 0;
   bottom: 0;
   overflow: auto;
-  margin-left: 250px;
+  margin-left: var(--pf-v6-c-page__sidebar--Width, 250px);
   top: calc(
     var(--header-height) + var(--banner-height)
   );
@@ -23,7 +23,7 @@ html {
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  &.pf-v5-c-page {
+  &.pf-v6-c-page {
     display: block;
     grid-template-columns: unset;
     grid-template-areas: unset;
@@ -40,14 +40,6 @@ body {
 #react-app-root {
   height: 100%;
   width: 100%;
-  .pf-v5-c-page {
-    // pf grid rule stops at @media (min-width: 1200px)
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-template-areas:
-      'header header'
-      'nav main';
-  }
 }
 
 .base li {
@@ -669,7 +661,7 @@ span.btn a.disabled {
 }
 
 .compact-ui {
-  td.pf-v5-c-table__td {
+  td.pf-v6-c-table__td {
     padding-top: 2px;
     padding-bottom: 2px;
     > button {
@@ -680,7 +672,7 @@ span.btn a.disabled {
 
 .user-banner-present {
   --banner-height: calc(
-    2 * var(--pf-v5-global--spacer--xs) +
-      (var(--pf-v5-global--LineHeight--md) * var(--pf-v5-global--FontSize--sm))
-  ); // banner height is line height and a small padding
+    2 * var(--pf-t--global--spacer--xs) +
+      (var(--pf-t--global--font--line-height--body) * var(--pf-t--global--font--size--body--sm))
+  );
 }
