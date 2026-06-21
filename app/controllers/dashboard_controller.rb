@@ -4,19 +4,27 @@ class DashboardController < ApplicationController
   skip_before_action :welcome
 
   def index
-    origin = params[:origin]
-    settings = origin.present? ? { origin: origin } : {}
-    @data = Dashboard::Data.new(params[:search], settings)
-    @dashboard_props = build_dashboard_props(@data, origin)
-
     respond_to do |format|
-      format.html
-      format.yaml { render :plain => @data.report.to_yaml }
-      format.json { render :json => @dashboard_props }
+      format.html { render template: 'react/index', layout: spa_fetch_request? ? 'spa_content' : 'layouts/react_application' }
+      format.yaml do
+        load_dashboard_data
+        render :plain => @data.report.to_yaml
+      end
+      format.json do
+        load_dashboard_data
+        render :json => @dashboard_props
+      end
     end
   end
 
   private
+
+  def load_dashboard_data
+    origin = params[:origin]
+    settings = origin.present? ? { origin: origin } : {}
+    @data = Dashboard::Data.new(params[:search], settings)
+    @dashboard_props = build_dashboard_props(@data, origin)
+  end
 
   def build_dashboard_props(data, origin)
     h = helpers
