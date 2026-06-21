@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Spinner } from '@patternfly/react-core';
@@ -28,8 +27,8 @@ const Select = ({
   const selectRef = useRef(null);
 
   const initializeSelect2 = () => {
-    if ($.fn.select2) {
-      $(selectRef.current).select2({
+    if (window.$ && window.$.fn && window.$.fn.select2) {
+      window.$(selectRef.current).select2({
         allowClear,
         formatNoMatches: __('No matches found'),
       });
@@ -37,9 +36,11 @@ const Select = ({
   };
 
   const attachEvent = () => {
-    $(selectRef.current)
-      .off('select2:select select2:unselecting', onChange)
-      .on('select2:select select2:unselecting', onChange);
+    if (window.$ && window.$.fn && window.$.fn.select2) {
+      window.$(selectRef.current)
+        .off('select2:select select2:unselecting', onChange)
+        .on('select2:select select2:unselecting', onChange);
+    }
   };
 
   useEffect(() => {

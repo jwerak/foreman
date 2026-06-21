@@ -1,9 +1,3 @@
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-attr */
-/* eslint-disable jquery/no-class */
-/* eslint-disable jquery/no-text */
-
-import $ from 'jquery';
 import {
   SpiceMainConn,
   sendCtrlAltDel as _sendCtrlAltDel,
@@ -13,10 +7,13 @@ import { sprintf, translate as __ } from './react_app/common/I18n';
 let sc = null;
 
 export function startSpice() {
-  const scheme = $('#spice-area').data('encrypt') ? 'wss' : 'ws';
+  const spiceArea = document.getElementById('spice-area');
+  if (!spiceArea) return;
+
+  const scheme = spiceArea.dataset.encrypt ? 'wss' : 'ws';
   const host = window.location.hostname;
-  const port = $('#spice-area').data('port');
-  const password = $('#spice-area').data('password');
+  const port = spiceArea.dataset.port;
+  const password = spiceArea.dataset.password;
 
   if (!host || !port) {
     // eslint-disable-next-line no-console
@@ -47,18 +44,21 @@ export function disconnect() {
 }
 
 function spiceError(e) {
-  $('#spice-status').text(e);
-  $('#spice-status')
-    .removeClass('label-success')
-    .addClass('label-danger');
+  const status = document.getElementById('spice-status');
+  if (status) {
+    status.textContent = e;
+    status.classList.remove('label-success');
+    status.classList.add('label-danger');
+  }
   disconnect();
 }
 
 function spiceSuccess(m) {
-  $('#spice-status').text(
-    sprintf(__('Connected to: %s'), $('#spice-status').attr('data-host'))
-  );
-  $('#spice-status').addClass('label-success');
+  const status = document.getElementById('spice-status');
+  if (status) {
+    status.textContent = sprintf(__('Connected to: %s'), status.getAttribute('data-host'));
+    status.classList.add('label-success');
+  }
 }
 
 export function sendCtrlAltDel() {

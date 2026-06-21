@@ -1,4 +1,21 @@
-<%= alert :header => _("Service unavailable"), :class => 'alert-danger',
-  :actions => link_to(_('Back'), main_app.root_path, :class => 'btn btn-default'),
-  :text => h(exception.message),
-  :close => false %>
+<% content_for(:title, _("Service unavailable")) %>
+<div class="pf-v6-c-empty-state pf-m-lg pf-m-danger">
+  <div class="pf-v6-c-empty-state__content">
+    <div class="pf-v6-c-empty-state__header">
+      <div class="pf-v6-c-empty-state__icon">
+        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+      </div>
+      <div class="pf-v6-c-empty-state__title">
+        <h1 class="pf-v6-c-empty-state__title-text"><%= _("Service unavailable") %></h1>
+      </div>
+    </div>
+    <div class="pf-v6-c-empty-state__body">
+      <p><%= h(exception.message) %></p>
+    </div>
+    <div class="pf-v6-c-empty-state__footer">
+      <div class="pf-v6-c-empty-state__actions">
+        <%= link_to(_('Back'), main_app.root_path, class: 'pf-v6-c-button pf-m-primary') %>
+      </div>
+    </div>
+  </div>
+</div>

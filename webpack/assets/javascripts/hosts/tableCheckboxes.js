@@ -1,19 +1,3 @@
-/* eslint-disable jquery/no-param */
-/* eslint-disable jquery/no-load */
-/* eslint-disable jquery/no-hide */
-/* eslint-disable jquery/no-show */
-/* eslint-disable jquery/no-find */
-/* eslint-disable jquery/no-text */
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-attr */
-/* eslint-disable jquery/no-is */
-/* eslint-disable jquery/no-html */
-/* eslint-disable jquery/no-each */
-/* eslint-disable jquery/no-submit */
-/* eslint-disable jquery/no-in-array */
-
-import $ from 'jquery';
 import Cookies from 'js-cookie';
 
 import {
@@ -25,23 +9,26 @@ import { getURIsearch } from '../react_app/common/urlHelpers';
 import { foremanUrl } from '../foreman_tools';
 import * as sessionStorage from './HostsSessionStorage';
 
-// Array contains list of host ids
+function getCsrfToken() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta ? meta.content : '';
+}
+
 const cookieName = `_ForemanSelected${window.location.pathname.replace(
   /\//,
   ''
 )}`;
 let foremanSelectedHosts = readFromCookie();
 
-// triggered by a host checkbox change
 export function hostChecked({ id, checked }) {
-  const multipleAlert = $('#multiple-alert');
+  const multipleAlert = document.getElementById('multiple-alert');
   const cid = parseInt(id.replace('host_ids_', ''), 10);
   if (checked) addHostId(cid);
   else {
     rmHostId(cid);
-    if (multipleAlert.length) {
-      multipleAlert.hide('slow');
-      multipleAlert.data('multiple', false);
+    if (multipleAlert) {
+      multipleAlert.style.display = 'none';
+      multipleAlert.dataset.multiple = 'false';
     }
   }
   Cookies.set(cookieName, JSON.stringify(foremanSelectedHosts), {
@@ -53,11 +40,11 @@ export function hostChecked({ id, checked }) {
 }
 
 function addHostId(id) {
-  if ($.inArray(id, foremanSelectedHosts) === -1) foremanSelectedHosts.push(id);
+  if (foremanSelectedHosts.indexOf(id) === -1) foremanSelectedHosts.push(id);
 }
 
 function rmHostId(id) {
-  const pos = $.inArray(id, foremanSelectedHosts);
+  const pos = foremanSelectedHosts.indexOf(id);
   if (pos >= 0) foremanSelectedHosts.splice(pos, 1);
 }
 
@@ -73,28 +60,33 @@ function readFromCookie() {
 }
 
 function toggleActions() {
-  const dropDownContainer = $('#submit_multiple');
-  const dropdown = dropDownContainer.find('a');
+  const dropDownContainer = document.getElementById('submit_multiple');
+  if (!dropDownContainer) return;
+
+  const dropdowns = dropDownContainer.querySelectorAll('a');
   const disabledMessage = __('Please select hosts to perform action on.');
+
   if (foremanSelectedHosts.length === 0) {
-    dropdown.addClass('disabled');
-    dropdown.attr('disabled', 'disabled');
-    dropDownContainer.attr('title', disabledMessage);
+    dropdowns.forEach(a => {
+      a.classList.add('disabled');
+      a.setAttribute('disabled', 'disabled');
+    });
+    dropDownContainer.setAttribute('title', disabledMessage);
   } else {
-    dropdown.removeClass('disabled');
-    dropdown.removeAttr('disabled');
-    dropDownContainer.removeAttr('title');
+    dropdowns.forEach(a => {
+      a.classList.remove('disabled');
+      a.removeAttribute('disabled');
+    });
+    dropDownContainer.removeAttribute('title');
   }
 }
 
-// setups checkbox values upon document load
-$(document).on('ContentLoad', () => {
+document.addEventListener('ContentLoad', () => {
   if (window.location.pathname !== foremanUrl('/hosts')) return;
 
   const hostQuery = sessionStorage.getHostQuery();
   const uriSearch = getURIsearch();
 
-  // clear selected hosts if new search occurs
   if (uriSearch !== '' && hostQuery !== uriSearch) {
     cleanHostsSelection();
     sessionStorage.setHostQuery(uriSearch);
@@ -104,16 +96,18 @@ $(document).on('ContentLoad', () => {
 
   for (let i = 0; i < foremanSelectedHosts.length; i++) {
     const cid = `host_ids_${foremanSelectedHosts[i]}`;
-    const boxes = $(`#${cid}`);
-    if (boxes && boxes[0]) boxes[0].checked = true;
+    const box = document.getElementById(cid);
+    if (box) box.checked = true;
   }
   toggleActions();
   updateCounter();
 
-  // updates the form URL based on the action selection
-  $('#confirmation-modal .secondary').click(() => {
-    $('#confirmation-modal').modal('hide');
-  });
+  const cancelBtn = document.querySelector('#confirmation-modal .secondary');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+      hideModal('confirmation-modal');
+    });
+  }
 });
 
 function removeForemanHostsCookie() {
@@ -126,7 +120,7 @@ export function resetSelection() {
 }
 
 function cleanHostsSelection() {
-  $('.host_select_boxes').each((index, box) => {
+  document.querySelectorAll('.host_select_boxes').forEach(box => {
     box.checked = false;
     hostChecked(box);
   });
@@ -147,14 +141,18 @@ export function multipleSelection() {
     total
   );
   const undoText = __('Undo selection');
-  const multpleAlert = $('#multiple-alert');
-  multpleAlert
-    .find('.text')
-    .html(
-      `${alertText} <a href="#" onclick="tfm.hosts.table.undoMultipleSelection();">${undoText}</a>`
-    );
-  multpleAlert.data('multiple', true);
-  $('.select_count').html(total);
+  const multipleAlert = document.getElementById('multiple-alert');
+  if (!multipleAlert) return;
+
+  const textEl = multipleAlert.querySelector('.text');
+  if (textEl) {
+    textEl.innerHTML =
+      `${alertText} <a href="#" onclick="tfm.hosts.table.undoMultipleSelection();">${undoText}</a>`;
+  }
+  multipleAlert.dataset.multiple = 'true';
+  document.querySelectorAll('.select_count').forEach(el => {
+    el.innerHTML = String(total);
+  });
 }
 
 export function undoMultipleSelection() {
@@ -171,117 +169,211 @@ export function undoMultipleSelection() {
     n__('Select this host', 'Select all<b> %s </b> hosts', pagination.total),
     pagination.total
   );
-  const multpleAlert = $('#multiple-alert');
-  multpleAlert
-    .find('.text')
-    .html(
-      `${alertText} <a href="#" onclick="tfm.hosts.table.multipleSelection();">${selectText}</a>`
-    );
-  multpleAlert.data('multiple', false);
-  $('.select_count').html(pagination.perPage);
+  const multipleAlert = document.getElementById('multiple-alert');
+  if (!multipleAlert) return;
+
+  const textEl = multipleAlert.querySelector('.text');
+  if (textEl) {
+    textEl.innerHTML =
+      `${alertText} <a href="#" onclick="tfm.hosts.table.multipleSelection();">${selectText}</a>`;
+  }
+  multipleAlert.dataset.multiple = 'false';
+  document.querySelectorAll('.select_count').forEach(el => {
+    el.innerHTML = String(pagination.perPage);
+  });
 }
 
 export function toggleCheck() {
   const pagination = paginationMetaData();
-  const multpleAlert = $('#multiple-alert');
-  const checked = $('#check_all').is(':checked');
-  $('.host_select_boxes').each((index, box) => {
+  const multipleAlert = document.getElementById('multiple-alert');
+  const checkAll = document.getElementById('check_all');
+  const checked = checkAll ? checkAll.checked : false;
+
+  document.querySelectorAll('.host_select_boxes').forEach(box => {
     box.checked = checked;
     hostChecked(box);
   });
-  if (checked && pagination.perPage - pagination.total < 0) {
-    multpleAlert.show('slow');
-    multpleAlert.data('multiple', false);
-  } else if (!checked) {
-    multpleAlert.hide('slow');
-    multpleAlert.data('multiple', false);
-    cleanHostsSelection();
+
+  if (multipleAlert) {
+    if (checked && pagination.perPage - pagination.total < 0) {
+      multipleAlert.style.display = '';
+      multipleAlert.dataset.multiple = 'false';
+    } else if (!checked) {
+      multipleAlert.style.display = 'none';
+      multipleAlert.dataset.multiple = 'false';
+      cleanHostsSelection();
+    }
   }
   return false;
 }
 
 export function toggleMultipleOkButton({ value }) {
-  const btn = $('#confirmation-modal .btn-primary');
-  if (value !== 'disabled') btn.removeClass('disabled').attr('disabled', false);
-  else btn.addClass('disabled').attr('disabled', true);
+  const btn = document.querySelector('#confirmation-modal .btn-primary');
+  if (!btn) return;
+
+  if (value !== 'disabled') {
+    btn.classList.remove('disabled');
+    btn.disabled = false;
+  } else {
+    btn.classList.add('disabled');
+    btn.disabled = true;
+  }
 }
 
 export function submitModalForm() {
-  if (!$('#keep_selected').is(':checked')) removeForemanHostsCookie();
-  if (isMultple()) {
-    const query = $('<input>')
-      .attr('type', 'hidden')
-      .attr('name', 'search')
-      .val(getURIsearch());
-    $('#confirmation-modal form').append(query);
+  const keepSelected = document.getElementById('keep_selected');
+  if (keepSelected && !keepSelected.checked) removeForemanHostsCookie();
+
+  if (isMultiple()) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'search';
+    input.value = getURIsearch();
+    const form = document.querySelector('#confirmation-modal form');
+    if (form) form.appendChild(input);
   }
-  $('#confirmation-modal form').submit();
-  $('#confirmation-modal').modal('hide');
+
+  const form = document.querySelector('#confirmation-modal form');
+  if (form) form.submit();
+  hideModal('confirmation-modal');
 }
 
-function isMultple() {
-  return $('#multiple-alert').data('multiple');
+function isMultiple() {
+  const alert = document.getElementById('multiple-alert');
+  return alert ? alert.dataset.multiple === 'true' : false;
 }
 
 function getBulkParam() {
-  return isMultple()
+  return isMultiple()
     ? { search: getURIsearch() }
     : { host_ids: foremanSelectedHosts };
 }
 
+function showModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.style.display = 'block';
+  modal.classList.add('in');
+  document.body.classList.add('modal-open');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop fade in';
+  backdrop.id = `${id}-backdrop`;
+  document.body.appendChild(backdrop);
+}
+
+function hideModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.style.display = 'none';
+  modal.classList.remove('in');
+  document.body.classList.remove('modal-open');
+
+  const backdrop = document.getElementById(`${id}-backdrop`);
+  if (backdrop) backdrop.remove();
+}
+
 export function buildModal(element, url) {
   const data = getBulkParam();
-  const title = $(element).attr('data-dialog-title');
-  $('#confirmation-modal .modal-header h4').text(title);
-  $('#confirmation-modal .modal-body')
-    .empty()
-    .append("<div class='modal-spinner spinner spinner-lg'></div>");
-  $('#confirmation-modal').modal();
-  $('#confirmation-modal .modal-body').load(
-    `${url} #content`,
-    data,
-    (response, status, xhr) => {
-      $('#loading').hide();
-      $('#submit_multiple').val('');
-      if (isMultple()) $('#multiple-modal-alert').show();
-      const b = $('#confirmation-modal .btn-primary');
-      if ($(response).find('#content form select').length > 0)
-        b.addClass('disabled').attr('disabled', true);
-      else b.removeClass('disabled').attr('disabled', false);
-    }
-  );
+  const title = element.getAttribute('data-dialog-title');
+  const modalHeader = document.querySelector('#confirmation-modal .modal-header h4');
+  if (modalHeader) modalHeader.textContent = title;
+
+  const modalBody = document.querySelector('#confirmation-modal .modal-body');
+  if (modalBody) {
+    modalBody.innerHTML = "<div class='modal-spinner spinner spinner-lg'></div>";
+  }
+
+  showModal('confirmation-modal');
+
+  const params = new URLSearchParams(
+    typeof data.host_ids !== 'undefined'
+      ? data.host_ids.map(id => ['host_ids[]', id])
+      : [['search', data.search]]
+  ).toString();
+
+  fetch(`${url}?${params}`, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'text/html',
+    },
+  })
+    .then(r => r.text())
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const content = doc.getElementById('content');
+
+      if (modalBody) {
+        modalBody.innerHTML = content ? content.innerHTML : html;
+      }
+
+      const loading = document.getElementById('loading');
+      if (loading) loading.style.display = 'none';
+
+      const submitMultiple = document.getElementById('submit_multiple');
+      if (submitMultiple) submitMultiple.value = '';
+
+      if (isMultiple()) {
+        const multiAlert = document.getElementById('multiple-modal-alert');
+        if (multiAlert) multiAlert.style.display = '';
+      }
+
+      const btn = document.querySelector('#confirmation-modal .btn-primary');
+      if (btn) {
+        const hasSelect = modalBody && modalBody.querySelector('form select');
+        if (hasSelect) {
+          btn.classList.add('disabled');
+          btn.disabled = true;
+        } else {
+          btn.classList.remove('disabled');
+          btn.disabled = false;
+        }
+      }
+    });
+
   return false;
 }
 
 export function buildRedirect(url) {
   const data = getBulkParam();
+  const params = new URLSearchParams(
+    typeof data.host_ids !== 'undefined'
+      ? data.host_ids.map(id => ['host_ids[]', id])
+      : [['search', data.search]]
+  ).toString();
+
   const redirectUrl = url.includes('?')
-    ? `${url}&${$.param(data)}`
-    : `${url}?${$.param(data)}`;
+    ? `${url}&${params}`
+    : `${url}?${params}`;
 
   window.location.replace(redirectUrl);
 }
 
 function paginationMetaData() {
-  const { total, perPage } = document.getElementsByClassName(
-    'pf-v6-c-pagination'
-  )[0].dataset;
+  const paginationEl = document.querySelector('.pf-v6-c-pagination');
+  if (!paginationEl) return { total: 0, perPage: 0 };
+
+  const { total, perPage } = paginationEl.dataset;
   return { total: Number(total), perPage: Number(perPage) };
 }
 
 function updateCounter() {
-  const item = $('#check_all');
-  if (foremanSelectedHosts)
-    $('.select_count').text(foremanSelectedHosts.length);
-  let title = '';
-  if (item.prop('checked') && foremanSelectedHosts)
-    title = `${foremanSelectedHosts.length} - ${item.attr('uncheck-title')}`;
-  else title = item.attr('check-title');
+  const item = document.getElementById('check_all');
+  if (foremanSelectedHosts) {
+    document.querySelectorAll('.select_count').forEach(el => {
+      el.textContent = String(foremanSelectedHosts.length);
+    });
+  }
 
-  item.attr('data-original-title', title);
-  item.tooltip({
-    container: 'body',
-    trigger: 'hover',
-  });
+  if (!item) return false;
+
+  let title = '';
+  if (item.checked && foremanSelectedHosts) {
+    title = `${foremanSelectedHosts.length} - ${item.getAttribute('uncheck-title')}`;
+  } else {
+    title = item.getAttribute('check-title');
+  }
+
+  item.setAttribute('title', title);
   return false;
 }

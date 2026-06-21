@@ -44,9 +44,6 @@ textarea.form-control {
   font-size: 75%;
 }
 
-.badge.badge-inverse {
-  background-color: black;
-}
 
 span.input-group-btn .hidden-xs {
   display: inline !important;
@@ -83,9 +80,6 @@ a {
   background-color: white;
 }
 
-.label-default {
-  background-color: #ccc;
-}
 
 .form-actions {
   padding: 19px 20px 20px;
@@ -209,12 +203,6 @@ body.modal-open {
   padding-right: 30px;
 }
 
-.form-control + .glyphicon {
-  position: absolute;
-  right: 0;
-  padding: 9px 37px;
-}
-
 .input-addon {
   color: black;
 }
@@ -229,10 +217,6 @@ textarea {
     resize: vertical;
     min-height: 26px; // prevent firefox from resizing smaller then one line height
   }
-}
-
-div.form-group .glyphicon-info-sign {
-  color: black;
 }
 
 form .pficon-info {
@@ -257,26 +241,10 @@ form .fa-info-circle {
   }
 }
 
-.select2-container .select2-choices .select2-search-field input,
-.select2-container .select2-choice,
-.select2-search input,
-.select2-drop.select2-drop-above,
-.select2-container .select2-choice .select2-arrow,
-.select2-dropdown-open.select2-drop-above [class^='select2-choice'],
-.select2-drop,
-.select2-container .select2-choices {
-  border-radius: 0;
-}
 
 .btn-group > .btn + .dropdown-toggle {
   padding-right: 3px;
   padding-left: 3px;
-}
-
-.blank-slate-pf {
-  background-color: inherit;
-  border: inherit;
-  padding: inherit;
 }
 
 .col-md-3 b {
@@ -287,52 +255,15 @@ a.btn-info span {
   padding-bottom: 4px;
 }
 
-.blank-slate-pf {
-  font-size: 1.4em;
-  width: 750px;
-  max-width: 90%;
-  margin: 0 auto;
-}
-
 // Color origin: pf-orange-400
 .pficon-ok.warn::before {
   color: #ec7a08;
 }
 
-.paneless {
-  .panel {
-    box-shadow: none;
-  }
-
-  .panel-title {
-    font-size: inherit;
-  }
-
-  .panel-heading + .panel-collapse .panel-body {
-    border: none;
-    padding: 0;
-  }
-
-  .panel-heading {
-    background: none;
-    border: none;
-    padding-left: inherit;
-    padding-right: inherit;
-
-    a {
-      font-weight: inherit;
-      font-size: inherit;
-    }
-  }
-}
 
 // gridster on dashboard conflicts with notifications drawer
 .gridster .gs-w {
   z-index: auto !important;
-}
-
-#history a .glyphicon {
-  color: #4d5258;
 }
 
 span.btn-action a {

@@ -1,26 +1,24 @@
-/* eslint-disable jquery/no-toggle */
-/* eslint-disable jquery/no-each */
-/* eslint-disable func-names */
-
-import $ from 'jquery';
-
 export function initAdvancedFields() {
-  $('a.advanced_fields_switch').each(function() {
-    const field = $(this);
-    field.on('click', updateAdvancedFields);
+  document.querySelectorAll('a.advanced_fields_switch').forEach(field => {
+    field.addEventListener('click', updateAdvancedFields);
   });
 }
 
 function updateAdvancedFields() {
-  const switcher = $('a.advanced_fields_switch');
-  const original = switcher.html();
-  switcher.html(switcher.data('alternativeLabel'));
-  switcher.data('alternativeLabel', original);
+  const switcher = document.querySelector('a.advanced_fields_switch');
+  if (!switcher) return;
 
-  switcher
-    .siblings('i.fa')
-    .toggleClass('fa-angle-right')
-    .toggleClass('fa-angle-down');
+  const original = switcher.innerHTML;
+  switcher.innerHTML = switcher.dataset.alternativeLabel;
+  switcher.dataset.alternativeLabel = original;
 
-  $('div.advanced').toggle();
+  const icon = switcher.parentElement.querySelector('i.fa');
+  if (icon) {
+    icon.classList.toggle('fa-angle-right');
+    icon.classList.toggle('fa-angle-down');
+  }
+
+  document.querySelectorAll('div.advanced').forEach(el => {
+    el.style.display = el.style.display === 'none' ? '' : 'none';
+  });
 }

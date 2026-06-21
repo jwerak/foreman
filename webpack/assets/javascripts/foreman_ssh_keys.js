@@ -1,15 +1,14 @@
-/* eslint-disable jquery/no-val */
-
-import $ from 'jquery';
-
 export function autofillSshKeyName() {
-  const name = $('#ssh_key_name');
-  const comment = $('#ssh_key_key')
-    .val()
-    .match(/^\S+ \S+ (.+)\n?$/);
+  const name = document.getElementById('ssh_key_name');
+  const keyField = document.getElementById('ssh_key_key');
+  if (!name || !keyField) return true;
 
-  if (name.val() === '' && comment && comment.length >= 1) {
-    return name.val(comment[1]).change();
+  const comment = keyField.value.match(/^\S+ \S+ (.+)\n?$/);
+
+  if (name.value === '' && comment && comment.length >= 1) {
+    name.value = comment[1];
+    name.dispatchEvent(new Event('change', { bubbles: true }));
+    return name;
   }
 
   return true;

@@ -10,4 +10,3 @@ module.exports = jquery;
 require('jquery-ujs');
 require('multiselect');
 require('select2');
-require('datatables.net-bs');

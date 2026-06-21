@@ -158,11 +158,6 @@ select {
   background-color: #408140;
 }
 
-.card-pf a.btn:hover,
-.card-pf a.btn {
-  color: #4d5258 !important;
-}
-
 .audit-content {
   border-bottom: 1px solid #ccc;
   margin-bottom: 9px;
@@ -256,10 +251,6 @@ table {
   max-height: 800px;
 }
 
-.label-light {
-  font-weight: normal;
-  text-shadow: 0 0 0;
-}
 
 .console-screen {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -411,10 +402,6 @@ table {
   display: inline-block !important;
 }
 
-.glyphicon.nic-flag {
-  margin: 2px;
-}
-
 .lookup-keys-container {
   li .close {
     display: none;
@@ -467,46 +454,8 @@ table {
   font-family: monospace;
 }
 
-.select2-arrow > b {
-  margin: -2px 0 0;
-}
-
 .icon-white {
   color: #fff;
-}
-
-.select2-container .select2-choices .select2-search-field input,
-.select2-container .select2-choice,
-.select2-container .select2-choices .select2-chosen {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  line-height: 2;
-}
-
-.navbar-editor
-  > span
-  > .select2-container
-  .select2-choices
-  .select2-search-field
-  input,
-.select2-container .select2-choice,
-.select2-container .select2-choices .select2-chosen {
-  height: 24px;
-
-  .select2-search-choice-close {
-    top: 6px;
-  }
-}
-
-.select2-chosen,
-.select2-choice > span:first-child,
-.select2-container .select2-choices .select2-search-field input {
-  padding: 0;
-}
-
-.select2-chosen,
-.select2-choice > span:first-child,
-.select2-container .select2-choices .select2-search-field input {
-  padding-left: 6px;
 }
 
 .expander {

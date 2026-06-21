@@ -1,19 +1,3 @@
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-find */
-/* eslint-disable jquery/no-closest */
-/* eslint-disable jquery/no-hide */
-/* eslint-disable jquery/no-serialize */
-/* eslint-disable jquery/no-html */
-/* eslint-disable jquery/no-show */
-/* eslint-disable jquery/no-prop */
-/* eslint-disable jquery/no-class */
-/* eslint-disable jquery/no-ajax */
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-attr */
-/* eslint-disable jquery/no-each */
-/* eslint-disable jquery/no-filter */
-
-import $ from 'jquery';
 import { activateDatatables } from './foreman_tools';
 import { notify } from './foreman_toast_notifications';
 import { sprintf, translate as __ } from './react_app/common/I18n';
@@ -32,122 +16,158 @@ export default {
   testConnection,
 };
 
-// Common functions used by one or more Compute Resource
+function getCsrfToken() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta ? meta.content : '';
+}
 
-// AJAX load vm listing
+document.addEventListener('ContentLoad', () => {
+  document.querySelectorAll('#vms[data-url], #images_list[data-url], #key_pairs_list[data-url]').forEach(el => {
+    const url = el.getAttribute('data-url');
 
-$(document).on('ContentLoad', () => {
-  $('#vms, #images_list, #key_pairs_list')
-    .filter('[data-url]')
-    .each((i, el) => {
-      const tab = $(el);
-      const url = tab.attr('data-url');
-
-      tab.load(`${url} table`, (response, status, xhr) => {
-        if (status === 'error') {
-          // eslint-disable-next-line function-paren-newline
-          tab.html(
-            // eslint-disable-next-line no-undef
-            sprintf(
-              __('There was an error listing VMs: %(status)s %(statusText)s'),
-              {
-                status: xhr.status,
-                statusText: xhr.statusText,
-              }
-            )
-          );
-        } else {
-          activateDatatables();
-        }
+    fetch(url, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' },
+    })
+      .then(response => {
+        if (!response.ok) throw response;
+        return response.text();
+      })
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const table = doc.querySelector('table');
+        el.innerHTML = table ? table.outerHTML : html;
+        activateDatatables();
+      })
+      .catch(err => {
+        el.innerHTML = sprintf(
+          __('There was an error listing VMs: %(status)s %(statusText)s'),
+          { status: err.status || '', statusText: err.statusText || String(err) }
+        );
       });
-    });
+  });
 });
 
-// eslint-disable-next-line max-statements
 export function providerSelected(item) {
-  const computeConnection = $('#compute_connection');
-  const provider = $(item).val();
+  const computeConnection = document.getElementById('compute_connection');
+  const provider = item.value;
 
   if (provider === '') {
-    computeConnection.hide();
-    $('[type=submit]').attr('disabled', true);
+    if (computeConnection) computeConnection.style.display = 'none';
+    document.querySelectorAll('[type=submit]').forEach(btn => {
+      btn.disabled = true;
+    });
     return false;
   }
-  $('[type=submit]').attr('disabled', false);
-  const url = $(item).attr('data-url');
+
+  document.querySelectorAll('[type=submit]').forEach(btn => {
+    btn.disabled = false;
+  });
+
+  const url = item.getAttribute('data-url');
   const data = `provider=${provider}`;
 
-  computeConnection.show();
-  computeConnection.load(`${url} div#compute_connection`, data, () => {
-    // eslint-disable-next-line no-undef
-    password_caps_lock_hint();
-    $('a[rel="popover"]').popover();
-  });
+  if (computeConnection) {
+    computeConnection.style.display = '';
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'text/html',
+        'X-CSRF-Token': getCsrfToken(),
+      },
+      body: data,
+    })
+      .then(r => r.text())
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const content = doc.querySelector('div#compute_connection');
+        computeConnection.innerHTML = content ? content.innerHTML : html;
+        if (typeof window.password_caps_lock_hint === 'function') {
+          window.password_caps_lock_hint();
+        }
+      });
+  }
 
   return false;
 }
 
 export function testConnection(item) {
-  let crId = $('form').data('id');
+  const form = document.querySelector('form');
+  let crId = form ? form.dataset.id : '';
+  if (crId === undefined || crId === null) crId = '';
 
-  if (crId === undefined || crId === null) {
-    crId = '';
-  }
+  const passwordInput = document.querySelector('input#compute_resource_password');
+  const password = passwordInput ? passwordInput.value : '';
+  const passwordDisabled = passwordInput ? passwordInput.disabled : false;
 
-  const password = $('input#compute_resource_password').val();
-  const passwordDisabled = $('#compute_resource_password').prop('disabled');
+  document.querySelectorAll('.tab-error').forEach(el => el.classList.remove('tab-error'));
 
-  $('.tab-error').removeClass('tab-error');
-  $('#test_connection_indicator').show();
-  $.ajax({
-    type: 'put',
-    url: $(item).attr('data-url'),
-    data: `${$('form').serialize()}&cr_id=${crId}`,
-    success(result) {
-      const res = $(`<div>${result}</div>`);
+  const indicator = document.getElementById('test_connection_indicator');
+  if (indicator) indicator.style.display = '';
 
-      $('#compute_connection').html(res.find('#compute_connection'));
-      $('#compute_connection').prepend(res.find('.alert'));
-      if (
-        $('.alert-danger', result).length === 0 &&
-        $('#compute_connection .has-error', result).length === 0
-      ) {
-        notify({
-          message: __('Test connection was successful'),
-          type: 'success',
-        });
-      }
+  const formData = new URLSearchParams(new FormData(form)).toString();
+  const body = `${formData}&cr_id=${crId}`;
+
+  fetch(item.getAttribute('data-url'), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRF-Token': getCsrfToken(),
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'text/html',
     },
-    error({ statusText }) {
+    body,
+  })
+    .then(response => {
+      if (!response.ok) throw response;
+      return response.text();
+    })
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const computeConnection = document.getElementById('compute_connection');
+      const newContent = doc.querySelector('#compute_connection');
+      const alert = doc.querySelector('.alert');
+
+      if (computeConnection && newContent) {
+        computeConnection.innerHTML = newContent.innerHTML;
+      }
+      if (computeConnection && alert) {
+        computeConnection.insertAdjacentHTML('afterbegin', alert.outerHTML);
+      }
+
+      if (!doc.querySelector('.alert-danger') && !doc.querySelector('#compute_connection .has-error')) {
+        notify({ message: __('Test connection was successful'), type: 'success' });
+      }
+    })
+    .catch(err => {
       notify({
-        message: `${__(
-          'An error occurred while testing the connection: '
-        )}${statusText}`,
+        message: `${__('An error occurred while testing the connection: ')}${err.statusText || String(err)}`,
         type: 'danger',
       });
-    },
-    complete(result) {
-      // we need to restore the password field as it is not sent back from the server.
-      $('input#compute_resource_password').val(password);
-      $('#compute_resource_password').prop('disabled', passwordDisabled);
-      $('#test_connection_indicator').hide();
-      // eslint-disable-next-line no-undef
-      reloadOnAjaxComplete('#test_connection_indicator');
-    },
-  });
+    })
+    .finally(() => {
+      if (passwordInput) {
+        passwordInput.value = password;
+        passwordInput.disabled = passwordDisabled;
+      }
+      if (indicator) indicator.style.display = 'none';
+      if (typeof window.reloadOnAjaxComplete === 'function') {
+        window.reloadOnAjaxComplete('#test_connection_indicator');
+      }
+    });
 }
 
 export function capacityEdit(element) {
-  const buttons = $(element)
-    .closest('.fields')
-    .find('button[name=allocation_radio_btn].btn.active');
+  const fields = element.closest('.fields');
+  if (!fields) return false;
 
-  if (buttons.length > 0 && buttons[0].id === 'btnAllocationFull') {
-    const allocation = $(element)
-      .closest('.fields')
-      .find('[id$=allocation]')[0];
+  const activeBtn = fields.querySelector('button[name=allocation_radio_btn].btn.active');
 
-    allocation.value = element.value;
+  if (activeBtn && activeBtn.id === 'btnAllocationFull') {
+    const allocation = fields.querySelector('[id$=allocation]');
+    if (allocation) allocation.value = element.value;
   }
   return false;
 }

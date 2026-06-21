@@ -64,3 +64,6 @@ window.tfm = Object.assign(window.tfm || {}, {
 window.jstz = jstz;
 window.ipaddr = ipaddr;
 window.diff = diff;
+
+window.showModal = tools.showModal;
+window.hideModal = tools.hideModal;

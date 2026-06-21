@@ -1,39 +1,23 @@
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-find */
-/* eslint-disable jquery/no-class */
-/* eslint-disable jquery/no-closest */
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-sizzle */
-/* eslint-disable jquery/no-text */
-
-import $ from 'jquery';
-
 const matcherFieldChanged = (element, currentValue) => {
-  const { initialValue } = $(element).data();
-
-  const popover = $(element)
-    .closest('td')
-    .find('a.warn-field-changed');
+  const initialValue = element.dataset.initialValue;
+  const popover = element.closest('td').querySelector('a.warn-field-changed');
 
   if (initialValue === currentValue) {
-    $(element).removeClass('matcher-field-changed');
-    $(popover).removeClass('warn-show');
+    element.classList.remove('matcher-field-changed');
+    if (popover) popover.classList.remove('warn-show');
   } else {
-    $(element).addClass('matcher-field-changed');
-    $(popover).addClass('warn-show');
+    element.classList.add('matcher-field-changed');
+    if (popover) popover.classList.add('warn-show');
   }
 };
 
 export const matcherKeyChanged = element => {
-  const currentValue = $(element)
-    .find(':selected')
-    .text();
-
+  const selected = element.querySelector('option:checked');
+  const currentValue = selected ? selected.textContent : '';
   matcherFieldChanged(element, currentValue);
 };
 
 export const matcherValueChanged = element => {
-  const currentValue = $(element).val();
-
+  const currentValue = element.value;
   matcherFieldChanged(element, currentValue);
 };

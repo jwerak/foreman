@@ -1,8 +1,4 @@
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-attr */
-
 import RFB from '@novnc/novnc/core/rfb';
-import $ from 'jquery';
 import { sprintf, translate as __ } from './react_app/common/I18n';
 
 let rfb;
@@ -20,14 +16,16 @@ function sendCtrlAltDel() {
 
 function showStatus(state, message) {
   const level = StatusLevelLookup[state] || 'warning';
-  const status = $('#noVNC_status');
-  const ctrlAltDeleteButton = $('#ctrlAltDelButton');
+  const status = document.getElementById('noVNC_status');
+  const ctrlAltDeleteButton = document.getElementById('ctrlAltDelButton');
 
-  ctrlAltDeleteButton.prop('disabled', state !== 'normal');
+  if (ctrlAltDeleteButton) {
+    ctrlAltDeleteButton.disabled = state !== 'normal';
+  }
 
-  if (typeof message !== 'undefined') {
-    status.attr('class', `col-md-12 label label-${level}`);
-    status.html(message);
+  if (status && typeof message !== 'undefined') {
+    status.className = `col-md-12 label label-${level}`;
+    status.innerHTML = message;
   }
 }
 
@@ -62,18 +60,24 @@ function onClose(e) {
     );
   }
 }
-$(document).on('ContentLoad', () => {
-  const vncScreen = $('#noVNC_screen');
 
-  if (vncScreen.length) {
-    $('#sendCtrlAltDelButton').on('click', sendCtrlAltDel);
-    const protocol = $('#vnc').data('encrypt') ? 'wss' : 'ws';
-    const host = $('#vnc').attr('data-host') || window.location.hostname;
-    const port = $('#vnc').attr('data-port');
-    const path = $('#vnc').attr('data-path');
-    const password = $('#vnc').attr('data-password');
-    const tokenProtocol = $('#vnc').attr('data-token-protocol');
-    const plainProtocol = $('#vnc').attr('data-plain-protocol');
+document.addEventListener('ContentLoad', () => {
+  const vncScreen = document.getElementById('noVNC_screen');
+
+  if (vncScreen) {
+    const sendBtn = document.getElementById('sendCtrlAltDelButton');
+    if (sendBtn) sendBtn.addEventListener('click', sendCtrlAltDel);
+
+    const vncEl = document.getElementById('vnc');
+    if (!vncEl) return;
+
+    const protocol = vncEl.dataset.encrypt ? 'wss' : 'ws';
+    const host = vncEl.getAttribute('data-host') || window.location.hostname;
+    const port = vncEl.getAttribute('data-port');
+    const path = vncEl.getAttribute('data-path');
+    const password = vncEl.getAttribute('data-password');
+    const tokenProtocol = vncEl.getAttribute('data-token-protocol');
+    const plainProtocol = vncEl.getAttribute('data-plain-protocol');
     const url = `${protocol}://${host}:${port}${path || ''}`;
     const options = {};
     if (password) {
@@ -82,7 +86,7 @@ $(document).on('ContentLoad', () => {
     if (tokenProtocol || plainProtocol) {
       options.wsProtocols = [tokenProtocol, plainProtocol].filter(String);
     }
-    rfb = new RFB(vncScreen.get(0), url, options);
+    rfb = new RFB(vncScreen, url, options);
     rfb._sock.on('close', onClose);
     rfb.addEventListener('connect', connectFinished);
     rfb.addEventListener('disconnect', disconnectFinished);

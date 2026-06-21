@@ -1,42 +1,38 @@
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-trigger */
-/* eslint-disable jquery/no-each */
-/* eslint-disable jquery/no-toggle */
-/* eslint-disable jquery/no-find */
-/* eslint-disable jquery/no-closest */
-/* eslint-disable jquery/no-is */
-/* eslint-disable func-names */
-
-import $ from 'jquery';
-
 import store from './react_app/redux';
 import { actions as TemplateActions } from './react_app/components/TemplateGenerator';
 
 export function initTypeChanges() {
-  // update the hidden input which serves as template
-  // and also all existing inputs in case of editing
-  $('select.input_type_selector').each(function() {
-    updateVisibilityAfterInputTypeChange($(this));
+  document.querySelectorAll('select.input_type_selector').forEach(select => {
+    updateVisibilityAfterInputTypeChange(select);
   });
 
-  // every additional input that's added through "Add Input" button will also be handled
-  $(document).on('change', 'select.input_type_selector', function() {
-    updateVisibilityAfterInputTypeChange($(this));
+  document.addEventListener('change', e => {
+    if (e.target.matches('select.input_type_selector')) {
+      updateVisibilityAfterInputTypeChange(e.target);
+    }
   });
 }
 
 function updateVisibilityAfterInputTypeChange(select) {
   const fieldset = select.closest('fieldset');
-  fieldset.find('div.custom_input_type_fields').hide();
-  fieldset.find(`div.${select.val()}_input_type`).show();
+  if (!fieldset) return;
+
+  fieldset.querySelectorAll('div.custom_input_type_fields').forEach(el => {
+    el.style.display = 'none';
+  });
+  fieldset.querySelectorAll(`div.${select.value}_input_type`).forEach(el => {
+    el.style.display = '';
+  });
 }
 
 export const toggleEmailFields = checkbox => {
-  const $checkbox = $(checkbox);
-  $checkbox
-    .closest('form')
-    .find('.email-fields')
-    .toggle($checkbox.is(':checked'));
+  const form = checkbox.closest('form');
+  if (!form) return;
+
+  const checked = checkbox.checked;
+  form.querySelectorAll('.email-fields').forEach(el => {
+    el.style.display = checked ? '' : 'none';
+  });
 };
 
 export const generateTemplate = (url, templateInputData) => {
@@ -52,23 +48,34 @@ export const inputValueOnchange = input => {
   const resourceValue = input.value === 'resource';
   const plainValue = input.value === 'plain';
   const inputId = input.dataset.item;
-  const $fields = $(input).closest('.fields');
+  const fields = input.closest('.fields');
+  if (!fields) return;
 
-  $fields
-    .find(`.resource-type-${inputId}`)
-    .toggle(searchValue || resourceValue);
-  $fields.find(`.input-options-${inputId}`).toggle(plainValue);
-  $fields.find(`.input-hidden-value-${inputId}`).toggle(plainValue);
+  fields.querySelectorAll(`.resource-type-${inputId}`).forEach(el => {
+    el.style.display = (searchValue || resourceValue) ? '' : 'none';
+  });
+  fields.querySelectorAll(`.input-options-${inputId}`).forEach(el => {
+    el.style.display = plainValue ? '' : 'none';
+  });
+  fields.querySelectorAll(`.input-hidden-value-${inputId}`).forEach(el => {
+    el.style.display = plainValue ? '' : 'none';
+  });
 };
 
 export function snippetChanged(item) {
-  const checked = $(item).is(':checked');
+  const checked = item.checked;
 
-  $('#kind_selector').toggle(!checked);
-  $('#snippet_message').toggle(checked);
-  $('#association').toggle(!checked);
-  if (checked) {
-    $('#ptable_os_family').val('');
-    $('#ptable_os_family').trigger('change');
+  const kindSelector = document.getElementById('kind_selector');
+  const snippetMessage = document.getElementById('snippet_message');
+  const association = document.getElementById('association');
+  const ptableOsFamily = document.getElementById('ptable_os_family');
+
+  if (kindSelector) kindSelector.style.display = checked ? 'none' : '';
+  if (snippetMessage) snippetMessage.style.display = checked ? '' : 'none';
+  if (association) association.style.display = checked ? 'none' : '';
+
+  if (checked && ptableOsFamily) {
+    ptableOsFamily.value = '';
+    ptableOsFamily.dispatchEvent(new Event('change', { bubbles: true }));
   }
 }

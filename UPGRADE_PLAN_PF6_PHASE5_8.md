@@ -237,64 +237,90 @@ Both wired into HostsIndex dropdown menu. Legacy ERB bulk views retained (old ho
 
 ---
 
-## Phase 8: Legacy JS & SCSS Cleanup
+## Phase 8: Legacy JS & SCSS Cleanup ✅ COMPLETE (2026-06-21)
 
-**Goal:** Remove jQuery dependencies, clean up SCSS, and eliminate `window.tfm` pattern.
+**Goal:** Remove jQuery dependencies from webpack files, clean up SCSS, convert error pages to PF6, and update Bootstrap modals.
 
-### 8.1: Migrate jQuery AJAX files to fetch
+### 8.1: Migrate jQuery files to vanilla JS + fetch ✅
 
-24 files import jQuery. Strategy per file:
-- Replace `$.ajax()` → `fetch()` or the existing `API` module (`webpack/.../react_app/API.js`)
-- Replace DOM manipulation → React components or remove if the page is already React
-- Replace jQuery plugins (DataTables, select2, tooltips) → PF6 equivalents
+Converted 19 webpack files from `import $ from 'jquery'` to vanilla JS + `fetch()`. All files maintain the same exported API for backward compatibility with Sprockets callers (`window.tfm.*`).
 
-**Priority order:**
-1. `foreman_tools.js` — used everywhere, migrate `activateTooltips()`, `foremanUrl()` etc.
-2. `foreman_compute_resource.js` — compute resource AJAX
-3. `foreman_auth_source.js` — LDAP test connection
-4. `foreman_http_proxies.js` — proxy test connection
-5. `foreman_hosts.js` — host page JS
-6. `compute_resource/*.js` (ec2, libvirt, openstack, vmware)
-7. Remaining files (`foreman_users`, `foreman_medium`, etc.)
+**Batch A — Trivial files (5 files) ✅:**
+- `foreman_medium.js` — `.toggle()` → `style.display`
+- `foreman_ssh_keys.js` — `.val()` → `.value`
+- `foreman_advanced_fields.js` — jQuery DOM → vanilla `querySelector`/`classList`
+- `foreman_lookup_keys.js` — jQuery DOM → vanilla
+- `foreman_template_inputs.js` — jQuery DOM → vanilla, event delegation via `document.addEventListener`
 
-### 8.2: Clean up legacy SCSS
+**Batch B — AJAX files (5 files) ✅:**
+- `foreman_http_proxies.js` — `$.ajax` → `fetch()` with CSRF token
+- `foreman_users.js` — `$.ajax` → `fetch()`, DOM → vanilla
+- `foreman_auth_source.js` — `$.ajax` → `fetch()`, `$(document).ready` → `DOMContentLoaded`
+- `foreman_compute_resource.js` — `$.ajax` → `fetch()`, `.load()` → `fetch` + `DOMParser` + `innerHTML`
+- `compute_resource/libvirt.js` — `$.ajax` → `fetch()`, `.button('toggle')` → `classList.toggle`
 
-**Files to clean:**
-- `app/assets/stylesheets/patternfly_and_overrides.scss` — remove `.label-default`, `.panel-*`, `.badge-*` selectors, replace `$color-pf-blue-500` with PF6 token
-- `app/assets/stylesheets/base.scss` — remove `.label-light`
-- `app/assets/stylesheets/base-pf4.scss` — PF3→PF4 compat layer, can be removed after form migration
-- `app/assets/stylesheets/multi-select-overrides.scss` — `.glyphicon` reference
+**Batch C — Compute resource sub-modules (3 files) ✅:**
+- `compute_resource/ec2.js` — DOM → vanilla, `.multiSelect('refresh')` uses `window.$` guard
+- `compute_resource/openstack.js` — `$.ajax` → `fetch()`
+- `compute_resource/vmware.js` — `$.ajax` → `fetch()`, `.select2()` uses `window.$` guard
 
-### 8.3: Remove `window.tfm` exports incrementally
+**Batch D — Console and host selection (3 files) ✅:**
+- `bundle_novnc.js` — jQuery DOM → vanilla `getElementById`/`dataset`/`getAttribute`
+- `spice.js` — jQuery DOM → vanilla
+- `hosts/tableCheckboxes.js` — Complete rewrite: `$.inArray` → `.indexOf`, `$.param` → `URLSearchParams`, `.modal()` → vanilla `showModal`/`hideModal`, `.tooltip()` → removed (native title)
 
-As each jQuery file is replaced by React, remove its entry from `bundle.js`:
-```js
-// Remove from window.tfm as each module is migrated:
-// authSource, computeResource, httpProxies, hosts, etc.
-```
+**Batch E — Complex utility (1 file) ✅:**
+- `foreman_tools.js` — `activateTooltips()` → no-op (native browser tooltips), `activateDatatables()` → guarded with `window.$ && $.fn.DataTable`, `setTab`/`highlightTabErrors` → vanilla `querySelector` + manual tab activation. Added `showModal()`/`hideModal()` helpers.
 
-### 8.4: Remove jQuery dependency
+**Batch F — React Select2 wrapper (1 file) ✅:**
+- `react_app/components/common/forms/Select.js` — Removed `import $ from 'jquery'`, uses `window.$` guard for select2 plugin
 
-After all `window.tfm` modules are migrated:
-- Remove `require('dsmorse-gridster')` — **already done**
-- Remove `require('jquery-ujs')` → replaced by Rails UJS or Turbo
-- Remove `require('select2')` → replaced by PF6 Select
-- Remove `require('datatables.net-bs')` → replaced by PF6 Table
-- Eventually remove jQuery itself from `webpack/assets/javascripts/jquery.js`
+**Kept as-is:** `foreman_overrides.js` — depends on `$.rails.allowAction` (jquery-ujs), cannot convert without replacing Rails UJS.
 
-### 8.5: Update error pages
+### 8.2: Clean up legacy SCSS ✅
 
-Convert `common/403.html.erb`, `404.html.erb`, `500.html.erb`, `503.html.erb` to use PF6 `EmptyState` with appropriate icons. These are static pages — can use plain PF6 CSS classes without React.
+**patternfly_and_overrides.scss:** Removed `.label-default`, `.badge.badge-inverse`, `.blank-slate-pf` (2 blocks), `.paneless .panel-*`, select2 border-radius overrides, `.form-control + .glyphicon`, `.glyphicon-info-sign`, `#history .glyphicon`.
 
-### 8.6: Replace Bootstrap modals
+**base.scss:** Removed `.label-light`, `.card-pf`, `.glyphicon.nic-flag`, select2 styling (`.select2-arrow`, font/height overrides, padding).
 
-7 files use Bootstrap modals. Replace with PF6 `Modal` component (already available as `ForemanModal` React component in `webpack/.../ForemanModal/`):
-- `common/_modal.html.erb` — generic wrapper
-- `hosts/_conflicts.html.erb` — conflict resolution
-- `hosts/_dhcp_lease_errors.html.erb` — DHCP errors
-- `hosts/_interfaces.html.erb` — network interface editor
-- `hosts/_list.html.erb` — bulk operations
-- `hosts/show.html.erb` — host detail modals
+**multi-select-overrides.scss:** Removed `.form-control + .glyphicon` in `.ms-header`.
+
+**base-pf4.scss:** Kept — still needed for PF6 compat with Bootstrap-sass tables/alerts.
+
+### 8.3: Update bundle.js ✅
+
+Added `window.showModal` and `window.hideModal` global functions (from `foreman_tools.js`) for ERB onclick handlers. All `window.tfm` exports kept — still called from Sprockets JS and ERB views.
+
+### 8.4: Update jquery.js ✅
+
+Removed `require('datatables.net-bs')` — `activateDatatables()` now guarded with `window.$ && $.fn.DataTable`. Kept `jquery-ujs` (Rails UJS), `multiselect` (taxonomy widgets), `select2` (Sprockets `activate_select2()` + compute resource sub-modules).
+
+### 8.5: Update error pages ✅
+
+Converted 4 ERB error pages to PF6 EmptyState CSS classes:
+- `common/403.html.erb` — PF6 EmptyState with lock icon, permission list
+- `common/404.html.erb` — PF6 EmptyState with search icon
+- `common/500.html.erb` — PF6 EmptyState with danger status, error details, documentation link
+- `common/503.html.erb` — PF6 EmptyState with danger status
+
+Updated 2 static HTML error pages (`public/404.html`, `public/500.html`) with modern centered layout.
+
+### 8.6: Replace Bootstrap modals ✅
+
+Updated 3 modal views with PF6 Modal CSS classes (dual-compatible with Bootstrap JS for Sprockets):
+- `common/_modal.html.erb` — Added `.pf-v6-c-modal-box` classes alongside Bootstrap classes
+- `hosts/_list.html.erb` (confirmation-modal) — PF6 modal structure, vanilla JS `showModal`/`hideModal`
+- `hosts/_dhcp_lease_errors.html.erb` — PF6 modal + alert classes
+
+Updated `layout_helper.rb` `modal_close()` to generate PF6 button classes with vanilla JS close handler.
+
+### 8.7: Update ERB views with legacy class references ✅
+
+- `about/index.html.erb` — `.label.label-success`/`.label-default` → PF6 Label (`.pf-v6-c-label.pf-m-green`)
+- `hosts/console/vmrc.html.erb` — `.blank-slate-pf` → PF6 EmptyState
+- `ssh_keys/_ssh_keys_tab.html.erb` — `.blank-slate-pf` → PF6 EmptyState + PF6 alert
+
+**Remaining jQuery in Sprockets:** `app/assets/javascripts/` files (application.js, host_edit.js, host_edit_interfaces.js, proxy_status.js, etc.) still use jQuery directly via `window.$`. These are in the Sprockets pipeline, not webpack, and will be addressed when those ERB views are migrated to React.
 
 ---
 

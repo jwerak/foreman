@@ -1,11 +1,3 @@
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-find */
-/* eslint-disable jquery/no-text */
-/* eslint-disable jquery/no-ajax */
-/* eslint-disable jquery/no-each */
-/* eslint-disable jquery/no-class */
-
-import $ from 'jquery';
 import { importRemote } from '@module-federation/utilities';
 import { sprintf, translate as __ } from './react_app/common/I18n';
 
@@ -16,6 +8,22 @@ import { openConfirmModal as coreOpenConfirmModal } from './react_app/components
 
 export const openConfirmModal = options =>
   store.dispatch(coreOpenConfirmModal(options));
+
+export function showModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.style.display = 'block';
+  modal.classList.add('in');
+  document.body.classList.add('modal-open');
+}
+
+export function hideModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.style.display = 'none';
+  modal.classList.remove('in');
+  document.body.classList.remove('modal-open');
+}
 
 export * from './react_app/common/DeprecationService';
 
@@ -37,6 +45,8 @@ export function iconText(name, innerText, iconClass) {
 }
 
 export function activateDatatables() {
+  if (!window.$ || !window.$.fn || !window.$.fn.DataTable) return;
+
   const language = {
     searchPlaceholder: __('Filter...'),
     emptyTable: __('No data available in table'),
@@ -63,6 +73,9 @@ export function activateDatatables() {
       sortDescending: __(': activate to sort column descending'),
     },
   };
+
+  const $ = window.$;
+
   $('[data-table=inline]')
     .not('.dataTable')
     .DataTable({
@@ -89,55 +102,71 @@ export function activateDatatables() {
 }
 
 export function activateTooltips(elParam = 'body') {
-  const el = $(elParam);
-
-  el.tooltip({
-    selector: '[rel="twipsy"],*[title]:not(*[rel],.fa,.pficon)',
-    container: 'body',
-    trigger: 'hover',
-  });
-  // Ellipsis have to be initialized for each element for title() to work
-  el.find('.ellipsis').tooltip({
-    container: 'body',
-    title() {
-      return this.scrollWidth > this.clientWidth ? this.textContent : null;
-    },
-  });
+  // Bootstrap tooltip plugin removed — native browser title tooltips are used instead.
+  // For ellipsis overflow detection, use CSS text-overflow: ellipsis (already styled).
+  // This function is kept as a no-op for backward compatibility with callers.
 }
 
-// generates an absolute, needed in case of running Foreman from a subpath
 export { foremanUrl } from './react_app/common/helpers';
 
 export const setTab = () => {
   const urlHash = document.location.hash.split('?')[0];
   if (urlHash.length && !urlHash.startsWith('#/')) {
-    const tabContent = $(urlHash);
-    const parentTab = tabContent.closest('.tab-pane');
-    if (parentTab.exists()) {
-      $(`.nav-tabs a[href="#${parentTab[0].id}"]`).tab('show');
+    const tabContent = document.querySelector(urlHash);
+    if (tabContent) {
+      const parentTab = tabContent.closest('.tab-pane');
+      if (parentTab) {
+        activateTab(`.nav-tabs a[href="#${parentTab.id}"]`);
+      }
+      activateTab(`.nav-tabs a[href="${urlHash}"]`);
     }
-    $(`.nav-tabs a[href="${urlHash}"]`).tab('show');
   }
 };
 
+function activateTab(selector) {
+  const tabLink = document.querySelector(selector);
+  if (!tabLink) return;
+
+  const tabList = tabLink.closest('ul');
+  if (tabList) {
+    tabList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+  }
+  const parentLi = tabLink.closest('li');
+  if (parentLi) parentLi.classList.add('active');
+
+  const href = tabLink.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    const tabContainer = document.querySelector(href);
+    if (tabContainer) {
+      const siblings = tabContainer.parentElement.querySelectorAll('.tab-pane');
+      siblings.forEach(pane => pane.classList.remove('active', 'in'));
+      tabContainer.classList.add('active', 'in');
+    }
+  }
+}
+
 export function highlightTabErrors() {
-  const errorFields = $('.tab-content .has-error');
-  errorFields.parents('.tab-pane').each(function fn() {
-    $(`a[href="#${this.id}"]`).addClass('tab-error');
+  const errorFields = document.querySelectorAll('.tab-content .has-error');
+  errorFields.forEach(field => {
+    let pane = field.closest('.tab-pane');
+    while (pane) {
+      const link = document.querySelector(`a[href="#${pane.id}"]`);
+      if (link) link.classList.add('tab-error');
+      pane = pane.parentElement ? pane.parentElement.closest('.tab-pane') : null;
+    }
   });
+
   const firstTabError = document.querySelector('.tab-error');
   if (firstTabError) {
-    $(firstTabError).tab('show');
+    activateTab(`.nav-tabs a.tab-error`);
   }
   const firstNestedTabError = document.querySelector('.nav-pills .tab-error');
   if (firstNestedTabError) {
-    $(firstNestedTabError).tab('show');
+    activateTab(`.nav-pills a.tab-error`);
   }
 
-  errorFields
-    .first()
-    .find('.form-control')
-    .trigger('focus');
+  const firstErrorInput = document.querySelector('.tab-content .has-error .form-control');
+  if (firstErrorInput) firstErrorInput.focus();
 }
 
 export const loadPluginModule = async (url, scope, module, plugin = true) => {
@@ -152,7 +181,6 @@ export const loadPluginModule = async (url, scope, module, plugin = true) => {
     module,
     remoteEntryFileName: plugin ? `${scope}_remoteEntry.js` : 'remoteEntry.js',
   });
-  // tag the plugin as loaded
   window.allPluginsLoaded[name] = true;
   const loadPlugin = new Event('loadPlugin');
   document.dispatchEvent(loadPlugin);

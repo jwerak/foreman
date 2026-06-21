@@ -18,23 +18,31 @@
   <% else %>
     <tbody>
       <tr>
-        <td class="blank-slate-pf">
-            <div class="blank-slate-pf-icon">
-              <%= icon_text("key", "", :kind => "fa") %>
+        <td>
+          <div class="pf-v6-c-empty-state">
+            <div class="pf-v6-c-empty-state__content">
+              <div class="pf-v6-c-empty-state__header">
+                <div class="pf-v6-c-empty-state__icon"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="pf-v6-c-empty-state__title"><h1 class="pf-v6-c-empty-state__title-text"><%= _('SSH keys') %></h1></div>
+              </div>
+              <div class="pf-v6-c-empty-state__body">
+                <p><%= _("You can add SSH public keys to a user in Foreman.") %></p>
+                <p><%= _("The keys can be used in provisioning templates and are also available for configuration management tools managed by Foreman.") %></p>
+              </div>
+              <div class="pf-v6-c-empty-state__footer">
+                <% if @user.persisted? && authorized_for(hash_for_new_user_ssh_key_path(:user_id => @user)) %>
+                  <div class="pf-v6-c-empty-state__actions">
+                    <%= link_to(_('Add SSH key'), hash_for_new_user_ssh_key_path(:user_id => @user), :class => "pf-v6-c-button pf-m-primary") %>
+                  </div>
+                <% else %>
+                  <div class="pf-v6-c-alert pf-m-warning pf-m-inline">
+                    <div class="pf-v6-c-alert__icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>
+                    <p class="pf-v6-c-alert__title"><%= _("In order to add the SSH key, the user must be saved first. A 'create_ssh_keys' permission is required too.") %></p>
+                  </div>
+                <% end %>
+              </div>
             </div>
-            <h1><%= _('SSH keys') %></h1>
-            <p>
-              <%= _("You can add SSH public keys to a user in Foreman.") %><br />
-              <%= _("The keys can be used in provisioning templates and are also available for configuration management tools managed by Foreman.") %><br />
-             </p>
-             <% if @user.persisted? && authorized_for(hash_for_new_user_ssh_key_path(:user_id => @user)) %>
-               <div class="blank-slate-pf-main-action">
-                 <%= link_to(_('Add SSH key'), hash_for_new_user_ssh_key_path(:user_id => @user), :class => "btn btn-success btn-lg" ) %>
-               </div>
-             <% else %>
-               <%= alert :header => '', :class => 'alert-warning', :close => false,
-                         :text => _("In order to add the SSH key, the user must be saved first. A 'create_ssh_keys' permission is required too.") %>
-             <% end %>
+          </div>
         </td>
       </tr>
     </tbody>

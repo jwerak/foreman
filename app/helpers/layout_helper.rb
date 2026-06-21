@@ -259,7 +259,7 @@ module LayoutHelper
   end
 
   def modal_close(text = _('Close'))
-    button_tag(text, :class => 'btn btn-default', :data => { :dismiss => 'modal' })
+    button_tag(text, :class => 'pf-v6-c-button pf-m-secondary', :data => { :dismiss => 'modal' }, :onclick => 'this.closest(".modal").style.display="none";document.body.classList.remove("modal-open")')
   end
 
   def last_days(days)

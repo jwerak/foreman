@@ -1,7 +1,21 @@
-<div class='col-md-offset-4 col-md-4'>
-  <%= alert :header => (_(controller_name.camelize.singularize) rescue nil) + ' ' + _('not found'),
-    :text => _('Please try to update your request'),
-    :actions => link_to(_('Back'), main_app.root_path, :class => 'btn btn-default'),
-    :class => 'alert-warning',
-    :close => false %>
+<% content_for(:title, _("Not found")) %>
+<div class="pf-v6-c-empty-state pf-m-lg">
+  <div class="pf-v6-c-empty-state__content">
+    <div class="pf-v6-c-empty-state__header">
+      <div class="pf-v6-c-empty-state__icon">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </div>
+      <div class="pf-v6-c-empty-state__title">
+        <h1 class="pf-v6-c-empty-state__title-text"><%= (_(controller_name.camelize.singularize) rescue nil) + ' ' + _('not found') %></h1>
+      </div>
+    </div>
+    <div class="pf-v6-c-empty-state__body">
+      <p><%= _("Please try to update your request") %></p>
+    </div>
+    <div class="pf-v6-c-empty-state__footer">
+      <div class="pf-v6-c-empty-state__actions">
+        <%= link_to(_('Back'), main_app.root_path, class: 'pf-v6-c-button pf-m-primary') %>
+      </div>
+    </div>
+  </div>
 </div>

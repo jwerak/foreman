@@ -52,9 +52,9 @@
               <tr>
                 <td><%= provider[:friendly_name] %></td>
                 <% if provider[:status] == :installed %>
-                  <td><div class="label label-success"><%= _('Installed') %></div></td>
+                  <td><span class="pf-v6-c-label pf-m-green"><span class="pf-v6-c-label__content"><%= _('Installed') %></span></span></td>
                 <% else %>
-                  <td><div class="label label-default"><%= _('Not Installed') %></div></td>
+                  <td><span class="pf-v6-c-label"><span class="pf-v6-c-label__content"><%= _('Not Installed') %></span></span></td>
                 <% end %>
               </tr>
             <% end %>

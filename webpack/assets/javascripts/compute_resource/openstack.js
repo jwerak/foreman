@@ -1,43 +1,55 @@
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-attr */
-/* eslint-disable jquery/no-ajax */
-/* eslint-disable jquery/no-html */
-/* eslint-disable jquery/no-class */
-
-import $ from 'jquery';
 import { showSpinner, hideSpinner } from '../foreman_tools';
 import { sprintf, translate as __ } from '../react_app/common/I18n';
 
+function getCsrfToken() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta ? meta.content : '';
+}
+
 export function schedulerHintFilterSelected(item) {
-  const filter = $(item).val();
+  const filter = item.value;
+  const wrapper = document.getElementById('scheduler_hint_wrapper');
 
   if (filter === '') {
-    $('#scheduler_hint_wrapper').empty();
+    if (wrapper) wrapper.innerHTML = '';
   } else {
-    const url = $(item).attr('data-url');
-    // eslint-disable-next-line no-undef
-    const data = serializeForm().replace('method=patch', 'method=post');
+    const url = item.getAttribute('data-url');
+    const form = document.querySelector('form');
+    const data = form
+      ? new URLSearchParams(new FormData(form)).toString().replace('method=patch', 'method=post')
+      : '';
 
     showSpinner();
-    $.ajax({
-      type: 'post',
-      url,
-      data,
-      complete() {
-        hideSpinner();
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-Token': getCsrfToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'text/html',
       },
-      error(jqXHR, status, error) {
-        $('#scheduler_hint_wrapper').html(
-          sprintf(
+      body: data,
+    })
+      .then(response => {
+        if (!response.ok) throw response;
+        return response.text();
+      })
+      .then(html => {
+        if (wrapper) wrapper.innerHTML = html;
+      })
+      .catch(err => {
+        if (wrapper) {
+          wrapper.innerHTML = sprintf(
             __('Error loading scheduler hint filters information: %s'),
-            error
-          )
-        );
-        $('#compute_resource_tab a').addClass('tab-error');
-      },
-      success(result) {
-        $('#scheduler_hint_wrapper').html(result);
-      },
-    });
+            err.statusText || String(err)
+          );
+        }
+        const crTab = document.querySelector('#compute_resource_tab a');
+        if (crTab) crTab.classList.add('tab-error');
+      })
+      .finally(() => {
+        hideSpinner();
+      });
   }
 }

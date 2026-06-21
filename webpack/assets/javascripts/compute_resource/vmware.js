@@ -1,20 +1,17 @@
-/* eslint-disable jquery/no-prop */
-/* eslint-disable jquery/no-data */
-/* eslint-disable jquery/no-each */
-/* eslint-disable jquery/no-ajax */
-/* eslint-disable jquery/no-val */
-/* eslint-disable jquery/no-text */
-
-import $ from 'jquery';
 import store from '../react_app/redux';
 import { translate as __ } from '../react_app/common/I18n';
 import { showSpinner, hideSpinner } from '../foreman_tools';
 import { changeCluster } from '../react_app/redux/actions/hosts/storage/vmware';
 
+function getCsrfToken() {
+  const meta = document.querySelector('meta[name="csrf-token"]');
+  return meta ? meta.content : '';
+}
+
 export function onClusterChange(item) {
-  const clusterId = $(item).val();
-  const resPoolsUrl = $(item).data('poolsurl');
-  const networksUrl = $(item).data('networksurl');
+  const clusterId = item.value;
+  const resPoolsUrl = item.dataset.poolsurl;
+  const networksUrl = item.dataset.networksurl;
 
   store.dispatch(changeCluster(clusterId));
 
@@ -23,63 +20,78 @@ export function onClusterChange(item) {
 }
 
 function fetchResourcePools(url, clusterId) {
-  // eslint-disable-next-line camelcase
-  const data = { cluster_id: clusterId };
-  const $selectbox = $('select[id$="resource_pool"]');
+  const selectbox = document.querySelector('select[id$="resource_pool"]');
+  if (!selectbox) return;
 
   if (!clusterId) {
-    $selectbox.select2('destroy').empty();
-    $('<option>')
-      .text(__('Please select a cluster'))
-      .val('')
-      .appendTo($selectbox);
-    $selectbox.prop('disabled', true).select2();
+    // select2 jQuery plugin — use global $ if available
+    if (window.$ && window.$(selectbox).select2) {
+      window.$(selectbox).select2('destroy');
+    }
+    selectbox.innerHTML = `<option value="">${__('Please select a cluster')}</option>`;
+    selectbox.disabled = true;
+    if (window.$ && window.$(selectbox).select2) {
+      window.$(selectbox).select2();
+    }
     return;
   }
 
   showSpinner();
-  $.ajax({
-    type: 'get',
-    url,
-    data,
-    complete() {
-      hideSpinner();
+
+  fetch(`${url}?cluster_id=${encodeURIComponent(clusterId)}`, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'application/json',
     },
-    success(request) {
-      $selectbox
-        .select2('destroy')
-        .empty()
-        .prop('disabled', false);
+  })
+    .then(response => response.json())
+    .then(request => {
+      if (window.$ && window.$(selectbox).select2) {
+        window.$(selectbox).select2('destroy');
+      }
+      selectbox.innerHTML = '';
+      selectbox.disabled = false;
       request.forEach(({ name }) => {
-        $('<option>')
-          .text(name)
-          .val(name)
-          .appendTo($selectbox);
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        selectbox.appendChild(option);
       });
-      $selectbox.select2();
-    },
-  });
+      if (window.$ && window.$(selectbox).select2) {
+        window.$(selectbox).select2();
+      }
+    })
+    .finally(() => {
+      hideSpinner();
+    });
 }
 
 function fetchNetworks(url, clusterId) {
-  const $networkOptions = $('select[id$=_network]');
+  const networkOptions = document.querySelectorAll('select[id$=_network]');
 
   showSpinner();
-  $.ajax({
-    type: 'get',
-    url,
-    data: { cluster_id: clusterId },
-    success(response) {
-      $networkOptions.empty();
 
-      $.each(response.results, (idx, value) => {
-        $networkOptions.append(new Option(value.name, value.id, false, false));
+  fetch(`${url}?cluster_id=${encodeURIComponent(clusterId)}`, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(response => {
+      networkOptions.forEach(select => {
+        select.innerHTML = '';
+        response.results.forEach(({ name, id }) => {
+          const option = new Option(name, id, false, false);
+          select.appendChild(option);
+        });
       });
 
-      window.update_interface_table();
-    },
-    complete() {
+      if (typeof window.update_interface_table === 'function') {
+        window.update_interface_table();
+      }
+    })
+    .finally(() => {
       hideSpinner();
-    },
-  });
+    });
 }
