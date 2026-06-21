@@ -30,7 +30,7 @@ module Foreman::Controller::TaxonomiesController
   def new
     @taxonomy = taxonomy_class.new
     Taxonomy.no_taxonomy_scope do
-      # we explicitly render here in order to evaluate the view without taxonomy scope
+      set_form_fields
       render 'taxonomies/new'
     end
   end
@@ -38,13 +38,14 @@ module Foreman::Controller::TaxonomiesController
   def nest
     @taxonomy           = taxonomy_class.new
     @taxonomy.parent_id = params[:id].to_i if resource_scope.find_by_id(params[:id])
+    set_form_fields
     render 'taxonomies/new'
   end
 
-  # cannot name this method "clone" since Object has a clone method and the mixin doesn't overwrite it
   def clone_taxonomy
     @old_name = @taxonomy.name
     @taxonomy = @taxonomy.dup
+    set_form_fields
     render 'taxonomies/clone'
   end
 
@@ -57,13 +58,14 @@ module Foreman::Controller::TaxonomiesController
         process_success(:object => @taxonomy, :success_redirect => send("edit_#{taxonomy_single}_path", @taxonomy))
       end
     else
+      set_form_fields
       process_error(:render => "taxonomies/new", :object => @taxonomy)
     end
   end
 
   def edit
     Taxonomy.no_taxonomy_scope do
-      # we explicitly render here in order to evaluate the view without taxonomy scope
+      set_form_fields
       render 'taxonomies/edit'
     end
   end
@@ -81,6 +83,7 @@ module Foreman::Controller::TaxonomiesController
     if result
       process_success(:object => @taxonomy)
     else
+      set_form_fields
       process_error(:render => "taxonomies/edit", :object => @taxonomy)
     end
   end
@@ -224,5 +227,18 @@ module Foreman::Controller::TaxonomiesController
     session[taxonomy_id] = @taxonomy ? @taxonomy.id : nil
 
     TopbarSweeper.expire_cache
+  end
+
+  def set_form_fields
+    parent_scope = taxonomy_class.completer_scope(nil).authorized("edit_#{taxonomies_plural}").order(:title)
+    parent_scope = parent_scope.where.not(id: @taxonomy.subtree_ids) if @taxonomy.persisted?
+    parent_options = parent_scope.map { |t| { value: t.id, label: t.title } }
+
+    @form_fields = [
+      { name: 'parent_id', label: _('Parent'), type: 'select', tab: taxonomy_class.model_name.human,
+        options: parent_options },
+      { name: 'name', label: _('Name'), required: true, tab: taxonomy_class.model_name.human },
+      { name: 'description', label: _('Description'), type: 'textarea', tab: taxonomy_class.model_name.human },
+    ]
   end
 end

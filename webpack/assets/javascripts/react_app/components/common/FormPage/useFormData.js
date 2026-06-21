@@ -8,6 +8,8 @@ const useFormData = ({ apiUrl, resourceId, fields, resourceName }) => {
     fields.forEach(field => {
       if (field.type === 'checkbox') {
         initial[field.name] = field.initialValue ?? false;
+      } else if (field.type === 'checkboxGroup') {
+        initial[field.name] = field.initialValue ?? [];
       } else {
         initial[field.name] = field.initialValue ?? '';
       }
@@ -28,11 +30,18 @@ const useFormData = ({ apiUrl, resourceId, fields, resourceName }) => {
         const { data } = await API.get(`${apiUrl}/${resourceId}`);
         const loaded = {};
         fields.forEach(field => {
-          const val = data[field.name];
-          if (field.type === 'checkbox') {
-            loaded[field.name] = val ?? false;
+          if (field.type === 'checkboxGroup') {
+            const key = field.loadKey || field.name;
+            const raw = data[key];
+            if (Array.isArray(raw) && raw.length > 0 && typeof raw[0] === 'object') {
+              loaded[field.name] = raw.map(item => item.id);
+            } else {
+              loaded[field.name] = Array.isArray(raw) ? raw : [];
+            }
+          } else if (field.type === 'checkbox') {
+            loaded[field.name] = data[field.name] ?? false;
           } else {
-            loaded[field.name] = val ?? '';
+            loaded[field.name] = data[field.name] ?? '';
           }
         });
         setValues(loaded);
@@ -62,7 +71,13 @@ const useFormData = ({ apiUrl, resourceId, fields, resourceName }) => {
   const validate = useCallback(() => {
     const newErrors = {};
     fields.forEach(field => {
-      if (field.required && !values[field.name] && values[field.name] !== 0) {
+      if (!field.required) return;
+      const val = values[field.name];
+      if (field.type === 'checkboxGroup') {
+        if (!Array.isArray(val) || val.length === 0) {
+          newErrors[field.name] = "can't be blank";
+        }
+      } else if (!val && val !== 0) {
         newErrors[field.name] = "can't be blank";
       }
     });

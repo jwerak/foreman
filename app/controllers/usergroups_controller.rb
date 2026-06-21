@@ -12,6 +12,7 @@ class UsergroupsController < ApplicationController
 
   def new
     @usergroup = Usergroup.new
+    set_form_fields
   end
 
   def create
@@ -19,14 +20,17 @@ class UsergroupsController < ApplicationController
     if @usergroup.save && refresh_external_usergroups
       process_success
     else
+      set_form_fields
       process_error
     end
   rescue => e
     external_usergroups_error(@usergroup, e)
+    set_form_fields
     process_error
   end
 
   def edit
+    set_form_fields
   end
 
   def update
@@ -34,13 +38,16 @@ class UsergroupsController < ApplicationController
         refresh_external_usergroups
       process_success
     else
+      set_form_fields
       process_error
     end
   rescue Foreman::CyclicGraphException => e
     @usergroup.errors.add(:usergroups, e.record.errors[:base].join(' '))
+    set_form_fields
     process_error
   rescue => e
     external_usergroups_error(@usergroup, e)
+    set_form_fields
     process_error
   end
 
@@ -69,5 +76,23 @@ class UsergroupsController < ApplicationController
 
   def refresh_external_usergroups
     (external_usergroups + @usergroup.external_usergroups).uniq.map(&:refresh)
+  end
+
+  def set_form_fields
+    usergroup_options = Usergroup.except_current(@usergroup).order(:name).map { |ug| { value: ug.id, label: ug.name } }
+    user_options = User.except_hidden.order(:login).map { |u| { value: u.id, label: u.select_title } }
+    role_options = Role.for_current_user.map { |r| { value: r.id, label: r.name } }
+
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true, tab: _('User Group') },
+      { name: 'usergroup_ids', label: _('User Groups'), type: 'checkboxGroup', tab: _('User Group'),
+        options: usergroup_options, loadKey: 'usergroups' },
+      { name: 'user_ids', label: _('Users'), type: 'checkboxGroup', tab: _('User Group'),
+        options: user_options, loadKey: 'users' },
+      { name: 'admin', label: _('Admin'), type: 'checkbox', tab: _('Roles'),
+        checkboxLabel: _('Administrator') },
+      { name: 'role_ids', label: _('Roles'), type: 'checkboxGroup', tab: _('Roles'),
+        options: role_options, loadKey: 'roles' },
+    ]
   end
 end

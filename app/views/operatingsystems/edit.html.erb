@@ -1,3 +1,1 @@
-<% title _("Edit %s") % @operatingsystem.to_s %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@operatingsystem).merge(fields: @form_fields)) %>

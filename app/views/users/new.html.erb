@@ -1,3 +1,1 @@
-<% title _("Create User") %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@user).merge(fields: @form_fields)) %>

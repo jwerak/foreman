@@ -1,3 +1,1 @@
-<% title _("Create Operating System") %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@operatingsystem).merge(fields: @form_fields)) %>

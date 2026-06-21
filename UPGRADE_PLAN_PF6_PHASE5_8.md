@@ -143,7 +143,7 @@ const DomainsIndex = (props) => (
 
 ---
 
-## Phase 7: Form Page Migration (7.1-7.3, 7B COMPLETE)
+## Phase 7: Form Page Migration (7.1-7.3, 7C COMPLETE)
 
 **Goal:** Convert the 44 ERB form pages from `form_for`/`form_tag` to React form components.
 
@@ -195,13 +195,14 @@ Map Rails form helpers to PF6 equivalents:
 - `compute_resources/_form` ✅ — FormPage with name, provider select (disabled on edit), description textarea. Provider-specific partials + taxonomy tabs deferred.
 - `lookup_keys/_edit` — Deferred: Puppet plugin partial with no standalone route, matchers/nested values too complex for FormPage pattern
 
-**Batch 7C — Tabbed/complex forms (6 pages):**
-- `subnets/_form` (tabs: subnet, domains, proxies)
-- `operatingsystems/_form` (tabs: OS, ptables, media, templates)
-- `hostgroups/_form` (tabs: host group, network, OS, parameters)
-- `users/_form` (tabs: user, locations, orgs, roles)
-- `usergroups/_form` (tabs: group, roles, external)
-- `taxonomies/_form` + step wizards
+**Batch 7C — Tabbed/complex forms (6 pages) ✅ COMPLETE (2026-06-21):**
+Added PF6 Tabs support and `checkboxGroup` field type to FormPage infrastructure.
+- `subnets/_form` ✅ — FormPage with 3 tabs: Subnet (name, description, network, cidr, gateway, dns_primary, dns_secondary, ipam, from/to, vlanid, mtu, nic_delay, boot_mode), Domains (checkboxGroup), Proxies (dhcp/tftp/httpboot/dns/template/bmc selects). Parameters + taxonomy tabs deferred.
+- `operatingsystems/_form` ✅ — FormPage with 4 tabs: Operating System (name, major, minor, description, family, release_name, password_hash), Architectures (checkboxGroup), Partition Tables (checkboxGroup), Installation Media (checkboxGroup). Templates + Parameters tabs deferred.
+- `hostgroups/_form` ✅ — FormPage with 2 tabs: Host Group (parent_id, name, description, compute_resource_id, compute_profile_id), Network (domain_id, subnet_id, subnet6_id, realm_id). OS tab, Parameters (Slot component), smart_proxy_fields, extensible main_tabs, taxonomy tabs deferred.
+- `users/_form` ✅ — FormPage with 2 tabs: User (login, firstname, lastname, mail, description, locale, timezone, auth_source_id), Roles (admin checkbox, role_ids checkboxGroup). Password, Email Preferences, SSH Keys, PAT, Registration Tokens, UI Preferences, taxonomy tabs deferred.
+- `usergroups/_form` ✅ — FormPage with 2 tabs: User Group (name, usergroup_ids checkboxGroup, user_ids checkboxGroup), Roles (admin checkbox, role_ids checkboxGroup). External Groups + extensible tabs deferred.
+- `taxonomies/_form` ✅ — FormPage with 1 tab: Location/Organization (parent_id, name, description). All 13+ resource assignment tabs, cross-taxonomy tabs, Parameters deferred.
 
 **Batch 7D — Host forms (deferred — highest complexity):**
 - `hosts/_form` — the most complex form in Foreman, with dynamic tabs, compute resource integration, AJAX loading. Migrate last or as a separate phase.

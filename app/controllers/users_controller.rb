@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    set_form_fields
   end
 
   def create
@@ -26,6 +27,7 @@ class UsersController < ApplicationController
     if @user.save
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -33,9 +35,7 @@ class UsersController < ApplicationController
   def edit
     editing_self?
     @user = find_resource(:edit_users)
-    (MailNotification.authorized_as(@user, :view_mail_notifications).subscriptable - @user.mail_notifications).sort_by(&:name).each do |mail_notification|
-      @user.user_mail_notifications.build(:mail_notification_id => mail_notification.id)
-    end
+    set_form_fields
   end
 
   def update
@@ -46,6 +46,7 @@ class UsersController < ApplicationController
 
       process_success((editing_self? && !current_user.allowed_to?({:controller => 'users', :action => 'index'})) ? { :success_redirect => helpers.current_hosts_path } : { :success_redirect => users_path })
     else
+      set_form_fields
       process_error
     end
   end
@@ -245,6 +246,31 @@ class UsersController < ApplicationController
 
   def parameter_filter_context
     Foreman::Controller::Parameters::User::Context.new(:ui, controller_name, params[:action], editing_self?)
+  end
+
+  def set_form_fields
+    locale_options = Foreman::Gettext::Support.human_available_locales.map { |label, value| { value: value, label: label } }
+    timezone_options = ActiveSupport::TimeZone.all.map { |tz| { value: tz.name, label: tz.to_s } }
+    auth_source_options = AuthSource.except_hidden.select { |a| a.to_label.present? }.map { |a| { value: a.id, label: a.to_label } }
+    role_options = Role.for_current_user.map { |r| { value: r.id, label: r.name } }
+
+    @form_fields = [
+      { name: 'login', label: _('Login'), required: true, tab: _('User') },
+      { name: 'firstname', label: _('First name'), tab: _('User') },
+      { name: 'lastname', label: _('Last name'), tab: _('User') },
+      { name: 'mail', label: _('Email'), type: 'email', required: true, tab: _('User') },
+      { name: 'description', label: _('Description'), type: 'textarea', tab: _('User') },
+      { name: 'locale', label: _('Language'), type: 'select', tab: _('User'),
+        options: locale_options },
+      { name: 'timezone', label: _('Timezone'), type: 'select', tab: _('User'),
+        options: timezone_options },
+      { name: 'auth_source_id', label: _('Authorized by'), type: 'select', tab: _('User'),
+        options: auth_source_options },
+      { name: 'admin', label: _('Admin'), type: 'checkbox', tab: _('Roles'),
+        checkboxLabel: _('Administrator') },
+      { name: 'role_ids', label: _('Roles'), type: 'checkboxGroup', tab: _('Roles'),
+        options: role_options, loadKey: 'roles' },
+    ]
   end
 
   def verify_active_session

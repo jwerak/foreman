@@ -222,6 +222,146 @@ describe('FormPage', () => {
     expect(screen.getByLabelText('Gateway')).toBeInTheDocument();
   });
 
+  test('renders form with tabs when fields have tab property', () => {
+    const tabbedFields = [
+      { name: 'name', label: 'Name', required: true, tab: 'General' },
+      { name: 'description', label: 'Description', tab: 'General' },
+      { name: 'domain_ids', label: 'Associated Domains', type: 'checkboxGroup', tab: 'Domains',
+        options: [
+          { value: 1, label: 'example.com' },
+          { value: 2, label: 'test.org' },
+        ] },
+    ];
+
+    render(<FormPage {...defaultProps} fields={tabbedFields} />);
+
+    expect(screen.getByRole('tab', { name: 'General' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Domains' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Name')).toBeInTheDocument();
+  });
+
+  test('switches tabs when clicking tab header', async () => {
+    const tabbedFields = [
+      { name: 'name', label: 'Name', required: true, tab: 'General' },
+      { name: 'domain_ids', label: 'Associated Domains', type: 'checkboxGroup', tab: 'Domains',
+        options: [
+          { value: 1, label: 'example.com' },
+        ] },
+    ];
+
+    render(<FormPage {...defaultProps} fields={tabbedFields} />);
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Domains' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('example.com')).toBeInTheDocument();
+    });
+  });
+
+  test('renders checkboxGroup field with options', () => {
+    const fieldsWithCheckboxGroup = [
+      {
+        name: 'role_ids',
+        label: 'Roles',
+        type: 'checkboxGroup',
+        options: [
+          { value: 1, label: 'Viewer' },
+          { value: 2, label: 'Manager' },
+          { value: 3, label: 'Admin' },
+        ],
+      },
+    ];
+
+    render(<FormPage {...defaultProps} fields={fieldsWithCheckboxGroup} />);
+
+    expect(screen.getByText('Viewer')).toBeInTheDocument();
+    expect(screen.getByText('Manager')).toBeInTheDocument();
+    expect(screen.getByText('Admin')).toBeInTheDocument();
+  });
+
+  test('checkboxGroup toggles selections', async () => {
+    API.post.mockResolvedValue({ data: { id: 1 } });
+    const onSuccess = jest.fn();
+
+    const fieldsWithCheckboxGroup = [
+      {
+        name: 'role_ids',
+        label: 'Roles',
+        type: 'checkboxGroup',
+        options: [
+          { value: 1, label: 'Viewer' },
+          { value: 2, label: 'Manager' },
+        ],
+      },
+    ];
+
+    render(<FormPage {...defaultProps} fields={fieldsWithCheckboxGroup} onSubmitSuccess={onSuccess} />);
+
+    fireEvent.click(screen.getByLabelText('Viewer'));
+    fireEvent.click(screen.getByLabelText('Manager'));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Create'));
+    });
+
+    expect(API.post).toHaveBeenCalledWith('/api/v2/architectures', {
+      architecture: { role_ids: [1, 2] },
+    });
+  });
+
+  test('checkboxGroup shows empty message when no options', () => {
+    const fieldsWithEmptyCheckboxGroup = [
+      {
+        name: 'role_ids',
+        label: 'Roles',
+        type: 'checkboxGroup',
+        options: [],
+      },
+    ];
+
+    render(<FormPage {...defaultProps} fields={fieldsWithEmptyCheckboxGroup} />);
+
+    expect(screen.getByText('No options available')).toBeInTheDocument();
+  });
+
+  test('loads checkboxGroup data from association objects in edit mode', async () => {
+    API.get.mockResolvedValue({
+      data: {
+        id: 1,
+        name: 'test',
+        domains: [{ id: 1, name: 'example.com' }, { id: 3, name: 'foo.org' }],
+      },
+    });
+
+    const tabbedFields = [
+      { name: 'name', label: 'Name', tab: 'General' },
+      { name: 'domain_ids', label: 'Associated Domains', type: 'checkboxGroup', tab: 'Domains',
+        loadKey: 'domains',
+        options: [
+          { value: 1, label: 'example.com' },
+          { value: 2, label: 'test.org' },
+          { value: 3, label: 'foo.org' },
+        ] },
+    ];
+
+    render(<FormPage {...defaultProps} fields={tabbedFields} resourceId={1} />);
+
+    await waitFor(() => {
+      expect(screen.getByDisplayValue('test')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Domains' }));
+
+    await waitFor(() => {
+      const checkbox1 = screen.getByLabelText('example.com');
+      const checkbox2 = screen.getByLabelText('test.org');
+      const checkbox3 = screen.getByLabelText('foo.org');
+      expect(checkbox1).toBeChecked();
+      expect(checkbox2).not.toBeChecked();
+      expect(checkbox3).toBeChecked();
+    });
+  });
+
   test('loads and populates data in edit mode', async () => {
     API.get.mockResolvedValue({
       data: { id: 1, name: 'x86_64', description: 'Intel architecture' },

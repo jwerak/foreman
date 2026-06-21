@@ -1,3 +1,1 @@
-<% title(taxonomy_new) %>
-
-<%= render 'taxonomies/step1' , :taxonomy => @taxonomy %>
+<%= react_component('FormPage', react_form_props(@taxonomy).merge(fields: @form_fields)) %>

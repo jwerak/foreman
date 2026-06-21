@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Form,
@@ -18,11 +18,15 @@ import {
   Spinner,
   Popover,
   Icon,
+  Tabs,
+  Tab,
+  TabTitleText,
 } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons';
 
 import { translate as __ } from '../../../common/I18n';
 import useFormData from './useFormData';
+import './FormPage.scss';
 
 const FormFieldInput = ({ field, value, error, onChange, isSubmitting }) => {
   const validated = error ? 'error' : 'default';
@@ -104,6 +108,38 @@ const FormFieldInput = ({ field, value, error, onChange, isSubmitting }) => {
         />
       );
 
+    case 'checkboxGroup': {
+      const selected = Array.isArray(value) ? value : [];
+      return (
+        <div className="form-page-checkbox-group">
+          {(field.options || []).map(opt => {
+            const optValue = typeof opt === 'object' ? opt.value : opt;
+            const optLabel = typeof opt === 'object' ? opt.label : opt;
+            return (
+              <Checkbox
+                key={optValue}
+                id={`${fieldId}-${optValue}`}
+                label={optLabel}
+                isChecked={selected.includes(optValue)}
+                onChange={(_event, isChecked) => {
+                  const next = isChecked
+                    ? [...selected, optValue]
+                    : selected.filter(v => v !== optValue);
+                  onChange(field.name, next);
+                }}
+                isDisabled={field.disabled || isSubmitting}
+              />
+            );
+          })}
+          {(!field.options || field.options.length === 0) && (
+            <HelperText>
+              <HelperTextItem>{__('No options available')}</HelperTextItem>
+            </HelperText>
+          )}
+        </div>
+      );
+    }
+
     default:
       return (
         <TextInput
@@ -168,6 +204,9 @@ const FormPage = ({
     onSubmit,
   } = useFormData({ apiUrl, resourceId, fields, resourceName });
 
+  const hasTabs = fields.some(f => f.tab);
+  const [activeTab, setActiveTab] = useState(0);
+
   const handleSubmit = async e => {
     const result = await onSubmit(e);
     if (result.success) {
@@ -186,17 +225,6 @@ const FormPage = ({
       </div>
     );
   }
-
-  const sections = {};
-  const unsectionedFields = [];
-  fields.forEach(field => {
-    if (field.section) {
-      if (!sections[field.section]) sections[field.section] = [];
-      sections[field.section].push(field);
-    } else {
-      unsectionedFields.push(field);
-    }
-  });
 
   const renderField = field => {
     if (field.type === 'hidden') return null;
@@ -272,27 +300,106 @@ const FormPage = ({
     );
   };
 
+  const renderErrorAlert = () =>
+    submitErrors && (
+      <Alert
+        variant="danger"
+        title={__('Unable to save')}
+        isInline
+        ouiaId="form-submit-error"
+      >
+        {submitErrors.length === 1 ? (
+          <span>{submitErrors[0]}</span>
+        ) : (
+          <ul>
+            {submitErrors.map((msg, idx) => (
+              <li key={idx}>{msg}</li>
+            ))}
+          </ul>
+        )}
+      </Alert>
+    );
+
+  const renderActionGroup = () => (
+    <ActionGroup>
+      <Button
+        variant="primary"
+        type="submit"
+        isDisabled={isSubmitting}
+        isLoading={isSubmitting}
+        ouiaId="form-submit-button"
+      >
+        {submitLabel || (isEdit ? __('Update') : __('Create'))}
+      </Button>
+      {cancelUrl && (
+        <Button
+          variant="link"
+          component="a"
+          href={cancelUrl}
+          isDisabled={isSubmitting}
+          ouiaId="form-cancel-button"
+        >
+          {__('Cancel')}
+        </Button>
+      )}
+    </ActionGroup>
+  );
+
+  if (hasTabs) {
+    const tabOrder = [];
+    const tabFields = {};
+    fields.forEach(field => {
+      const tabName = field.tab;
+      if (!tabName) return;
+      if (!tabFields[tabName]) {
+        tabFields[tabName] = [];
+        tabOrder.push(tabName);
+      }
+      tabFields[tabName].push(field);
+    });
+
+    return (
+      <div className="pf-v6-c-page__main-section pf-m-light">
+        <Form isWidthLimited onSubmit={handleSubmit}>
+          {renderErrorAlert()}
+          <Tabs
+            activeKey={activeTab}
+            onSelect={(_event, key) => setActiveTab(key)}
+            aria-label={title}
+          >
+            {tabOrder.map((tabName, idx) => (
+              <Tab
+                key={tabName}
+                eventKey={idx}
+                title={<TabTitleText>{tabName}</TabTitleText>}
+              >
+                <div className="pf-v6-u-pt-md">
+                  {tabFields[tabName].map(renderField)}
+                </div>
+              </Tab>
+            ))}
+          </Tabs>
+          {renderActionGroup()}
+        </Form>
+      </div>
+    );
+  }
+
+  const sections = {};
+  const unsectionedFields = [];
+  fields.forEach(field => {
+    if (field.section) {
+      if (!sections[field.section]) sections[field.section] = [];
+      sections[field.section].push(field);
+    } else {
+      unsectionedFields.push(field);
+    }
+  });
+
   return (
     <div className="pf-v6-c-page__main-section pf-m-light">
       <Form isWidthLimited onSubmit={handleSubmit}>
-        {submitErrors && (
-          <Alert
-            variant="danger"
-            title={__('Unable to save')}
-            isInline
-            ouiaId="form-submit-error"
-          >
-            {submitErrors.length === 1 ? (
-              <span>{submitErrors[0]}</span>
-            ) : (
-              <ul>
-                {submitErrors.map((msg, idx) => (
-                  <li key={idx}>{msg}</li>
-                ))}
-              </ul>
-            )}
-          </Alert>
-        )}
+        {renderErrorAlert()}
 
         {unsectionedFields.map(renderField)}
 
@@ -302,28 +409,7 @@ const FormPage = ({
           </FormSection>
         ))}
 
-        <ActionGroup>
-          <Button
-            variant="primary"
-            type="submit"
-            isDisabled={isSubmitting}
-            isLoading={isSubmitting}
-            ouiaId="form-submit-button"
-          >
-            {submitLabel || (isEdit ? __('Update') : __('Create'))}
-          </Button>
-          {cancelUrl && (
-            <Button
-              variant="link"
-              component="a"
-              href={cancelUrl}
-              isDisabled={isSubmitting}
-              ouiaId="form-cancel-button"
-            >
-              {__('Cancel')}
-            </Button>
-          )}
-        </ActionGroup>
+        {renderActionGroup()}
       </Form>
     </div>
   );
@@ -341,6 +427,7 @@ FormPage.propTypes = {
         'textarea',
         'select',
         'checkbox',
+        'checkboxGroup',
         'password',
         'email',
         'number',
@@ -363,6 +450,8 @@ FormPage.propTypes = {
       ),
       checkboxLabel: PropTypes.string,
       section: PropTypes.string,
+      tab: PropTypes.string,
+      loadKey: PropTypes.string,
       initialValue: PropTypes.any,
       rows: PropTypes.number,
     })

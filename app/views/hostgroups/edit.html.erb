@@ -1,3 +1,1 @@
-<% title(_("Edit %s") % @hostgroup.title) %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@hostgroup).merge(fields: @form_fields)) %>
