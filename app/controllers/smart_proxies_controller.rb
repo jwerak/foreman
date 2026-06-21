@@ -1,6 +1,7 @@
 class SmartProxiesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::SmartProxy
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:show, :edit, :update, :refresh, :ping, :tftp_server, :destroy, :log_pane, :failed_modules, :errors_card, :modules_card, :expire_logs]
   before_action :find_status, :only => [:ping, :tftp_server]

@@ -2,6 +2,7 @@ class BookmarksController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::BookmarkCommon
   include Foreman::Controller::Parameters::Bookmark
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 

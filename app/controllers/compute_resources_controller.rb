@@ -1,6 +1,7 @@
 class ComputeResourcesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::ComputeResource
+  include Foreman::Controller::FormFieldsApi
 
   AJAX_REQUESTS = [:template_selected, :instance_type_selected, :cluster_selected, :resource_pools]
   before_action :ajax_request, :only => AJAX_REQUESTS
@@ -180,7 +181,7 @@ class ComputeResourcesController < ApplicationController
     @form_fields = [
       { name: 'name', label: _('Name'), required: true },
       { name: 'provider', label: _('Provider'), type: 'select', required: true, options: provider_options,
-        disabled: @compute_resource.persisted? },
+        disabled: @compute_resource&.persisted? },
       { name: 'description', label: _('Description'), type: 'textarea', rows: 3 },
     ]
   end

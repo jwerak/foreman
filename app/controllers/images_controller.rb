@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   include Foreman::Controller::Parameters::Image
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_compute_resource
   before_action :find_resource, :only => [:edit, :update, :destroy]
@@ -58,7 +59,7 @@ class ImagesController < ApplicationController
       { name: 'name', label: _('Name'), required: true },
       { name: 'operatingsystem_id', label: _('Operating System'), type: 'select', required: true, options: os_options },
       { name: 'architecture_id', label: _('Architecture'), type: 'select', required: true, options: arch_options },
-      { name: 'compute_resource_id', type: 'hidden', initialValue: @compute_resource.id },
+      { name: 'compute_resource_id', type: 'hidden', initialValue: @compute_resource&.id },
     ]
   end
 

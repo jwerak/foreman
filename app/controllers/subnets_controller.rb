@@ -1,6 +1,7 @@
 class SubnetsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Subnet
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 

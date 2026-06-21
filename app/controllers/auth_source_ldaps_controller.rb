@@ -1,5 +1,6 @@
 class AuthSourceLdapsController < ApplicationController
   include Foreman::Controller::Parameters::AuthSourceLdap
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 

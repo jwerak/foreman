@@ -1,6 +1,7 @@
 class DomainsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Domain
+  include Foreman::Controller::FormFieldsApi
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
   def index

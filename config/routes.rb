@@ -1,5 +1,20 @@
 Foreman::Application.routes.draw do
   apipie_dsl
+
+  constraints(id: /\d+/) do
+    %w[
+      architectures domains hostgroups operatingsystems realms media
+      compute_profiles subnets compute_resources http_proxies bookmarks
+      roles users usergroups smart_proxies common_parameters
+      auth_source_ldaps auth_source_externals locations organizations
+    ].each do |resource|
+      get "#{resource}/:id", to: 'react#index'
+    end
+    get 'templates/provisioning_templates/:id', to: 'react#index'
+    get 'templates/ptables/:id', to: 'react#index'
+    get 'templates/report_templates/:id', to: 'react#index'
+  end
+
   resources :mail_notifications, only: [] do
     collection do
       get 'auto_complete_search'
@@ -132,6 +147,7 @@ Foreman::Application.routes.draw do
     resources :bookmarks, except: [:show, :new, :create] do
       collection do
         get 'auto_complete_search'
+        get 'form_fields'
       end
     end
 
@@ -153,6 +169,7 @@ Foreman::Application.routes.draw do
   resources :common_parameters, except: [:show] do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
   resources :parameters, only: [:index] do
@@ -164,6 +181,7 @@ Foreman::Application.routes.draw do
   resources :compute_profiles do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
     resources :compute_attributes, only: [:create, :edit, :update]
     resources :compute_resources, only: [] do
@@ -178,6 +196,7 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
       post 'architecture_selected'
       post 'os_selected'
       post 'domain_selected'
@@ -215,12 +234,14 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
 
   resources :http_proxies, controller: 'http_proxies' do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
       put 'test_connection'
     end
   end
@@ -238,10 +259,12 @@ Foreman::Application.routes.draw do
   resources :usergroups, except: [:show] do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
 
   get 'menu', to: 'user_menus#menu'
+  get 'layout', to: 'layout_data#show'
 
   resources :users, except: [:show] do
     collection do
@@ -252,6 +275,7 @@ Foreman::Application.routes.draw do
       get 'extlogin'
       get 'extlogout'
       get 'auto_complete_search'
+      get 'form_fields'
       delete 'stop_impersonation'
       delete 'invalidate_jwt_for_all_users'
     end
@@ -267,6 +291,7 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
 
@@ -289,11 +314,16 @@ Foreman::Application.routes.draw do
   resources :auth_source_ldaps, except: [:show, :index] do
     collection do
       put 'test_connection'
+      get 'form_fields'
     end
   end
 
   resources :auth_sources, only: [:show, :index]
-  resources :auth_source_externals, only: [:update, :edit]
+  resources :auth_source_externals, only: [:update, :edit] do
+    collection do
+      get 'form_fields'
+    end
+  end
 
   put 'users/(:id)/test_mail', to: 'users#test_mail', as: 'test_mail_user'
 
@@ -367,6 +397,7 @@ Foreman::Application.routes.draw do
     resources :domains, except: [:show] do
       collection do
         get 'auto_complete_search'
+        get 'form_fields'
       end
     end
 
@@ -377,6 +408,7 @@ Foreman::Application.routes.draw do
       end
       collection do
         get 'auto_complete_search'
+        get 'form_fields'
       end
     end
   end
@@ -387,6 +419,7 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
 
@@ -405,6 +438,7 @@ Foreman::Application.routes.draw do
   resources :architectures, except: [:show] do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
     end
   end
 
@@ -432,6 +466,7 @@ Foreman::Application.routes.draw do
       end
       collection do
         get 'auto_complete_search'
+        get 'form_fields'
         get 'provider_selected'
         put 'test_connection'
       end
@@ -442,6 +477,7 @@ Foreman::Application.routes.draw do
     resources :realms, except: [:show] do
       collection do
         get 'auto_complete_search'
+        get 'form_fields'
       end
     end
   end
@@ -449,6 +485,7 @@ Foreman::Application.routes.draw do
   resources :subnets, except: [:show] do
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
       get 'import'
       post 'create_multiple'
       post 'freeip'
@@ -491,6 +528,7 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
       get 'clear'
       get  'mismatches'
       post 'import_mismatches'
@@ -511,6 +549,7 @@ Foreman::Application.routes.draw do
     end
     collection do
       get 'auto_complete_search'
+      get 'form_fields'
       get 'clear'
       get  'mismatches'
       post 'import_mismatches'

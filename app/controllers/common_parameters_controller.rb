@@ -1,6 +1,7 @@
 class CommonParametersController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Parameter
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 

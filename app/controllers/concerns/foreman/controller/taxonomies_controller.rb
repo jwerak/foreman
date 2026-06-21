@@ -2,6 +2,8 @@ module Foreman::Controller::TaxonomiesController
   extend ActiveSupport::Concern
 
   included do
+    include Foreman::Controller::FormFieldsApi
+
     before_action :find_resource, :only => %w{edit update destroy clone_taxonomy assign_hosts
                                               assign_selected_hosts assign_all_hosts step2 select
                                               parent_taxonomy_selected}
@@ -231,7 +233,7 @@ module Foreman::Controller::TaxonomiesController
 
   def set_form_fields
     parent_scope = taxonomy_class.completer_scope(nil).authorized("edit_#{taxonomies_plural}").order(:title)
-    parent_scope = parent_scope.where.not(id: @taxonomy.subtree_ids) if @taxonomy.persisted?
+    parent_scope = parent_scope.where.not(id: @taxonomy.subtree_ids) if @taxonomy&.persisted?
     parent_options = parent_scope.map { |t| { value: t.id, label: t.title } }
 
     @form_fields = [

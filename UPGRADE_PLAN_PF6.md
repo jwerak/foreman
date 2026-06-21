@@ -1077,3 +1077,108 @@ architecture. All data is now passed as props from the controller (no per-widget
 - `webpack/assets/javascripts/dashboard/gridster.scss`
 
 **Test results:** 229 suites pass, 1172 tests (1171 pass, 1 skipped), 375 snapshots.
+
+## Phase 11: Unified Detail Pages with OpenShift-style Layout
+
+**Goal:** Create SPA detail/edit pages for all resources so clicking a row in an index table navigates without full reload, with proper sidebar highlighting and breadcrumb navigation.
+
+**Full plan:** `.claude/plans/unified-detail-pages.md`
+
+### Phase 11.1: Fix Sidebar Active State ✅ COMPLETE (2026-06-21)
+
+**Problem:** Navigating to `/domains/5` lost sidebar highlighting because all path matching was exact (`/domains` !== `/domains/5`).
+
+**File modified:** `webpack/.../components/Layout/Navigation.js`
+
+**Changes:**
+1. Added `findActiveParent(path)` helper (lines 60-70) — resolves a path to its parent menu title via `subItemToItemMap`, tries exact match first, falls back to longest prefix match with `/` separator guard
+2. Updated sub-item `isActive` logic (lines 104-112) — added `currentPath.startsWith(href + '/')` fallback
+3. Replaced 3 exact `subItemToItemMap[...]` lookups with `findActiveParent()` for initial expand, navigation update, and `NavExpandable` `isActive` prop
+4. Updated secondary expand match (lines 138-143) — added prefix fallback for nested menu groups
+
+**Test file added:** `webpack/.../components/Layout/__tests__/Navigation.test.js`
+
+### Phase 11.2: Form Fields API Endpoint ✅ COMPLETE (2026-06-21)
+
+**New file:** `app/controllers/concerns/foreman/controller/form_fields_api.rb`
+
+Concern that adds a `form_fields` action calling `set_form_fields` and rendering `{ fields: @form_fields || [] }` as JSON.
+
+**Controllers updated (21 includes):**
+ArchitecturesController, DomainsController, BookmarksController, HostgroupsController,
+OperatingsystemsController, RealmsController, MediaController, ComputeProfilesController,
+SubnetsController, ComputeResourcesController, HttpProxiesController, RolesController,
+UsersController, UsergroupsController, SmartProxiesController, CommonParametersController,
+ImagesController, SshKeysController, AuthSourceExternalsController, AuthSourceLdapsController,
+Foreman::Controller::TaxonomiesController (concern — covers LocationsController + OrganizationsController)
+
+**Routes added:** 20 `get 'form_fields'` collection routes in `config/routes.rb` for all
+top-level resources with `set_form_fields`.
+
+**Test file added:** `test/controllers/concerns/form_fields_api_test.rb`
+
+### Phase 11.4D: Rails Routes for Direct URL Access ✅ COMPLETE (2026-06-21)
+
+Added `get ':resource/:id', to: 'react#index'` with `constraints(id: /\d+/)` at the top of
+`config/routes.rb` for 23 resources:
+
+**FormPage resources (20):** architectures, domains, hostgroups, operatingsystems, realms,
+media, compute_profiles, subnets, compute_resources, http_proxies, bookmarks, roles, users,
+usergroups, smart_proxies, common_parameters, auth_source_ldaps, auth_source_externals,
+locations, organizations
+
+**TemplateForm resources (3):** templates/provisioning_templates, templates/ptables,
+templates/report_templates
+
+Routes are placed before all resource definitions so they take priority over existing `show`
+actions (e.g., smart_proxies, compute_resources). The `\d+` constraint ensures only numeric
+IDs are matched, preventing conflicts with named routes like `/users/login`.
+
+### Phase 11.3: DetailPage Component ✅ COMPLETE (2026-06-21)
+
+Created the unified DetailPage component system with three sub-components:
+
+**New files:**
+- `webpack/.../components/common/DetailPage/useDetailData.js` — Custom hook that parallel-fetches
+  resource data (`GET /api/v2/{resource}/{id}`) and field definitions (`GET /{resource}/form_fields`).
+  Returns `{ resource, fields, isLoading, error }` with cancellation on unmount.
+- `webpack/.../components/common/DetailPage/DetailsTabContent.js` — Renders resource data as PF6
+  `DescriptionList`. Groups fields by `tab` property into `Card` sections. Formats by type:
+  `select` → option label lookup, `checkbox` → Yes/No, `checkboxGroup` → comma-separated names,
+  `password` → masked (********), `hidden` → skipped, default → string value or dash.
+- `webpack/.../components/common/DetailPage/index.js` — Main DetailPage layout with `PageSection`
+  breadcrumb (Link to index), `Title` heading, and `Tabs` (Details + Edit). Uses `useDetailData`
+  hook, passes fields to both `DetailsTabContent` and `FormPage`. Edit tab uses `onSubmitSuccess`
+  callback for SPA navigation back to index via `useHistory().push()`.
+
+**Modified file:**
+- `webpack/.../components/common/FormPage/index.js` — Added `embedded` prop (default false).
+  When true, skips outer `pf-v6-c-page__main-section` wrapper div and renders form content
+  directly. Uses a `Wrapper` component pattern (Fragment vs div) to avoid code duplication.
+
+**Test files (20 tests, all passing):**
+- `__tests__/useDetailData.test.js` — 4 tests: loading state, parallel fetch, error handling,
+  empty fields response
+- `__tests__/DetailsTabContent.test.js` — 9 tests: text fields, empty values, hidden fields,
+  checkbox Yes/No, password masking, select label lookup, checkboxGroup names, empty checkboxGroup,
+  tab grouping into cards
+- `__tests__/DetailPage.test.js` — 7 tests: loading spinner, error alert, breadcrumb/title/tabs,
+  tab switching to edit form, initialTab="edit", nameField prop, breadcrumb link href
+
+### Phase 11.4A-C: Resource Configuration Registry + Route Generator ✅ COMPLETE (2026-06-21)
+
+**New files:**
+- `webpack/.../routes/DetailPages/resourceConfigs.js` — Data-driven registry with one entry per
+  resource. Each config has: `indexPath`, `apiUrl`, `controller`, `resourceName`, `title`,
+  `nameField`, `fieldsUrl`. 18 FormPage resources + 3 TemplateForm resources (with
+  `formComponent: 'TemplateForm'` flag, `fieldsUrl: null`). TemplateForm resources are excluded
+  from route generation (deferred to Phase 11.5+ when TemplateForm supports embedded mode).
+- `webpack/.../routes/DetailPages/index.js` — Route generator that creates two routes per
+  FormPage config: `/:indexPath/:id` (details tab) and `/:indexPath/:id/edit` (edit tab).
+  Edit routes are listed first so `/edit` suffix matches before the catch-all `:id` pattern.
+
+**Modified file:**
+- `webpack/.../routes/routes.js` — Added `...DetailPages` import and spread before `...IndexPages`
+  so detail routes take priority over index catch-all.
+
+### Phase 11.5: Update Index Page Links (PENDING)

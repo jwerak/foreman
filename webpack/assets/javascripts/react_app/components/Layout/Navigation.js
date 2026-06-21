@@ -57,6 +57,18 @@ const Navigation = ({
     });
   });
 
+  const findActiveParent = path => {
+    const clean = pathFragment(path);
+    if (subItemToItemMap[clean]) return subItemToItemMap[clean];
+    let best = null;
+    Object.keys(subItemToItemMap).forEach(key => {
+      if (clean.startsWith(key + '/') && (!best || key.length > best.length)) {
+        best = key;
+      }
+    });
+    return best ? subItemToItemMap[best] : null;
+  };
+
   const currentLocation = useForemanLocation()?.title;
   const currentOrganization = useForemanOrganization()?.title;
 
@@ -90,7 +102,12 @@ const Navigation = ({
               groups[currIndex].groupItems.push({
                 ...sub,
                 isActive:
-                  (currentPath && currentPath === sub.href?.split('?')[0]) ||
+                  (currentPath &&
+                    (currentPath === sub.href?.split('?')[0] ||
+                      (sub.href &&
+                        currentPath.startsWith(
+                          sub.href.split('?')[0] + '/'
+                        )))) ||
                   isCurrentLocation ||
                   isCurrentOrganization,
               });
@@ -107,18 +124,24 @@ const Navigation = ({
     null
   );
   const [expandedSections, setExpandedSections] = useState(() => {
-    const initial = subItemToItemMap[pathFragment(getCurrentPath())];
+    const initial = findActiveParent(getCurrentPath());
     return new Set(initial ? [initial] : []);
   });
   useEffect(() => {
-    const active = subItemToItemMap[pathFragment(getCurrentPath())];
+    const active = findActiveParent(getCurrentPath());
     if (active) {
       setExpandedSections(prev => new Set([...prev, active]));
     }
     groupedItems.some(({ groups }) =>
       groups.some(({ groupItems, title }) =>
         groupItems.some(({ href }) => {
-          if (cleanNavPath(href) === pathFragment(getCurrentPath())) {
+          if (
+            cleanNavPath(href) === pathFragment(getCurrentPath()) ||
+            (href &&
+              pathFragment(getCurrentPath()).startsWith(
+                cleanNavPath(href) + '/'
+              ))
+          ) {
             setCurrentExpandedSecondary(title);
             return true;
           }
@@ -152,9 +175,7 @@ const Navigation = ({
               ouiaId={`nav-expandable-${index}`}
               title={titleWithIcon(title, iconClass)}
               groupId={`nav-expandable-group-${title}`}
-              isActive={
-                subItemToItemMap[pathFragment(getCurrentPath())] === title
-              }
+              isActive={findActiveParent(getCurrentPath()) === title}
               isExpanded={expandedSections.has(title)}
               className={className}
               onClick={() => onMouseOver(index)}

@@ -8,8 +8,11 @@ import EmptyPage from './common/EmptyPage/route';
 import FiltersForm from './FiltersForm';
 import Upgrade from './Upgrade';
 import IndexPages from './IndexPages';
+import DetailPages from './DetailPages';
+import Dashboard from './Dashboard';
 
 export const routes = [
+  Dashboard,
   Audits,
   ...Models,
   Hosts,
@@ -19,5 +22,6 @@ export const routes = [
   EmptyPage,
   ...FiltersForm,
   Upgrade,
+  ...DetailPages,
   ...IndexPages,
 ];

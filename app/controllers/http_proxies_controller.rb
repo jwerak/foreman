@@ -1,6 +1,7 @@
 class HttpProxiesController < ApplicationController
   include Foreman::Controller::Parameters::HttpProxy
   include Foreman::Controller::AutoCompleteSearch
+  include Foreman::Controller::FormFieldsApi
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
   def index

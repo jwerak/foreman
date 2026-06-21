@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   include Foreman::Controller::UsersMixin
   include Foreman::Controller::Parameters::User
   include Foreman::Controller::BruteforceProtection
+  include Foreman::Controller::FormFieldsApi
   include Foreman::TelemetryHelper
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :login_token_reload

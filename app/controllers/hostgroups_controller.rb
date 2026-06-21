@@ -4,6 +4,7 @@ class HostgroupsController < ApplicationController
   include Foreman::Controller::Parameters::Hostgroup
   include Foreman::Controller::CsvResponder
   include Foreman::Controller::SetRedirectionPath
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource,  :only => [:nest, :clone, :edit, :update, :destroy]
   before_action :ajax_request,   :only => [:process_hostgroup]

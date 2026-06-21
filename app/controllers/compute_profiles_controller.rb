@@ -1,6 +1,7 @@
 class ComputeProfilesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::ComputeProfile
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:show, :edit, :update, :destroy]
 

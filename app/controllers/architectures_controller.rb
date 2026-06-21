@@ -1,6 +1,7 @@
 class ArchitecturesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Architecture
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 

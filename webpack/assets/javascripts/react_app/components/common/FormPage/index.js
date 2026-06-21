@@ -192,6 +192,7 @@ const FormPage = ({
   submitLabel,
   resourceName,
   onSubmitSuccess,
+  embedded,
 }) => {
   const {
     values,
@@ -219,12 +220,18 @@ const FormPage = ({
   };
 
   if (isLoading) {
+    const spinner = <Spinner size="xl" aria-label={__('Loading form data')} />;
+    if (embedded) return spinner;
     return (
       <div className="pf-v6-c-page__main-section pf-m-light form-page-loading">
-        <Spinner size="xl" aria-label={__('Loading form data')} />
+        {spinner}
       </div>
     );
   }
+
+  const Wrapper = embedded ? React.Fragment : ({ children }) => (
+    <div className="pf-v6-c-page__main-section pf-m-light">{children}</div>
+  );
 
   const renderField = field => {
     if (field.type === 'hidden') return null;
@@ -359,7 +366,7 @@ const FormPage = ({
     });
 
     return (
-      <div className="pf-v6-c-page__main-section pf-m-light">
+      <Wrapper>
         <Form isWidthLimited onSubmit={handleSubmit}>
           {renderErrorAlert()}
           <Tabs
@@ -381,7 +388,7 @@ const FormPage = ({
           </Tabs>
           {renderActionGroup()}
         </Form>
-      </div>
+      </Wrapper>
     );
   }
 
@@ -397,7 +404,7 @@ const FormPage = ({
   });
 
   return (
-    <div className="pf-v6-c-page__main-section pf-m-light">
+    <Wrapper>
       <Form isWidthLimited onSubmit={handleSubmit}>
         {renderErrorAlert()}
 
@@ -411,7 +418,7 @@ const FormPage = ({
 
         {renderActionGroup()}
       </Form>
-    </div>
+    </Wrapper>
   );
 };
 
@@ -461,6 +468,7 @@ FormPage.propTypes = {
   submitLabel: PropTypes.string,
   resourceName: PropTypes.string,
   onSubmitSuccess: PropTypes.func,
+  embedded: PropTypes.bool,
 };
 
 FormPage.defaultProps = {
@@ -469,6 +477,7 @@ FormPage.defaultProps = {
   submitLabel: null,
   resourceName: '',
   onSubmitSuccess: null,
+  embedded: false,
 };
 
 export default FormPage;

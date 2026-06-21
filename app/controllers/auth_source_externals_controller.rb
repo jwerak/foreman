@@ -1,5 +1,6 @@
 class AuthSourceExternalsController < ApplicationController
   include Foreman::Controller::Parameters::AuthSourceExternal
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update]
 

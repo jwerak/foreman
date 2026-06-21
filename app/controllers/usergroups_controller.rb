@@ -2,6 +2,7 @@ class UsergroupsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Usergroup
   include Foreman::Controller::ExternalUsergroupsErrors
+  include Foreman::Controller::FormFieldsApi
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
   before_action :get_external_usergroups_to_refresh, :only => [:update]
@@ -79,7 +80,8 @@ class UsergroupsController < ApplicationController
   end
 
   def set_form_fields
-    usergroup_options = Usergroup.except_current(@usergroup).order(:name).map { |ug| { value: ug.id, label: ug.name } }
+    base_scope = @usergroup ? Usergroup.except_current(@usergroup) : Usergroup.all
+    usergroup_options = base_scope.order(:name).map { |ug| { value: ug.id, label: ug.name } }
     user_options = User.except_hidden.order(:login).map { |u| { value: u.id, label: u.select_title } }
     role_options = Role.for_current_user.map { |r| { value: r.id, label: r.name } }
 
