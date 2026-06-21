@@ -143,7 +143,7 @@ const DomainsIndex = (props) => (
 
 ---
 
-## Phase 7: Form Page Migration (7.1-7.3, 7C COMPLETE)
+## Phase 7: Form Page Migration (7.1-7.4, 7D COMPLETE)
 
 **Goal:** Convert the 44 ERB form pages from `form_for`/`form_tag` to React form components.
 
@@ -204,12 +204,36 @@ Added PF6 Tabs support and `checkboxGroup` field type to FormPage infrastructure
 - `usergroups/_form` ✅ — FormPage with 2 tabs: User Group (name, usergroup_ids checkboxGroup, user_ids checkboxGroup), Roles (admin checkbox, role_ids checkboxGroup). External Groups + extensible tabs deferred.
 - `taxonomies/_form` ✅ — FormPage with 1 tab: Location/Organization (parent_id, name, description). All 13+ resource assignment tabs, cross-taxonomy tabs, Parameters deferred.
 
-**Batch 7D — Host forms (deferred — highest complexity):**
-- `hosts/_form` — the most complex form in Foreman, with dynamic tabs, compute resource integration, AJAX loading. Migrate last or as a separate phase.
+**Batch 7D — Host form ✅ COMPLETE (2026-06-21):**
+Built a dedicated `HostForm` component tree (not using FormPage — too complex for schema-driven approach).
+- `hosts/_form` ✅ — HostForm with 5 tabs: Host (name, org, location, hostgroup, compute_resource, compute_profile, realm + Slot extension), Operating System (architecture, OS, ptable, media, PXE loader, provision method, root password — with cascading API fetches), Interfaces (PF6 Table + InterfaceModal for add/edit/delete with domain→subnet cascading), Parameters (editable key-value pairs with add/remove), Additional Information (owner, enabled, model, comment). Hostgroup inheritance applies defaults to non-overridden fields. Taxonomy changes refresh scoped options. Plugin extensibility via Slot('host-form-main-fields') and Slot('host-form-extra-content'). Provider-specific VM tab deferred.
 
-### 7.4: Migrate bulk operation modals
+**Component architecture:**
+```
+webpack/.../components/HostForm/
+  index.js                    -- Main: PF6 Tabs + Form + submit
+  useHostForm.js              -- Hook: values, cascading, validation
+  HostFormContext.js           -- Context shared across tabs
+  InterfaceModal.js            -- PF6 Modal for NIC editing
+  constants.js                 -- API paths
+  tabs/HostTab.js              -- Host tab fields
+  tabs/OperatingSystemTab.js   -- OS tab with cascading
+  tabs/InterfacesTab.js        -- Interfaces table
+  tabs/ParametersTab.js        -- Key-value parameter editor
+  tabs/AdditionalInfoTab.js    -- Additional info fields
+```
 
-Convert the 11 host bulk operation forms (`multiple_build`, `multiple_destroy`, `select_multiple_*`, etc.) to use PF6 Modal + Form components. These are simpler forms rendered in modals.
+**Controller:** `set_host_form_data` in `hosts_controller.rb` serializes host attributes, select options, and interfaces/parameters as JSON props.
+
+**49 tests** across 7 test suites (HostForm, useHostForm, InterfacesTab, ParametersTab, BulkEditParametersModal, BulkRebuildConfigModal, bulkDelete).
+
+### 7.4: Migrate bulk operation modals ✅ COMPLETE (2026-06-21)
+
+9 of 11 bulk modals already existed as React components in the React HostsIndex. Added the 2 missing modals:
+- `BulkEditParametersModal` ✅ — PF6 Modal with dynamic name/value rows, Add/Remove. New API endpoint `PUT /api/v2/hosts/bulk/update_parameters`.
+- `BulkRebuildConfigModal` ✅ — PF6 confirmation Modal, uses existing `PUT /api/v2/hosts/bulk/build` with `rebuild_configuration: true`.
+
+Both wired into HostsIndex dropdown menu. Legacy ERB bulk views retained (old hosts index still uses them).
 
 ---
 

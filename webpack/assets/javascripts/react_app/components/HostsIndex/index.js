@@ -56,6 +56,8 @@ import BulkChangeOwnerModal from './BulkActions/changeOwner';
 import BulkDisassociateModal from './BulkActions/disassociate';
 import BulkPowerStateModal from './BulkActions/powerState/index';
 import BulkManageNotificationsModal from './BulkActions/manageNotifications';
+import BulkEditParametersModal from './BulkActions/editParameters';
+import BulkRebuildConfigModal from './BulkActions/rebuildConfig';
 import { foremanUrl } from '../../common/helpers';
 import Slot from '../common/Slot';
 import forceSingleton from '../../common/forceSingleton';
@@ -257,6 +259,8 @@ const HostsIndex = () => {
   const [disassociateModalOpen, setDisassociateModalOpen] = useState(false);
   const [powerStateModalOpen, setPowerStateModalOpen] = useState(false);
   const [notificationsModalOpen, setNotificationsModalOpen] = useState(false);
+  const [rebuildConfigModalOpen, setRebuildConfigModalOpen] = useState(false);
+  const [editParametersModalOpen, setEditParametersModalOpen] = useState(false);
 
   const dropdownItems = [
     <MenuItem
@@ -266,6 +270,14 @@ const HostsIndex = () => {
       isDisabled={selectedCount === 0}
     >
       {__('Build management')}
+    </MenuItem>,
+    <MenuItem
+      itemId="rebuild-config-dropdown-item"
+      key="rebuild-config-dropdown-item"
+      onClick={() => setRebuildConfigModalOpen(true)}
+      isDisabled={selectedCount === 0}
+    >
+      {__('Rebuild config')}
     </MenuItem>,
     <MenuItem
       itemId="disassociate-dropdown-item"
@@ -290,6 +302,14 @@ const HostsIndex = () => {
       isDisabled={selectedCount === 0}
     >
       {__('Manage notifications')}
+    </MenuItem>,
+    <MenuItem
+      itemId="edit-parameters-dropdown-item"
+      key="edit-parameters-dropdown-item"
+      onClick={() => setEditParametersModalOpen(true)}
+      isDisabled={selectedCount === 0}
+    >
+      {__('Edit parameters')}
     </MenuItem>,
     <MenuItem
       itemId="host-association-dropdown-item"
@@ -612,6 +632,11 @@ const HostsIndex = () => {
             isOpen={buildModalOpen}
             closeModal={() => setBuildModalOpen(false)}
           />
+          <BulkRebuildConfigModal
+            key="bulk-rebuild-config-modal"
+            isOpen={rebuildConfigModalOpen}
+            closeModal={() => setRebuildConfigModalOpen(false)}
+          />
           <BulkReassignHostgroupModal
             key="bulk-reassign-hg-modal"
             isOpen={hgModalOpen}
@@ -631,6 +656,11 @@ const HostsIndex = () => {
             key="bulk-disassociate-modal"
             isOpen={disassociateModalOpen}
             closeModal={() => setDisassociateModalOpen(false)}
+          />
+          <BulkEditParametersModal
+            key="bulk-edit-parameters-modal"
+            isOpen={editParametersModalOpen}
+            closeModal={() => setEditParametersModalOpen(false)}
           />
           <BulkManageNotificationsModal
             key="bulk-manage-notifications-modal"

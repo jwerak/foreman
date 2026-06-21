@@ -83,6 +83,7 @@ class HostsController < ApplicationController
       :managed => true,
       :build => true
     )
+    set_host_form_data
   end
 
   # Clone the host
@@ -103,6 +104,7 @@ class HostsController < ApplicationController
       process_success :success_redirect => helpers.current_host_details_path(@host)
     else
       load_vars_for_ajax
+      set_host_form_data
       offer_to_overwrite_conflicts
       process_error
     end
@@ -110,6 +112,7 @@ class HostsController < ApplicationController
 
   def edit
     load_vars_for_ajax
+    set_host_form_data
   end
 
   def update
@@ -122,6 +125,7 @@ class HostsController < ApplicationController
       else
         taxonomy_scope
         load_vars_for_ajax
+        set_host_form_data
         offer_to_overwrite_conflicts
         process_error
       end
@@ -665,6 +669,96 @@ class HostsController < ApplicationController
   end
 
   private
+
+  def set_host_form_data
+    @host_form_data = {
+      host: host_form_attributes,
+      options: host_form_options,
+      meta: {
+        isNew: @host.new_record?,
+        isManaged: @host.managed?,
+        cancelUrl: @host.new_record? ? helpers.current_hosts_path : helpers.current_host_details_path(@host),
+        showOrganizationTab: User.current.allowed_to?(:view_organizations),
+        showLocationTab: User.current.allowed_to?(:view_locations),
+      },
+    }
+  end
+
+  def host_form_attributes
+    attrs = {}
+    %w[name organization_id location_id hostgroup_id compute_resource_id
+       compute_profile_id realm_id enabled model_id comment managed build
+       architecture_id operatingsystem_id ptable_id medium_id pxe_loader
+       provision_method].each do |attr|
+      attrs[attr] = @host.send(attr)
+    end
+    attrs['id'] = @host.id if @host.persisted?
+    # Owner is stored as polymorphic - combine type and id
+    attrs['is_owned_by'] = @host.is_owned_by
+    attrs['host_parameters_attributes'] = @host.host_parameters.map do |param|
+      {
+        'id' => param.id,
+        'name' => param.name,
+        'value' => param.value,
+        '_destroy' => false,
+      }
+    end
+    attrs['interfaces_attributes'] = @host.interfaces.map do |nic|
+      {
+        'id' => nic.id,
+        'identifier' => nic.identifier,
+        'name' => nic.name,
+        'type' => nic.type,
+        'mac' => nic.mac,
+        'ip' => nic.ip,
+        'ip6' => nic.ip6,
+        'domain_id' => nic.domain_id,
+        'subnet_id' => nic.subnet_id,
+        'subnet6_id' => nic.subnet6_id,
+        'managed' => nic.managed?,
+        'primary' => nic.primary?,
+        'provision' => nic.provision?,
+        'virtual' => nic.virtual?,
+        'attached_to' => nic.attached_to,
+        'tag' => nic.tag,
+        '_destroy' => false,
+      }
+    end
+    attrs
+  end
+
+  def host_form_options
+    {
+      organizations: Organization.my_organizations.order(:title).map { |o| { value: o.id, label: o.title } },
+      locations: Location.my_locations.order(:title).map { |l| { value: l.id, label: l.title } },
+      hostgroups: host_form_accessible_resource(:hostgroup, :title).map { |hg| { value: hg.id, label: hg.to_label } },
+      computeResources: host_form_accessible_resource(:compute_resource).map { |cr| { value: cr.id, label: cr.to_label } },
+      computeProfiles: host_form_compute_profiles.map { |cp| { value: cp.id, label: cp.name } },
+      realms: Realm.authorized(:view_realms).order(:name).map { |r| { value: r.id, label: r.name } },
+      models: host_form_accessible_resource(:model).map { |m| { value: m.id, label: m.to_label } },
+      owners: owner_select_options,
+      architectures: Architecture.authorized(:view_architectures).order(:name).map { |a| { value: a.id, label: a.to_label } },
+    }
+  end
+
+  def host_form_accessible_resource(resource, order = :name)
+    klass = resource.to_s.classify.constantize
+    klass = klass.with_taxonomy_scope_override(@location, @organization) if klass.include?(Taxonomix)
+    list = klass.authorized.reorder(order).to_a
+    current = @host.public_send(resource) if @host.respond_to?(resource)
+    list |= [current] if current.present?
+    list
+  end
+
+  def host_form_compute_profiles
+    (ComputeProfile.authorized(:view_compute_profiles).visibles.to_a | [@host.compute_profile]).compact
+  end
+
+  def owner_select_options
+    users = User.authorized(:view_users).visible.order(:login).map { |u| { value: u.id_and_type, label: u.select_title, group: 'Users' } }
+    usergroups = Usergroup.authorized(:view_usergroups).order(:name).map { |ug| { value: ug.id_and_type, label: ug.select_title, group: 'Usergroups' } }
+    users + usergroups
+  end
 
   def preload_reports
     @last_report_ids = ConfigReport.where(:host_id => @hosts.map(&:id)).reorder('').group(:host_id).maximum(:id)

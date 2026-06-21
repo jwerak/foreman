@@ -5,7 +5,7 @@ module Api
       include Api::V2::BulkHostsExtension
 
       before_action :find_deletable_hosts, :only => [:bulk_destroy]
-      before_action :find_editable_hosts, :only => [:build, :reassign_hostgroup, :change_owner, :disassociate, :change_power_state, :manage_notifications]
+      before_action :find_editable_hosts, :only => [:build, :reassign_hostgroup, :change_owner, :disassociate, :change_power_state, :manage_notifications, :update_parameters]
       before_action :validate_power_action, :only => [:change_power_state]
 
       def_param_group :bulk_host_ids do
@@ -173,6 +173,34 @@ module Api
         end
       end
 
+      api :PUT, "/hosts/bulk/update_parameters", N_("Update parameters")
+      param_group :bulk_host_ids
+      param :parameters, Array, :required => true, :desc => N_("Array of parameters to update") do
+        param :name, String, :required => true, :desc => N_("Parameter name")
+        param :value, String, :required => true, :desc => N_("Parameter value")
+      end
+      def update_parameters
+        counter = 0
+        skipped = 0
+        @hosts.each do |host|
+          params[:parameters].each do |param_data|
+            next if param_data[:value].blank?
+            if (host_param = host.host_parameters.find_by(name: param_data[:name]))
+              counter += 1 if host_param.update(value: param_data[:value])
+            else
+              skipped += 1
+            end
+          end
+        end
+
+        if skipped == 0
+          process_response(true, { message: n_("Updated parameters for %s host",
+            "Updated parameters for %s hosts", @hosts.count) % @hosts.count })
+        else
+          process_response(true, { message: _("%{updated} parameters updated, %{skipped} skipped (parameter not found on host)") % { updated: counter, skipped: skipped } })
+        end
+      end
+
       api :PUT, "/hosts/bulk/manage_notifications", N_("Manage notifications")
       param_group :bulk_host_ids
       param :enabled, :bool, :required => true, :desc => N_("Whether to enable or disable notification alerts for the selected hosts")
@@ -201,7 +229,7 @@ module Api
 
       def action_permission
         case params[:action]
-        when 'build', 'change_power_state', 'manage_notifications'
+        when 'build', 'change_power_state', 'manage_notifications', 'update_parameters'
           'edit'
         else
           super

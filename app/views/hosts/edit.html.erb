@@ -10,4 +10,4 @@
                                {:class => 'btn btn-default', :method => :put}) if @host.compute?)
    )
 %>
-<%= render :partial => 'hosts/form' %>
+<%= react_component('HostForm', @host_form_data) %>
