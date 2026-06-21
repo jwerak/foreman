@@ -1,3 +1,4 @@
-<%= image_breadcrumb %>
-
-<%= render 'form' %>
+<%= react_component('FormPage', react_form_props(@image, controller: 'images', cancel_url: compute_resource_path(@compute_resource)).merge(
+  apiUrl: "/api/v2/compute_resources/#{@compute_resource.id}/images",
+  fields: @form_fields
+)) %>

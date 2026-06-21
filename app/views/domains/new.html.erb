@@ -1,3 +1,1 @@
-<% title _("Create Domain") %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@domain).merge(fields: @form_fields)) %>

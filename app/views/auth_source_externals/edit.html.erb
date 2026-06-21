@@ -1,15 +1,1 @@
-<%= breadcrumbs(
-    items: [
-      {
-        caption: _("Authentication Sources"),
-        url: auth_sources_path
-      },
-      {
-        caption:_("Edit External Authentication Source"),
-      }
-    ],
-    switchable: false,
-  )
-%>
-<% title _("Edit External Authentication Source") %>
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@auth_source_external, cancel_url: auth_sources_path).merge(fields: @form_fields)) %>

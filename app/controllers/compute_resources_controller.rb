@@ -18,6 +18,7 @@ class ComputeResourcesController < ApplicationController
 
   def new
     @compute_resource = ComputeResource.new
+    set_form_fields
   end
 
   def show
@@ -29,21 +30,25 @@ class ComputeResourcesController < ApplicationController
       if @compute_resource.save
         process_success :success_redirect => @compute_resource
       else
+        set_form_fields
         process_error
       end
     else
       @compute_resource = ComputeResource.new compute_resource_params
       @compute_resource.valid?
+      set_form_fields
       process_error
     end
   rescue Fog::Errors::Error, Excon::Error => e
     Foreman::Logging.exception("Error while creating a resource", e)
+    set_form_fields
     process_error(
       error_msg: _('Error while trying to create resource: %s') % e.message
     )
   end
 
   def edit
+    set_form_fields
   end
 
   def associate
@@ -73,10 +78,12 @@ class ComputeResourcesController < ApplicationController
     if @compute_resource.update(compute_resource_params)
       process_success :success_redirect => compute_resources_path
     else
+      set_form_fields
       process_error
     end
   rescue Fog::Errors::Error, Excon::Error => e
     Foreman::Logging.exception("Error while updating resource", e)
+    set_form_fields
     process_error(
       error_msg: _('Error while trying to update resource: %s') % e.message
     )
@@ -165,6 +172,18 @@ class ComputeResourcesController < ApplicationController
   end
 
   private
+
+  def set_form_fields
+    provider_options = ComputeResource.providers.map { |name, klass|
+      { value: name, label: klass.constantize.provider_friendly_name }
+    }.sort_by { |o| o[:label] }
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true },
+      { name: 'provider', label: _('Provider'), type: 'select', required: true, options: provider_options,
+        disabled: @compute_resource.persisted? },
+      { name: 'description', label: _('Description'), type: 'textarea', rows: 3 },
+    ]
+  end
 
   def action_permission
     case params[:action]

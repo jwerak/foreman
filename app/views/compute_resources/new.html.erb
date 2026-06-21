@@ -1,3 +1,1 @@
-<% title _("Create Compute Resource") %>
-
-<%= render 'form' %>
+<%= react_component('FormPage', react_form_props(@compute_resource).merge(fields: @form_fields)) %>

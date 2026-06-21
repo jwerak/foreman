@@ -1,3 +1,1 @@
-<% title _("Create Proxy") %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@smart_proxy).merge(fields: @form_fields)) %>

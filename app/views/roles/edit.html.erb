@@ -1,4 +1,1 @@
-<% title _("Edit %s") % @role.to_s %>
-<% breadcrumbs(switchable: false) %>
-
-<%= render 'form' %>
+<%= react_component('FormPage', react_form_props(@role).merge(fields: @form_fields)) %>

@@ -143,7 +143,7 @@ const DomainsIndex = (props) => (
 
 ---
 
-## Phase 7: Form Page Migration (7.1-7.3 COMPLETE)
+## Phase 7: Form Page Migration (7.1-7.3, 7B COMPLETE)
 
 **Goal:** Convert the 44 ERB form pages from `form_for`/`form_tag` to React form components.
 
@@ -185,15 +185,15 @@ Map Rails form helpers to PF6 equivalents:
 - `ssh_keys/_form` ✅ — FormPage with key textarea, name field (nested under users, create-only)
 - `autosign/_form` — Deferred: AJAX-loaded Bootstrap modal in smart proxy show page, not a standalone CRUD form
 
-**Batch 7B — Multi-field forms (8 pages):**
-- `domains/_form`
-- `smart_proxies/_form`
-- `roles/_form`
-- `images/_form`
-- `auth_source_ldaps/_form`
-- `auth_source_externals/_form`
-- `compute_resources/_form`
-- `lookup_keys/_edit`
+**Batch 7B — Multi-field forms (7 pages) ✅ COMPLETE (2026-06-21):**
+- `domains/_form` ✅ — FormPage with name, fullname, dns_id select (taxonomy tabs + parameters deferred)
+- `smart_proxies/_form` ✅ — FormPage with name, url (taxonomy tabs deferred)
+- `roles/_form` ✅ — FormPage with name (disabled if builtin), description textarea (filters tab + taxonomy handling deferred)
+- `images/_form` ✅ — FormPage with name, operatingsystem_id select, architecture_id select (nested under compute_resource, provider-specific fields deferred)
+- `auth_source_ldaps/_form` ✅ — FormPage with 3 sections: LDAP Server (name, host, tls, port, server_type), Account (account, password, base_dn, groups_base, ldap_group_membership, ldap_filter, onthefly_register, usergroup_sync), Attribute Mappings (attr_login/firstname/lastname/mail/photo). Test connection + taxonomy tabs deferred.
+- `auth_source_externals/_form` ✅ — FormPage with name (disabled, edit-only). Taxonomy tabs deferred.
+- `compute_resources/_form` ✅ — FormPage with name, provider select (disabled on edit), description textarea. Provider-specific partials + taxonomy tabs deferred.
+- `lookup_keys/_edit` — Deferred: Puppet plugin partial with no standalone route, matchers/nested values too complex for FormPage pattern
 
 **Batch 7C — Tabbed/complex forms (6 pages):**
 - `subnets/_form` (tabs: subnet, domains, proxies)

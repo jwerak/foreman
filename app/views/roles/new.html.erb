@@ -1,3 +1,1 @@
-<% title _("Create Role") %>
-
-<%= render 'form' %>
+<%= react_component('FormPage', react_form_props(@role).merge(fields: @form_fields)) %>

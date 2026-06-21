@@ -14,6 +14,7 @@ class SmartProxiesController < ApplicationController
 
   def new
     @smart_proxy = SmartProxy.new
+    set_form_fields
   end
 
   def create
@@ -21,12 +22,14 @@ class SmartProxiesController < ApplicationController
     if @smart_proxy.save
       process_success :object => @smart_proxy
     else
+      set_form_fields
       process_error :object => @smart_proxy
     end
   end
 
   def edit
     @proxy = @smart_proxy
+    set_form_fields
   end
 
   def refresh
@@ -61,6 +64,7 @@ class SmartProxiesController < ApplicationController
     if @smart_proxy.update(smart_proxy_params)
       process_success :object => @smart_proxy
     else
+      set_form_fields
       process_error :object => @smart_proxy
     end
   end
@@ -141,6 +145,14 @@ class SmartProxiesController < ApplicationController
       else
         super
     end
+  end
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true, helpText: _('Must be unique') },
+      { name: 'url', label: _('URL'), required: true, helpText: _('HTTPS endpoint'),
+        labelHelp: _('Hostname and client certificate must be valid. Ports are typically 8443 or 9090.') },
+    ]
   end
 
   def resource_base

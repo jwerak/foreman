@@ -27,6 +27,7 @@ class RolesController < ApplicationController
 
   def new
     @role = Role.new
+    set_form_fields
   end
 
   def create
@@ -36,6 +37,7 @@ class RolesController < ApplicationController
       process_success
     else
       @cloned_role = true if cloning?
+      set_form_fields
       process_error
     end
   end
@@ -51,12 +53,14 @@ class RolesController < ApplicationController
   end
 
   def edit
+    set_form_fields
   end
 
   def update
     if @role.update(role_params)
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -78,6 +82,13 @@ class RolesController < ApplicationController
       else
         super
     end
+  end
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true, disabled: @role.builtin? },
+      { name: 'description', label: _('Description'), type: 'textarea', rows: 5 },
+    ]
   end
 
   def role_from_form

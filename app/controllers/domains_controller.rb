@@ -9,6 +9,7 @@ class DomainsController < ApplicationController
 
   def new
     @domain = Domain.new
+    set_form_fields
   end
 
   def create
@@ -16,17 +17,20 @@ class DomainsController < ApplicationController
     if @domain.save
       process_success
     else
+      set_form_fields
       process_error
     end
   end
 
   def edit
+    set_form_fields
   end
 
   def update
     if @domain.update(domain_params)
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -37,5 +41,17 @@ class DomainsController < ApplicationController
     else
       process_error
     end
+  end
+
+  private
+
+  def set_form_fields
+    dns_proxy_options = SmartProxy.authorized(:view_smart_proxies).with_features('DNS').map { |p| { value: p.id, label: p.name } }
+    @form_fields = [
+      { name: 'name', label: _('DNS Domain'), required: true, helpText: _('The full DNS domain name') },
+      { name: 'fullname', label: _('Full name'), helpText: _('Full name describing the domain') },
+      { name: 'dns_id', label: _('DNS Proxy'), type: 'select', options: dns_proxy_options,
+        labelHelp: _('DNS proxy to use within this domain for managing A records, note that PTR records are managed via Subnet DNS proxy') },
+    ]
   end
 end
