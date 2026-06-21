@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
@@ -11,7 +12,7 @@ const RealmsIndex = props => {
       key: 'name',
       title: __('Name'),
       sortKey: 'name',
-      wrapper: row => <a href={`/realms/${row.id}/edit`}>{row.name}</a>,
+      wrapper: row => <Link to={`/realms/${row.id}`}>{row.name}</Link>,
     },
     {
       key: 'hosts_count',

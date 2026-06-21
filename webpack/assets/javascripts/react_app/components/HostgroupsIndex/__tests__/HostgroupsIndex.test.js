@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -67,9 +68,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <HostgroupsIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <HostgroupsIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('HostgroupsIndex', () => {
@@ -95,7 +98,7 @@ describe('HostgroupsIndex', () => {
     expect(screen.getByText('Hosts including Sub-groups')).toBeInTheDocument();
   });
 
-  test('title links to edit page', async () => {
+  test('title links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -104,7 +107,7 @@ describe('HostgroupsIndex', () => {
 
     expect(screen.getByText('Base').closest('a')).toHaveAttribute(
       'href',
-      '/hostgroups/1/edit'
+      '/hostgroups/1'
     );
   });
 
@@ -117,7 +120,7 @@ describe('HostgroupsIndex', () => {
 
     expect(screen.getByText('Base/Web').closest('a')).toHaveAttribute(
       'href',
-      '/hostgroups/2/edit'
+      '/hostgroups/2'
     );
   });
 

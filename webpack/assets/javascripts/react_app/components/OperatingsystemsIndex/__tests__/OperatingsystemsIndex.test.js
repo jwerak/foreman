@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <OperatingsystemsIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <OperatingsystemsIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('OperatingsystemsIndex', () => {
@@ -80,7 +83,7 @@ describe('OperatingsystemsIndex', () => {
     expect(screen.getByText('Hosts')).toBeInTheDocument();
   });
 
-  test('title links to edit page', async () => {
+  test('title links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -89,7 +92,7 @@ describe('OperatingsystemsIndex', () => {
 
     expect(screen.getByText('CentOS 8').closest('a')).toHaveAttribute(
       'href',
-      '/operatingsystems/1/edit'
+      '/operatingsystems/1'
     );
   });
 

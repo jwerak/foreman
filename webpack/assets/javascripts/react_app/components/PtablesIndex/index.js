@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { CheckIcon, LockIcon } from '@patternfly/react-icons';
 
 import { translate as __ } from '../../common/I18n';
@@ -13,7 +14,7 @@ const PtablesIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/ptables/${row.id}/edit`}>{row.name}</a>
+        <Link to={`/ptables/${row.id}`}>{row.name}</Link>
       ),
     },
     {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -54,9 +55,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <RolesIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <RolesIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('RolesIndex', () => {
@@ -81,7 +84,7 @@ describe('RolesIndex', () => {
     expect(screen.getByText('Locked')).toBeInTheDocument();
   });
 
-  test('name links to filters page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -90,7 +93,7 @@ describe('RolesIndex', () => {
 
     expect(screen.getByText('Manager').closest('a')).toHaveAttribute(
       'href',
-      '/roles/1/filters'
+      '/roles/1'
     );
   });
 

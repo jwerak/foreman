@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -65,9 +66,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <MediaIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <MediaIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('MediaIndex', () => {
@@ -94,7 +97,7 @@ describe('MediaIndex', () => {
     expect(screen.getByText('Operating Systems')).toBeInTheDocument();
   });
 
-  test('name links to edit page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -103,7 +106,7 @@ describe('MediaIndex', () => {
 
     expect(screen.getByText('CentOS mirror').closest('a')).toHaveAttribute(
       'href',
-      '/media/1/edit'
+      '/media/1'
     );
   });
 

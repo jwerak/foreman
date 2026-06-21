@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
@@ -12,7 +13,7 @@ const HostgroupsIndex = props => {
       title: __('Name'),
       sortKey: 'label',
       wrapper: row => (
-        <a href={`/hostgroups/${row.id}/edit`}>{row.title}</a>
+        <Link to={`/hostgroups/${row.id}`}>{row.title}</Link>
       ),
     },
     {

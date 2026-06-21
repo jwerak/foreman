@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <DomainsIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <DomainsIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('DomainsIndex', () => {
@@ -90,7 +93,7 @@ describe('DomainsIndex', () => {
     expect(screen.getByText('test.org')).toBeInTheDocument();
   });
 
-  test('name links to edit page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -99,7 +102,7 @@ describe('DomainsIndex', () => {
 
     expect(screen.getByText('Example Domain').closest('a')).toHaveAttribute(
       'href',
-      '/domains/1/edit'
+      '/domains/1'
     );
   });
 

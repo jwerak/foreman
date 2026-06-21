@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <UsersIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <UsersIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('UsersIndex', () => {
@@ -82,7 +85,7 @@ describe('UsersIndex', () => {
     expect(screen.getByText('Admin')).toBeInTheDocument();
   });
 
-  test('login links to edit page', async () => {
+  test('login links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -91,7 +94,7 @@ describe('UsersIndex', () => {
 
     expect(screen.getByText('admin').closest('a')).toHaveAttribute(
       'href',
-      '/users/1/edit'
+      '/users/1'
     );
   });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
@@ -12,9 +13,9 @@ const DomainsIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/domains/${row.id}/edit`}>
+        <Link to={`/domains/${row.id}`}>
           {row.fullname || row.name}
-        </a>
+        </Link>
       ),
     },
     {

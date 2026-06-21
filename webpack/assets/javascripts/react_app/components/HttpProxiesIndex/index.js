@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
@@ -12,7 +13,7 @@ const HttpProxiesIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/http_proxies/${row.id}/edit`}>{row.name}</a>
+        <Link to={`/http_proxies/${row.id}`}>{row.name}</Link>
       ),
     },
     {

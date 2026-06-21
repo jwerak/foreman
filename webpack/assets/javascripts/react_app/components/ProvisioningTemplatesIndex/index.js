@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { CheckIcon, LockIcon } from '@patternfly/react-icons';
 
 import { translate as __ } from '../../common/I18n';
@@ -13,7 +14,7 @@ const ProvisioningTemplatesIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/templates/provisioning_templates/${row.id}/edit`}>{row.name}</a>
+        <Link to={`/templates/provisioning_templates/${row.id}`}>{row.name}</Link>
       ),
     },
     {

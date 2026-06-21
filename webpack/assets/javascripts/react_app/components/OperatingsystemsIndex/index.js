@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
@@ -12,7 +13,7 @@ const OperatingsystemsIndex = props => {
       title: __('Title'),
       sortKey: 'title',
       wrapper: row => (
-        <a href={`/operatingsystems/${row.id}/edit`}>{row.title}</a>
+        <Link to={`/operatingsystems/${row.id}`}>{row.title}</Link>
       ),
     },
     {

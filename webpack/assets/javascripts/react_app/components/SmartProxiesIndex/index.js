@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
 
 import { translate as __ } from '../../common/I18n';
 import IndexPage from '../common/IndexPage';
 import API from '../../redux/API/API';
 
 const SmartProxiesIndex = props => {
+  const history = useHistory();
+
   const columns = [
     {
       key: 'name',
       title: __('Name'),
       sortKey: 'name',
-      wrapper: row => <a href={`/smart_proxies/${row.id}`}>{row.name}</a>,
+      wrapper: row => <Link to={`/smart_proxies/${row.id}`}>{row.name}</Link>,
     },
     {
       key: 'url',
@@ -32,7 +35,7 @@ const SmartProxiesIndex = props => {
     {
       title: __('Edit'),
       onClick: () => {
-        window.location.href = `/smart_proxies/${row.id}/edit`;
+        history.push(`/smart_proxies/${row.id}/edit`);
       },
     },
     {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <SubnetsIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <SubnetsIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('SubnetsIndex', () => {
@@ -83,7 +86,7 @@ describe('SubnetsIndex', () => {
     expect(screen.getByText('Hosts')).toBeInTheDocument();
   });
 
-  test('name links to edit page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -92,7 +95,7 @@ describe('SubnetsIndex', () => {
 
     expect(screen.getByText('Production').closest('a')).toHaveAttribute(
       'href',
-      '/subnets/1/edit'
+      '/subnets/1'
     );
   });
 

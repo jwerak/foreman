@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <BookmarksIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <BookmarksIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('BookmarksIndex', () => {
@@ -80,7 +83,7 @@ describe('BookmarksIndex', () => {
     expect(screen.getByText('Public')).toBeInTheDocument();
   });
 
-  test('name links to edit page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -89,7 +92,7 @@ describe('BookmarksIndex', () => {
 
     expect(screen.getByText('Active hosts').closest('a')).toHaveAttribute(
       'href',
-      '/bookmarks/1/edit'
+      '/bookmarks/1'
     );
   });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -53,9 +54,11 @@ const defaultProps = {
 
 const renderComponent = (props = {}) =>
   render(
-    <Provider store={store}>
-      <ArchitecturesIndex {...defaultProps} {...props} />
-    </Provider>
+    <MemoryRouter>
+      <Provider store={store}>
+        <ArchitecturesIndex {...defaultProps} {...props} />
+      </Provider>
+    </MemoryRouter>
   );
 
 describe('ArchitecturesIndex', () => {
@@ -81,7 +84,7 @@ describe('ArchitecturesIndex', () => {
     expect(screen.getByText('Hosts')).toBeInTheDocument();
   });
 
-  test('name links to edit page', async () => {
+  test('name links to detail page', async () => {
     renderComponent();
 
     await waitFor(() => {
@@ -90,7 +93,7 @@ describe('ArchitecturesIndex', () => {
 
     expect(screen.getByText('x86_64').closest('a')).toHaveAttribute(
       'href',
-      '/architectures/1/edit'
+      '/architectures/1'
     );
   });
 

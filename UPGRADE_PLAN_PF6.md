@@ -1181,4 +1181,28 @@ Created the unified DetailPage component system with three sub-components:
 - `webpack/.../routes/routes.js` — Added `...DetailPages` import and spread before `...IndexPages`
   so detail routes take priority over index catch-all.
 
-### Phase 11.5: Update Index Page Links (PENDING)
+### Phase 11.5: Update Index Page Links ✅ COMPLETE (2026-06-21)
+
+Changed `<a href="/resource/:id/edit">` to `<Link to="/resource/:id">` in 18 index page
+components for SPA navigation. Also updated 3 edit row actions from `window.location.href`
+to `history.push()` using React Router's `useHistory` hook.
+
+**Components modified (18):**
+DomainsIndex, ArchitecturesIndex, HostgroupsIndex, OperatingsystemsIndex, RealmsIndex,
+MediaIndex, ComputeProfilesIndex, SubnetsIndex, ComputeResourcesIndex, HttpProxiesIndex,
+PtablesIndex, ProvisioningTemplatesIndex, ReportTemplatesIndex, UsersIndex, UserGroupsIndex,
+RolesIndex, BookmarksIndex, SmartProxiesIndex
+
+**Pattern (15 components — Link only):**
+- Import `{ Link } from 'react-router-dom'`
+- `<a href={`/resource/${row.id}/edit`}>` → `<Link to={`/resource/${row.id}`}>`
+
+**Pattern (3 components — Link + useHistory for edit row action):**
+- ComputeProfilesIndex: "Rename" action → `history.push()`
+- ComputeResourcesIndex: "Edit" action → `history.push()`
+- SmartProxiesIndex: "Edit" action → `history.push()`
+
+**Test files updated (18):**
+- Added `<MemoryRouter>` wrapper around all test renders (required for `<Link>`)
+- Updated href assertions from `/resource/:id/edit` → `/resource/:id`
+- Renamed test descriptions from "links to edit page" → "links to detail page"

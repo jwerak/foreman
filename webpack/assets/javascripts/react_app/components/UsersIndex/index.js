@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { CheckIcon } from '@patternfly/react-icons';
 
 import { translate as __ } from '../../common/I18n';
@@ -12,7 +13,7 @@ const UsersIndex = props => {
       key: 'login',
       title: __('Login'),
       sortKey: 'login',
-      wrapper: row => <a href={`/users/${row.id}/edit`}>{row.login}</a>,
+      wrapper: row => <Link to={`/users/${row.id}`}>{row.login}</Link>,
     },
     {
       key: 'firstname',

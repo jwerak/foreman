@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { LockIcon } from '@patternfly/react-icons';
 
 import { translate as __ } from '../../common/I18n';
@@ -15,7 +16,7 @@ const RolesIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/roles/${row.id}/edit`}>{row.name}</a>
+        <Link to={`/roles/${row.id}`}>{row.name}</Link>
       ),
     },
     {
