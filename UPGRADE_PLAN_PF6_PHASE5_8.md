@@ -324,75 +324,87 @@ Updated `layout_helper.rb` `modal_close()` to generate PF6 button classes with v
 
 ---
 
-## Phase 9: Client-Side Routing for Migrated Pages
+## Phase 9: Client-Side Routing for Migrated Pages ✅ COMPLETE (2026-06-21)
 
-**Goal:** Eliminate full page reloads when navigating between already-migrated React pages. Currently, every sidebar click triggers `window.location.href` (full server round-trip + complete React tree re-mount), even though the Layout/sidebar is already React and uses `history.push()`. This is a legacy artifact of the hybrid Rails/React architecture.
+**Goal:** Eliminate full page reloads when navigating between already-migrated React pages. Sidebar clicks now trigger SPA-like navigation (React Router `history.push()`) instead of full server round-trips.
 
-### Root cause
+### Root cause (resolved)
 
-The rendering pipeline is:
+Previously, migrated index pages were mounted via ERB `react_component()` but NOT registered as React Router routes. Every sidebar navigation fell through to `fallbackRoute()` → `window.location.href` → full page reload. Now all 22 migrated index pages are registered as React Router routes, so sidebar navigation between them swaps content without reloading.
 
-```
-Sidebar click → Navigation.clickAndNavigate() → history.push(href)
-    → React Router checks registered routes
-    → Route registered?  YES → renderRoute() — only content swaps (SPA)
-    →                     NO  → fallbackRoute() → window.location.href (FULL RELOAD)
-```
+### 9.1: Register migrated index pages as React Router routes ✅
 
-Migrated index pages (Domains, Subnets, etc.) are mounted via ERB `react_component()`. They are NOT registered as React Router routes. So every navigation falls through to `fallbackRoute()` → full page reload → Rails renders full HTML → entire React tree (Layout + content) re-mounts from scratch.
+**Approach:** Option C (hybrid) — registered React Router routes with hardcoded props mirroring `react_index_props`, while keeping ERB views as fallbacks for direct URL access/bookmarks/first page load.
 
-Pages that ARE registered as React Router routes (e.g., `/new/hosts`, host details) already navigate without reloading — the Layout/sidebar stays mounted and only content swaps.
+**New files:**
+- `webpack/.../routes/IndexPages/IndexPageRoute.js` — Wrapper component that renders `Head` (document title), `BreadcrumbBar` (page title as H1 via single-item breadcrumb), and the index component with hardcoded props + `initialSearch` extracted from URL query string.
+- `webpack/.../routes/IndexPages/index.js` — Exports array of 22 route definitions using a `route()` helper function. Each route has `path`, `exact: true`, and `render` function.
 
-### 9.1: Register migrated index pages as React Router routes
+**Updated file:**
+- `webpack/.../routes/routes.js` — Added `...IndexPages` to the core routes array.
 
-**Files:**
-- `webpack/.../routes/Routes.js` (or wherever routes are aggregated)
-- New route files per page, e.g. `webpack/.../routes/Domains/index.js`
+**22 routes registered:**
 
-Each migrated IndexPage component needs a route registration:
+| Path | Component | Key Props |
+|------|-----------|-----------|
+| `/domains` | DomainsIndex | apiUrl, controller, createUrl, hasHelpPage |
+| `/architectures` | ArchitecturesIndex | apiUrl, controller, createUrl, hasHelpPage |
+| `/realms` | RealmsIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/media` | MediaIndex | apiUrl, controller, createUrl, hasHelpPage, documentationUrl |
+| `/compute_profiles` | ComputeProfilesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/subnets` | SubnetsIndex | apiUrl, controller, createUrl |
+| `/compute_resources` | ComputeResourcesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/http_proxies` | HttpProxiesIndex | apiUrl, controller, createUrl, hasHelpPage |
+| `/operatingsystems` | OperatingsystemsIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/templates/ptables` | PtablesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/templates/provisioning_templates` | ProvisioningTemplatesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/templates/report_templates` | ReportTemplatesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/config_reports` | ConfigReportsIndex | apiUrl, controller, creatable:false, exportable, exportUrl, documentationUrl |
+| `/users` | UsersIndex | apiUrl, controller, createUrl |
+| `/usergroups` | UserGroupsIndex | apiUrl, controller, createUrl |
+| `/roles` | RolesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/locations` | TaxonomiesIndex | apiUrl, controller, createUrl, taxonomyResource, taxonomySingle, mismatchesUrl |
+| `/organizations` | TaxonomiesIndex | apiUrl, controller, createUrl, taxonomyResource, taxonomySingle, mismatchesUrl |
+| `/bookmarks` | BookmarksIndex | apiUrl, controller, creatable:false, documentationUrl |
+| `/hostgroups` | HostgroupsIndex | apiUrl, controller, createUrl, hasHelpPage, exportable, exportUrl |
+| `/smart_proxies` | SmartProxiesIndex | apiUrl, controller, createUrl, documentationUrl |
+| `/fact_values` | FactValuesIndex | apiUrl (custom: `/fact_values.json`), controller, creatable:false, exportable, exportUrl, documentationUrl |
 
-```js
-// webpack/.../routes/Domains/index.js
-import DomainsIndex from '../../components/DomainsIndex';
+### 9.2: Handle routes with `/templates/` prefix ✅
 
-export default {
-  path: '/domains',
-  render: props => <DomainsIndex apiUrl="/api/v2/domains" controller="domains" ... />,
-};
-```
+Three routes registered with `/templates/` prefix:
+- `/templates/ptables` → PtablesIndex (controller: `ptables`, createUrl: `/templates/ptables/new`)
+- `/templates/provisioning_templates` → ProvisioningTemplatesIndex
+- `/templates/report_templates` → ReportTemplatesIndex
 
-**Key challenge:** The ERB helper `react_index_props` currently provides props (`apiUrl`, `createUrl`, `controller`, `documentationUrl`, etc.) from the server. When routing client-side, these props must be derived in JavaScript instead. Options:
+### 9.3: Handle controller-specific search autocomplete ✅
 
-- **Option A (simple):** Hardcode props in each route definition. The props are deterministic — `apiUrl` is always `/api/v2/{controller}`, `createUrl` is `/{path}/new`, etc.
-- **Option B (DRY):** Create a `routeIndexProps(controller, options)` JS helper that mirrors `react_index_props` logic. One function, all routes use it.
-- **Option C (hybrid):** Keep ERB rendering for initial page load (SEO, deep links), but register routes so subsequent navigation is client-side. The React component works with either prop source.
+Each route passes `controller` prop to the index component. The `IndexPage` component uses `getControllerSearchProps(controller)` to configure `SearchBar` autocomplete URL (`/{controller}/auto_complete_search`). Works identically to ERB-provided props.
 
-**Recommendation:** Option C — register React Router routes that hardcode the props, but keep the ERB views as fallbacks for direct URL access / bookmarks / first page load. The component doesn't need to change — it receives the same props either way.
+### 9.4: Handle breadcrumbs ✅
 
-### 9.2: Handle routes with `/templates/` prefix
+`IndexPageRoute` wrapper renders `BreadcrumbBar` with a single breadcrumb item (the page title). With one item, `BreadcrumbBar` renders in "title mode" — displaying the caption as a PF6 `<h1>` heading, matching the ERB layout behavior. Also renders `<Head>` component to set the document `<title>`.
 
-Provisioning templates and report templates live under `/templates/provisioning_templates` and `/templates/report_templates`. These nested paths need correct route registration. Partition tables are at `/templates/ptables`. All three share the same prefix pattern.
+### 9.5: Preserve ERB fallback for non-JS / deep links ✅
 
-### 9.3: Handle controller-specific search autocomplete
+All ERB views (`app/views/*/index.html.erb`) are kept intact. The React Router route and ERB view coexist:
+- First page load / direct URL / bookmarks → Rails serves ERB → `react_component()` mounts the index component with server-provided props
+- Subsequent sidebar navigation → React Router matches the route → `IndexPageRoute` renders the component with hardcoded props (no server round-trip)
 
-The `SearchBar` component needs `controller` for autocomplete URL construction (`/{controller}/auto_complete_search`). When mounted via ERB, this comes from `react_index_props`. When mounted via React Router, the route definition must supply it. The `getControllerSearchProps()` utility already handles this — just pass the controller name.
+### 9.6: Plugin route extensibility ✅
 
-### 9.4: Handle breadcrumbs
+No changes to the `registerRoutes()` API. Plugins continue to add their own client-side routes via `registerRoutes(pluginId, routesArray)`. The new index page routes are added to the core `routes` array in `routes.js`, not via the plugin Fill/Slot system — they're core routes, not plugin routes.
 
-Currently, breadcrumbs are rendered by Rails (via `breadcrumbs()` helper in ERB). When navigating client-side, the `BreadcrumbBar` React component (already registered) would need its props updated. The `ReactApp` already renders breadcrumbs from server-provided data — for client-side routes, the route definition should include breadcrumb metadata.
+### 9.7: Not registered (intentionally excluded)
 
-### 9.5: Preserve ERB fallback for non-JS / deep links
+- **KeyPairsIndex** — Nested under `/compute_resources/:id/key_pairs`, requires dynamic `computeResourceId` and `computeResourceName` props from the URL. Would need a dynamic wrapper that fetches compute resource data. Low traffic page, kept as ERB-only.
+- **HostsIndex** — Already registered as a React Router route (pre-existing, at `/new/hosts`).
 
-Keep the ERB views functional so that:
-- Direct URL access (bookmarks, shared links) still works via server-side render
-- Crawlers and non-JS clients get a rendered page
-- Plugins that haven't migrated still work
+### 9.8: Tests ✅
 
-The React Router route and the ERB view coexist — first load uses ERB, subsequent navigation uses the React route.
-
-### 9.6: Plugin route extensibility
-
-Foreman plugins register their own pages. The route registration system must remain extensible so plugins can add their own client-side routes via the existing `registerRoutes()` API in `RoutingService`.
+9 tests across 2 test files:
+- `__tests__/IndexPageRoute.test.js` — 4 tests (breadcrumb rendering, props passing, initialSearch from URL, empty search)
+- `__tests__/indexRoutes.test.js` — 5 tests (route count, structure, all paths, /templates/ prefix, taxonomy routes)
 
 ---
 
@@ -410,17 +422,17 @@ Both are in the Layout/sidebar React component, not in the index page migration.
 ## Execution Order
 
 ```
-Phase 5 (infrastructure)  ←  Do first, enables everything else
+Phase 5 (infrastructure)  ✅  COMPLETE
     ↓
-Phase 6A-6E (index pages) ←  Can be done in parallel batches
+Phase 6A-6G (index pages) ✅  COMPLETE
     ↓
-Phase 7A-7C (forms)       ←  Depends on Phase 6 for pattern validation
+Phase 7A-7C (forms)       ✅  COMPLETE
     ↓
-Phase 7D (host forms)     ←  Most complex, do last
+Phase 7D (host forms)     ✅  COMPLETE
     ↓
-Phase 8 (cleanup)         ←  Incremental, can overlap with 6/7
+Phase 8 (cleanup)         ✅  COMPLETE
     ↓
-Phase 9 (client routing)  ←  After pages are React, make nav SPA-like
+Phase 9 (client routing)  ✅  COMPLETE — SPA navigation for all migrated pages
 ```
 
 Each batch within a phase is independently mergeable.
