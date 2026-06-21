@@ -6,6 +6,7 @@ class SshKeysController < ApplicationController
 
   def new
     @ssh_key = SshKey.new
+    set_form_fields
   end
 
   def create
@@ -13,6 +14,7 @@ class SshKeysController < ApplicationController
     if @ssh_key.save
       process_success :success_redirect => edit_user_path(@user)
     else
+      set_form_fields
       process_error
     end
   end
@@ -23,5 +25,14 @@ class SshKeysController < ApplicationController
     else
       process_error
     end
+  end
+
+  private
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'key', label: _('Key'), type: 'textarea', rows: 3, required: true },
+      { name: 'name', label: _('Name'), required: true },
+    ]
   end
 end

@@ -1,3 +1,1 @@
-<% title _("Edit %s") % @medium.to_s %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@medium).merge(fields: @form_fields)) %>

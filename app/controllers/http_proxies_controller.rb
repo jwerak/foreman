@@ -9,6 +9,7 @@ class HttpProxiesController < ApplicationController
 
   def new
     @http_proxy = HttpProxy.new
+    set_form_fields
   end
 
   def create
@@ -16,11 +17,13 @@ class HttpProxiesController < ApplicationController
     if @http_proxy.save
       process_success
     else
+      set_form_fields
       process_error
     end
   end
 
   def edit
+    set_form_fields
   end
 
   def test_connection
@@ -49,6 +52,7 @@ class HttpProxiesController < ApplicationController
     if @http_proxy.update(http_proxy_params)
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -59,5 +63,17 @@ class HttpProxiesController < ApplicationController
     else
       process_error
     end
+  end
+
+  private
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true },
+      { name: 'url', label: _('URL'), required: true, helpText: _('URL of the proxy including schema (https://proxy.example.com:8080)') },
+      { name: 'username', label: _('Username'), helpText: _('Username to use if authentication is required.') },
+      { name: 'password', label: _('Password'), type: 'password', helpText: _('Password to use if authentication is required.') },
+      { name: 'cacert', label: _('SSL CA Certificate'), type: 'textarea', rows: 5, helpText: _('SSL CA Certificate to use if authentication is required.') },
+    ]
   end
 end

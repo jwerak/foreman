@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import API from '../../../redux/API/API';
 
-const useFormData = ({ apiUrl, resourceId, fields }) => {
+const useFormData = ({ apiUrl, resourceId, fields, resourceName }) => {
   const isEdit = !!resourceId;
   const [values, setValues] = useState(() => {
     const initial = {};
@@ -83,9 +83,9 @@ const useFormData = ({ apiUrl, resourceId, fields }) => {
       setSubmitErrors(null);
       setErrors({});
 
-      const controller = apiUrl.split('/').pop();
-      const singularController = controller.replace(/s$/, '');
-      const payload = { [singularController]: values };
+      const payloadKey =
+        resourceName || apiUrl.split('/').pop().replace(/s$/, '');
+      const payload = { [payloadKey]: values };
 
       try {
         if (isEdit) {
@@ -114,7 +114,7 @@ const useFormData = ({ apiUrl, resourceId, fields }) => {
         setIsSubmitting(false);
       }
     },
-    [apiUrl, resourceId, isEdit, values, validate]
+    [apiUrl, resourceId, resourceName, isEdit, values, validate]
   );
 
   return {

@@ -1,3 +1,1 @@
-<% title _("Create Global Parameter") %>
-
-<%= render :partial => 'form' %>
+<%= react_component('FormPage', react_form_props(@common_parameter).merge(fields: @form_fields)) %>

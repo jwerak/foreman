@@ -10,6 +10,7 @@ class ArchitecturesController < ApplicationController
 
   def new
     @architecture = Architecture.new
+    set_form_fields
   end
 
   def create
@@ -17,17 +18,20 @@ class ArchitecturesController < ApplicationController
     if @architecture.save
       process_success
     else
+      set_form_fields
       process_error
     end
   end
 
   def edit
+    set_form_fields
   end
 
   def update
     if @architecture.update(architecture_params)
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -38,5 +42,13 @@ class ArchitecturesController < ApplicationController
     else
       process_error
     end
+  end
+
+  private
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true },
+    ]
   end
 end

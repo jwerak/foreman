@@ -13,9 +13,11 @@ class ComputeProfilesController < ApplicationController
 
   def new
     @compute_profile = ComputeProfile.new
+    set_form_fields
   end
 
   def edit
+    set_form_fields
   end
 
   def create
@@ -23,6 +25,7 @@ class ComputeProfilesController < ApplicationController
     if @compute_profile.save
       process_success :success_redirect => compute_profile_path(@compute_profile)
     else
+      set_form_fields
       process_error
     end
   end
@@ -31,6 +34,7 @@ class ComputeProfilesController < ApplicationController
     if @compute_profile.update(compute_profile_params)
       process_success
     else
+      set_form_fields
       process_error
     end
   end
@@ -41,5 +45,13 @@ class ComputeProfilesController < ApplicationController
     else
       process_error
     end
+  end
+
+  private
+
+  def set_form_fields
+    @form_fields = [
+      { name: 'name', label: _('Name'), required: true },
+    ]
   end
 end

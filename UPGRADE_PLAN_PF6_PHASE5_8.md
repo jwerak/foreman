@@ -143,11 +143,11 @@ const DomainsIndex = (props) => (
 
 ---
 
-## Phase 7: Form Page Migration
+## Phase 7: Form Page Migration (7.1-7.3 COMPLETE)
 
 **Goal:** Convert the 44 ERB form pages from `form_for`/`form_tag` to React form components.
 
-### 7.1: Create `FormPage` component
+### 7.1: Create `FormPage` component ✅
 
 **New file:** `webpack/.../components/common/FormPage/index.js`
 
@@ -161,7 +161,7 @@ Reuse existing:
 - `webpack/.../common/forms/FormField.js` — existing form field component
 - `webpack/.../common/forms/InputFactory.js` — existing input type factory
 
-### 7.2: Create form field type components
+### 7.2: Create form field type components ✅
 
 Map Rails form helpers to PF6 equivalents:
 - `text_field` → PF6 `TextInput`
@@ -173,17 +173,17 @@ Map Rails form helpers to PF6 equivalents:
 
 ### 7.3: Migrate simple CRUD forms first
 
-**Batch 7A — Simple single-tab forms (10 pages):**
-- `architectures/_form`
-- `realms/_form`
-- `media/_form`
-- `models/_form`
-- `compute_profiles/_form`
-- `http_proxies/_form`
-- `bookmarks/_form`
-- `common_parameters/_form`
-- `ssh_keys/_form`
-- `autosign/_form`
+**Batch 7A — Simple single-tab forms (9 pages) ✅ COMPLETE (2026-06-21):**
+- `architectures/_form` ✅ — FormPage with name field
+- `realms/_form` ✅ — FormPage with name, realm_type select, realm_proxy_id select (taxonomy tabs deferred)
+- `media/_form` ✅ — FormPage with name, path, os_family select (NFS conditional fields + taxonomy tabs deferred)
+- `models/_form` ✅ — Already migrated to React routes (ModelForm component)
+- `compute_profiles/_form` ✅ — FormPage with name field
+- `http_proxies/_form` ✅ — FormPage with name, url, username, password, cacert (test connection + taxonomy tabs deferred)
+- `bookmarks/_form` ✅ — FormPage with name, query, public checkbox, hidden controller field (edit-only)
+- `common_parameters/_form` ✅ — FormPage with name, parameter_type select, value textarea, hidden_value checkbox
+- `ssh_keys/_form` ✅ — FormPage with key textarea, name field (nested under users, create-only)
+- `autosign/_form` — Deferred: AJAX-loaded Bootstrap modal in smart proxy show page, not a standalone CRUD form
 
 **Batch 7B — Multi-field forms (8 pages):**
 - `domains/_form`

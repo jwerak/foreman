@@ -1,3 +1,1 @@
-<% title _("Create Compute Profile") %>
-
-<%= render 'form' %>
+<%= react_component('FormPage', react_form_props(@compute_profile).merge(fields: @form_fields)) %>

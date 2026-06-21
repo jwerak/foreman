@@ -166,7 +166,7 @@ const FormPage = ({
     isEdit,
     onChange,
     onSubmit,
-  } = useFormData({ apiUrl, resourceId, fields });
+  } = useFormData({ apiUrl, resourceId, fields, resourceName });
 
   const handleSubmit = async e => {
     const result = await onSubmit(e);
@@ -199,6 +199,8 @@ const FormPage = ({
   });
 
   const renderField = field => {
+    if (field.type === 'hidden') return null;
+
     if (field.type === 'checkbox') {
       return (
         <FormGroup key={field.name} fieldId={`form-field-${field.name}`}>
@@ -342,6 +344,7 @@ FormPage.propTypes = {
         'password',
         'email',
         'number',
+        'hidden',
       ]),
       required: PropTypes.bool,
       disabled: PropTypes.bool,
