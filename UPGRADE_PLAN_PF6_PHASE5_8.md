@@ -60,7 +60,7 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 
 ---
 
-## Phase 6: Index/List Page Migration
+## Phase 6: Index/List Page Migration ✅ COMPLETE (2026-06-21)
 
 **Goal:** Convert all 23 ERB index pages to use the `IndexPage` component. Each page follows the same pattern:
 
@@ -103,11 +103,11 @@ Renders action button props as PF6 `Button` + `Dropdown` with `MenuToggle`. Repl
 **Batch 6G — Bookmarks ✅ COMPLETE (2026-06-20):**
 - `bookmarks/index` ✅ — React IndexPage with name, query, controller, public columns
 
-**Batch 6E — Remaining pages (4 pages):**
-- `hostgroups/index`
-- `smart_proxies/index`
-- `fact_values/index`
-- `key_pairs/index`
+**Batch 6E — Remaining pages (4 pages) ✅ COMPLETE (2026-06-21):**
+- `hostgroups/index` ✅ — React IndexPage with title (ancestry path), hosts_count, children_hosts_count columns + nest/create host/clone/delete actions + API enhancement (2 new RABL nodes)
+- `smart_proxies/index` ✅ — React IndexPage with name, url, features columns + edit/delete actions (locations/organizations/status columns omitted — not in API index response)
+- `fact_values/index` ✅ — React IndexPage with host, fact_name, value, origin, reported_at columns + custom controller JSON (API v2 format incompatible, returns hash not array)
+- `key_pairs/index` ✅ — React IndexPage with status, name, fingerprint columns + conditional download/recreate/delete actions + custom controller JSON (no API v2 endpoint, nested under compute_resources)
 
 ### Per-page pattern (example: `domains/index`):
 
@@ -273,6 +273,78 @@ Convert `common/403.html.erb`, `404.html.erb`, `500.html.erb`, `503.html.erb` to
 
 ---
 
+## Phase 9: Client-Side Routing for Migrated Pages
+
+**Goal:** Eliminate full page reloads when navigating between already-migrated React pages. Currently, every sidebar click triggers `window.location.href` (full server round-trip + complete React tree re-mount), even though the Layout/sidebar is already React and uses `history.push()`. This is a legacy artifact of the hybrid Rails/React architecture.
+
+### Root cause
+
+The rendering pipeline is:
+
+```
+Sidebar click → Navigation.clickAndNavigate() → history.push(href)
+    → React Router checks registered routes
+    → Route registered?  YES → renderRoute() — only content swaps (SPA)
+    →                     NO  → fallbackRoute() → window.location.href (FULL RELOAD)
+```
+
+Migrated index pages (Domains, Subnets, etc.) are mounted via ERB `react_component()`. They are NOT registered as React Router routes. So every navigation falls through to `fallbackRoute()` → full page reload → Rails renders full HTML → entire React tree (Layout + content) re-mounts from scratch.
+
+Pages that ARE registered as React Router routes (e.g., `/new/hosts`, host details) already navigate without reloading — the Layout/sidebar stays mounted and only content swaps.
+
+### 9.1: Register migrated index pages as React Router routes
+
+**Files:**
+- `webpack/.../routes/Routes.js` (or wherever routes are aggregated)
+- New route files per page, e.g. `webpack/.../routes/Domains/index.js`
+
+Each migrated IndexPage component needs a route registration:
+
+```js
+// webpack/.../routes/Domains/index.js
+import DomainsIndex from '../../components/DomainsIndex';
+
+export default {
+  path: '/domains',
+  render: props => <DomainsIndex apiUrl="/api/v2/domains" controller="domains" ... />,
+};
+```
+
+**Key challenge:** The ERB helper `react_index_props` currently provides props (`apiUrl`, `createUrl`, `controller`, `documentationUrl`, etc.) from the server. When routing client-side, these props must be derived in JavaScript instead. Options:
+
+- **Option A (simple):** Hardcode props in each route definition. The props are deterministic — `apiUrl` is always `/api/v2/{controller}`, `createUrl` is `/{path}/new`, etc.
+- **Option B (DRY):** Create a `routeIndexProps(controller, options)` JS helper that mirrors `react_index_props` logic. One function, all routes use it.
+- **Option C (hybrid):** Keep ERB rendering for initial page load (SEO, deep links), but register routes so subsequent navigation is client-side. The React component works with either prop source.
+
+**Recommendation:** Option C — register React Router routes that hardcode the props, but keep the ERB views as fallbacks for direct URL access / bookmarks / first page load. The component doesn't need to change — it receives the same props either way.
+
+### 9.2: Handle routes with `/templates/` prefix
+
+Provisioning templates and report templates live under `/templates/provisioning_templates` and `/templates/report_templates`. These nested paths need correct route registration. Partition tables are at `/templates/ptables`. All three share the same prefix pattern.
+
+### 9.3: Handle controller-specific search autocomplete
+
+The `SearchBar` component needs `controller` for autocomplete URL construction (`/{controller}/auto_complete_search`). When mounted via ERB, this comes from `react_index_props`. When mounted via React Router, the route definition must supply it. The `getControllerSearchProps()` utility already handles this — just pass the controller name.
+
+### 9.4: Handle breadcrumbs
+
+Currently, breadcrumbs are rendered by Rails (via `breadcrumbs()` helper in ERB). When navigating client-side, the `BreadcrumbBar` React component (already registered) would need its props updated. The `ReactApp` already renders breadcrumbs from server-provided data — for client-side routes, the route definition should include breadcrumb metadata.
+
+### 9.5: Preserve ERB fallback for non-JS / deep links
+
+Keep the ERB views functional so that:
+- Direct URL access (bookmarks, shared links) still works via server-side render
+- Crawlers and non-JS clients get a rendered page
+- Plugins that haven't migrated still work
+
+The React Router route and the ERB view coexist — first load uses ERB, subsequent navigation uses the React route.
+
+### 9.6: Plugin route extensibility
+
+Foreman plugins register their own pages. The route registration system must remain extensible so plugins can add their own client-side routes via the existing `registerRoutes()` API in `RoutingService`.
+
+---
+
 ## Known Issues
 
 - **Logout link** — The "Log Out" link in the User menu does not respond (no navigation, no POST). Likely caused by `data-method: post` not being processed by React/PF6 navigation — Rails UJS or Turbo needs to handle it.
@@ -296,6 +368,8 @@ Phase 7A-7C (forms)       ←  Depends on Phase 6 for pattern validation
 Phase 7D (host forms)     ←  Most complex, do last
     ↓
 Phase 8 (cleanup)         ←  Incremental, can overlap with 6/7
+    ↓
+Phase 9 (client routing)  ←  After pages are React, make nav SPA-like
 ```
 
 Each batch within a phase is independently mergeable.
@@ -318,3 +392,4 @@ After each batch:
 | 7A-7C (simple forms) | 24 pages | Moderate — schema-driven |
 | 7D (host forms) | 1 page | High complexity — separate effort |
 | 8 (cleanup) | 24 JS + SCSS files | Incremental, low risk |
+| 9 (client routing) | ~25 route registrations | Moderate — per-page route + props |

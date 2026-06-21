@@ -65,6 +65,10 @@ import PtablesIndex from './PtablesIndex';
 import ProvisioningTemplatesIndex from './ProvisioningTemplatesIndex';
 import ReportTemplatesIndex from './ReportTemplatesIndex';
 import ConfigReportsIndex from './ConfigReportsIndex';
+import HostgroupsIndex from './HostgroupsIndex';
+import SmartProxiesIndex from './SmartProxiesIndex';
+import FactValuesIndex from './FactValuesIndex';
+import KeyPairsIndex from './KeyPairsIndex';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -220,6 +224,10 @@ const coreComponents = [
   { name: 'ProvisioningTemplatesIndex', type: ProvisioningTemplatesIndex },
   { name: 'ReportTemplatesIndex', type: ReportTemplatesIndex },
   { name: 'ConfigReportsIndex', type: ConfigReportsIndex },
+  { name: 'HostgroupsIndex', type: HostgroupsIndex },
+  { name: 'SmartProxiesIndex', type: SmartProxiesIndex },
+  { name: 'FactValuesIndex', type: FactValuesIndex },
+  { name: 'KeyPairsIndex', type: KeyPairsIndex },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {

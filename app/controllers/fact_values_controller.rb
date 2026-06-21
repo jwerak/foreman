@@ -11,6 +11,27 @@ class FactValuesController < ApplicationController
         @fact_values = @fact_values.preload(related_tables).paginate(:page => params[:page], :per_page => params[:per_page])
         render :index
       end
+      format.json do
+        paginated = @fact_values.preload(related_tables).paginate(:page => params[:page], :per_page => params[:per_page] || 20)
+        render json: {
+          results: paginated.map { |fv|
+            {
+              id: fv.id,
+              host_name: fv.host&.name,
+              host_id: fv.host&.id,
+              fact_name: fv.name,
+              value: fv.value,
+              origin: fv.origin,
+              updated_at: fv.updated_at,
+            }
+          },
+          total: @fact_values.count,
+          subtotal: paginated.total_entries,
+          page: (params[:page] || 1).to_i,
+          per_page: paginated.per_page,
+          can_create: false,
+        }
+      end
       format.csv do
         csv_response(@fact_values.joins(related_tables).includes(related_tables))
       end

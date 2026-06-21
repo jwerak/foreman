@@ -3,6 +3,9 @@ object @hostgroup
 extends "api/v2/hostgroups/base"
 extends "api/v2/smart_proxies/children_nodes"
 
+node(:hosts_count) { |hostgroup| hosts_count[hostgroup] }
+node(:children_hosts_count) { |hostgroup| hostgroup.children_hosts_count }
+
 attributes :subnet_id, :subnet_name, :operatingsystem_id, :operatingsystem_name, :domain_id, :domain_name,
   :compute_profile_id, :compute_profile_name, :ancestry, :parent_id, :parent_name,
   :ptable_id, :ptable_name, :medium_id, :medium_name, :pxe_loader,

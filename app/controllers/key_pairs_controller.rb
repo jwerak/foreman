@@ -6,6 +6,27 @@ class KeyPairsController < ApplicationController
 
   def index
     @key_pairs = @compute_resource.get_compute_key_pairs
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          results: @key_pairs.map { |kp|
+            {
+              name: kp.name,
+              fingerprint: kp.fingerprint,
+              active: kp.active,
+              key_pair_id: kp.key_pair_id,
+              used_elsewhere: kp.used_elsewhere,
+            }
+          },
+          total: @key_pairs.size,
+          subtotal: @key_pairs.size,
+          page: 1,
+          per_page: @key_pairs.size,
+          can_create: false,
+        }
+      end
+    end
   rescue => e
     compute_resource_error("SSH keys", e)
   end
