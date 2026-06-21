@@ -81,6 +81,18 @@ module LayoutHelper
     }
   end
 
+  def react_form_props(resource, options = {})
+    controller_name = options[:controller] || params[:controller]
+    resource_id = resource.persisted? ? resource.id : nil
+    {
+      apiUrl: "/api/v2/#{controller_name}",
+      title: resource.persisted? ? _("Edit %s") % resource.to_s : _("Create %s") % resource.class.model_name.human,
+      resourceId: resource_id,
+      resourceName: controller_name.singularize,
+      cancelUrl: options[:cancel_url] || url_for(action: :index),
+    }
+  end
+
   def react_taxonomy_index_props
     klass = params[:controller].classify.constantize
     react_index_props(klass).merge(

@@ -47,6 +47,7 @@ import { WelcomeArchitecture } from './Architectures/Welcome';
 import JwtTokens from './users/JwtTokens/JwtTokens';
 import Dashboard from './Dashboard';
 import IndexPage from './common/IndexPage';
+import FormPage from './common/FormPage';
 import DomainsIndex from './DomainsIndex';
 import ArchitecturesIndex from './ArchitecturesIndex';
 import RealmsIndex from './RealmsIndex';
@@ -206,6 +207,7 @@ const coreComponents = [
   { name: 'WelcomeConfigReports', type: WelcomeConfigReports },
   { name: 'WelcomeArchitecture', type: WelcomeArchitecture },
   { name: 'IndexPage', type: IndexPage },
+  { name: 'FormPage', type: FormPage },
   { name: 'DomainsIndex', type: DomainsIndex },
   { name: 'ArchitecturesIndex', type: ArchitecturesIndex },
   { name: 'RealmsIndex', type: RealmsIndex },
