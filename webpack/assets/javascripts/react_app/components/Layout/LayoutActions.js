@@ -1,5 +1,6 @@
 import {
   LAYOUT_INITIALIZE,
+  LAYOUT_UPDATE_TAXONOMY,
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
   LAYOUT_EXPAND,
@@ -19,6 +20,11 @@ export const initializeLayout = ({
     organization,
     location,
   },
+});
+
+export const updateTaxonomy = ({ items, organization, location }) => ({
+  type: LAYOUT_UPDATE_TAXONOMY,
+  payload: { items, organization, location },
 });
 
 export const showLoading = () => ({

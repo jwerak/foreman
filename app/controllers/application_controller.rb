@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   include Foreman::Controller::Flash
   include Foreman::Controller::Authorize
 
+  layout :resolve_layout
+
   protect_from_forgery with: :exception # See ActionController::RequestForgeryProtection for details
   rescue_from Exception, :with => :generic_exception if Rails.env.production?
   rescue_from ScopedSearch::QueryNotSupported, :with => :invalid_search_query
@@ -241,6 +243,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def resolve_layout
+    return 'spa_content' if spa_fetch_request?
+    nil
+  end
+
+  def spa_fetch_request?
+    request.headers['X-SPA-Fetch'] == 'true' && !api_request?
+  end
 
   def require_admin
     unless User.current.admin?

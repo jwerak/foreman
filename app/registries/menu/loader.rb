@@ -34,7 +34,8 @@ module Menu
 
       Manager.map :top_menu do |menu|
         menu.sub_menu :monitor_menu,    :caption => N_('Monitor'), :icon => 'fa fa-tachometer' do
-          menu.item :dashboard,         :caption => N_('Dashboard'), :exact => true
+          menu.item :dashboard,         :caption => N_('Dashboard'), :exact => true,
+                    :url => '/dashboard'
           menu.item :host_statuses,
             :caption => N_('Host Statuses'),
             :url => '/host_statuses',
@@ -57,6 +58,7 @@ module Menu
                 :url_hash => { :controller => 'api/v2/hosts', :action => 'index' }
 
           menu.item :newhost,           :caption => N_('Create Host'),
+                    :url => '/new/hosts',
                     :url_hash => {:controller => '/hosts', :action => 'new'}
           menu.item :register_hosts,    :caption => N_('Register Host'),
                     :url => '/hosts/register',

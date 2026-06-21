@@ -2,6 +2,7 @@ import Immutable from 'seamless-immutable';
 
 import {
   LAYOUT_INITIALIZE,
+  LAYOUT_UPDATE_TAXONOMY,
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
   LAYOUT_EXPAND,
@@ -22,6 +23,12 @@ export default (state = initialState, action) => {
       return state
         .set('items', payload.items)
         .set('isCollapsed', payload.isCollapsed)
+        .set('currentOrganization', payload.organization)
+        .set('currentLocation', payload.location);
+
+    case LAYOUT_UPDATE_TAXONOMY:
+      return state
+        .set('items', payload.items)
         .set('currentOrganization', payload.organization)
         .set('currentLocation', payload.location);
 

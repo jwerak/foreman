@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Divider,
@@ -15,7 +17,65 @@ import {
 import { CheckIcon, GlobeIcon, BuildingIcon } from '@patternfly/react-icons';
 import { foremanUrl } from '../../../../common/helpers';
 import { translate as __ } from '../../../../common/I18n';
+import { useForemanSetContext, useForemanSettings } from '../../../../Root/Context/ForemanContext';
+import { updateTaxonomy } from '../../LayoutActions';
+import { combineMenuItems } from '../../LayoutHelper';
 import './TaxonomyDropdown.scss';
+
+const switchTaxonomy = async (url, dispatch, setContext, displayNewHostsPage, history, location) => {
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+  await fetch(url, {
+    headers: {
+      'X-SPA-Fetch': 'true',
+      'X-CSRF-Token': csrfToken,
+    },
+    credentials: 'same-origin',
+    redirect: 'manual',
+  });
+
+  const layoutResponse = await fetch(foremanUrl('/layout'), {
+    headers: {
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    credentials: 'same-origin',
+  });
+
+  if (!layoutResponse.ok) {
+    window.location.reload();
+    return;
+  }
+
+  const layoutData = await layoutResponse.json();
+
+  dispatch(
+    updateTaxonomy({
+      items: combineMenuItems(layoutData, displayNewHostsPage),
+      organization: layoutData.orgs.current_org,
+      location: layoutData.locations.current_location,
+    })
+  );
+
+  setContext(prev => ({
+    ...prev,
+    metadata: {
+      ...prev.metadata,
+      organization: layoutData.orgs.current_org
+        ? { title: layoutData.orgs.current_org }
+        : undefined,
+      location: layoutData.locations.current_location
+        ? { title: layoutData.locations.current_location }
+        : undefined,
+    },
+  }));
+
+  history.replace({
+    pathname: location.pathname,
+    search: location.search,
+    state: { taxonomySwitch: Date.now() },
+  });
+};
 
 const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
   const id = `${taxonomyType}-dropdown`;
@@ -26,9 +86,17 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
       ? __('Any organization')
       : __('Any location');
 
+  const dispatch = useDispatch();
+  const setContext = useForemanSetContext();
+  const settings = useForemanSettings();
+  const displayNewHostsPage = settings?.displayNewHostsPage;
+  const history = useHistory();
+  const location = useLocation();
+
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState(taxonomies);
+  const [isSwitching, setIsSwitching] = useState(false);
 
   const onSearchButtonClick = useCallback(() => {
     const filtered =
@@ -43,6 +111,20 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
   useEffect(() => {
     onSearchButtonClick();
   }, [searchValue, onSearchButtonClick]);
+
+  const handleTaxonomySwitch = useCallback(async (url) => {
+    setIsSwitching(true);
+    setIsOpen(false);
+    try {
+      await switchTaxonomy(url, dispatch, setContext, displayNewHostsPage, history, location);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Taxonomy switch failed:', err);
+      window.location.reload();
+    } finally {
+      setIsSwitching(false);
+    }
+  }, [dispatch, setContext, displayNewHostsPage, history, location]);
 
   const onSelect = () => {
     setIsOpen(false);
@@ -75,6 +157,7 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
           onClick={() => setIsOpen(prev => !prev)}
           isExpanded={isOpen}
           isFullWidth
+          isDisabled={isSwitching}
           aria-label="Selected Taxonomy:"
           ouiaId={`taxonomy-context-selector-${taxonomyType}`}
         >
@@ -98,10 +181,8 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
         <DropdownItem
           key={0}
           className={`${taxonomyType}s_clear`}
-          onClick={() => {
-            window.location.assign(anyTaxonomyURL);
-          }}
-          isDisabled={!currentTaxonomy}
+          onClick={() => handleTaxonomySwitch(anyTaxonomyURL)}
+          isDisabled={!currentTaxonomy || isSwitching}
         >
           <Grid hasGutter>
             <GridItem span={1}>{anyIcon}</GridItem>
@@ -118,10 +199,10 @@ const TaxonomyDropdown = ({ taxonomyType, currentTaxonomy, taxonomies }) => {
             className={`${taxonomyType}_menuitem`}
             onClick={() => {
               if (href) {
-                window.location.assign(href);
+                handleTaxonomySwitch(href);
               }
             }}
-            isDisabled={title === currentTaxonomy}
+            isDisabled={title === currentTaxonomy || isSwitching}
           >
             <Grid hasGutter>
               <GridItem span={11} style={{ textAlign: 'left' }}>

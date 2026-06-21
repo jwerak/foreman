@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { fallbackRoute } from '../RoutingService';
 import { selectRoutes } from '../RouterSelector';
+import RailsPage from '../RailsPage';
 
 const ForemanSwitcher = ({ children: coreRoutes }) => {
   const routes = useSelector(() => selectRoutes(coreRoutes), shallowEqual);
+  const location = useLocation();
+  const taxonomyKey = location.state?.taxonomySwitch || 0;
 
   return (
-    <Switch>
+    <Switch key={taxonomyKey}>
       {routes}
-      <Route render={fallbackRoute} key="default-route" />
+      <Route component={RailsPage} key="default-route" />
     </Switch>
   );
 };

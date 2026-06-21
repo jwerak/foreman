@@ -1,9 +1,6 @@
 import { Route } from 'react-router-dom';
 import React from 'react';
-import { visit } from '../common/helpers';
 import { addGlobalFill } from '../components/common/Fill/GlobalFill';
-
-let currentPath = window.location.href;
 
 /**
  * Adds a plugin's routes into core
@@ -30,26 +27,8 @@ export const registerRoutes = (id, routes) =>
  * @param {Object} props - routing props
  */
 export const renderRoute = (renderFn, props) => {
-  const {
-    location,
-    location: { pathname, search },
-  } = props;
   removeRailsContent();
-  location && updatePath(`${pathname}${search}`);
   return renderFn(props);
-};
-
-export const fallbackRoute = () => {
-  const nextPath = window.location.href;
-  if (currentPath !== nextPath) {
-    updatePath(nextPath);
-    return visit(nextPath);
-  }
-  return null;
-};
-
-const updatePath = newPath => {
-  if (newPath) currentPath = newPath;
 };
 
 const removeRailsContent = () => {
