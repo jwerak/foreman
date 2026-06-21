@@ -15,7 +15,7 @@ const RolesIndex = props => {
       title: __('Name'),
       sortKey: 'name',
       wrapper: row => (
-        <a href={`/roles/${row.id}/filters`}>{row.name}</a>
+        <a href={`/roles/${row.id}/edit`}>{row.name}</a>
       ),
     },
     {
@@ -39,7 +39,7 @@ const RolesIndex = props => {
       {
         title: __('Filters'),
         onClick: () => {
-          window.location.href = `/roles/${row.id}/filters`;
+          window.location.href = `/filters?role_id=${row.id}`;
         },
       },
     ];
@@ -48,7 +48,7 @@ const RolesIndex = props => {
       actions.push({
         title: __('Add filter'),
         onClick: () => {
-          window.location.href = `/roles/${row.id}/filters/new`;
+          window.location.href = `/filters/new?role_id=${row.id}`;
         },
       });
     }
