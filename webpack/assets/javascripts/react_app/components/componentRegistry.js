@@ -71,6 +71,7 @@ import SmartProxiesIndex from './SmartProxiesIndex';
 import FactValuesIndex from './FactValuesIndex';
 import KeyPairsIndex from './KeyPairsIndex';
 import HostForm from './HostForm';
+import TemplateForm from './TemplateForm';
 
 const componentRegistry = {
   registry: forceSingleton('component_registry', () => ({})),
@@ -232,6 +233,7 @@ const coreComponents = [
   { name: 'FactValuesIndex', type: FactValuesIndex },
   { name: 'KeyPairsIndex', type: KeyPairsIndex },
   { name: 'HostForm', type: HostForm },
+  { name: 'TemplateForm', type: TemplateForm },
 ];
 
 if (!componentRegistry.registry[coreComponents[0].name]) {

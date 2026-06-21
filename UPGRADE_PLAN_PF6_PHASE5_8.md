@@ -408,6 +408,124 @@ No changes to the `registerRoutes()` API. Plugins continue to add their own clie
 
 ---
 
+## Phase 10: Remaining ERB Page Migration
+
+**Goal:** Migrate the remaining ERB pages that still use Bootstrap form helpers, tab navigation, and old-style layouts to PF6 React components. These fall into 3 categories: template editor forms (most complex), show/detail pages, and deferred form features (taxonomy tabs, parameters, provider partials).
+
+### Current state (audit 2026-06-21)
+
+**Phase 7 migrated 24 form pages** — the `edit.html.erb` / `new.html.erb` views now use `react_component('FormPage', ...)`. However:
+- The old `_form.html.erb` ERB partials still exist (unused by the migrated pages but kept for fallback)
+- Several features were **deferred** on migrated forms (taxonomy tabs, parameters tabs, provider partials, etc.)
+- **3 form pages were NOT migrated at all** — they still render old ERB `_form` partials with Bootstrap `form_for`, `text_f`, `nav-tabs` (down from 6; provisioning_templates, report_templates, ptables done in 10.1)
+
+### 10.1: Template editor forms (3 pages — highest complexity) ✅ COMPLETE (2026-06-21)
+
+Built a dedicated `TemplateForm` React component tree (similar to HostForm — too complex for schema-driven FormPage). Replaces the shared `templates/_form.html.erb` Bootstrap tabbed form with PF6 Tabs + embedded Editor React component.
+
+- `provisioning_templates/edit.html.erb` + `new.html.erb` ✅ — TemplateForm with Template tab (Editor + name/default/description/audit), Inputs tab (dynamic add/remove), Type tab (snippet + kind selector), Locations tab, Organizations tab
+- `report_templates/edit.html.erb` + `new.html.erb` ✅ — TemplateForm with Template tab, Inputs tab, Type tab (snippet only), Locations tab, Organizations tab
+- `ptables/edit.html.erb` + `new.html.erb` ✅ — TemplateForm with Template tab (Editor + snippet + OS family inline), Inputs tab, Locations tab, Organizations tab (no separate Type tab)
+
+**Component architecture:**
+```
+webpack/.../components/TemplateForm/
+  index.js                    -- Main: PF6 Tabs + Form + submit via API
+  useTemplateForm.js          -- Hook: values, validation, submit (reads Editor Redux state)
+  TemplateFormContext.js       -- Context shared across tabs
+  constants.js                 -- Template type constants
+  tabs/TemplateTab.js          -- Editor + name/default/description/audit fields
+  tabs/InputsTab.js            -- Dynamic template input rows with add/remove (PF6 Cards)
+  tabs/TypeTab.js              -- Snippet checkbox + kind selector (provisioning only)
+  tabs/TaxonomyTab.js          -- Reusable Locations/Organizations checkbox group
+```
+
+**Controller:** `set_template_form_data` in `templates_controller.rb` serializes template attributes, select options (template kinds, OS families, input types, value types, locations, organizations), editor props (DSL cache, render paths, safemode), and meta (isNew, cancelUrl, templateType, apiUrl) as JSON props. Called as `before_action` for `:new` and `:edit`, and explicitly in `clone_template`, `create` (on error), and `update` (on error).
+
+**32 tests** across 4 test suites (TemplateForm, useTemplateForm, InputsTab, TypeTab).
+
+**Deferred features:**
+- History tab — needs audit API integration
+- Help tab — safemode methods/variables reference
+- Association tab (provisioning) — OS multi-select + hostgroup combinations
+- Template combinations (provisioning) — hostgroup-specific template assignment
+- Plugin pagelets — `render_pagelets_for(:tab_headers/:tab_content)`
+
+Old `templates/_form.html.erb` partial retained as fallback.
+
+### 10.2: Compute attribute forms (2 pages)
+
+| Page | ERB View | Key challenges |
+|------|----------|---------------|
+| Compute Attributes edit | `compute_attributes/edit.html.erb` | Provider-specific VM config partials (EC2, Libvirt, VMware, OpenStack) |
+| Compute Attributes new | `compute_attributes/new.html.erb` | Same — renders provider-specific base, networks, volumes partials |
+
+**Approach:** These are deeply provider-specific. Each provider has its own form partial with unique fields (instance types, flavors, networks, storage). Consider a plugin-extensible `ComputeAttributeForm` with Slot/Fill for provider-specific sections. Low priority — compute resource VM configuration is a niche workflow.
+
+### 10.3: Show/detail pages (5 pages)
+
+| Page | ERB View | Current style |
+|------|----------|--------------|
+| Smart Proxy show | `smart_proxies/show.html.erb` | Bootstrap panels, AJAX status checks, feature tabs |
+| Host show | `hosts/show.html.erb` | Bootstrap tabs, metrics, facts — **already has React HostDetails at `/new/hosts/:name`** |
+| Compute Resource show | `compute_resources/show.html.erb` | Bootstrap tabs, VM list, provider-specific tabs |
+| Compute Profile show | `compute_profiles/show.html.erb` | List of compute attribute links per compute resource |
+| Compute Resource VM show | `compute_resources_vms/show.html.erb` | Provider-specific VM details |
+
+**Note:** `hosts/show.html.erb` is the legacy host detail page. The React `HostDetails` component at `/new/hosts/:name` is the modern replacement. The legacy page can be removed once all plugins migrate to the React host detail page.
+
+### 10.4: Deferred features on migrated forms
+
+Phase 7 created React `FormPage` components for 24 forms but deferred these features:
+
+**Taxonomy tabs (locations/organizations)** — 12 forms defer this:
+- domains, subnets, hostgroups, compute_resources, smart_proxies, http_proxies, media, auth_source_externals, auth_source_ldaps, realms, users, taxonomies
+
+**Parameters tabs** — 6 forms defer this:
+- domains, subnets, hostgroups, operatingsystems, hosts (React HostForm has its own), taxonomies
+
+**Provider-specific partials** — 2 forms defer this:
+- compute_resources (EC2/Libvirt/VMware/OpenStack provider fields)
+- images (provider-specific image fields)
+
+**Other deferred features:**
+- `http_proxies`: Test Connection button
+- `hostgroups`: smart_proxy_fields, extensible main_tabs, OS tab
+- `users`: Password fields, Email Preferences, SSH Keys, PAT, Registration Tokens, UI Preferences tabs
+- `taxonomies`: 13+ resource assignment tabs (Users, Smart Proxies, Subnets, Compute Resources, Media, Templates, Ptables, Domains, Realms, Hostgroups, cross-taxonomy)
+
+**Approach for taxonomy tabs:** Create a reusable `TaxonomyTabs` React component that renders Location/Organization checkbox groups. Add to FormPage as optional tab sections. This one component unblocks 12 forms.
+
+**Approach for parameters:** Create a reusable `ParametersTab` React component (key-value editor with inheritance display). The `HostForm` already has `ParametersTab` — extract and generalize.
+
+### 10.5: Other remaining ERB pages
+
+| Page | Path | Notes |
+|------|------|-------|
+| Compute Resource VM new | `compute_resources_vms/new.html.erb` | Provider-specific VM creation — very niche |
+| About | `about/index.html.erb` | Already updated with PF6 labels (Phase 8.7) |
+| Settings | `settings/index.html.erb` | Partially React (`SettingsTable`), ERB tab navigation |
+| Filters index/form | `filters/index`, `filters/_form` | Not yet migrated to React IndexPage/FormPage |
+| Common Parameters index | `common_parameters/index` | Not yet migrated to React IndexPage |
+
+### Execution order
+
+```
+10.1  Template editor forms       ✅  COMPLETE
+  ↓
+10.4a Taxonomy tabs component     ←  Unblocks 12 forms, do next
+  ↓
+10.4b Parameters tab component    ←  Unblocks 6 forms
+  ↓
+10.3  Show pages                  ←  Smart proxy show, compute resource show
+  ↓
+10.2  Compute attribute forms     ←  Low priority, provider-specific
+  ↓
+10.4c Provider partials           ←  Lowest priority, niche workflows
+```
+
+---
+
 ## Known Issues
 
 - **Logout link** — The "Log Out" link in the User menu does not respond (no navigation, no POST). Likely caused by `data-method: post` not being processed by React/PF6 navigation — Rails UJS or Turbo needs to handle it.
