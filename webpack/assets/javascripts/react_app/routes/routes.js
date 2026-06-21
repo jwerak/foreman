@@ -10,9 +10,11 @@ import Upgrade from './Upgrade';
 import IndexPages from './IndexPages';
 import DetailPages from './DetailPages';
 import Dashboard from './Dashboard';
+import Topology from './Topology';
 
 export const routes = [
   Dashboard,
+  Topology,
   Audits,
   ...Models,
   Hosts,

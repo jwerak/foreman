@@ -34,6 +34,7 @@
     "@patternfly/react-table": "~6.4.3",
     "@patternfly/react-templates": "~6.4.3",
     "@patternfly/react-tokens": "~6.4.0",
+    "@patternfly/react-topology": "~6.4.0",
     "@reduxjs/toolkit": "^1.6.0",
     "@scalprum/core": "^0.8.1",
     "@scalprum/react-core": "^0.9.3",

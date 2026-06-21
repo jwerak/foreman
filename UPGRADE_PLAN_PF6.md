@@ -1206,3 +1206,43 @@ RolesIndex, BookmarksIndex, SmartProxiesIndex
 - Added `<MemoryRouter>` wrapper around all test renders (required for `<Link>`)
 - Updated href assertions from `/resource/:id/edit` → `/resource/:id`
 - Renamed test descriptions from "links to edit page" → "links to detail page"
+
+---
+
+## Phase 12: Topology Visualization (New Feature)
+
+**Status:** Implemented
+**Package added:** `@patternfly/react-topology@~6.4.0`
+
+Added a new Topology Visualization page under **Monitor > Topology** using the native
+PatternFly Topology extension. Provides two perspectives:
+
+### Perspective A: Infrastructure & Provisioning
+- Visualizes Compute Resources → Hosts relationships
+- Aggregate host count badges on parent nodes (individual hosts hidden by default)
+- Bare Metal group for hosts without compute resources
+- Status decorators showing error counts
+
+### Perspective C: Configuration Management
+- Visualizes Host Group inheritance tree (parent → child hierarchy via ancestry)
+- Aggregate host count badges on leaf group nodes
+- Edges derived from the `has_ancestry` gem's ancestry column
+
+### UI Controls
+- **Perspective Switcher**: dropdown to toggle between Infrastructure and Configuration views
+- **Layout Toggle**: Dagre (hierarchical) vs Cola (force-directed) layout algorithms
+- **Show/Hide Hosts**: switch to expand individual host nodes on canvas
+- **Show Errors Only**: filter to show only nodes with active failures
+
+### Interactive Sidebar
+- Clicking any node opens a right-hand `TopologySideBar`
+- For aggregate nodes: shows summary + paginated, searchable DataTable of hosts
+- For individual hosts: shows status, hostgroup, link to host details
+
+### Files Added/Modified
+- **Backend:** `app/controllers/api/v2/topology_controller.rb` — 2 actions (infrastructure, configuration)
+- **API Routes:** `GET /api/v2/topology/infrastructure`, `GET /api/v2/topology/configuration`
+- **Frontend:** 16 new files under `webpack/.../components/Topology/` and `webpack/.../routes/Topology/`
+- **Menu:** Topology item added under Monitor section
+- **Tests:** Backend controller test + 5 frontend test suites (24 tests)
+- **Jest config:** Added `@patternfly/react-topology` and `@patternfly/react-styles/css` mappings

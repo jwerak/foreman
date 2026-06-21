@@ -1,0 +1,23 @@
+.topology-page {
+  height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: column;
+
+  .pf-v6-l-stack {
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .pf-v6-l-stack__item.pf-m-fill,
+  .pf-v6-l-stack__item:last-child {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .pf-topology-side-bar {
+    padding: 1.5rem;
+    padding-top: 2rem;
+    overflow-y: auto;
+  }
+}

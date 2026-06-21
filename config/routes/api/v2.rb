@@ -444,6 +444,8 @@ Foreman::Application.routes.draw do
       put 'auth_source_ldaps/(:id)/test', :to => 'auth_source_ldaps#test'
       post 'registration_commands', to: 'registration_commands#create'
       get 'host_statuses', :to => 'host_statuses#index'
+      get 'topology/infrastructure', :to => 'topology#infrastructure'
+      get 'topology/configuration', :to => 'topology#configuration'
     end
   end
 end

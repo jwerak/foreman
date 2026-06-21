@@ -42,6 +42,9 @@ module Menu
             :url_hash => { :controller => 'api/v2/host_statuses', :action => 'index' }
           menu.item :fact_values,       :caption => N_('Facts')
           menu.item :audits,            :caption => N_('Audits')
+          menu.item :topology,
+            :caption => N_('Topology'),
+            :url => '/topology'
           menu.divider                  :caption => N_('Reports')
           menu.item :reports,           :caption => N_('Config Management'),
                     :url_hash => {:controller => '/config_reports', :action => 'index', :search => 'eventful = true'}
