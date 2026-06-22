@@ -1398,3 +1398,83 @@ path: `${config.indexPath}/:id(\\d+)/edit`
 The pattern `/:id(\\d+)` only matches when the URL segment consists entirely of digits.
 `/subnets/new` no longer matches, falling through to Rails' normal route handling which
 renders the `FormPage` component with create mode.
+
+---
+
+## Phase 13: Users Detail Page — Full Tab Parity
+
+**Date:** 2026-06-22
+
+### Problem
+
+The old Rails user edit form (`app/views/users/_form.html.erb`) has 9 tabs: User, Email
+Preferences, Locations, Organizations, Roles, SSH Keys, Personal Access Tokens, Registration
+Tokens, and UI Preferences. The SPA `DetailPage` only showed 2 hardcoded tabs (Details + Edit)
+with 10 basic fields. This left the SPA user page significantly stripped down vs the Rails UI.
+
+### Changes
+
+#### Track C: DetailPage Custom Tabs Extension (Generic)
+
+Extended the `DetailPage` component to support a `customTabs` prop — an array of tab
+descriptors with `eventKey`, `title`, `component`, `getProps`, and optional `isVisible`.
+This is a generic extension that benefits all resources, not just Users.
+
+**Files modified:**
+- `webpack/.../DetailPage/useDetailData.js` — Added `metadata` state, parses
+  `fieldsRes.data.metadata || {}` from the form_fields response
+- `webpack/.../DetailPage/index.js` — Added `customTabs` prop (default `[]`), switched tab
+  keys from numeric to string, filters custom tabs by `isVisible({ resourceId, resource, metadata })`,
+  renders visible custom tabs after Details and Edit
+- `webpack/.../routes/DetailPages/index.js` — Passes `customTabs={config.customTabs || []}`
+  to DetailPage in both detail and edit routes
+- `app/controllers/concerns/foreman/controller/form_fields_api.rb` — Added `metadata` to
+  JSON response: `render json: { fields: ..., metadata: @form_metadata || {} }`
+
+#### Track A: Extended UsersController Form Fields
+
+Added missing fields for all 9 tabs to `UsersController.set_form_fields`:
+
+**User tab additions:**
+- `disabled` (checkbox)
+
+**New tabs added:**
+- Email Preferences: `mail_enabled` (checkbox)
+- Locations (conditional on `show_location_tab?`): `location_ids` (checkboxGroup),
+  `default_location_id` (select)
+- Organizations (conditional on `show_organization_tab?`): `organization_ids` (checkboxGroup),
+  `default_organization_id` (select)
+- UI Preferences: `ui_compact_mode` (checkbox)
+
+Added `@form_metadata = { current_user_id: User.current.id }` for client-side
+`editing_self` detection.
+
+**File modified:** `app/controllers/users_controller.rb`
+
+#### Track B: Sub-Resource Custom Tabs
+
+**New component — SSH Keys** (`webpack/.../users/SshKeys/`):
+- `SshKeys.js` — Hook-based component (not Redux) with `userId` prop. Fetches
+  `GET /api/v2/users/:userId/ssh_keys`, renders PF6 Table with Name, Fingerprint,
+  Length, Created, Actions columns. Empty state with KeyIcon. Add/Delete CRUD operations.
+- `NewSshKeyModal.js` — PF6 Modal with Name (TextInput) + Public Key (TextArea) fields.
+  POSTs to API and refreshes list.
+- `index.js` — barrel export
+
+**Wired existing components:**
+- `PersonalAccessTokens` — existing Redux-based component, wired via `url` and `canCreate` props
+- `JwtTokens` — existing component, wired via `userId` prop, gated by
+  `isVisible: metadata.current_user_id === resourceId` (editing self only)
+
+**File modified:** `webpack/.../routes/DetailPages/resourceConfigs.js` — Added imports and
+`customTabs` array to the Users resource config.
+
+#### Tests
+
+- `useDetailData.test.js` — Added metadata parsing test (5 tests total)
+- `DetailPage.test.js` — Added 3 custom tab tests: renders, isVisible hides, metadata passthrough
+  (10 tests total)
+- `SshKeys.test.js` — **New**, 5 tests: empty state, table rendering, API endpoint, add button,
+  delete confirm modal
+
+**All tests pass. No regressions in existing test suites.**

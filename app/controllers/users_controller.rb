@@ -260,6 +260,8 @@ class UsersController < ApplicationController
       { name: 'firstname', label: _('First name'), tab: _('User') },
       { name: 'lastname', label: _('Last name'), tab: _('User') },
       { name: 'mail', label: _('Email'), type: 'email', required: true, tab: _('User') },
+      { name: 'disabled', label: _('Disabled'), type: 'checkbox', tab: _('User'),
+        checkboxLabel: _('Disabled') },
       { name: 'description', label: _('Description'), type: 'textarea', tab: _('User') },
       { name: 'locale', label: _('Language'), type: 'select', tab: _('User'),
         options: locale_options },
@@ -267,11 +269,40 @@ class UsersController < ApplicationController
         options: timezone_options },
       { name: 'auth_source_id', label: _('Authorized by'), type: 'select', tab: _('User'),
         options: auth_source_options },
+      { name: 'mail_enabled', label: _('Mail Enabled'), type: 'checkbox', tab: _('Email Preferences'),
+        checkboxLabel: _('Mail Enabled') },
       { name: 'admin', label: _('Admin'), type: 'checkbox', tab: _('Roles'),
         checkboxLabel: _('Administrator') },
       { name: 'role_ids', label: _('Roles'), type: 'checkboxGroup', tab: _('Roles'),
         options: role_options, loadKey: 'roles' },
+      { name: 'ui_compact_mode', label: _('Compact table mode'), type: 'checkbox', tab: _('UI Preferences'),
+        checkboxLabel: _('Compact table mode'),
+        labelHelp: _('Will show table rows with less space between items') },
     ]
+
+    if helpers.show_location_tab?
+      location_options = Location.authorized(:view_locations).map { |l| { value: l.id, label: l.title } }
+      @form_fields += [
+        { name: 'location_ids', label: _('Locations'), type: 'checkboxGroup', tab: _('Locations'),
+          options: location_options, loadKey: 'locations' },
+        { name: 'default_location_id', label: _('Default on login'), type: 'select', tab: _('Locations'),
+          options: [{ value: '', label: '' }] + location_options },
+      ]
+    end
+
+    if helpers.show_organization_tab?
+      org_options = Organization.authorized(:view_organizations).map { |o| { value: o.id, label: o.title } }
+      @form_fields += [
+        { name: 'organization_ids', label: _('Organizations'), type: 'checkboxGroup', tab: _('Organizations'),
+          options: org_options, loadKey: 'organizations' },
+        { name: 'default_organization_id', label: _('Default on login'), type: 'select', tab: _('Organizations'),
+          options: [{ value: '', label: '' }] + org_options },
+      ]
+    end
+
+    @form_metadata = {
+      current_user_id: User.current.id,
+    }
   end
 
   def verify_active_session

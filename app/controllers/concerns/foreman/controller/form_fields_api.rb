@@ -9,6 +9,6 @@ module Foreman::Controller::FormFieldsApi
       instance_variable_set(ivar, klass.new) if klass
     end
     set_form_fields
-    render json: { fields: @form_fields || [] }
+    render json: { fields: @form_fields || [], metadata: @form_metadata || {} }
   end
 end

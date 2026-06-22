@@ -4,6 +4,7 @@ import API from '../../../redux/API/API';
 const useDetailData = ({ apiUrl, resourceId, fieldsUrl }) => {
   const [resource, setResource] = useState(null);
   const [fields, setFields] = useState([]);
+  const [metadata, setMetadata] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,6 +24,7 @@ const useDetailData = ({ apiUrl, resourceId, fieldsUrl }) => {
         if (!cancelled) {
           setResource(resourceRes.data);
           setFields(fieldsRes.data.fields || []);
+          setMetadata(fieldsRes.data.metadata || {});
         }
       } catch (err) {
         if (!cancelled) {
@@ -45,7 +47,7 @@ const useDetailData = ({ apiUrl, resourceId, fieldsUrl }) => {
     };
   }, [apiUrl, resourceId, fieldsUrl]);
 
-  return { resource, fields, isLoading, error };
+  return { resource, fields, metadata, isLoading, error };
 };
 
 export default useDetailData;

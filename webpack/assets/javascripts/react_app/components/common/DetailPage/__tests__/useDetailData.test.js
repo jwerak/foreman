@@ -32,6 +32,7 @@ describe('useDetailData', () => {
     expect(result.current.isLoading).toBe(true);
     expect(result.current.resource).toBeNull();
     expect(result.current.fields).toEqual([]);
+    expect(result.current.metadata).toEqual({});
     expect(result.current.error).toBeNull();
   });
 
@@ -54,6 +55,7 @@ describe('useDetailData', () => {
 
     expect(result.current.resource).toEqual(mockResource);
     expect(result.current.fields).toEqual(mockFields);
+    expect(result.current.metadata).toEqual({});
     expect(result.current.error).toBeNull();
 
     expect(API.get).toHaveBeenCalledWith('/api/v2/domains/1');
@@ -91,5 +93,28 @@ describe('useDetailData', () => {
     });
 
     expect(result.current.fields).toEqual([]);
+    expect(result.current.metadata).toEqual({});
+  });
+
+  test('returns metadata from form_fields response', async () => {
+    const mockResource = { id: 1, name: 'admin' };
+    const mockMetadata = { current_user_id: 1 };
+
+    API.get
+      .mockResolvedValueOnce({ data: mockResource })
+      .mockResolvedValueOnce({
+        data: {
+          fields: [{ name: 'login', label: 'Login' }],
+          metadata: mockMetadata,
+        },
+      });
+
+    const { result } = renderHook(() => useDetailData(defaultArgs));
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(result.current.metadata).toEqual(mockMetadata);
   });
 });

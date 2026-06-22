@@ -1,4 +1,7 @@
 import { translate as __ } from '../../common/I18n';
+import SshKeys from '../../components/users/SshKeys';
+import PersonalAccessTokens from '../../components/users/PersonalAccessTokens';
+import JwtTokens from '../../components/users/JwtTokens/JwtTokens';
 
 const resourceConfigs = [
   {
@@ -117,6 +120,32 @@ const resourceConfigs = [
     title: __('Users'),
     nameField: 'login',
     fieldsUrl: '/users/form_fields',
+    customTabs: [
+      {
+        eventKey: 'ssh_keys',
+        title: __('SSH Keys'),
+        component: SshKeys,
+        getProps: ({ resourceId }) => ({ userId: resourceId }),
+      },
+      {
+        eventKey: 'personal_access_tokens',
+        title: __('Personal Access Tokens'),
+        component: PersonalAccessTokens,
+        getProps: ({ resourceId, apiUrl }) => ({
+          url: `${apiUrl}/${resourceId}/personal_access_tokens`,
+          canCreate: true,
+        }),
+      },
+      {
+        eventKey: 'registration_tokens',
+        title: __('Registration Tokens'),
+        component: JwtTokens,
+        getProps: ({ resourceId }) => ({ userId: resourceId }),
+        isVisible: ({ resourceId, metadata }) =>
+          metadata.current_user_id &&
+          String(resourceId) === String(metadata.current_user_id),
+      },
+    ],
   },
   {
     indexPath: '/usergroups',

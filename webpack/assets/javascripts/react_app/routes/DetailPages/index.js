@@ -19,6 +19,7 @@ const detailRoute = config => ({
         title={config.title}
         resourceName={config.resourceName}
         nameField={config.nameField}
+        customTabs={config.customTabs || []}
         initialTab="details"
       />
     </>
@@ -41,6 +42,7 @@ const editRoute = config => ({
         title={config.title}
         resourceName={config.resourceName}
         nameField={config.nameField}
+        customTabs={config.customTabs || []}
         initialTab="edit"
       />
     </>

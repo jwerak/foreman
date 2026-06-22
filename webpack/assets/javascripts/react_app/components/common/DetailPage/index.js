@@ -19,8 +19,8 @@ import useDetailData from './useDetailData';
 import DetailsTabContent from './DetailsTabContent';
 import FormPage from '../FormPage';
 
-const TAB_DETAILS = 0;
-const TAB_EDIT = 1;
+const TAB_DETAILS = 'details';
+const TAB_EDIT = 'edit';
 
 const DetailPage = ({
   resourceId,
@@ -31,13 +31,14 @@ const DetailPage = ({
   resourceName,
   nameField,
   initialTab,
+  customTabs,
 }) => {
   const history = useHistory();
   const [activeTab, setActiveTab] = useState(
-    initialTab === 'edit' ? TAB_EDIT : TAB_DETAILS
+    initialTab === 'edit' ? TAB_EDIT : initialTab || TAB_DETAILS
   );
 
-  const { resource, fields, isLoading, error } = useDetailData({
+  const { resource, fields, metadata, isLoading, error } = useDetailData({
     apiUrl,
     resourceId,
     fieldsUrl,
@@ -62,6 +63,11 @@ const DetailPage = ({
   }
 
   const displayName = resource?.[nameField] || `${resourceName} ${resourceId}`;
+  const tabContext = { resourceId, resource, apiUrl, metadata };
+
+  const visibleCustomTabs = customTabs.filter(
+    tab => !tab.isVisible || tab.isVisible(tabContext)
+  );
 
   return (
     <>
@@ -109,6 +115,17 @@ const DetailPage = ({
               />
             </div>
           </Tab>
+          {visibleCustomTabs.map(tab => (
+            <Tab
+              key={tab.eventKey}
+              eventKey={tab.eventKey}
+              title={<TabTitleText>{tab.title}</TabTitleText>}
+            >
+              <div className="pf-v6-u-pt-md">
+                <tab.component {...tab.getProps(tabContext)} />
+              </div>
+            </Tab>
+          ))}
         </Tabs>
       </PageSection>
     </>
@@ -124,12 +141,22 @@ DetailPage.propTypes = {
   title: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,
   nameField: PropTypes.string,
-  initialTab: PropTypes.oneOf(['details', 'edit']),
+  initialTab: PropTypes.string,
+  customTabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      eventKey: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      component: PropTypes.elementType.isRequired,
+      getProps: PropTypes.func.isRequired,
+      isVisible: PropTypes.func,
+    })
+  ),
 };
 
 DetailPage.defaultProps = {
   nameField: 'name',
   initialTab: 'details',
+  customTabs: [],
 };
 
 export default DetailPage;

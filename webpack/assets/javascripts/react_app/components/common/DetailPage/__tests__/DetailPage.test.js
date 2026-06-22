@@ -138,4 +138,99 @@ describe('DetailPage', () => {
     const indexLink = screen.getByRole('link', { name: 'Domains' });
     expect(indexLink).toHaveAttribute('href', '/domains');
   });
+
+  describe('custom tabs', () => {
+    const MockTabComponent = ({ message }) => <div>{message}</div>;
+    MockTabComponent.propTypes = { message: require('prop-types').string };
+    MockTabComponent.defaultProps = { message: '' };
+
+    const customTabs = [
+      {
+        eventKey: 'custom_tab',
+        title: 'Custom Tab',
+        component: MockTabComponent,
+        getProps: ({ resourceId }) => ({ message: `Resource ${resourceId}` }),
+      },
+    ];
+
+    test('renders custom tabs when provided', async () => {
+      API.get
+        .mockResolvedValueOnce({ data: mockResource })
+        .mockResolvedValueOnce({ data: { fields: mockFields } });
+
+      renderWithRouter(
+        <DetailPage {...defaultProps} customTabs={customTabs} />
+      );
+
+      await waitFor(() => {
+        expect(screen.getByRole('tab', { name: 'Custom Tab' })).toBeInTheDocument();
+      });
+
+      fireEvent.click(screen.getByRole('tab', { name: 'Custom Tab' }));
+
+      await waitFor(() => {
+        expect(screen.getByText('Resource 1')).toBeInTheDocument();
+      });
+    });
+
+    test('hides custom tab when isVisible returns false', async () => {
+      const hiddenTabs = [
+        {
+          eventKey: 'hidden_tab',
+          title: 'Hidden Tab',
+          component: MockTabComponent,
+          getProps: () => ({ message: 'hidden' }),
+          isVisible: () => false,
+        },
+      ];
+
+      API.get
+        .mockResolvedValueOnce({ data: mockResource })
+        .mockResolvedValueOnce({ data: { fields: mockFields } });
+
+      renderWithRouter(
+        <DetailPage {...defaultProps} customTabs={hiddenTabs} />
+      );
+
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { name: 'example.com' })).toBeInTheDocument();
+      });
+
+      expect(screen.queryByRole('tab', { name: 'Hidden Tab' })).not.toBeInTheDocument();
+    });
+
+    test('passes metadata to isVisible and getProps', async () => {
+      const mockMetadata = { current_user_id: 42 };
+      const isVisible = jest.fn(() => true);
+      const getProps = jest.fn(() => ({ message: 'with metadata' }));
+
+      const tabsWithMeta = [
+        {
+          eventKey: 'meta_tab',
+          title: 'Meta Tab',
+          component: MockTabComponent,
+          getProps,
+          isVisible,
+        },
+      ];
+
+      API.get
+        .mockResolvedValueOnce({ data: mockResource })
+        .mockResolvedValueOnce({
+          data: { fields: mockFields, metadata: mockMetadata },
+        });
+
+      renderWithRouter(
+        <DetailPage {...defaultProps} customTabs={tabsWithMeta} />
+      );
+
+      await waitFor(() => {
+        expect(screen.getByRole('tab', { name: 'Meta Tab' })).toBeInTheDocument();
+      });
+
+      expect(isVisible).toHaveBeenCalledWith(
+        expect.objectContaining({ metadata: mockMetadata })
+      );
+    });
+  });
 });
