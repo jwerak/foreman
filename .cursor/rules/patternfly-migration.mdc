@@ -1,0 +1,64 @@
+---
+description: PatternFly 6 migration rules for Foreman — enforces PF6 coding standards and migration best practices
+globs: "**/*.{js,jsx,tsx,scss,css}"
+alwaysApply: true
+---
+
+# PatternFly 6 Migration Rules for Foreman
+
+## Documentation
+
+Always reference these files when generating or editing PatternFly code:
+- `AGENT.md` — project migration guide, architecture, and coding standards
+- `.claude/instructions/pf6-migration-patterns.md` — before/after code recipes for all migration types
+- `.claude/instructions/pf6-testing-recipes.md` — PF6-specific test patterns
+- `migration-toolkit/checklists/` — phase-by-phase migration checklists
+
+## Import Rules
+
+- NEVER import from `@patternfly/react-core/deprecated` — use composable equivalents
+- NEVER import from `@patternfly/react-core/next` — use standard imports
+- NEVER import from `@patternfly/react-table/deprecated` — use composable Table
+- NEVER import from `patternfly-react` or `patternfly` (PF3 legacy)
+- ALWAYS use `@patternfly/react-charts/victory` for chart components
+- ALWAYS use `@patternfly/react-core` for all PF components
+- Use `import { translate as __ } from '../../common/I18n'` for all user-visible strings
+
+## CSS Rules
+
+- Use `--pf-t--global--*` semantic design tokens for colors, spacing, fonts
+- Use `--pf-v6-c-*` for component-level CSS variable overrides
+- NEVER use `pf-v5-` prefixed CSS class names
+- NEVER use `--pf-v5-*` CSS variables
+- NEVER hardcode hex/rgb colors — use PF6 design tokens for dark mode compatibility
+- Co-locate SCSS with components: `ComponentName/ComponentName.scss`
+
+## Component Rules
+
+- ALWAYS use functional React components with hooks
+- Use `useSelector` and `useDispatch` for Redux state (NEVER `connect()` HOC)
+- Use `useState`, `useEffect`, `useMemo`, `useCallback` for local state
+- Props must be destructured in function signature
+- Use PF6 composable patterns:
+  - Modal: `<Modal>` + `<ModalHeader>` + `<ModalBody>` + `<ModalFooter>`
+  - Dropdown: `<Dropdown>` + `<MenuToggle>` + `<DropdownList>` + `<DropdownItem>`
+  - Select: `<Select>` + `<MenuToggle>` + `<SelectList>` + `<SelectOption>`
+  - Table: `<Table>` + `<Thead>` + `<Tbody>` + `<Tr>` + `<Th>` + `<Td>`
+  - EmptyState: headingText/icon as props, not child components
+
+## Testing Rules
+
+- Use React Testing Library (`render`, `screen`, `waitFor`) — NEVER Enzyme
+- Query by role first: `screen.getByRole('button', { name: '...' })`
+- Use `@testing-library/user-event` (not `fireEvent`) for interactions
+- Wrap router-dependent components in `<MemoryRouter>`
+- PF6 buttons wrap text in span — use `getByRole` not `getByText` for buttons
+- PF6 dropdown menus only render when open — click toggle before querying items
+
+## Foreman-Specific Rules
+
+- One directory per component: `ComponentName/index.js` + `.scss` + `__tests__/`
+- Index pages use `<IndexPage columns={[...]} />` shared component
+- Detail pages registered in `resourceConfigs.js`
+- SPA routes registered in `routes/IndexPages/index.js`
+- Plugin extensibility via Fill/Slot pattern

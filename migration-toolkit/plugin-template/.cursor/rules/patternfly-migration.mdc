@@ -1,0 +1,50 @@
+---
+description: PatternFly 6 migration rules for Foreman plugins — enforces PF6 patterns in all React code
+globs: "**/*.{js,jsx,tsx,scss,css}"
+alwaysApply: true
+---
+
+# PatternFly 6 Migration Rules for Foreman Plugin
+
+## Documentation
+
+Always reference these files when generating or editing PatternFly code:
+- `AGENT.md` — project-specific migration guide
+- `.claude/instructions/pf6-migration-patterns.md` — before/after code recipes
+- `.claude/instructions/pf6-testing-recipes.md` — PF6 test patterns
+
+## Import Rules
+
+- NEVER import from `@patternfly/react-core/deprecated`
+- NEVER import from `@patternfly/react-core/next`
+- NEVER import from `@patternfly/react-table/deprecated`
+- NEVER import from `patternfly-react` or `patternfly` (PF3)
+- ALWAYS use `@patternfly/react-charts/victory` for chart components
+- ALWAYS use `@patternfly/react-core` for all PF components
+
+## CSS Rules
+
+- Use `--pf-t--global--*` semantic design tokens for colors, spacing, fonts
+- Use `--pf-v6-c-*` for component-level variable overrides
+- NEVER use `pf-v5-` prefixed class names
+- NEVER hardcode hex/rgb colors — use PF6 design tokens for dark mode compat
+
+## Component Rules
+
+- ALWAYS use functional components with hooks
+- Use `useSelector` and `useDispatch` for Redux (NEVER `connect()`)
+- Use `translate as __` from `foremanReact/common/I18n` for all user-visible strings
+- Use PF6 composable patterns: Modal(Header+Body+Footer), Dropdown(MenuToggle+DropdownList)
+
+## Testing Rules
+
+- Use React Testing Library (`render`, `screen`, `waitFor`) — NEVER Enzyme
+- Query by role first: `screen.getByRole('button', { name: '...' })`
+- Use `@testing-library/user-event` for interactions (not `fireEvent`)
+- Wrap router-dependent components in `<MemoryRouter>`
+
+## Foreman Plugin Rules
+
+- Shared deps (React, PF, Redux) come from core via Module Federation — do NOT bundle separately
+- Import core utils via `foremanReact/` alias (e.g., `foremanReact/common/I18n`)
+- Fill components must render PF6 markup to match core UI
