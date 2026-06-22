@@ -279,27 +279,27 @@ graph TB
 
     subgraph "SPA Pages"
         subgraph "IndexPage Routes (22)"
-            IDX1[/domains]
-            IDX2[/architectures]
-            IDX3[/hostgroups]
-            IDX4[/users]
-            IDX5[/roles]
-            IDX6[... 17 more]
+            IDX1["/domains"]
+            IDX2["/architectures"]
+            IDX3["/hostgroups"]
+            IDX4["/users"]
+            IDX5["/roles"]
+            IDX6["... 17 more"]
         end
 
         subgraph "DetailPage Routes (21)"
-            DET1[/domains/:id]
-            DET2[/architectures/:id]
-            DET3[/users/:id]
-            DET4[/roles/:id]
-            DET5[... 17 more]
+            DET1["/domains/:id"]
+            DET2["/architectures/:id"]
+            DET3["/users/:id"]
+            DET4["/roles/:id"]
+            DET5["... 17 more"]
         end
 
         subgraph "Special SPA Pages"
-            DASH[/dashboard]
-            TOPO[/topology]
-            REG[/registration_commands]
-            HOST[/new/hosts]
+            DASH["/dashboard"]
+            TOPO["/topology"]
+            REG["/registration_commands"]
+            HOST["/new/hosts"]
         end
     end
 
