@@ -7,10 +7,10 @@ exports[`ExternalLogout rendering renders ExternalLogout 1`] = `
     style="background-image: url(/some-background);"
   >
     <div
-      class="pf-v6-l-grid"
+      class="grid"
     >
       <div
-        class="pf-v6-l-grid__item pf-m-12-col pf-m-8-col-on-sm pf-m-offset-2-col-on-sm pf-m-6-col-on-md pf-m-offset-3-col-on-md"
+        class="gridItem"
       >
         <header
           class="login-pf-page-header"
@@ -36,7 +36,7 @@ exports[`ExternalLogout rendering renders ExternalLogout 1`] = `
           </div>
         </header>
         <a
-          class="pf-v6-c-button pf-m-primary pf-m-block pf-m-display-lg login-pf-submit-button"
+          class="button login-pf-submit-button"
           data-ouia-component-id="login-pf-submit-button"
           data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"

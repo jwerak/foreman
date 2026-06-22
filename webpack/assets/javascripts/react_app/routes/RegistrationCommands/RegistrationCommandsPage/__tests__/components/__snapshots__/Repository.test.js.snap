@@ -3,24 +3,24 @@
 exports[`RegistrationCommandsPage fields - Repository renders 1`] = `
 <div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
         for="reg_repo"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Repositories
         </span>
       </label>
         
       <span
-        class="pf-v6-c-form__group-label-help"
+        class="formGroupLabelHelp"
       >
         <div
           style="display: contents;"
@@ -29,10 +29,10 @@ exports[`RegistrationCommandsPage fields - Repository renders 1`] = `
             class="pf-v6-c-form__group-label-help"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"
@@ -54,23 +54,23 @@ exports[`RegistrationCommandsPage fields - Repository renders 1`] = `
       </span>
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <button
-        class="pf-v6-c-button pf-m-link"
+        class="button"
         data-ouia-component-id="host_reg_add_more_repositories"
         data-ouia-component-type="PF6/Button"
         data-ouia-safe="true"
         type="button"
       >
         <span
-          class="pf-v6-c-button__icon pf-m-start"
+          class="buttonIcon"
         >
           <span
-            class="pf-v6-c-icon"
+            class="icon"
           >
             <span
-              class="pf-v6-c-icon__content"
+              class="iconContent"
             >
               <svg
                 aria-hidden="true"

@@ -56,12 +56,12 @@ span.input-group-btn .hidden-xs {
 }
 
 .children_fields.lookup_values > th {
-  background-color: white;
+  background-color: var(--pf-t--global--background--color--primary--default);
 }
 
 span.btn a {
   text-decoration: none;
-  color: #333;
+  color: var(--pf-t--global--text--color--link--default);
 }
 
 a {
@@ -72,12 +72,12 @@ a {
 .help-inline {
   margin: 0;
   display: inline-block;
-  color: #737373;
+  color: var(--pf-t--global--text--color--subtle);
 }
 
 .well {
   padding: 19px 19px 19px 36px;
-  background-color: white;
+  background-color: var(--pf-t--global--background--color--primary--default);
 }
 
 
@@ -88,8 +88,8 @@ a {
 }
 
 .navbar.navbar-form {
-  background-color: #f8f8f8;
-  border: 1px solid #e7e7e7;
+  background-color: var(--pf-t--global--background--color--secondary--default);
+  border: 1px solid var(--pf-t--global--border--color--default);
 }
 
 .nav.nav-tabs {
@@ -169,7 +169,7 @@ a {
 }
 
 .nav.nav-pills.nav-stacked .btn.btn-success:hover {
-  background-color: #47a447;
+  background-color: var(--pf-t--global--icon--color--status--success--default);
 }
 
 .nav.nav-pills.nav-stacked {
@@ -192,7 +192,7 @@ a {
 }
 
 .has-error {
-  color: #a94442;
+  color: var(--pf-t--global--icon--color--status--danger--default);
 }
 
 body.modal-open {
@@ -204,7 +204,7 @@ body.modal-open {
 }
 
 .input-addon {
-  color: black;
+  color: var(--pf-t--global--text--color--regular);
 }
 
 legend {
@@ -224,7 +224,7 @@ form .pficon-info {
 }
 
 form .fa-info-circle {
-  color: black;
+  color: var(--pf-t--global--text--color--regular);
 }
 
 .fa-times {
@@ -255,9 +255,8 @@ a.btn-info span {
   padding-bottom: 4px;
 }
 
-// Color origin: pf-orange-400
 .pficon-ok.warn::before {
-  color: #ec7a08;
+  color: var(--pf-t--global--icon--color--status--warning--default);
 }
 
 
@@ -273,7 +272,7 @@ span.btn-action a {
 }
 
 span.btn-action.btn-primary a {
-  color: #fff;
+  color: var(--pf-t--global--text--color--on-brand--default);
 }
 
 .pf-v6-c-menu ul {

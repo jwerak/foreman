@@ -14,7 +14,7 @@ exports[`common Form should render tooltip help 1`] = `
         style="display: contents;"
       >
         <button
-          class="pf-v6-c-button pf-m-plain"
+          class="button"
           data-ouia-component-id="OUIA-Generated-Button-plain-1"
           data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
@@ -24,10 +24,10 @@ exports[`common Form should render tooltip help 1`] = `
             class="pf-v6-c-button__text"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"

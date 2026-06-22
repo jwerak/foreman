@@ -3,24 +3,24 @@
 exports[`RegistrationCommandsPage fields - TokenLifeTime renders 1`] = `
 <div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
         for="reg_token_life_time_input"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Token life time
         </span>
       </label>
         
       <span
-        class="pf-v6-c-form__group-label-help"
+        class="formGroupLabelHelp"
       >
         <div
           style="display: contents;"
@@ -29,10 +29,10 @@ exports[`RegistrationCommandsPage fields - TokenLifeTime renders 1`] = `
             class="pf-v6-c-form__group-label-help"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"
@@ -54,16 +54,16 @@ exports[`RegistrationCommandsPage fields - TokenLifeTime renders 1`] = `
       </span>
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <div
-        class="pf-v6-c-input-group"
+        class="inputGroup"
       >
         <div
-          class="pf-v6-c-input-group__item pf-m-fill"
+          class="inputGroupItem"
         >
           <span
-            class="pf-v6-c-form-control"
+            class="formControl"
           >
             <input
               aria-invalid="false"
@@ -79,26 +79,26 @@ exports[`RegistrationCommandsPage fields - TokenLifeTime renders 1`] = `
           </span>
         </div>
         <div
-          class="pf-v6-c-input-group__item pf-m-box"
+          class="inputGroupItem"
         >
           <span
-            class="pf-v6-c-input-group__text"
+            class="inputGroupText"
           >
             hours
           </span>
         </div>
         <div
-          class="pf-v6-c-input-group__item pf-m-box"
+          class="inputGroupItem"
         >
           <span
-            class="pf-v6-c-input-group__text"
+            class="inputGroupText"
           >
             <div
-              class="pf-v6-c-check"
+              class="check"
             >
               <input
                 aria-invalid="false"
-                class="pf-v6-c-check__input"
+                class="checkInput"
                 data-ouia-component-id="reg_unlimited_token_life_time"
                 data-ouia-component-type="PF6/Checkbox"
                 data-ouia-safe="true"
@@ -106,7 +106,7 @@ exports[`RegistrationCommandsPage fields - TokenLifeTime renders 1`] = `
                 type="checkbox"
               />
               <label
-                class="pf-v6-c-check__label"
+                class="checkLabel"
                 for="reg_unlimited_token_life_time"
               >
                 unlimited

@@ -9,10 +9,10 @@ exports[`ImpersonateIcon should render 1`] = `
       class="nav-item-iconic"
     >
       <span
-        class="pf-v6-c-icon blink-image"
+        class="icon blink-image"
       >
         <span
-          class="pf-v6-c-icon__content"
+          class="iconContent"
         >
           <svg
             aria-hidden="true"

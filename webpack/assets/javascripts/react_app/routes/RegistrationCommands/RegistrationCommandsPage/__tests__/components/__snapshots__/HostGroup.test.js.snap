@@ -3,17 +3,17 @@
 exports[`RegistrationCommandsPage fields - HostGroup renders 1`] = `
 <div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
         for="reg_host_group"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Host group
         </span>
@@ -21,10 +21,10 @@ exports[`RegistrationCommandsPage fields - HostGroup renders 1`] = `
         
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <span
-        class="pf-v6-c-form-control without_select2"
+        class="formControl without_select2"
       >
         <select
           aria-invalid="false"
@@ -45,10 +45,10 @@ exports[`RegistrationCommandsPage fields - HostGroup renders 1`] = `
           </option>
         </select>
         <span
-          class="pf-v6-c-form-control__utilities"
+          class="formControlUtilities"
         >
           <span
-            class="pf-v6-c-form-control__toggle-icon"
+            class="formControlToggleIcon"
           >
             <svg
               aria-hidden="true"

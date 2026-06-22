@@ -6,28 +6,28 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
     id="login-page"
   >
     <div
-      class="pf-v6-c-login login-pf"
+      class="login login-pf"
     >
       <div
-        class="pf-v6-c-login__container"
+        class="loginContainer"
       >
         <header
-          class="pf-v6-c-login__header"
+          class="loginHeader"
         >
           <img
             alt=""
-            class="pf-v6-c-brand"
+            class="brand"
             src="/some-logo"
           />
         </header>
         <main
-          class="pf-v6-c-login__main"
+          class="loginMain"
         >
           <div
-            class="pf-v6-c-login__main-header"
+            class="loginMainHeader"
           >
             <h2
-              class="pf-v6-c-title pf-m-3xl"
+              class="title"
               data-ouia-component-id="OUIA-Generated-Title-1"
               data-ouia-component-type="PF6/Title"
               data-ouia-safe="true"
@@ -35,32 +35,32 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
               Welcome
             </h2>
             <p
-              class="pf-v6-c-login__main-header-desc"
+              class="loginMainHeaderDesc"
             >
               Log in to your account
             </p>
           </div>
           <div
-            class="pf-v6-c-login__main-body"
+            class="loginMainBody"
           >
             <form
               action="/users/login"
-              class="pf-v6-c-form"
+              class="form"
               method="post"
               novalidate=""
             >
               <div
-                class="pf-v6-c-form__alert"
+                class="form__alert"
               >
                 <div
                   aria-live="polite"
-                  class="pf-v6-c-alert pf-m-inline pf-m-danger"
+                  class="alert"
                   data-ouia-component-id="login-alert"
                   data-ouia-component-type="PF6/Alert"
                   data-ouia-safe="true"
                 >
                   <div
-                    class="pf-v6-c-alert__icon"
+                    class="alertIcon"
                   >
                     <svg
                       aria-hidden="true"
@@ -77,7 +77,7 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
                     </svg>
                   </div>
                   <h4
-                    class="pf-v6-c-alert__title"
+                    class="alertTitle"
                   >
                     <span
                       class="pf-v6-screen-reader"
@@ -89,13 +89,13 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
                 </div>
               </div>
               <div
-                class="pf-v6-c-form__group"
+                class="formGroup"
               >
                 <div
-                  class="pf-v6-c-form__group-control"
+                  class="formGroupControl"
                 >
                   <span
-                    class="pf-v6-c-form-control"
+                    class="formControl"
                   >
                     <input
                       aria-invalid="false"
@@ -114,13 +114,13 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
                 </div>
               </div>
               <div
-                class="pf-v6-c-form__group"
+                class="formGroup"
               >
                 <div
-                  class="pf-v6-c-form__group-control"
+                  class="formGroupControl"
                 >
                   <span
-                    class="pf-v6-c-form-control"
+                    class="formControl"
                   >
                     <input
                       aria-invalid="false"
@@ -144,16 +144,16 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
                 value="some token"
               />
               <div
-                class="pf-v6-c-form__group pf-m-action"
+                class="formGroup"
               >
                 <div
-                  class="pf-v6-c-form__group-control"
+                  class="formGroupControl"
                 >
                   <div
-                    class="pf-v6-c-form__actions"
+                    class="formActions"
                   >
                     <button
-                      class="pf-v6-c-button pf-m-primary pf-m-block pf-m-progress"
+                      class="button"
                       data-ouia-component-id="login-submit"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -173,13 +173,13 @@ exports[`LoginPage rendering renders LoginPage 1`] = `
           </div>
         </main>
         <footer
-          class="pf-v6-c-login__footer"
+          class="loginFooter"
         >
           <p>
             some caption
           </p>
           <ul
-            class="pf-v6-c-list"
+            class="list"
           />
         </footer>
       </div>

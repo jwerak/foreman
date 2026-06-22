@@ -7,21 +7,21 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
   >
     <nav
       aria-label="Breadcrumb"
-      class="pf-v6-c-breadcrumb breadcrumbs-list"
+      class="breadcrumb breadcrumbs-list"
       data-ouia-component-id="breadcrumbs-list"
       data-ouia-component-type="PF6/Breadcrumb"
       data-ouia-safe="true"
     >
       <ol
-        class="pf-v6-c-breadcrumb__list"
+        class="breadcrumbList"
         role="list"
       >
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item"
+          class="breadcrumbItem breadcrumb-item"
           item="[object Object]"
         >
           <a
-            class="pf-v6-c-breadcrumb__link"
+            class="breadcrumbLink"
             href="/some-url"
           >
              
@@ -29,11 +29,11 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
           </a>
         </li>
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item"
+          class="breadcrumbItem breadcrumb-item"
           item="[object Object]"
         >
           <span
-            class="pf-v6-c-breadcrumb__item-divider"
+            class="breadcrumbItemDivider"
           >
             <svg
               aria-hidden="true"
@@ -53,11 +53,11 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
           child with onClick
         </li>
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item active"
+          class="breadcrumbItem breadcrumb-item active"
           item="[object Object]"
         >
           <span
-            class="pf-v6-c-breadcrumb__item-divider"
+            class="breadcrumbItemDivider"
           >
             <svg
               aria-hidden="true"
@@ -75,11 +75,11 @@ exports[`BreadcrumbBar rendering renders breadcrumb-bar 1`] = `
           </span>
            
           <span
-            class="pf-v6-c-truncate"
+            class="truncate"
             tabindex="0"
           >
             <span
-              class="pf-v6-c-truncate__start"
+              class="truncateStart"
             >
               active child
             </span>
@@ -101,21 +101,21 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
   >
     <nav
       aria-label="Breadcrumb"
-      class="pf-v6-c-breadcrumb breadcrumbs-list"
+      class="breadcrumb breadcrumbs-list"
       data-ouia-component-id="breadcrumbs-list"
       data-ouia-component-type="PF6/Breadcrumb"
       data-ouia-safe="true"
     >
       <ol
-        class="pf-v6-c-breadcrumb__list"
+        class="breadcrumbList"
         role="list"
       >
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item"
+          class="breadcrumbItem breadcrumb-item"
           item="[object Object]"
         >
           <a
-            class="pf-v6-c-breadcrumb__link"
+            class="breadcrumbLink"
             href="/some-url"
           >
              
@@ -123,11 +123,11 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
           </a>
         </li>
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item"
+          class="breadcrumbItem breadcrumb-item"
           item="[object Object]"
         >
           <span
-            class="pf-v6-c-breadcrumb__item-divider"
+            class="breadcrumbItemDivider"
           >
             <svg
               aria-hidden="true"
@@ -147,11 +147,11 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
           child with onClick
         </li>
         <li
-          class="pf-v6-c-breadcrumb__item breadcrumb-item active"
+          class="breadcrumbItem breadcrumb-item active"
           item="[object Object]"
         >
           <span
-            class="pf-v6-c-breadcrumb__item-divider"
+            class="breadcrumbItemDivider"
           >
             <svg
               aria-hidden="true"
@@ -169,11 +169,11 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
           </span>
            
           <span
-            class="pf-v6-c-truncate"
+            class="truncate"
             tabindex="0"
           >
             <span
-              class="pf-v6-c-truncate__start"
+              class="truncateStart"
             >
               active child
             </span>
@@ -186,20 +186,20 @@ exports[`BreadcrumbBar rendering renders switchable breadcrumb-bar 1`] = `
             >
               <button
                 aria-label="open breadcrumb switcher"
-                class="pf-v6-c-button pf-m-plain"
+                class="button"
                 data-ouia-component-id="breadcrumb-button"
                 data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 type="button"
               >
                 <span
-                  class="pf-v6-c-button__icon"
+                  class="buttonIcon"
                 >
                   <span
-                    class="pf-v6-c-icon"
+                    class="icon"
                   >
                     <span
-                      class="pf-v6-c-icon__content"
+                      class="iconContent"
                     >
                       <svg
                         aria-hidden="true"

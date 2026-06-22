@@ -3,21 +3,21 @@
 exports[`ShowTaxonomyInline render organizations 1`] = `
 <div>
   <div
-    class="pf-v6-l-grid"
+    class="grid"
   >
     <div
-      class="pf-v6-l-grid__item pf-m-3-col"
+      class="gridItem"
     >
       <span>
         Affected Organizations
       </span>
     </div>
     <div
-      class="pf-v6-l-grid__item pf-m-9-col"
+      class="gridItem"
     >
       <strong>
         <a
-          class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+          class="button apply-comma "
           data-ouia-component-id="taxonomy-inline-btn"
           data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
@@ -31,7 +31,7 @@ exports[`ShowTaxonomyInline render organizations 1`] = `
         </a>
         <a
           aria-disabled="true"
-          class="pf-v6-c-button pf-m-link pf-m-disabled pf-m-inline apply-comma disabled"
+          class="button apply-comma disabled"
           data-ouia-component-id="taxonomy-inline-btn"
           data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"

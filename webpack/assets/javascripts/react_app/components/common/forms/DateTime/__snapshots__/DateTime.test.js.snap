@@ -20,13 +20,13 @@ exports[`DateTime rendering renders Report Date input 1`] = `
           style="display: contents;"
         >
           <div
-            class="pf-v6-c-input-group"
+            class="inputGroup"
           >
             <div
-              class="pf-v6-c-input-group__item pf-v6-c-date-picker__input pf-v6-c-date-picker "
+              class="inputGroupItem pf-v6-c-date-picker__input pf-v6-c-date-picker "
             >
               <span
-                class="pf-v6-c-form-control  pf-v6-c-form-control"
+                class="formControl  pf-v6-c-form-control"
               >
                 <input
                   aria-invalid="false"
@@ -44,18 +44,18 @@ exports[`DateTime rendering renders Report Date input 1`] = `
               </span>
             </div>
             <div
-              class="pf-v6-c-input-group__item date-picker-input-item"
+              class="inputGroupItem date-picker-input-item"
             >
               <button
                 aria-label="Toggle date picker"
-                class="pf-v6-c-button pf-m-control"
+                class="button"
                 data-ouia-component-id="toggle-calendar-button"
                 data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 type="button"
               >
                 <span
-                  class="pf-v6-c-button__icon"
+                  class="buttonIcon"
                 >
                   <svg
                     aria-hidden="true"
@@ -74,21 +74,21 @@ exports[`DateTime rendering renders Report Date input 1`] = `
               </button>
             </div>
             <div
-              class="pf-v6-c-input-group__item date-picker-input-item"
+              class="inputGroupItem date-picker-input-item"
             >
               <div
-                class="pf-v6-c-date-picker time-picker-pf"
+                class="datePicker time-picker-pf"
               >
                 <div
-                  class="pf-v6-c-date-picker__input"
+                  class="datePickerInput"
                   locale="EN"
                   style="--pf-v6-c-date-picker__input--c-form-control--Width: 150px;"
                 >
                   <div
-                    class="pf-v6-c-input-group"
+                    class="inputGroup"
                   >
                     <div
-                      class="pf-v6-c-input-group__item"
+                      class="inputGroupItem"
                     >
                       <div
                         id="time-picker-stable"
@@ -97,7 +97,7 @@ exports[`DateTime rendering renders Report Date input 1`] = `
                           style="padding-left: 0px;"
                         >
                           <span
-                            class="pf-v6-c-form-control pf-m-icon"
+                            class="formControl"
                           >
                             <input
                               aria-haspopup="menu"
@@ -114,10 +114,10 @@ exports[`DateTime rendering renders Report Date input 1`] = `
                               value="01:00"
                             />
                             <span
-                              class="pf-v6-c-form-control__utilities"
+                              class="formControlUtilities"
                             >
                               <span
-                                class="pf-v6-c-form-control__icon"
+                                class="formControlIcon"
                               >
                                 <svg
                                   aria-hidden="true"
@@ -164,20 +164,20 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
         style="display: contents;"
       >
         <button
-          class="pf-v6-c-button pf-m-plain field-help"
+          class="button field-help"
           data-ouia-component-id="OUIA-Generated-Button-plain-1"
           data-ouia-component-type="PF6/Button"
           data-ouia-safe="true"
           type="button"
         >
           <span
-            class="pf-v6-c-button__icon"
+            class="buttonIcon"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"
@@ -208,13 +208,13 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
           style="display: contents;"
         >
           <div
-            class="pf-v6-c-input-group"
+            class="inputGroup"
           >
             <div
-              class="pf-v6-c-input-group__item pf-v6-c-date-picker__input pf-v6-c-date-picker "
+              class="inputGroupItem pf-v6-c-date-picker__input pf-v6-c-date-picker "
             >
               <span
-                class="pf-v6-c-form-control  pf-v6-c-form-control"
+                class="formControl  pf-v6-c-form-control"
               >
                 <input
                   aria-invalid="false"
@@ -233,18 +233,18 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
               </span>
             </div>
             <div
-              class="pf-v6-c-input-group__item date-picker-input-item"
+              class="inputGroupItem date-picker-input-item"
             >
               <button
                 aria-label="Toggle date picker"
-                class="pf-v6-c-button pf-m-control"
+                class="button"
                 data-ouia-component-id="toggle-calendar-button"
                 data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
                 type="button"
               >
                 <span
-                  class="pf-v6-c-button__icon"
+                  class="buttonIcon"
                 >
                   <svg
                     aria-hidden="true"
@@ -263,21 +263,21 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
               </button>
             </div>
             <div
-              class="pf-v6-c-input-group__item date-picker-input-item"
+              class="inputGroupItem date-picker-input-item"
             >
               <div
-                class="pf-v6-c-date-picker time-picker-pf"
+                class="datePicker time-picker-pf"
               >
                 <div
-                  class="pf-v6-c-date-picker__input"
+                  class="datePickerInput"
                   locale="EN"
                   style="--pf-v6-c-date-picker__input--c-form-control--Width: 150px;"
                 >
                   <div
-                    class="pf-v6-c-input-group"
+                    class="inputGroup"
                   >
                     <div
-                      class="pf-v6-c-input-group__item"
+                      class="inputGroupItem"
                     >
                       <div
                         id="time-picker-stable"
@@ -286,7 +286,7 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
                           style="padding-left: 0px;"
                         >
                           <span
-                            class="pf-v6-c-form-control pf-m-icon"
+                            class="formControl"
                           >
                             <input
                               aria-haspopup="menu"
@@ -303,10 +303,10 @@ exports[`DateTime rendering renders with Require and Info 1`] = `
                               value="01:00"
                             />
                             <span
-                              class="pf-v6-c-form-control__utilities"
+                              class="formControlUtilities"
                             >
                               <span
-                                class="pf-v6-c-form-control__icon"
+                                class="formControlIcon"
                               >
                                 <svg
                                   aria-hidden="true"

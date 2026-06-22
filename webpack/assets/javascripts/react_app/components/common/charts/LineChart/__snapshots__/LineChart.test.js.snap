@@ -3,19 +3,19 @@
 exports[`Line Chart should render empty state when no data 1`] = `
 <div>
   <div
-    class="pf-v6-c-empty-state pf-m-xs"
+    class="emptyState"
   >
     <div
-      class="pf-v6-c-empty-state__content"
+      class="emptyStateContent"
     >
       <div
-        class="pf-v6-c-empty-state__header"
+        class="emptyState__header"
       >
         <div
-          class="pf-v6-c-empty-state__title"
+          class="emptyState__title"
         >
           <h5
-            class="pf-v6-c-empty-state__title-text"
+            class="emptyStateTitleText"
           >
             No data available
           </h5>
@@ -25,10 +25,10 @@ exports[`Line Chart should render empty state when no data 1`] = `
         class="empty-state-icon"
       >
         <span
-          class="pf-v6-c-icon"
+          class="icon"
         >
           <span
-            class="pf-v6-c-icon__content pf-m-lg"
+            class="iconContent"
           >
             <svg
               aria-hidden="true"
@@ -47,17 +47,17 @@ exports[`Line Chart should render empty state when no data 1`] = `
         </span>
       </span>
       <div
-        class="pf-v6-c-empty-state__body"
+        class="emptyStateBody"
       >
         <div
           class="empty-state-description"
         />
       </div>
       <div
-        class="pf-v6-c-empty-state__footer"
+        class="emptyStateFooter"
       >
         <div
-          class="pf-v6-c-empty-state__actions"
+          class="emptyStateActions"
         />
       </div>
     </div>

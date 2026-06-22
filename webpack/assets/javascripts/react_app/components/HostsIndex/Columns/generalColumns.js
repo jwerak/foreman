@@ -117,7 +117,7 @@ const generalColumns = [
         hostDetails?.owner_type !== 'User' ? UsersIcon : UserIcon;
       return (
         <TableText>
-          <Icon style={{ color: '#2B9AF3', marginRight: '5px' }}>
+          <Icon style={{ color: 'var(--pf-t--global--icon--color--brand--default)', marginRight: '5px' }}>
             <OwnerIcon />
           </Icon>
           {hostDetails?.owner_name}

@@ -11,37 +11,37 @@ exports[`ExpansiveView rendering render audit record changes 1`] = `
     >
       <div
         aria-label="editor-diff-buttons"
-        class="pf-v6-c-toggle-group"
+        class="toggleGroup"
         id="diff-toggle-buttons"
         role="group"
       >
         <div
-          class="pf-v6-c-toggle-group__item diff-button"
+          class="toggleGroupItem diff-button"
         >
           <button
             aria-pressed="true"
-            class="pf-v6-c-toggle-group__button pf-m-selected"
+            class="toggleGroupButton"
             id="split-btn"
             type="button"
           >
             <span
-              class="pf-v6-c-toggle-group__text"
+              class="toggleGroupText"
             >
               Split
             </span>
           </button>
         </div>
         <div
-          class="pf-v6-c-toggle-group__item diff-button"
+          class="toggleGroupItem diff-button"
         >
           <button
             aria-pressed="false"
-            class="pf-v6-c-toggle-group__button"
+            class="toggleGroupButton"
             id="unified-btn"
             type="button"
           >
             <span
-              class="pf-v6-c-toggle-group__text"
+              class="toggleGroupText"
             >
               Unified
             </span>

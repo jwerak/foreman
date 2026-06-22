@@ -10,7 +10,7 @@ exports[`ColumnSelector should render 1`] = `
       id="column-selector"
     >
       <button
-        class="pf-v6-c-button pf-m-link columns-selector"
+        class="button columns-selector"
         data-ouia-component-id="manage-columns-button"
         data-ouia-component-type="PF6/Button"
         data-ouia-safe="true"
@@ -19,13 +19,13 @@ exports[`ColumnSelector should render 1`] = `
         type="button"
       >
         <span
-          class="pf-v6-c-button__icon pf-m-start"
+          class="buttonIcon"
         >
           <span
-            class="pf-v6-c-icon"
+            class="icon"
           >
             <span
-              class="pf-v6-c-icon__content"
+              class="iconContent"
             >
               <svg
                 aria-hidden="true"

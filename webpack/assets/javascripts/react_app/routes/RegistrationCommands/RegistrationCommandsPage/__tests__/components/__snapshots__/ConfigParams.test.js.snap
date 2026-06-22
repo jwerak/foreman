@@ -3,24 +3,24 @@
 exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
 <div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
         for="registration_setup_remote_execution"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Setup REX
         </span>
       </label>
         
       <span
-        class="pf-v6-c-form__group-label-help"
+        class="formGroupLabelHelp"
       >
         <div
           style="display: contents;"
@@ -29,10 +29,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
             class="pf-v6-c-form__group-label-help"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"
@@ -54,10 +54,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
       </span>
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <span
-        class="pf-v6-c-form-control without_select2"
+        class="formControl without_select2"
       >
         <select
           aria-invalid="false"
@@ -87,10 +87,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
           </option>
         </select>
         <span
-          class="pf-v6-c-form-control__utilities"
+          class="formControlUtilities"
         >
           <span
-            class="pf-v6-c-form-control__toggle-icon"
+            class="formControlToggleIcon"
           >
             <svg
               aria-hidden="true"
@@ -111,24 +111,24 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
     </div>
   </div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
         for="registration_setup_insights"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Setup Insights
         </span>
       </label>
         
       <span
-        class="pf-v6-c-form__group-label-help"
+        class="formGroupLabelHelp"
       >
         <div
           style="display: contents;"
@@ -137,10 +137,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
             class="pf-v6-c-form__group-label-help"
           >
             <span
-              class="pf-v6-c-icon pf-m-inline"
+              class="icon"
             >
               <span
-                class="pf-v6-c-icon__content"
+                class="iconContent"
               >
                 <svg
                   aria-hidden="true"
@@ -162,10 +162,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
       </span>
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <span
-        class="pf-v6-c-form-control without_select2"
+        class="formControl without_select2"
       >
         <select
           aria-invalid="false"
@@ -195,10 +195,10 @@ exports[`RegistrationCommandsPage fields - ConfigParams renders 1`] = `
           </option>
         </select>
         <span
-          class="pf-v6-c-form-control__utilities"
+          class="formControlUtilities"
         >
           <span
-            class="pf-v6-c-form-control__toggle-icon"
+            class="formControlToggleIcon"
           >
             <svg
               aria-hidden="true"

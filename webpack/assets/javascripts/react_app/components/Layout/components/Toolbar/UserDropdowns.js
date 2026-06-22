@@ -13,6 +13,22 @@ import { UserAltIcon } from '@patternfly/react-icons';
 import { userPropType } from '../../LayoutHelper';
 import { translate as __ } from '../../../../common/I18n';
 
+const handleMethodLink = async (url, method) => {
+  const csrfToken =
+    document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+  await fetch(url, {
+    method: method.toUpperCase(),
+    headers: {
+      'X-CSRF-Token': csrfToken,
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    credentials: 'same-origin',
+  });
+
+  window.location = '/';
+};
+
 const UserDropdowns = ({ user, notificationUrl, instanceTitle, ...props }) => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
@@ -21,21 +37,37 @@ const UserDropdowns = ({ user, notificationUrl, instanceTitle, ...props }) => {
   };
   const userInfo = user.current_user;
 
-  const userDropdownItems = user.user_dropdown[0].children.map((item, i) =>
-    item.type === 'divider' ? (
-      <Divider component="li" key={i} />
-    ) : (
+  const userDropdownItems = user.user_dropdown[0].children.map((item, i) => {
+    if (item.type === 'divider') {
+      return <Divider component="li" key={i} />;
+    }
+
+    const method = item.html_options?.['data-method'];
+
+    if (method) {
+      return (
+        <DropdownItem
+          ouiaId={`user-dropdown-item-${i}`}
+          key={i}
+          className="user_menuitem"
+          onClick={() => handleMethodLink(item.url, method)}
+        >
+          {__(item.name)}
+        </DropdownItem>
+      );
+    }
+
+    return (
       <DropdownItem
         ouiaId={`user-dropdown-item-${i}`}
         key={i}
         className="user_menuitem"
-        href={item.url}
-        {...item.html_options}
+        to={item.url}
       >
         {__(item.name)}
       </DropdownItem>
-    )
-  );
+    );
+  });
 
   return (
     userInfo && (

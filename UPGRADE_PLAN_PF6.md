@@ -1246,3 +1246,87 @@ PatternFly Topology extension. Provides two perspectives:
 - **Menu:** Topology item added under Monitor section
 - **Tests:** Backend controller test + 5 frontend test suites (24 tests)
 - **Jest config:** Added `@patternfly/react-topology` and `@patternfly/react-styles/css` mappings
+
+---
+
+## Bug Fixes: User Menu Links & Dark Mode Contrast
+
+**Date:** 2026-06-22
+**Files changed:** 7 source files + 33 snapshot files
+
+### Fix: Logout & My Account Links in User Dropdown
+
+**Problem:** Clicking "Log Out" or "My Account" in the user dropdown did nothing. Two root causes:
+1. PF6 `DropdownItem` renders as `<button>` by default — the `href` prop was silently ignored
+2. Logout requires a POST request with CSRF token, but `data-method="post"` from Rails UJS
+   is not processed by React/PF6 components
+
+**File modified:** `webpack/.../Layout/components/Toolbar/UserDropdowns.js`
+
+**Changes:**
+- Added `handleMethodLink()` function that POSTs via `fetch()` with CSRF token from
+  `<meta name="csrf-token">`, then redirects to `/` on success (same pattern as
+  `TaxonomyDropdown.js` taxonomy switching)
+- Items with `html_options['data-method']` (e.g. logout) get an `onClick` handler
+  instead of an `href`
+- Regular items (e.g. My Account) use PF6 `to` prop (renders as `<a>` with `href`)
+- Removed `{...item.html_options}` spread (was passing `data-method` as an unused prop)
+
+**Test file rewritten:** `UserDropdowns.test.js` — 5 behavioral tests replacing snapshot:
+- Renders user name in toggle
+- My Account renders as `<a>` with correct `href`
+- Log Out renders as `<button>` (no href)
+- Log Out POSTs with CSRF token on click
+- Divider renders between items
+
+### Fix: Dark Mode Contrast
+
+**Problem:** PF6 dark theme toggle (`pf-v6-theme-dark`) works correctly, but hardcoded
+hex colors in SCSS and inline styles override the dark theme design tokens, causing
+poor contrast on tables, links, action buttons, and status indicators.
+
+**Files modified:**
+
+**`app/assets/stylesheets/patternfly_and_overrides.scss`** (8 replacements):
+- `span.btn a { color: #333 }` → `var(--pf-t--global--text--color--link--default)`
+- `.children_fields.lookup_values > th { background-color: white }` → `var(--pf-t--global--background--color--primary--default)`
+- `.help-inline { color: #737373 }` → `var(--pf-t--global--text--color--subtle)`
+- `.well { background-color: white }` → `var(--pf-t--global--background--color--primary--default)`
+- `.navbar.navbar-form { background-color: #f8f8f8; border: #e7e7e7 }` → semantic tokens
+- `.input-addon { color: black }` → `var(--pf-t--global--text--color--regular)`
+- `form .fa-info-circle { color: black }` → `var(--pf-t--global--text--color--regular)`
+- `.has-error { color: #a94442 }` → `var(--pf-t--global--icon--color--status--danger--default)`
+- `.pficon-ok.warn::before { color: #ec7a08 }` → `var(--pf-t--global--icon--color--status--warning--default)`
+- `.nav.nav-pills.nav-stacked .btn.btn-success:hover` → success token
+- `span.btn-action.btn-primary a { color: #fff }` → `var(--pf-t--global--text--color--on-brand--default)`
+
+**`app/assets/stylesheets/base.scss`** (15 replacements):
+- `.tab-error`, `.delete` — `#b94a48` → `var(--pf-t--global--icon--color--status--danger--default)`
+- `.inherited`, `.descendants` — `#444` → `var(--pf-t--global--text--color--subtle)`
+- `.used_by_hosts`, `.black` — `#000` → `var(--pf-t--global--text--color--regular)`
+- `.grey/.gray`, `.darkgrey/.darkgray` — `#808080`/`#606060` → `var(--pf-t--global--text--color--subtle)`
+- `.lightgrey/.lightgray` — `#999` → `var(--pf-t--global--text--color--placeholder)`
+- `.white-header` — `#fff` → `var(--pf-t--global--background--color--primary--default)`
+- `code.transparent` — `#000` → `var(--pf-t--global--text--color--regular)`
+- `.icon-white` — `#fff` → `var(--pf-t--global--text--color--on-brand--default)`
+- `.big` — `#797979` → `var(--pf-t--global--text--color--subtle)`
+- `.editable-empty` — `#808080` → `var(--pf-t--global--text--color--placeholder)`
+- `.interface-down` — `#808080` → `var(--pf-t--global--text--color--subtle)`
+- `tr.has-error td` — borders `#a94442` → danger token, text `#333` → regular
+- `.primary-flag/.managed-flag/.provision-flag` — inactive/hover/active colors → tokens
+- `.audit-content` border `#ccc` → `var(--pf-t--global--border--color--default)`
+- `.stats-well` border `#d7d7d7` → `var(--pf-t--global--border--color--default)`
+- `span.btn a.disabled` — `#8b8d8f` → `var(--pf-t--global--text--color--disabled)`
+- `.tabs-left .btn:hover` — `#408140` → success token
+
+**`webpack/.../HostsIndex/Columns/generalColumns.js`**:
+- Owner icon `color: '#2B9AF3'` → `'var(--pf-t--global--icon--color--brand--default)'`
+
+**`webpack/.../hosts/powerStatus/PowerStatus.scss`**:
+- `.on` `#3f9c35` → `var(--pf-t--global--icon--color--status--success--default)`
+- `.off` `#c00` → `var(--pf-t--global--icon--color--status--danger--default)`
+- `.na` `#8b8d8f` → `var(--pf-t--global--text--color--disabled)`
+
+**49 snapshot files updated** for PF6 DOM class changes from the token replacements.
+
+**All tests pass (277 suites, 1464 tests, 368 snapshots).**

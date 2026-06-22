@@ -4,39 +4,39 @@ exports[`AuditsList render resources list 1`] = `
 <div>
   <ul
     aria-label="Audits data list"
-    class="pf-v6-c-data-list pf-m-compact pf-m-grid-md"
+    class="dataList"
     id="audit-list"
     role="list"
   >
     <li
-      class="pf-v6-c-data-list__item audits-data-list main-info-minimize-padding"
+      class="dataListItem audits-data-list main-info-minimize-padding"
       id="234"
     >
       <div
-        class="pf-v6-c-data-list__item-row audits-list-item-row"
+        class="dataListItemRow audits-list-item-row"
       >
         <div
-          class="pf-v6-c-data-list__item-control"
+          class="dataListItemControl"
         >
           <div
-            class="pf-v6-c-data-list__toggle"
+            class="dataListToggle"
           >
             <button
               aria-controls="false"
               aria-expanded="false"
               aria-label="Details"
               aria-labelledby=" undefined"
-              class="pf-v6-c-button pf-m-plain"
+              class="button"
               data-ouia-component-id="OUIA-Generated-Button-plain-1"
               data-ouia-component-type="PF6/Button"
               data-ouia-safe="true"
               type="button"
             >
               <span
-                class="pf-v6-c-button__icon"
+                class="buttonIcon"
               >
                 <div
-                  class="pf-v6-c-data-list__toggle-icon"
+                  class="dataListToggleIcon"
                 >
                   <svg
                     aria-hidden="true"
@@ -57,10 +57,10 @@ exports[`AuditsList render resources list 1`] = `
           </div>
         </div>
         <div
-          class="pf-v6-c-data-list__item-content"
+          class="dataListItemContent"
         >
           <div
-            class="pf-v6-c-data-list__cell pf-m-flex-3"
+            class="dataListCell"
           >
             <span
               class="pf-v6-u-font-weight-bold pf-v6-u-font-size-sm"
@@ -85,19 +85,19 @@ exports[`AuditsList render resources list 1`] = `
             </span>
           </div>
           <div
-            class="pf-v6-c-data-list__cell"
+            class="dataListCell"
           >
             updated
           </div>
           <div
-            class="pf-v6-c-data-list__cell pf-m-flex-3 pf-m-align-right additional-info-item item-name"
+            class="dataListCell additional-info-item item-name"
           >
             <span>
               HOST
             </span>
           </div>
           <div
-            class="pf-v6-c-data-list__cell pf-m-flex-5 additional-info-item item-resource pf-m-truncate"
+            class="dataListCell additional-info-item item-resource"
           >
             <span>
               <div
@@ -114,7 +114,7 @@ exports[`AuditsList render resources list 1`] = `
           </div>
         </div>
         <div
-          class="pf-v6-c-data-list__item-action audits-list-actions"
+          class="dataListItemAction audits-list-actions"
           rowid=""
         >
           <span
@@ -131,21 +131,21 @@ exports[`AuditsList render resources list 1`] = `
         </div>
       </div>
       <section
-        class="pf-v6-c-data-list__expandable-content data-list-content"
+        class="dataListExpandableContent data-list-content"
         hidden=""
         id=""
       >
         <div
-          class="pf-v6-c-data-list__expandable-content-body"
+          class="dataListExpandableContentBody"
         >
           <div
-            class="pf-v6-l-grid"
+            class="grid"
           >
             <div
-              class="pf-v6-l-grid__item pf-m-12-col actions-btns"
+              class="gridItem actions-btns"
             >
               <a
-                class="pf-v6-c-button pf-m-primary pf-m-small pf-v6-u-float-right"
+                class="button pf-v6-u-float-right"
                 data-ouia-component-id="action-links-btn"
                 data-ouia-component-type="PF6/Button"
                 data-ouia-safe="true"
@@ -159,24 +159,24 @@ exports[`AuditsList render resources list 1`] = `
               </a>
             </div>
             <div
-              class="pf-v6-l-grid__item pf-m-12-col taxonomy-section"
+              class="gridItem taxonomy-section"
             >
               <div
-                class="pf-v6-l-grid"
+                class="grid"
               >
                 <div
-                  class="pf-v6-l-grid__item pf-m-3-col"
+                  class="gridItem"
                 >
                   <span>
                     Affected Organizations
                   </span>
                 </div>
                 <div
-                  class="pf-v6-l-grid__item pf-m-9-col"
+                  class="gridItem"
                 >
                   <strong>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -189,7 +189,7 @@ exports[`AuditsList render resources list 1`] = `
                       </span>
                     </a>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -202,7 +202,7 @@ exports[`AuditsList render resources list 1`] = `
                       </span>
                     </a>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -218,21 +218,21 @@ exports[`AuditsList render resources list 1`] = `
                 </div>
               </div>
               <div
-                class="pf-v6-l-grid"
+                class="grid"
               >
                 <div
-                  class="pf-v6-l-grid__item pf-m-3-col"
+                  class="gridItem"
                 >
                   <span>
                     Affected Locations
                   </span>
                 </div>
                 <div
-                  class="pf-v6-l-grid__item pf-m-9-col"
+                  class="gridItem"
                 >
                   <strong>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -245,7 +245,7 @@ exports[`AuditsList render resources list 1`] = `
                       </span>
                     </a>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -258,7 +258,7 @@ exports[`AuditsList render resources list 1`] = `
                       </span>
                     </a>
                     <a
-                      class="pf-v6-c-button pf-m-link pf-m-inline apply-comma "
+                      class="button apply-comma "
                       data-ouia-component-id="taxonomy-inline-btn"
                       data-ouia-component-type="PF6/Button"
                       data-ouia-safe="true"
@@ -275,20 +275,20 @@ exports[`AuditsList render resources list 1`] = `
               </div>
             </div>
             <div
-              class="pf-v6-l-grid__item pf-m-3-col"
+              class="gridItem"
             >
               <span>
                 Request UUID
               </span>
             </div>
             <div
-              class="pf-v6-l-grid__item pf-m-9-col value"
+              class="gridItem value"
             >
               <div
                 style="display: contents;"
               >
                 <button
-                  class="pf-v6-c-button pf-m-link pf-m-inline"
+                  class="button"
                   data-ouia-component-id="request-uuid-btn"
                   data-ouia-component-type="PF6/Button"
                   data-ouia-safe="true"

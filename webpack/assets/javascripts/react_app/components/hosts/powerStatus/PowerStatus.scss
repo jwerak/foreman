@@ -1,13 +1,13 @@
 .host-power-status {
   &.on {
-    color: #3f9c35;
+    color: var(--pf-t--global--icon--color--status--success--default);
   }
 
   &.off {
-    color: #c00;
+    color: var(--pf-t--global--icon--color--status--danger--default);
   }
 
   &.na {
-    color: #8b8d8f;
+    color: var(--pf-t--global--text--color--disabled);
   }
 }

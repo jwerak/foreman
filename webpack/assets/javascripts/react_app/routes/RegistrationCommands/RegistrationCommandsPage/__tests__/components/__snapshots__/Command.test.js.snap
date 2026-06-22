@@ -3,16 +3,16 @@
 exports[`RegistrationCommandsPage - Command renders 1`] = `
 <div>
   <div
-    class="pf-v6-c-form__group"
+    class="formGroup"
   >
     <div
-      class="pf-v6-c-form__group-label"
+      class="formGroupLabel"
     >
       <label
-        class="pf-v6-c-form__label"
+        class="formLabel"
       >
         <span
-          class="pf-v6-c-form__label-text"
+          class="formLabelText"
         >
           Registration command
         </span>
@@ -20,21 +20,21 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
         
     </div>
     <div
-      class="pf-v6-c-form__group-control"
+      class="formGroupControl"
     >
       <div
-        class="pf-v6-c-clipboard-copy pf-m-expanded"
+        class="clipboardCopy"
         data-ouia-component-type="PF6/ClipboardCopy"
         data-ouia-safe="true"
       >
         <div
-          class="pf-v6-c-clipboard-copy__group"
+          class="clipboardCopyGroup"
         >
           <button
             aria-controls="content-1"
             aria-expanded="true"
             aria-label="Show content"
-            class="pf-v6-c-button pf-m-control"
+            class="button"
             data-ouia-component-id="OUIA-Generated-Button-control-1"
             data-ouia-component-type="PF6/Button"
             data-ouia-safe="true"
@@ -42,10 +42,10 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
             type="button"
           >
             <span
-              class="pf-v6-c-button__icon"
+              class="buttonIcon"
             >
               <div
-                class="pf-v6-c-clipboard-copy__toggle-icon"
+                class="clipboardCopyToggleIcon"
               >
                 <svg
                   aria-hidden="true"
@@ -64,7 +64,7 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
             </span>
           </button>
           <span
-            class="pf-v6-c-form-control pf-m-readonly"
+            class="formControl"
           >
             <input
               aria-invalid="false"
@@ -81,7 +81,7 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
           </span>
           <button
             aria-label="Copy to clipboard"
-            class="pf-v6-c-button pf-m-control"
+            class="button"
             data-ouia-component-id="OUIA-Generated-Button-control-2"
             data-ouia-component-type="PF6/Button"
             data-ouia-safe="true"
@@ -89,7 +89,7 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
             type="button"
           >
             <span
-              class="pf-v6-c-button__icon"
+              class="buttonIcon"
             >
               <svg
                 aria-hidden="true"
@@ -108,7 +108,7 @@ exports[`RegistrationCommandsPage - Command renders 1`] = `
           </button>
         </div>
         <div
-          class="pf-v6-c-clipboard-copy__expandable-content"
+          class="clipboardCopyExpandableContent"
           contenteditable="false"
           id="content-1"
         >

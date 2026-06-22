@@ -9,10 +9,10 @@ exports[`LabelIcon renders 1`] = `
       class="pf-v6-c-form__group-label-help"
     >
       <span
-        class="pf-v6-c-icon pf-m-inline"
+        class="icon"
       >
         <span
-          class="pf-v6-c-icon__content"
+          class="iconContent"
         >
           <svg
             aria-hidden="true"
