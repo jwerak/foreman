@@ -2,6 +2,7 @@ class DomainsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Domain
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
   def index
@@ -54,5 +55,6 @@ class DomainsController < ApplicationController
       { name: 'dns_id', label: _('DNS Proxy'), type: 'select', options: dns_proxy_options,
         labelHelp: _('DNS proxy to use within this domain for managing A records, note that PTR records are managed via Subnet DNS proxy') },
     ]
+    append_taxonomy_form_fields
   end
 end

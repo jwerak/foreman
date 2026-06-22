@@ -1,6 +1,7 @@
 class AuthSourceLdapsController < ApplicationController
   include Foreman::Controller::Parameters::AuthSourceLdap
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
@@ -77,6 +78,7 @@ class AuthSourceLdapsController < ApplicationController
       { name: 'attr_mail', label: _('Email address attribute'), section: _('Attribute Mappings'), helpText: _('e.g. mail') },
       { name: 'attr_photo', label: _('Photo attribute'), section: _('Attribute Mappings'), helpText: _('e.g. jpegPhoto') },
     ]
+    append_taxonomy_form_fields
   end
 
   def controller_permission

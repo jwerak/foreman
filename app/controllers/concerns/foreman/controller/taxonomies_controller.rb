@@ -242,5 +242,66 @@ module Foreman::Controller::TaxonomiesController
       { name: 'name', label: _('Name'), required: true, tab: taxonomy_class.model_name.human },
       { name: 'description', label: _('Description'), type: 'textarea', tab: taxonomy_class.model_name.human },
     ]
+
+    if User.current.can?(:view_users)
+      @form_fields += [{ name: 'user_ids', label: _('Users'), type: 'checkboxGroup', tab: _('Users'),
+        options: User.except_hidden.authorized(:view_users).order(:login).map { |u| { value: u.id, label: u.select_title } },
+        loadKey: 'users' }]
+    end
+    if User.current.can?(:view_smart_proxies)
+      @form_fields += [{ name: 'smart_proxy_ids', label: _('Smart Proxies'), type: 'checkboxGroup', tab: _('Smart Proxies'),
+        options: SmartProxy.authorized(:view_smart_proxies).order(:name).map { |p| { value: p.id, label: p.name } },
+        loadKey: 'smart_proxies' }]
+    end
+    if User.current.can?(:view_subnets)
+      @form_fields += [{ name: 'subnet_ids', label: _('Subnets'), type: 'checkboxGroup', tab: _('Subnets'),
+        options: Subnet.authorized(:view_subnets).order(:name).map { |s| { value: s.id, label: s.to_label } },
+        loadKey: 'subnets' }]
+    end
+    if User.current.can?(:view_compute_resources)
+      @form_fields += [{ name: 'compute_resource_ids', label: _('Compute Resources'), type: 'checkboxGroup', tab: _('Compute Resources'),
+        options: ComputeResource.authorized(:view_compute_resources).order(:name).map { |cr| { value: cr.id, label: cr.to_label } },
+        loadKey: 'compute_resources' }]
+    end
+    if User.current.can?(:view_media)
+      @form_fields += [{ name: 'medium_ids', label: _('Installation Media'), type: 'checkboxGroup', tab: _('Installation Media'),
+        options: Medium.authorized(:view_media).order(:name).map { |m| { value: m.id, label: m.name } },
+        loadKey: 'media' }]
+    end
+    if User.current.can?(:view_provisioning_templates)
+      @form_fields += [{ name: 'provisioning_template_ids', label: _('Provisioning Templates'), type: 'checkboxGroup', tab: _('Provisioning Templates'),
+        options: ProvisioningTemplate.authorized(:view_provisioning_templates).order(:name).map { |t| { value: t.id, label: t.name } },
+        loadKey: 'provisioning_templates' }]
+    end
+    if User.current.can?(:view_ptables)
+      @form_fields += [{ name: 'ptable_ids', label: _('Partition Tables'), type: 'checkboxGroup', tab: _('Partition Tables'),
+        options: Ptable.authorized(:view_ptables).order(:name).map { |pt| { value: pt.id, label: pt.name } },
+        loadKey: 'ptables' }]
+    end
+    if User.current.can?(:view_domains)
+      @form_fields += [{ name: 'domain_ids', label: _('Domains'), type: 'checkboxGroup', tab: _('Domains'),
+        options: Domain.authorized(:view_domains).order(:name).map { |d| { value: d.id, label: d.name } },
+        loadKey: 'domains' }]
+    end
+    if User.current.can?(:view_realms)
+      @form_fields += [{ name: 'realm_ids', label: _('Realms'), type: 'checkboxGroup', tab: _('Realms'),
+        options: Realm.authorized(:view_realms).order(:name).map { |r| { value: r.id, label: r.name } },
+        loadKey: 'realms' }]
+    end
+    if User.current.can?(:view_hostgroups)
+      @form_fields += [{ name: 'hostgroup_ids', label: _('Host Groups'), type: 'checkboxGroup', tab: _('Host Groups'),
+        options: Hostgroup.authorized(:view_hostgroups).order(:name).map { |hg| { value: hg.id, label: hg.to_label } },
+        loadKey: 'hostgroups' }]
+    end
+
+    if taxonomy_class == Location && helpers.show_organization_tab?
+      @form_fields += [{ name: 'organization_ids', label: _('Organizations'), type: 'checkboxGroup', tab: _('Organizations'),
+        options: Organization.authorized(:view_organizations).order(:title).map { |o| { value: o.id, label: o.title } },
+        loadKey: 'organizations' }]
+    elsif taxonomy_class == Organization && helpers.show_location_tab?
+      @form_fields += [{ name: 'location_ids', label: _('Locations'), type: 'checkboxGroup', tab: _('Locations'),
+        options: Location.authorized(:view_locations).order(:title).map { |l| { value: l.id, label: l.title } },
+        loadKey: 'locations' }]
+    end
   end
 end

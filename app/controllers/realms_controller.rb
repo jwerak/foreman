@@ -2,6 +2,7 @@ class RealmsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Realm
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
@@ -55,5 +56,6 @@ class RealmsController < ApplicationController
       { name: 'realm_type', label: _('Realm Type'), type: 'select', required: true, options: type_options, helpText: _('Type of realm, e.g. FreeIPA') },
       { name: 'realm_proxy_id', label: _('Realm Proxy'), type: 'select', required: true, options: proxy_options },
     ]
+    append_taxonomy_form_fields
   end
 end

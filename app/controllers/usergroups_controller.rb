@@ -96,5 +96,6 @@ class UsergroupsController < ApplicationController
       { name: 'role_ids', label: _('Roles'), type: 'checkboxGroup', tab: _('Roles'),
         options: role_options, loadKey: 'roles' },
     ]
+    @form_metadata = { has_external_auth_sources: AuthSource.non_internal.exists? }
   end
 end

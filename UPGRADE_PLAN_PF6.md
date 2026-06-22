@@ -1478,3 +1478,96 @@ Added `@form_metadata = { current_user_id: User.current.id }` for client-side
   delete confirm modal
 
 **All tests pass. No regressions in existing test suites.**
+
+---
+
+## Phase 14: SPA Detail Page Parity — Taxonomy Tabs + Association Fields
+
+**Date:** 2026-06-22
+
+### Problem
+
+Nearly every SPA detail page was missing Locations/Organizations tabs compared to the old
+Rails ERB forms. The Architectures page was missing its Operating Systems association.
+Roles was missing its Filters list tab. User Groups was missing External User Groups tab.
+Locations and Organizations themselves were missing 11 internal association tabs each.
+
+### Tier 0+1: Shared TaxonomyFormFields Concern + 11 Controllers
+
+**New file:** `app/controllers/concerns/foreman/controller/taxonomy_form_fields.rb`
+
+Created a reusable concern with `append_taxonomy_form_fields` method that:
+- Assigns a default `tab:` to existing fields without one (using `controller_name.singularize.humanize`)
+  to prevent fields from being silently dropped when FormPage switches to tabbed layout
+- Conditionally appends `location_ids` and `organization_ids` checkboxGroup fields,
+  gated by `helpers.show_location_tab?` / `helpers.show_organization_tab?`
+
+**11 controllers updated** (include concern + call at end of `set_form_fields`):
+SmartProxiesController, ComputeResourcesController, DomainsController, SubnetsController,
+RealmsController, MediaController, HttpProxiesController, HostgroupsController,
+AuthSourceLdapsController, AuthSourceExternalsController, RolesController
+
+### Tier 2: Architectures → Operating Systems
+
+Added `operatingsystem_ids` checkboxGroup to `architectures_controller.rb:set_form_fields`
+with `Operatingsystem.authorized(:view_operatingsystems)` options and `loadKey: 'operatingsystems'`.
+
+### Tier 3: Role Filters Tab
+
+**New component:** `webpack/.../components/roles/RoleFiltersTab/index.js`
+
+Hook-based component following the SshKeys pattern:
+- Props: `{ roleId }`
+- Fetches `GET /api/v2/filters?search=role_id=${roleId}&per_page=all`
+- PF6 Table with Resource Type, Permissions, Search, Unlimited?, Override?, Actions columns
+- "New Filter" button links to `/filters/new?role_id=${roleId}`
+- Delete button per row with confirm modal
+- Wired via `customTabs` in Roles config in `resourceConfigs.js`
+
+**Test:** 5 tests — empty state, table rendering, API endpoint, new filter link, delete button
+
+### Tier 7: External User Groups Tab
+
+**New components:**
+- `webpack/.../components/usergroups/ExternalUsergroupsTab/index.js` — Table with Name,
+  Auth Source, Refresh/Delete actions. Fetches from
+  `GET /api/v2/usergroups/${usergroupId}/external_usergroups`
+- `webpack/.../components/usergroups/ExternalUsergroupsTab/NewExternalUsergroupModal.js` —
+  Modal with Name input + Auth Source select (fetched from `/api/v2/auth_sources`)
+
+**Controller change:** Added `@form_metadata = { has_external_auth_sources: AuthSource.non_internal.exists? }`
+to `usergroups_controller.rb:set_form_fields`
+
+**Wired via `customTabs`** in Usergroups config with `isVisible` gated on
+`metadata.has_external_auth_sources`
+
+**Test:** 5 tests — empty state, table rendering, API endpoint, action buttons, add button
+
+### Tier 4: Taxonomy Internal Association Tabs
+
+Extended `taxonomies_controller.rb:set_form_fields` with 11 association checkboxGroup fields,
+each gated by permission check (`User.current.can?`):
+- Users, Smart Proxies, Subnets, Compute Resources, Installation Media,
+  Provisioning Templates, Partition Tables, Domains, Realms, Host Groups
+- Cross-taxonomy: Location shows Organizations tab, Organization shows Locations tab
+
+### Files Changed
+
+**New files (7):**
+- `app/controllers/concerns/foreman/controller/taxonomy_form_fields.rb`
+- `webpack/.../components/roles/RoleFiltersTab/index.js`
+- `webpack/.../components/roles/RoleFiltersTab/__tests__/RoleFiltersTab.test.js`
+- `webpack/.../components/usergroups/ExternalUsergroupsTab/index.js`
+- `webpack/.../components/usergroups/ExternalUsergroupsTab/NewExternalUsergroupModal.js`
+- `webpack/.../components/usergroups/ExternalUsergroupsTab/__tests__/ExternalUsergroupsTab.test.js`
+
+**Modified files (15):**
+- 11 controllers (SmartProxies, ComputeResources, Domains, Subnets, Realms, Media,
+  HttpProxies, Hostgroups, AuthSourceLdaps, AuthSourceExternals, Roles)
+- `app/controllers/architectures_controller.rb`
+- `app/controllers/usergroups_controller.rb`
+- `app/controllers/concerns/foreman/controller/taxonomies_controller.rb`
+- `webpack/.../routes/DetailPages/resourceConfigs.js`
+
+**Test results:** 10 new tests (5 RoleFiltersTab + 5 ExternalUsergroupsTab), all passing.
+No regressions in existing test suites.

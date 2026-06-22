@@ -2,6 +2,7 @@ class SubnetsController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Subnet
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
@@ -154,5 +155,6 @@ class SubnetsController < ApplicationController
         options: proxy_options.call('BMC'),
         labelHelp: _('BMC Proxy to use within this subnet for management access') },
     ]
+    append_taxonomy_form_fields
   end
 end

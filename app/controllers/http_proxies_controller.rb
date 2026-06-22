@@ -2,6 +2,7 @@ class HttpProxiesController < ApplicationController
   include Foreman::Controller::Parameters::HttpProxy
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
   before_action :find_resource, :only => [:edit, :update, :destroy]
 
   def index
@@ -76,5 +77,6 @@ class HttpProxiesController < ApplicationController
       { name: 'password', label: _('Password'), type: 'password', helpText: _('Password to use if authentication is required.') },
       { name: 'cacert', label: _('SSL CA Certificate'), type: 'textarea', rows: 5, helpText: _('SSL CA Certificate to use if authentication is required.') },
     ]
+    append_taxonomy_form_fields
   end
 end

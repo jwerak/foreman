@@ -1,6 +1,7 @@
 class AuthSourceExternalsController < ApplicationController
   include Foreman::Controller::Parameters::AuthSourceExternal
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource, :only => [:edit, :update]
 
@@ -23,6 +24,7 @@ class AuthSourceExternalsController < ApplicationController
     @form_fields = [
       { name: 'name', label: _('Name'), disabled: true },
     ]
+    append_taxonomy_form_fields
   end
 
   def controller_permission

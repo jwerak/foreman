@@ -48,8 +48,11 @@ class ArchitecturesController < ApplicationController
   private
 
   def set_form_fields
+    os_options = Operatingsystem.authorized(:view_operatingsystems).order(:title).map { |os| { value: os.id, label: os.to_label } }
     @form_fields = [
       { name: 'name', label: _('Name'), required: true },
+      { name: 'operatingsystem_ids', label: _('Operating Systems'), type: 'checkboxGroup',
+        options: os_options, loadKey: 'operatingsystems' },
     ]
   end
 end

@@ -5,6 +5,7 @@ class HostgroupsController < ApplicationController
   include Foreman::Controller::CsvResponder
   include Foreman::Controller::SetRedirectionPath
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource,  :only => [:nest, :clone, :edit, :update, :destroy]
   before_action :ajax_request,   :only => [:process_hostgroup]
@@ -190,5 +191,6 @@ class HostgroupsController < ApplicationController
       { name: 'realm_id', label: _('Realm'), type: 'select', tab: _('Network'),
         options: realm_options },
     ]
+    append_taxonomy_form_fields
   end
 end

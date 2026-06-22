@@ -2,6 +2,7 @@ class MediaController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Medium
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   before_action :find_resource, :only => [:edit, :update, :destroy, :clone]
 
@@ -60,6 +61,7 @@ class MediaController < ApplicationController
       { name: 'path', label: _('Path'), required: true, helpText: _('The path to the medium, can be a URL or a valid NFS server (exclusive of the architecture). For example http://mirror.centos.org/centos/$version/os/$arch where $arch will be substituted for the host\'s actual OS architecture and $version, $major and $minor will be substituted for the version of the operating system.') },
       { name: 'os_family', label: _('Operating System Family'), type: 'select', options: os_family_options },
     ]
+    append_taxonomy_form_fields
   end
 
   def action_permission

@@ -2,6 +2,7 @@ class ComputeResourcesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::ComputeResource
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
 
   AJAX_REQUESTS = [:template_selected, :instance_type_selected, :cluster_selected, :resource_pools]
   before_action :ajax_request, :only => AJAX_REQUESTS
@@ -184,6 +185,7 @@ class ComputeResourcesController < ApplicationController
         disabled: @compute_resource&.persisted? },
       { name: 'description', label: _('Description'), type: 'textarea', rows: 3 },
     ]
+    append_taxonomy_form_fields
   end
 
   def action_permission

@@ -19,6 +19,7 @@ class RolesController < ApplicationController
   include Foreman::Controller::AutoCompleteSearch
   include Foreman::Controller::Parameters::Role
   include Foreman::Controller::FormFieldsApi
+  include Foreman::Controller::TaxonomyFormFields
   before_action :find_resource, :only => [:clone, :edit, :update, :destroy]
 
   def index
@@ -90,6 +91,7 @@ class RolesController < ApplicationController
       { name: 'name', label: _('Name'), required: true, disabled: @role&.builtin? },
       { name: 'description', label: _('Description'), type: 'textarea', rows: 5 },
     ]
+    append_taxonomy_form_fields
   end
 
   def role_from_form

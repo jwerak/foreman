@@ -2,6 +2,8 @@ import { translate as __ } from '../../common/I18n';
 import SshKeys from '../../components/users/SshKeys';
 import PersonalAccessTokens from '../../components/users/PersonalAccessTokens';
 import JwtTokens from '../../components/users/JwtTokens/JwtTokens';
+import RoleFiltersTab from '../../components/roles/RoleFiltersTab';
+import ExternalUsergroupsTab from '../../components/usergroups/ExternalUsergroupsTab';
 
 const resourceConfigs = [
   {
@@ -111,6 +113,14 @@ const resourceConfigs = [
     title: __('Roles'),
     nameField: 'name',
     fieldsUrl: '/roles/form_fields',
+    customTabs: [
+      {
+        eventKey: 'filters',
+        title: __('Filters'),
+        component: RoleFiltersTab,
+        getProps: ({ resourceId }) => ({ roleId: resourceId }),
+      },
+    ],
   },
   {
     indexPath: '/users',
@@ -155,6 +165,15 @@ const resourceConfigs = [
     title: __('User Groups'),
     nameField: 'name',
     fieldsUrl: '/usergroups/form_fields',
+    customTabs: [
+      {
+        eventKey: 'external_usergroups',
+        title: __('External User Groups'),
+        component: ExternalUsergroupsTab,
+        getProps: ({ resourceId }) => ({ usergroupId: resourceId }),
+        isVisible: ({ metadata }) => !!metadata.has_external_auth_sources,
+      },
+    ],
   },
   {
     indexPath: '/smart_proxies',
