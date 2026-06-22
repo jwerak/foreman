@@ -1359,3 +1359,42 @@ tokens were not loaded (only `patternfly.css` and `patternfly-addons.css` were i
 This caused chart axis labels and grid lines to remain light-themed in dark mode.
 
 **All tests pass (277 suites, 1464 tests, 368 snapshots).**
+
+---
+
+## Bug Fix: "Create New" Pages Broken for SPA-Routed Resources
+
+**Date:** 2026-06-22
+
+### Problem
+
+Navigating to `/subnets/new`, `/domains/new`, `/locations/new`, or any other resource's
+"Create New" page rendered a broken SPA detail page instead of the Rails form. The root cause
+was that React Router's DetailPage routes used an unrestricted `:id` parameter pattern
+(`/subnets/:id`) that matched the literal string "new". The DetailPage component would then
+try to fetch `/api/v2/subnets/new`, get a 404, and show an error.
+
+**Affected:** All 18 FormPage resources (subnets, domains, http_proxies, realms,
+compute_profiles, compute_resources, smart_proxies, locations, organizations, architectures,
+hostgroups, operatingsystems, media, bookmarks, roles, users, usergroups, common_parameters).
+
+### Fix
+
+**File modified:** `webpack/.../routes/DetailPages/index.js`
+
+Added a numeric regex constraint to the `:id` parameter using React Router v5's
+`path-to-regexp` syntax:
+
+```javascript
+// Before
+path: `${config.indexPath}/:id`
+path: `${config.indexPath}/:id/edit`
+
+// After
+path: `${config.indexPath}/:id(\\d+)`
+path: `${config.indexPath}/:id(\\d+)/edit`
+```
+
+The pattern `/:id(\\d+)` only matches when the URL segment consists entirely of digits.
+`/subnets/new` no longer matches, falling through to Rails' normal route handling which
+renders the `FormPage` component with create mode.

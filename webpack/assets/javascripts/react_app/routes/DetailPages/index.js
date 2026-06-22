@@ -4,7 +4,7 @@ import DetailPage from '../../components/common/DetailPage';
 import resourceConfigs from './resourceConfigs';
 
 const detailRoute = config => ({
-  path: `${config.indexPath}/:id`,
+  path: `${config.indexPath}/:id(\\d+)`,
   exact: true,
   render: ({ match }) => (
     <>
@@ -26,7 +26,7 @@ const detailRoute = config => ({
 });
 
 const editRoute = config => ({
-  path: `${config.indexPath}/:id/edit`,
+  path: `${config.indexPath}/:id(\\d+)/edit`,
   exact: true,
   render: ({ match }) => (
     <>
