@@ -1329,4 +1329,33 @@ poor contrast on tables, links, action buttons, and status indicators.
 
 **49 snapshot files updated** for PF6 DOM class changes from the token replacements.
 
+### Fix: Dark Mode Bootstrap CSS Override (Root Cause)
+
+**Problem:** PF6 dark theme tokens use `:where(.pf-v6-theme-dark)` which has **zero CSS
+specificity**. Bootstrap CSS (loaded via the Rails asset pipeline in `application.css`) sets
+`body { background-color: #fff }`, `.table td, .table th { background-color: #fff !important }`,
+and `.form-control { background-color: #fff }` — all with normal or `!important` specificity,
+overriding PF6's dark backgrounds. This caused Cards, Tables, and page backgrounds to remain
+white in dark mode.
+
+**File modified:** `app/assets/stylesheets/patternfly_colors_overrides.scss`
+
+Added `html.pf-v6-theme-dark` block (specificity beats both Bootstrap and `:where()`) with
+overrides for:
+- `body` — dark background + light text
+- `.table td, .table th` — `transparent !important` (overrides Bootstrap's `#fff !important`)
+- `.form-control` — dark input backgrounds
+- `.panel`, `.well`, `.modal-content`, `.dropdown-menu` — dark backgrounds
+- `.navbar-default`, `.list-group-item` — dark backgrounds
+- `h1–h6`, `legend`, `pre`, `code` — light text
+- `#rails-app-content` — dark background for Rails-rendered pages
+- `.pf-v6-c-login` — dark login page
+- DataTables, Select2, Bootstrap alerts/badges/buttons
+
+**File modified:** `webpack/.../common/scss/vendor-core.scss`
+
+Added `@import '~@patternfly/patternfly/patternfly-charts.css'` — the PF6 chart dark theme
+tokens were not loaded (only `patternfly.css` and `patternfly-addons.css` were imported).
+This caused chart axis labels and grid lines to remain light-themed in dark mode.
+
 **All tests pass (277 suites, 1464 tests, 368 snapshots).**

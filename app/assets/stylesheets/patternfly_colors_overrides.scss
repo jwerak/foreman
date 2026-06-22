@@ -26,3 +26,147 @@
     display: none;
   }
 }
+
+// Dark mode overrides — Bootstrap CSS (loaded via the Rails asset pipeline) sets
+// body, .table, .form-control etc. to white backgrounds with normal or !important
+// specificity, overriding PF6 dark tokens which use :where() (zero specificity).
+// These rules restore correct dark backgrounds and text colors.
+html.pf-v6-theme-dark {
+  background-color: var(--pf-t--global--background--color--primary--default);
+
+  body {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap .table overrides (uses !important, so we must too)
+  .table td,
+  .table th {
+    background-color: transparent !important;
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  .table .table {
+    background-color: transparent;
+  }
+
+  // Bootstrap form controls
+  .form-control {
+    background-color: var(--pf-t--global--background--color--control--default);
+    color: var(--pf-t--global--text--color--regular);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Bootstrap panels/wells
+  .panel,
+  .well {
+    background-color: var(--pf-t--global--background--color--secondary--default);
+    border-color: var(--pf-t--global--border--color--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap modals
+  .modal-content {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap dropdowns
+  .dropdown-menu {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    color: var(--pf-t--global--text--color--regular);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Bootstrap navbars
+  .navbar-default {
+    background-color: var(--pf-t--global--background--color--secondary--default);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Bootstrap badges
+  .badge {
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Rails-rendered content area
+  #rails-app-content {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // PF6 login page
+  .pf-v6-c-login {
+    --pf-v6-c-login--BackgroundColor: var(--pf-t--global--background--color--primary--default);
+  }
+
+  // DataTables
+  table.dataTable {
+    background-color: transparent;
+    color: var(--pf-t--global--text--color--regular);
+
+    thead th,
+    tbody td {
+      background-color: transparent !important;
+      color: var(--pf-t--global--text--color--regular);
+      border-color: var(--pf-t--global--border--color--default);
+    }
+  }
+
+  // Select2 dropdowns
+  .select2-container .select2-choice,
+  .select2-drop,
+  .select2-results .select2-result-label {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Legacy heading and text colors
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap btn-default
+  .btn-default {
+    background-color: var(--pf-t--global--background--color--secondary--default);
+    color: var(--pf-t--global--text--color--regular);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Legacy list groups
+  .list-group-item {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    border-color: var(--pf-t--global--border--color--default);
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap img-thumbnail
+  .img-thumbnail {
+    background-color: var(--pf-t--global--background--color--primary--default);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Legacy alerts inherit from Bootstrap
+  .alert {
+    color: var(--pf-t--global--text--color--regular);
+  }
+
+  // Bootstrap legend/label
+  legend {
+    color: var(--pf-t--global--text--color--regular);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Bootstrap hr
+  hr {
+    border-color: var(--pf-t--global--border--color--default);
+  }
+
+  // Bootstrap pre/code
+  pre,
+  code {
+    background-color: var(--pf-t--global--background--color--secondary--default);
+    color: var(--pf-t--global--text--color--regular);
+    border-color: var(--pf-t--global--border--color--default);
+  }
+}
